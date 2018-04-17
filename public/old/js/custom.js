@@ -1,41 +1,53 @@
 jQuery(document).ready(function($) {
-    $('#teacher_carousel').owlCarousel({
-        loop:true,
-        margin:60,
-        nav:false,
-        dots:true,
-        navText: ['<i class="fa fa-angle-double-left" aria-hidden="true"></i>', '<i class="fa fa-angle-double-right" aria-hidden="true"></i>'],
-        responsive:{
-            0:{
-                items:1
+    $('#slider_university').owlCarousel({
+        loop: true,
+        margin: 0,
+        nav: false,
+        responsive: {
+            0: {
+                items: 1
             },
-            600:{
-                items:3
+            600: {
+                items: 1
             },
-            1000:{
-                items:5
+            1000: {
+                items: 1
             }
         }
     });
-    $('#partner_universities').owlCarousel({
-        loop:true,
-        margin:60,
-        nav:false,
-        dots:true,
-        navText: ['<i class="fa fa-angle-double-left" aria-hidden="true"></i>', '<i class="fa fa-angle-double-right" aria-hidden="true"></i>'],
-        responsive:{
-            0:{
-                items:1
+    $('#slider_educational_blog').owlCarousel({
+        loop: true,
+        margin: 30,
+        nav: false,
+        responsive: {
+            0: {
+                items: 1
             },
-            600:{
-                items:3
+            600: {
+                items: 2
             },
-            1000:{
-                items:4
+            1000: {
+                items: 4
             }
         }
     });
 
+    $('#slider_univ_list').owlCarousel({
+        loop: false,
+        margin: 30,
+        nav: false,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 2
+            },
+            1000: {
+                items: 4
+            }
+        }
+    });
 
     $( ".datepicker" ).datepicker({
         dateFormat: "dd-mm-yy",

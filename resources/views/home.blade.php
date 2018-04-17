@@ -537,7 +537,6 @@
                             </div> 
                         @endforeach 
                     </div>
-
                 @endif
 
                 <div class="banner_block">

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Menu;
-
+ 
 class MenuController extends Controller
 {
 
@@ -34,8 +34,13 @@ class MenuController extends Controller
         return view('admin.menu.list', $data);
     }
 
-    public function sortable(Request $request)
+    public function sortable()
     {
-        exit(print_arr($request->all()));
+        exit('s');
+    }
+
+    public function edit()
+    {
+        exit('edit');
     }
 }

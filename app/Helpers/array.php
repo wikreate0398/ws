@@ -167,3 +167,54 @@ function noImg()
 {
     return '/public/uploads/no-image.png';
 }
+
+function uri($segment)
+{
+    return request()->segment($segment);
+}
+
+function adminMenu()
+{
+    return [
+        'menu' => [
+            'name' => 'Разделы сайта', 
+            'icon' => '<i class="fa fa-bars" aria-hidden="true"></i>',
+            'link' => '/admin/menu/',
+            'view' => true,
+            'edit' => 'Редактировать' 
+        ], 
+
+        // 'products' => [
+        //     'name'   => 'Каталог', 
+        //     'icon'   => '<i class="fa fa-book" aria-hidden="true"></i>',
+        //     'link'   => '/cp/products/',
+        //     'view'   => true,
+        //     'edit'   => 'Редактировать',
+        //     'childs' => [
+        //         'catalog' => [
+        //             'name' => 'Товары', 
+        //             'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+        //             'link' => '/cp/products/catalog/',
+        //             'view' => true,
+        //             'edit' => 'Редактировать' 
+        //         ] 
+        //     ]
+        // ], 
+
+        'constants' => [
+            'name' => 'Константы', 
+            'icon' => '<i class="fa fa-anchor" aria-hidden="true"></i>',
+            'link' => '/admin/constants/',
+            'view' => true,
+            'edit' => 'Редактировать' 
+        ],
+
+        'settings' => [
+            'name' => 'Настройки', 
+            'icon' => '<i class="fa fa-sliders" aria-hidden="true"></i>',
+            'link' => '/admin/settings/',
+            'view' => false,
+            'edit' => 'Редактировать' 
+        ] 
+    ]; 
+}

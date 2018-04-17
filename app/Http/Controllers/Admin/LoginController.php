@@ -30,16 +30,21 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/admin/';
 
+    protected $guard = 'admin';
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() {}
+    public function __construct() 
+    { 
+        $this->middleware('guest:admin')->except('logout');
+    }
 
     public function showLoginForm()
     {
-        return view('admin.layouts.login');
+        return view('layouts.login');
     }
 
     public function login(Request $request)
@@ -57,12 +62,11 @@ class LoginController extends Controller
 
             $remember = $request->has('remember') ? true : false;
    
-            if (Auth::guard('web')->attempt(['email' => $request->input('email'), 
-                               'password' => $request->input('password'), 
-                               'activate' => 1], $remember) == true) 
+            if (Auth::guard($this->guard)->attempt(['email' => $request->input('email'), 
+                               'password' => $request->input('password')], $remember) == true) 
             { 
                  
-                return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], trans('auth.success_login'));
+                return \App\Utils\JsonResponse::success(['redirect' => route('admin_menu')], trans('auth.success_login'));
             }
             else 
             { 
@@ -72,6 +76,12 @@ class LoginController extends Controller
             return self::errorLogin();
         } 
     } 
+
+    public function logout()
+    {
+        Auth::guard($this->guard)->logout(); 
+        return  redirect()->route('admin_login');
+    }
 
     static private function errorLogin()
     {

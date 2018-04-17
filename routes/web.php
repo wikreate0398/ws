@@ -49,13 +49,17 @@ Route::get('user/logout', function(){
 	return  redirect('/');
 })->name('logout');
 
-Route::get('admin', function(){
-	exit('s');
-});
+Route::get('admin/login', 'Admin\LoginController@showLoginForm', ['guard' => 'admin'])->name('admin_login');
+Route::post('admin/login', 'Admin\LoginController@login', ['guard' => 'admin'])->name('admin_run_login'); 
 
-Route::get('admin/login', 'Admin\LoginController@showLoginForm')->name('admin_login');
-Route::post('admin/login', 'Admin\LoginController@login')->name('admin_run_login'); 
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() { 
+	 
+	 
+	Route::group(['prefix' => 'menu'], function() { 
+		Route::get('/', 'MenuController@index'); 
+		Route::get('{id}/edit', 'MenuController@edit');
+		Route::post('/sortable', 'MenuController@sortable');
+	}); 
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
-	Route::get('menu', 'MenuController@index'); 
+	Route::get('logout', 'LoginController@logout')->name('logout'); 
 });

@@ -168,7 +168,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-        //TCG\Voyager\VoyagerServiceProvider::class,
+        Balping\BladeFunction\BladeFunctionServiceProvider::class,
 
         /*
          * Application Service Providers...

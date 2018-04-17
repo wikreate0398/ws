@@ -98,6 +98,11 @@ class ComposerStaticInit72b5495b18928048d81fe7ae0992889b
             'Cron\\' => 5,
             'Carbon\\' => 7,
         ),
+        'B' => 
+        array (
+            'Balping\\LaravelVersion\\' => 23,
+            'Balping\\BladeFunction\\' => 22,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -255,6 +260,14 @@ class ComposerStaticInit72b5495b18928048d81fe7ae0992889b
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
+        'Balping\\LaravelVersion\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/balping/laravel-version/src',
+        ),
+        'Balping\\BladeFunction\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/balping/laravel-blade-function/src',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -334,6 +347,8 @@ class ComposerStaticInit72b5495b18928048d81fe7ae0992889b
         'AlterPostNullableFieldsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_11_000000_alter_post_nullable_fields_table.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\Admin\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LoginController.php',
+        'App\\Http\\Controllers\\Admin\\MenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MenuController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -358,6 +373,8 @@ class ComposerStaticInit72b5495b18928048d81fe7ae0992889b
         'App\\Json\\JsonResponse' => __DIR__ . '/../..' . '/app/Json/JsonResponse.php',
         'App\\Mail\\ForgotMail' => __DIR__ . '/../..' . '/app/Mail/ForgotMail.php',
         'App\\Mail\\UserMail' => __DIR__ . '/../..' . '/app/Mail/UserMail.php',
+        'App\\Models\\Admin\\AdminUser' => __DIR__ . '/../..' . '/app/Models/Admin/AdminUser.php',
+        'App\\Models\\Admin\\Menu' => __DIR__ . '/../..' . '/app/Models/Admin/Menu.php',
         'App\\Models\\Cities' => __DIR__ . '/../..' . '/app/Models/Cities.php',
         'App\\Models\\GradeEducation' => __DIR__ . '/../..' . '/app/Models/GradeEducation.php',
         'App\\Models\\InstitutionTypes' => __DIR__ . '/../..' . '/app/Models/InstitutionTypes.php',
@@ -381,6 +398,8 @@ class ComposerStaticInit72b5495b18928048d81fe7ae0992889b
         'App\\Utils\\JsonResponse' => __DIR__ . '/../..' . '/app/Utils/JsonResponse.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+        'Balping\\BladeFunction\\BladeFunctionServiceProvider' => __DIR__ . '/..' . '/balping/laravel-blade-function/src/BladeFunctionServiceProvider.php',
+        'Balping\\LaravelVersion\\LaravelVersion' => __DIR__ . '/..' . '/balping/laravel-version/src/LaravelVersion.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',

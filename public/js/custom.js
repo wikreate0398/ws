@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
     $('#teacher_carousel').owlCarousel({
-        loop:true,
+        loop:false,
         margin:60,
         nav:false,
         dots:true,

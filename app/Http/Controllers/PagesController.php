@@ -16,9 +16,7 @@ class PagesController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Show the application dashboard.
@@ -28,8 +26,9 @@ class PagesController extends Controller
     public function index()
     { 
         $data = [
-            'university' => \App\Models\UsersUniversity::with('user')->orderBy('full_name', 'asc')->get()
-        ]; 
+            'university' => \App\Models\UsersUniversity::with('user')->orderBy('full_name', 'asc')->get(),
+            'teachers'   => \App\Models\User::where('user_type', 2)->orderBy('created_at', 'desc')->get(),
+        ];
 
         return view('home', $data);
     }

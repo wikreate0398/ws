@@ -14,7 +14,7 @@
     <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') . '?v=' . time() }}" rel="stylesheet">
-    <link href="{{ asset('css/loader.css') . '?v=' . time() }}" rel="stylesheet">
+    <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media-queries.css') }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

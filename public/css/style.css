@@ -219,9 +219,9 @@ header .main_menu li > a {
 #partner_universities{
     margin-bottom: 30px; 
 }
-.partner_universities__home{
+.center__slider{
     justify-content:center;
-    display: flex;
+    display: flex !important;
     align-items: center;
 }
 #partner_universities .item{
@@ -355,4 +355,15 @@ span.req{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.img__teacher{
+    display: block;
+    width: 180px;
+    height: 180px;
+    max-width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
 }

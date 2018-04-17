@@ -16,10 +16,14 @@ class AdminAuthenticate
      */
     public function handle($request, Closure $next)
     {
-
-        if ($request->segment(1) == 'admin') {  
+ 
+        if ($request->segment(1) == 'admin') {   
             Auth::shouldUse('admin');
         }
+
+        if (Auth::check() == false) {
+            return redirect()->route('admin_login'); 
+        } 
 
         return $next($request);
     }

@@ -43,5 +43,7 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Cron\\' => array($vendorDir . '/mtdowling/cron-expression/src/Cron'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
+    'Balping\\LaravelVersion\\' => array($vendorDir . '/balping/laravel-version/src'),
+    'Balping\\BladeFunction\\' => array($vendorDir . '/balping/laravel-blade-function/src'),
     'App\\' => array($baseDir . '/app'),
 );

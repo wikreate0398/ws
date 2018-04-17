@@ -1,0 +1,17 @@
+{
+    "name": "balping/laravel-version",
+    "description": "Simple wrapper class around version compare",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Balázs Dura-Kovács"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Balping\\LaravelVersion\\": "src/"
+        }
+    }
+}

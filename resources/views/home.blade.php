@@ -512,7 +512,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <img class="img-responsive" src="/images/about_us.png" alt="">
+                    <img class="img-responsive" src="/images/about_us.png" alt="" style="height: 360px;width: 600px;">
                 </div>
             </div>
         </div>
@@ -524,7 +524,7 @@
             <div class="col-lg-12">
                 @if(!empty($university))
                     <h2 class="header_block">ВУЗЫ ПАРТНЕРЫ</h2>
-                    <div id="partner_universities" class="owl-carousel owl-theme partner_universities__home">
+                    <div id="partner_universities" class="owl-carousel owl-theme center__slider">
                         @foreach($university as $item)
                             <div class="item"> 
                                 <?php $img = !empty($item['user']['image']) ? '/public/uploads/users/' . $item['user']['image'] : noImg()  ?>
@@ -543,59 +543,21 @@
                 <div class="banner_block">
                     <img class="img-responsive" src="/images/banner_2.jpg" alt="">
                 </div>
+
+                @if(!empty($teachers))
                 <h2 class="header_block">ЛУЧШИЕ ПРЕПОДАВАТЕЛИ</h2>
-                <div id="teacher_carousel" class="owl-carousel owl-theme">
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
-                    <div class="item">
-                        <img class="img-circle" src="http://via.placeholder.com/210x210" alt="">
-                        <h3>Петрова Вера Никитишна</h3>
-                        <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
-                    </div>
+                <div id="teacher_carousel" class="owl-carousel owl-theme center__slider">
+                    @foreach($teachers as $teacher)
+                        <div class="item">
+                            <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
+                            <a href="/institution/{{ $item['id'] }}/" onclick="return false;" class="img__teacher" style="background-image: url({{ $img }})"></a> 
+                            <h3>{{ $teacher['name'] }} {{ $teacher['surname'] }}</h3>
+                            <!-- <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p> -->
+                        </div> 
+                    @endforeach
                 </div>
+                @endif
+
             </div>
         </div>
     </div> 
@@ -613,7 +575,7 @@
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
                         </p>
-                        <a href="">Искать курс</a>
+                        <a href="">ИСКАТЬ КУРС</a>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -623,7 +585,7 @@
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
                         </p>
-                        <a href="">Искать курс</a>
+                        <a href="">СТАТЬ ПАРТНЕРАМИ</a>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -633,7 +595,7 @@
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
                         </p>
-                        <a href="">Искать курс</a>
+                        <a href="">НАЧАТЬ ОБУЧАТЬ</a>
                     </div>
                 </div>
             </div>

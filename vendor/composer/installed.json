@@ -1,5 +1,91 @@
 [
     {
+        "name": "balping/laravel-blade-function",
+        "version": "v0.2.2",
+        "version_normalized": "0.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/balping/laravel-blade-function.git",
+            "reference": "811309be24eb2d0d919db18d2b377f023949bfcc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/balping/laravel-blade-function/zipball/811309be24eb2d0d919db18d2b377f023949bfcc",
+            "reference": "811309be24eb2d0d919db18d2b377f023949bfcc",
+            "shasum": ""
+        },
+        "require": {
+            "balping/laravel-version": "^1.0.0",
+            "illuminate/support": "^5.1"
+        },
+        "time": "2018-02-08T21:14:02+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Balping\\BladeFunction\\BladeFunctionServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Balping\\BladeFunction\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Balázs Dura-Kovács"
+            }
+        ],
+        "description": "This Laravel 5.1+ package lets you declare functions inside blade templates.",
+        "keywords": [
+            "blade",
+            "directive",
+            "function",
+            "laravel",
+            "template"
+        ]
+    },
+    {
+        "name": "balping/laravel-version",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/balping/laravel-version.git",
+            "reference": "508951aa635c767187f4064943714ce7e2daea5a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/balping/laravel-version/zipball/508951aa635c767187f4064943714ce7e2daea5a",
+            "reference": "508951aa635c767187f4064943714ce7e2daea5a",
+            "shasum": ""
+        },
+        "time": "2017-08-12T13:18:36+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Balping\\LaravelVersion\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Balázs Dura-Kovács"
+            }
+        ],
+        "description": "Simple wrapper class around version compare"
+    },
+    {
         "name": "dnoegel/php-xdg-base-dir",
         "version": "0.1",
         "version_normalized": "0.1.0.0",

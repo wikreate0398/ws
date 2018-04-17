@@ -57,7 +57,7 @@
                         <li><a href="/under-construction/">ПРЕПОДАВАТЕЛИ</a></li>
                     </ul>
 
-                    <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
+                    <ul class="nav navbar-nav navbar-right" style="margin-top: 14px;">
                         @if(Auth::check())
                         <li><a href="{{ route('user_profile') }}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Профиль</a></li>
                         <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li> 

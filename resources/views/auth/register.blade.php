@@ -5,6 +5,8 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
 
+                <h2>Регистрация</h2><br><br>
+
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#user" aria-controls="user" role="tab"

@@ -51,14 +51,13 @@ Route::get('user/logout', function(){
 
 Route::get('admin/login', 'Admin\LoginController@showLoginForm', ['guard' => 'admin'])->name('admin_login');
 Route::post('admin/login', 'Admin\LoginController@login', ['guard' => 'admin'])->name('admin_run_login'); 
-
+ 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() { 
-	 
 	 
 	Route::group(['prefix' => 'menu'], function() { 
 		Route::get('/', 'MenuController@index'); 
 		Route::get('{id}/edit', 'MenuController@edit');
-		Route::post('/sortable', 'MenuController@sortable');
+		Route::post('sortable', 'MenuController@sortable');
 	}); 
 
 	Route::get('logout', 'LoginController@logout')->name('logout'); 

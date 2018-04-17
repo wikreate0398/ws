@@ -41,6 +41,9 @@ header .navbar-brand {
     height: auto;
     padding: 0px 15px;
 }
+header .navbar-default {
+    background-color: rgba(248,248,248,0.8);
+}
 header .main_menu li > a {
     padding-top: 20px;
     padding-bottom: 20px;

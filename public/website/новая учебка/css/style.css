@@ -1,0 +1,293 @@
+@font-face {
+    font-family: 'Proxima Nova Regular';
+    src: url('../fonts/ProximaNova-Regular.eot');
+    src: url('../fonts/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/ProximaNova-Regular.woff') format('woff'),
+    url('../fonts/ProximaNova-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Proxima Nova Semibold';
+    src: url('../fonts/ProximaNova-Semibold.eot');
+    src: url('../fonts/ProximaNova-Semibold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/ProximaNova-Semibold.woff') format('woff'),
+    url('../fonts/ProximaNova-Semibold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Proxima Nova Light';
+    src: url('../fonts/ProximaNova-Light.eot');
+    src: url('../fonts/ProximaNova-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/ProximaNova-Light.woff') format('woff'),
+    url('../fonts/ProximaNova-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+body{
+    font-family: 'Proxima Nova Regular';
+    font-size: 16px;
+}
+header{
+    background-image: url(../images/header_bg.jpg);
+    background-size: cover;
+}
+header .navbar-brand {
+    height: auto;
+    padding: 0px 15px;
+}
+header .main_menu li > a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.header_bottom h2{
+    color: #fff;
+    text-align: center;
+    margin-top: 180px;
+    margin-bottom: 60px;
+}
+.header_bottom .list_information{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.header_bottom .list_information li a{
+    color: #fff;
+    border-bottom: 1px dashed #fff;
+}
+#search_form{
+    margin-top: 60px;
+    margin-bottom: 120px;
+}
+#search_form .form-group{
+    margin-bottom: 0px;
+}
+#search_form .form-control{
+    height: auto;
+    padding: 10px 12px;
+    font-size: 18px
+}
+.btn-primary {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    padding: 10px 12px;
+}
+.header_block{
+    font-family: 'Proxima Nova Light';
+    color: #012f6b;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.popular_courses{
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 0px;
+}
+.popular_courses li{
+    float: none;
+    display: inline-block;
+}
+.popular_courses > li > a{
+    border: 1px solid #012f6b;
+    border-radius: 4px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.popular_courses > li > a:focus,
+.popular_courses > li > a:hover{
+    border: 1px solid #cf0058;
+    border-radius: 4px;
+}
+.popular_courses > li.active > a, .popular_courses > li.active > a:focus, .popular_courses > li.active > a:hover {
+    border: 1px solid #cf0058;
+    background: transparent;
+}
+.external_card{
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    margin-bottom: 30px;
+}
+.external_card .caption{
+    padding: 15px;
+}
+.external_card .caption .card_tag span{
+    float: right;
+}
+.external_card .caption .card_tag{
+    margin-bottom: 0px;
+}
+.external_card .caption .card_tag li{
+    color: #cf0058;
+    text-transform: uppercase;
+}
+.external_card .caption .card_tag span .btn-default{
+    border: none;
+    padding: 0px;
+    font-size: 18px;
+    line-height: 18px;
+}
+.external_card .caption h3{
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.external_card .caption h4{
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.external_card .caption .more_card{
+    text-align: center;
+}
+.external_card .caption .more_card a{
+    font-family: 'Proxima Nova Light';
+    font-size: 16px;
+    color: #cf0058;
+    border: 1px solid #cf0058;
+    border-radius: 25px;
+    padding: 5px 25px;
+    display: inline-block;
+    text-transform: uppercase;
+}
+.external_card .caption .more_card a:focus,
+.external_card .caption .more_card a:hover{
+    color: #fff;
+    border-color: #012f6b;
+    text-decoration: none;
+    background: #012f6b;
+}
+.external_card .caption .card_info{
+}
+.external_card .caption .card_info span{
+    float: right;
+    text-transform: uppercase;
+}
+.external_card .caption_footer{
+    background-color: rgba(153, 153, 153, 1);
+    padding: 5px;
+}
+.external_card .caption_footer .card_date_info{
+    text-align: right;
+    margin-bottom: 0px;
+    color: #fff;
+}
+.external_card .caption_footer .card_date_info .left_date{
+    font-size: 24px;
+    float: left;
+}
+.external_card .caption_footer .card_date_info .right_date{
+    font-size: 12px;
+    line-height: 14px;
+}
+.about_us_block{
+    background-color: rgba(242, 242, 242, 1);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.about_us_block h1{
+    font-family: 'Proxima Nova Semibold';
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+.about_us_block p{
+    font-family: 'Proxima Nova Light';
+    font-size: 20px;
+}
+.about_us_block a{
+    font-family: 'Proxima Nova Light';
+    color: #fff;
+    font-size: 21px;
+    margin-bottom: 0px;
+    display: inline-block;
+    background: #012f6b;
+    padding: 7px 15px;
+    border-radius: 4px;
+}
+.about_us_block a:focus,
+.about_us_block a:hover{
+    background: #cf0058;
+    text-decoration: none;
+}
+#partner_universities{
+    margin-bottom: 30px;
+}
+#partner_universities .item{
+    border: 1px solid rgb(210, 207, 207);
+    padding: 5px;
+}
+#partner_universities .item h3{
+    font-family: 'Proxima Nova Semibold';
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#partner_universities .item ul{
+    margin-bottom: 0px;
+}
+#partner_universities .item ul li{
+    text-align: center;
+}
+#partner_universities .item ul li{
+    font-family: 'Proxima Nova Light';
+    font-size: 12px;
+}
+#teacher_carousel{
+    margin-bottom: 30px;
+}
+#teacher_carousel .item h3{
+    font-family: 'Proxima Nova Regular';
+    font-size: 20px;
+    text-align: center;
+}
+#teacher_carousel .item p{
+    font-family: 'Proxima Nova Light';
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 0px;
+}
+.user_type_block{
+    background-color: rgba(242, 242, 242, 1);
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+}
+.user_type_home{
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); 
+    padding: 15px;
+    text-align: center;
+}
+.user_type_home h3{
+    font-family: 'Proxima Nova Light';
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.user_type_home p{
+    font-family: 'Proxima Nova Light';
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.user_type_home a{
+    font-family: 'Proxima Nova Light';
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 0px;
+    display: inline-block;
+    background: #012f6b;
+    padding: 7px 15px;
+    border-radius: 4px;
+}
+.user_type_home a:focus,
+.user_type_home a:hover{
+    background: #cf0058;
+    text-decoration: none;
+}
+.banner_block{
+    margin-bottom: 30px;
+}

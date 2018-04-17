@@ -293,6 +293,11 @@ header .main_menu li > a {
     background: #012f6b;
     padding: 7px 15px;
     border-radius: 4px;
+	
+	
+	
+	
+	/* Проверка */
 }
 .user_type_home a:focus,
 .user_type_home a:hover{

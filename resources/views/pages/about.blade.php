@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container no__home">
     <div class="row">
         <div class="col-lg-6">
             <h1>О портале</h1>

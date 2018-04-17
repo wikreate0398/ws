@@ -517,60 +517,29 @@
             </div>
         </div>
     </div>
+
+     
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="header_block">ВУЗЫ ПАРТНЕРЫ</h2>
-                <div id="partner_universities" class="owl-carousel owl-theme">
-                    <div class="item">
-                        <img class="img-responsive" src="http://via.placeholder.com/240x240" alt="">
-                        <h3>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h3>
-                        <ul class="list-unstyled">
-                            <li>10 КУРСОВ</li>
-                            <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-                        </ul>
+                @if(!empty($university))
+                    <h2 class="header_block">ВУЗЫ ПАРТНЕРЫ</h2>
+                    <div id="partner_universities" class="owl-carousel owl-theme partner_universities__home">
+                        @foreach($university as $item)
+                            <div class="item"> 
+                                <?php $img = !empty($item['user']['image']) ? '/public/uploads/users/' . $item['user']['image'] : noImg()  ?>
+                                <a href="/institution/{{ $item['id'] }}/" class="img__institution" style="background-image: url({{ $img }})"></a> 
+                                <h3 style="cursor: pointer;" onclick="window.location='/institution/{{ $item['id'] }}/'">{{ $item['full_name'] }}</h3>
+                               <!--  <ul class="list-unstyled">
+                                    <li>10 КУРСОВ</li>
+                                    <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
+                                </ul> -->
+                            </div> 
+                        @endforeach 
                     </div>
-                    <div class="item">
-                        <img class="img-responsive" src="http://via.placeholder.com/240x240" alt="">
-                        <h3>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h3>
-                        <ul class="list-unstyled">
-                            <li>10 КУРСОВ</li>
-                            <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <img class="img-responsive" src="http://via.placeholder.com/240x240" alt="">
-                        <h3>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h3>
-                        <ul class="list-unstyled">
-                            <li>10 КУРСОВ</li>
-                            <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <img class="img-responsive" src="http://via.placeholder.com/240x240" alt="">
-                        <h3>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h3>
-                        <ul class="list-unstyled">
-                            <li>10 КУРСОВ</li>
-                            <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <img class="img-responsive" src="http://via.placeholder.com/240x240" alt="">
-                        <h3>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h3>
-                        <ul class="list-unstyled">
-                            <li>10 КУРСОВ</li>
-                            <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <img class="img-responsive" src="http://via.placeholder.com/240x240" alt="">
-                        <h3>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h3>
-                        <ul class="list-unstyled">
-                            <li>10 КУРСОВ</li>
-                            <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-                        </ul>
-                    </div>
-                </div>
+
+                @endif
+
                 <div class="banner_block">
                     <img class="img-responsive" src="/images/banner_2.jpg" alt="">
                 </div>
@@ -629,7 +598,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+
     <div class="container-fluid user_type_block">
         <div class="container">
             <div class="row">

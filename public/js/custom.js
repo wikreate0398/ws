@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
         }
     });
     $('#partner_universities').owlCarousel({
-        loop:true,
+        loop:false,
         margin:60,
         nav:false,
         dots:true,
@@ -190,7 +190,7 @@ function addBlock(blockClass) {
 }
 
 function deleteBlock(item, id, action){
-    //$(item).closest('.row').remove();
+    $(item).closest('.row').remove();
 
     // if (id != '') {
     //     $.ajax({
@@ -296,5 +296,5 @@ function setEqualHeight(columns) {
 }
 
 $(window).on('load', function() { 
-    setEqualHeight($('#slider_univ_list .item h4'));   
+    setEqualHeight($('#partner_universities .item h3'));   
 }); 

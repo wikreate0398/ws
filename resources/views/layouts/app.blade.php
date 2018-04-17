@@ -23,13 +23,16 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.min.js') . '?v=' . time() }}"></script>
     <script src="{{ asset('js/custom.js') . '?v=' . time() }}"></script>
+     
 
 </head>
 
@@ -47,11 +50,21 @@
                     <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav main_menu">
-                        <li><a href="#">О ПРОЕКТЕ</a></li>
-                        <li><a href="#">КУРСЫ</a></li>
-                        <li><a href="#">ВУЗЫ И ШКОЛЫ</a></li>
-                        <li><a href="#">ПРЕПОДАВАТЕЛИ</a></li>
+                    <ul class="nav navbar-nav main_menu" style="margin-top: 5px;">
+                        <li><a href="/about/">О ПРОЕКТЕ</a></li>
+                        <li><a href="/under-construction/">КУРСЫ</a></li>
+                        <li><a href="/educational-institutions/">ВУЗЫ И ШКОЛЫ</a></li>
+                        <li><a href="/under-construction/">ПРЕПОДАВАТЕЛИ</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
+                        @if(Auth::check())
+                        <li><a href="{{ route('user_profile') }}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Профиль</a></li>
+                        <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li> 
+                        @else  
+                        <li><a href="{{ route('login') }}""><i class="fa fa-sign-in" aria-hidden="true"></i> Войти</a></li>  
+                        <li><a href="{{ route('registration') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Регистрация</a></li>
+                        @endif 
                     </ul>
                 </div>
             </div>

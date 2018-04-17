@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container">
+	<div class="container no__home" style="justify-content: center; display: flex; width: 100%; align-items: center;">
     <div class="row">
         <div class="col-lg-12" style="text-align: center;">
         	<img style="max-width: 100px; margin-bottom: 20px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Under_construction_icon-yellow.svg/2000px-Under_construction_icon-yellow.svg.png" alt="">

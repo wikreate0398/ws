@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container no__home">
     <div class="row">
         <div class="col-md-12 form-horizontal">
             <h1>{{ $data['full_name'] }}</h1>

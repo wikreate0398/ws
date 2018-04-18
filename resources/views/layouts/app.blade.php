@@ -17,6 +17,8 @@
     <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media-queries.css') }}" rel="stylesheet">
 
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

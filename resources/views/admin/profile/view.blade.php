@@ -101,7 +101,7 @@
                         <div class="form-group">
                             <label for="" class="col-lg-2 col-sm-2 control-label">Имя</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" name="name">
+                                <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}">
                             </div>
                         </div>
                         <div class="form-group">

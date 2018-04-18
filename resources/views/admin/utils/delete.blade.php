@@ -12,7 +12,10 @@
          </div>
          <div class="modal-footer">
             <button type="button" data-dismiss="modal" class="btn default">Отмена</button>
-            <button type="button" data-dismiss="modal" onclick="Ajax.toDelete(this, '/admin/actions/deleteElement/','{{ $id }}')" class="btn red">
+            <button type="button" 
+                    data-dismiss="modal" 
+                    onclick="Ajax.toDelete(this, '{{ $table }}', '{{ $id }}')" 
+                    class="btn red">
                Удалить
             </button>
          </div>

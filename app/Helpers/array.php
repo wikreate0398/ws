@@ -184,6 +184,13 @@ function adminMenu()
             'edit' => 'Редактировать' 
         ], 
 
+        'profile' => [
+            'name' => 'Разделы сайта',  
+            'link' => '/admin/profile/',
+            'view' => false,
+            'edit' => 'Редактировать' 
+        ], 
+ 
         // 'products' => [
         //     'name'   => 'Каталог', 
         //     'icon'   => '<i class="fa fa-book" aria-hidden="true"></i>',
@@ -201,13 +208,13 @@ function adminMenu()
         //     ]
         // ], 
 
-        'constants' => [
-            'name' => 'Константы', 
-            'icon' => '<i class="fa fa-anchor" aria-hidden="true"></i>',
-            'link' => '/admin/constants/',
-            'view' => true,
-            'edit' => 'Редактировать' 
-        ],
+        // 'constants' => [
+        //     'name' => 'Константы', 
+        //     'icon' => '<i class="fa fa-anchor" aria-hidden="true"></i>',
+        //     'link' => '/admin/constants/',
+        //     'view' => true,
+        //     'edit' => 'Редактировать' 
+        // ],
 
         'settings' => [
             'name' => 'Настройки', 

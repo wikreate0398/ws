@@ -41,7 +41,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="/admin_theme/theme/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
 <link href="/admin_theme/theme/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="/admin_theme/theme/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
-
+<link rel="stylesheet" href="/admin_theme/assets/css/admin.css?v=<?=time()?>">
 <!-- Main styles -->
 <link href="{{ asset('css/loader.css') . '?v=' . time() }}" rel="stylesheet">
 
@@ -129,7 +129,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="/admin_theme/theme/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
  
 <!-- Main scripts -->
+<script src="/admin_theme/assets/js/jquery.nestable.js?v=<?=time()?>" type="text/javascript"></script>
 <script src="/admin_theme/assets/js/ajax.js?v={time()}" type="text/javascript"></script>
+ <script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
  
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>

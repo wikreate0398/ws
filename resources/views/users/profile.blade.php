@@ -6,9 +6,9 @@
 		<div class="col-md-12"> 
 			<h3>Профиль</h3> 
 			
-			@if(Session::has('flas_message'))
+			@if(Session::has('flash_message'))
 			    <div class="alert alert-success" style="margin-top: 20px;">
-			    	<p>{{ Session::get('flas_message') }}</p>
+			    	<p>{{ Session::get('flash_message') }}</p>
 			    </div> 
 			@endif 
 

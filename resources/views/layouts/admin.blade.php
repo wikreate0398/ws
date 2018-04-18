@@ -13,6 +13,7 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <meta content="" name="description"/>
 <meta content="" name="author"/>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/> 
 <link href="/admin_theme/theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -61,6 +62,8 @@
     $('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website. 
     $('body').delay(350).css({'overflow':'visible'});
   });  
+
+  var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'); 
 </script> 
  
 </head>
@@ -100,10 +103,10 @@
                      <a href="/admin/profile/">
                      <i class="icon-user"></i> Профиль </a>
                   </li>
-                  <li>
+                 <!--  <li>
                      <a href="/admin/settings/">
-                     <i class="icon-user"></i> Настройки </a>
-                  </li>
+                     <i class="fa fa-cogs" aria-hidden="true"></i> Настройки </a>
+                  </li> -->
                   <li>
                      <a href="/admin/logout">
                      <i class="icon-key"></i> Выйти </a>
@@ -221,6 +224,19 @@
          <!-- END PAGE HEADER-->
 
          <!-- BEGIN PAGE CONTENT-->
+   
+
+            @if(Session::has('flash_message'))
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="alert alert-success" style="margin-top: 20px;">
+                        <p>{{ Session::get('admin_flash_message') }}</p>
+                     </div> 
+                  </div>
+               </div>
+            @endif 
+
+
             @yield('content')
          <!-- END PAGE CONTENT-->
       </div>
@@ -289,6 +305,8 @@
 <!-- CKeditor --> 
 <script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/ckeditor/ckeditor.js"></script>
 
+<script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+
 <!-- Main scripts -->
 <script src="/admin_theme/assets/js/jquery.nestable.js?v=<?=time()?>" type="text/javascript"></script>
 <script src="/admin_theme/assets/js/ajax.js?v={time()}" type="text/javascript"></script>
@@ -303,9 +321,16 @@
       ComponentsPickers.init();
       ComponentsDropdowns.init(); 
       ComponentsFormTools2.init();  
-      // ComponentsFormTools.init();
+      // ComponentsFormTools.init(); 
+
    });  
 </script>
+
+<style>
+   [data-notify="container"] {
+      z-index: 99999 !important;
+   }
+</style>
   
  
 <!-- END JAVASCRIPTS -->

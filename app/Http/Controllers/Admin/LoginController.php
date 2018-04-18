@@ -62,8 +62,10 @@ class LoginController extends Controller
 
             $remember = $request->has('remember') ? true : false;
    
-            if (Auth::guard($this->guard)->attempt(['email' => $request->input('email'), 
-                               'password' => $request->input('password')], $remember) == true) 
+            if (Auth::guard($this->guard)->attempt([
+                'email'    => $request->input('email'), 
+                'password' => $request->input('password'), 
+                'active'   => '1'], $remember) == true) 
             { 
                  
                 return \App\Utils\JsonResponse::success(['redirect' => route('admin_menu')], trans('auth.success_login'));

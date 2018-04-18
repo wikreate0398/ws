@@ -28,7 +28,9 @@ $(document).ready(function(){
     $('#nestable').nestable({
         collapsedClass: 'dd-collapsed',
         maxDepth:1,
-        axis: 'y'//x,y,all
+        axis: 'y',
+        noDragClass: 'no-drag',     
+        handleClass: 'dd-handle'
     }).nestable('expandAll').on('change', function() {
         Ajax.nestable($(this));
     }); 
@@ -58,7 +60,7 @@ function serializeForm(form, button, action, button_txt){
                         $(form).find('[name="'+key+'"]').filter(function() {
                             return !this.value;
                         }).addClass("error__input") 
-
+                        var br='';
                         $.each(value, function(k,v){
                             message += '<p>'+v+'</p>';
                         }); 
@@ -66,8 +68,8 @@ function serializeForm(form, button, action, button_txt){
                 }else{
                     message += '<p>' + jsonResponse.messages + '</p>'; 
                 }
-
-                $(form).find('#error-respond').fadeIn().html(message);
+                Ajax.notify('danger', message); 
+                //$(form).find('#error-respond').fadeIn().html(message);
                 // setTimeout(function() {
                 //     $(form).find('#form-respond').fadeOut(700);
                 // }, 1000);
@@ -106,8 +108,44 @@ function serializeForm(form, button, action, button_txt){
 }
 
 var Ajax = {
-    toDelete: function(){
-        alert('s');
+    toDelete: function(element, table, id){
+        jQuery.ajax({  
+            url: '/admin/ajax/deleteElement',
+            type: 'POST', 
+            data: {
+                id: id,
+                table: table,
+                _token: CSRF_TOKEN
+            }, 
+            headers: {'X-CSRF-TOKEN': CSRF_TOKEN}, 
+            dataType: 'json',  
+            beforeSend: function() {},
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                if (XMLHttpRequest.status === 401) document.location.reload(true);
+            },
+            success: function(res) {
+
+                if (res.msg === 'error') { 
+                    Ajax.notify('error', res.cause); 
+                } else { 
+                    Ajax.notify('success', res.message);
+                    $('.modal, .modal-backdrop').fadeOut(100);
+                    if ( $(element).closest('.dd-item').length == true) {
+                        $(element).closest('.dd-item').fadeOut(200);
+                    } else{
+                        if ($(element).closest('tbody').find('tr').length <= 1) {
+                            $(element).closest('table').fadeOut(200);
+                            $(element).closest('table').prev('.cat__name').fadeOut(200); 
+                        }else{
+                            $(element).closest('tr').fadeOut(200, function(){
+                                $(element).closest('tr').remove();
+                            });
+                        } 
+                    } 
+                }
+            },
+            complete: function() {}
+        }); 
     },
 
     nestable: function(item){
@@ -115,36 +153,81 @@ var Ajax = {
         var arr = $(item).nestable('serialize');
         var table = $(item).attr('data-table'); 
         var action = $(item).attr('data-action')
-
-        jQuery.ajax({
-            type: 'POST',
+ 
+        jQuery.ajax({  
             url: action,
-            dataType: 'json',
+            type: 'POST', 
             data: {
                 arr: arr,
-                table: table
-            },
+                table: table,
+                _token: CSRF_TOKEN
+            }, 
+            headers: {'X-CSRF-TOKEN': CSRF_TOKEN}, 
+            dataType: 'json',  
             beforeSend: function() {},
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 if (XMLHttpRequest.status === 401) document.location.reload(true);
             },
             success: function(res) {
-                if (res.msg === 'error') {
-                    //alert(res.cause); 
-                    $('#fade-respond').removeClass().addClass('alert-danger');
-                    $('#fade-respond').fadeIn(500).html(res.cause).setTimeout(1000).hide();
-                } else {
-                    //alert(res.msg);       
-                    $('#fade-respond').fadeIn(500).html(res.msg);
-                    $('#fade-respond').removeClass().addClass('success-respond');
-                    setTimeout(function() {
-                        $('#fade-respond').fadeOut(700);
-                    }, 1000);
+                if (res.msg === 'error') { 
+                    Ajax.notify('error', res.cause); 
+                } else { 
+                    Ajax.notify('success', res.message); 
                 }
             },
-            complete: function() {
-
+            complete: function() { 
             }
         }); 
+    },
+
+    buttonView: function(click, table, id, row) {  
+        row       = !row ? 'view' : row; 
+        var state = $(this).prop('checked');   
+        $.ajax({
+            type: "POST",
+            url: '/admin/ajax/viewElement',
+            data: {
+                'id': id,
+                'state': state,
+                'table': table,
+                'row' : row
+            },
+            headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+            dataType: 'json',
+            beforeSend: function() {},
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                if (XMLHttpRequest.status === 401) document.location.reload(true);
+            },
+            success: function(res) {
+                if (res.msg === 'error') { 
+                    Ajax.notify('error', res.cause); 
+                } else { 
+                    Ajax.notify('success', res.message); 
+                }
+            }
+        }); 
+    },
+
+    notify: function(status, message){
+        $.notify({
+         // options 
+         // title: 'Bootstrap notify',
+         message: message, 
+         target: '_blank'
+      },{
+         // settings
+         element: 'body', 
+         type: status, 
+         placement: {
+            from: "top",
+            align: "right"
+         },
+         offset: 20,
+         spacing: 10,
+         z_index: 1031,
+         delay: 2000,
+         timer: 1000 ,
+         
+      });
     }
 }

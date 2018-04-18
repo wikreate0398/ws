@@ -51,14 +51,34 @@ Route::get('user/logout', function(){
 
 Route::get('admin/login', 'Admin\LoginController@showLoginForm', ['guard' => 'admin'])->name('admin_login');
 Route::post('admin/login', 'Admin\LoginController@login', ['guard' => 'admin'])->name('admin_run_login'); 
- 
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() { 
-	 
+	Route::get('/', function(){
+		return redirect()->route('admin_menu');
+	});
+	
 	Route::group(['prefix' => 'menu'], function() { 
-		Route::get('/', 'MenuController@index'); 
-		Route::get('{id}/edit', 'MenuController@edit');
-		Route::post('sortable', 'MenuController@sortable');
+		Route::get('/', 'MenuController@show')->name('admin_menu');  
+		Route::get('{id}/edit', 'MenuController@showeditForm'); 
+		Route::get('add', 'MenuController@showAddForm');
+		Route::post('create', 'MenuController@create'); 
+		Route::post('{id}/update', 'MenuController@update'); 
+	}); 
+
+	Route::group(['prefix' => 'profile'], function() { 
+		Route::get('/', 'ProfileController@showForm')->name('profile');
+		Route::post('edit', 'ProfileController@edit');
+		Route::post('addNewUser', 'ProfileController@addNewUser');
+	}); 
+
+	Route::group(['prefix' => 'ajax'], function() {  
+		Route::post('depth-sort', 'AjaxController@depthSort')->name('depth_sort');
+		Route::post('viewElement', 'AjaxController@viewElement')->name('viewElement'); 
+		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement'); 
 	}); 
 
 	Route::get('logout', 'LoginController@logout')->name('logout'); 
 });
+ 
+
+ 

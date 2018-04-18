@@ -148,7 +148,7 @@
 				@foreach($users as $user)
 					<tr>
 						<td>{{ ucfirst($user['name']) }}</td>
-						<td>{{ ucfirst($user['login']) }}</td>
+						<td>{{ ucfirst($user['email']) }}</td>
 						<td>
 							{{ ($user['login'] == 1) ? 'Администартор' :  'Менеджер' }}
 						</td>

@@ -43,7 +43,7 @@ class ProfileController extends Controller
         }
 
         $checkLogin = AdminUser::whereEmail($request->input('login'))->first();
-        if (count($checkLogin) != false) 
+        if (!empty($checkLogin)) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Пользователь с таким логином уже Существует']);
         }

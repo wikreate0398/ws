@@ -1,5 +1,5 @@
 
-<a href="" class="btn btn-info  " style="display: inline-block; width: auto; border-radius: 20px;">Добавить свой курс</a>
+<a href="{{ route('add_course') }}" class="btn btn-info  " style="display: inline-block; width: auto; border-radius: 20px;">Добавить свой курс</a>
 <br><br>
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active">

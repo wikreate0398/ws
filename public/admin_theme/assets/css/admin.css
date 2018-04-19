@@ -188,3 +188,7 @@ span[data-notify="message"] p:last-child{
   width: 252px;
   height: 194px;
 }
+
+.dd3-item > button{ 
+  display: none !important;
+} 

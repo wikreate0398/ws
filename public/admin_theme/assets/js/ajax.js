@@ -24,16 +24,23 @@ $(document).ready(function(){
             serializeForm(form, button, action, button_txt);
         }, 500);
     });
+ 
+    $('#nestable').each(function(i){
+        var newClass = 'nestable_' + i;
+        $(this).addClass(newClass);
+        var depth = $(this).attr('data-depth') ? $(this).attr('data-depth') : 1;
 
-    $('#nestable').nestable({
-        collapsedClass: 'dd-collapsed',
-        maxDepth:1,
-        axis: 'y',
-        noDragClass: 'no-drag',     
-        handleClass: 'dd-handle'
-    }).nestable('expandAll').on('change', function() {
-        Ajax.nestable($(this));
+        $('.' + newClass).nestable({
+            collapsedClass: 'dd-collapsed',
+            maxDepth:parseInt(depth),
+            axis: 'y',
+            noDragClass: 'no-drag',     
+            handleClass: 'dd-handle'
+        }).nestable('expandAll').on('change', function() {
+            Ajax.nestable($(this));
+        }); 
     }); 
+
 });
 
 function serializeForm(form, button, action, button_txt){

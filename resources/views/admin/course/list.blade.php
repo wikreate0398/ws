@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@function ( catList($menu, $method, $table) )
-	@foreach ($menu as $item)  
+@function ( catList($data, $method, $table) )
+	@foreach ($data as $item)  
     <li class="dd-item dd3-item" data-id="{{ $item['id'] }}">
 	       <div class="dd-handle dd3-handle handle "></div>
 	       <div class="dd3-content clearfix">
@@ -20,7 +20,7 @@
 	           		<!-- Modal --> 
 	          	</p>   
 	       </div>
-	        @if(!empty($item['childs']))  
+	        @if(!empty($item['childs'])) 
 	           	<ol class="dd-list">
 	             	@catList($item['childs'], $method, $table)
 	           	</ol>
@@ -28,7 +28,7 @@
 	    </li>
 	@endforeach
 @endfunction
- 
+
 @section('content') 
 	<div class="row">
 		<div class="col-md-12" style="margin-bottom: 20px;">
@@ -36,9 +36,9 @@
 		</div>
 
 	   	<div class="col-md-12">  
-	      	<div class="dd" id="nestable" data-table="{{ $table }}" data-action="{{ route('depth_sort') }}">
+	      	<div class="dd" id="nestable" data-depth="2" data-table="{{ $table }}" data-action="{{ route('depth_sort') }}">
 	        	<ol class="dd-list">  
-               	@catList(map_tree($menu->toArray()), $method, $table) 
+               	@catList(map_tree($data->toArray()), $method, $table) 
 	        	</ol>
 	      	</div> 
 	   	</div>

@@ -194,24 +194,24 @@ function adminMenu()
             'link' => '/admin/profile/',
             'view' => false,
             'edit' => 'Редактировать' 
-        ], 
+        ],  
  
-        // 'products' => [
-        //     'name'   => 'Каталог', 
-        //     'icon'   => '<i class="fa fa-book" aria-hidden="true"></i>',
-        //     'link'   => '/cp/products/',
-        //     'view'   => true,
-        //     'edit'   => 'Редактировать',
-        //     'childs' => [
-        //         'catalog' => [
-        //             'name' => 'Товары', 
-        //             'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
-        //             'link' => '/cp/products/catalog/',
-        //             'view' => true,
-        //             'edit' => 'Редактировать' 
-        //         ] 
-        //     ]
-        // ], 
+        'course' => [
+            'name'   => 'Курсы', 
+            'icon'   => '<i class="fa fa-graduation-cap" aria-hidden="true"></i>',
+            'link'   => '/admin/course/',
+            'view'   => true,
+            'edit'   => 'Редактировать',
+            'childs' => [
+                'category' => [
+                    'name' => 'Категории', 
+                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                    'link' => '/admin/course/category/',
+                    'view' => true,
+                    'edit' => 'Редактировать' 
+                ] 
+            ]
+        ], 
 
         // 'constants' => [
         //     'name' => 'Константы', 

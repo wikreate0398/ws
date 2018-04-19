@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('user/profile/subscriptions', 'ProfileController@showSubscriptions')->name('user_subscriptions'); 
 	Route::get('user/profile/bookmarks', 'ProfileController@showBookmarks')->name('user_bookmarks'); 
 	Route::get('user/profile/diplomas', 'ProfileController@showDiploms')->name('user_diplomas'); 
+	Route::get('user/profile/add-course', 'ProfileController@showCourseForm')->name('add_course'); 
+
 	Route::get('user/profile/edit', 'ProfileController@showEditForm')->name('user_edit');	 
 
 	Route::post('user/updatePass', 'ProfileController@updatePassword')->name('update_pass'); 
@@ -55,7 +57,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 Route::get('user/logout', function(){ 
 	Auth::guard('web')->logout(); 
-	return  redirect('/');
+	return  redirect()->route('login');
 })->name('logout');
 
 Route::get('admin/login', 'Admin\LoginController@showLoginForm', ['guard' => 'admin'])->name('admin_login');
@@ -73,6 +75,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('create', 'MenuController@create'); 
 		Route::post('{id}/update', 'MenuController@update'); 
 	}); 
+
+	Route::group(['prefix' => 'course/category'], function() { 
+		Route::get('/', 'CourseController@show')->name('admin_course_category');    
+		Route::get('{id}/edit', 'CourseController@showeditForm'); 
+		Route::get('add', 'CourseController@showAddForm');
+		Route::post('create', 'CourseController@create'); 
+		Route::post('{id}/update', 'CourseController@update'); 
+	});  
 
 	Route::group(['prefix' => 'profile'], function() { 
 		Route::get('/', 'ProfileController@showForm')->name('profile');

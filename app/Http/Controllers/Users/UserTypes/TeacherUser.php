@@ -461,4 +461,12 @@ class TeacherUser extends Controller implements UserTypesInterface
             'include'            => $this->viewPath . 'diplomas',
         ]); 
     }  
+
+    public function showCourseForm()
+    {
+        return view('users.teacher_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'add_course',
+        ]); 
+    }
 }

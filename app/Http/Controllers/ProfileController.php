@@ -71,6 +71,11 @@ class ProfileController extends Controller
         return UserTypesService::init(Auth::user()->user_type, $this, 'showDiploms');  
     } 
 
+    public function showCourseForm()
+    {
+        return UserTypesService::init(Auth::user()->user_type, $this, 'showCourseForm');  
+    }
+
     public function updateImage(Request $request)
     {
         if ($request->hasFile('image') == false) 

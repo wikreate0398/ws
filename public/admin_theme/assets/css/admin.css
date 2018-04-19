@@ -146,11 +146,13 @@ div.tagsinput{
     position:absolute;
     left:50%; /* centers the loading animation horizontally one the screen */
     top:50%; /* centers the loading animation vertically one the screen */
-    background-image:url(../img/status.gif); /* path to your loading animation */
+    background-image:url(/images/gear-animation-green.gif); /* path to your loading animation */
     background-repeat:no-repeat;
     background-position:center;
+    background-size: contain;
     margin:-100px 0 0 -100px; /* is width and height divided by two */
 }
+
 .alert-danger{
     /*background: #ff7171;
     font-size: 18px; 
@@ -176,4 +178,13 @@ div.tagsinput{
 
 span[data-notify="message"] p:last-child{
   margin-bottom: 0px !important;
+}
+
+.univ__img{
+  display: block;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 252px;
+  height: 194px;
 }

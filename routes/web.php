@@ -31,6 +31,8 @@ Route::get('terms-of-use', 'PagesController@termsOfUse');
 Route::get('educational-institutions', 'InstitutionController@index'); 
 Route::get('institution/{id}', 'InstitutionController@view');
 
+Route::get('teachers', 'TeachersController@index');  
+
 Route::group(['middlewars' => 'auth'], function(){
 	Route::get('user/profile', 'ProfileController@userProfile')->name('user_profile');
 	Route::post('user/updatePass', 'ProfileController@updatePassword')->name('update_pass'); 

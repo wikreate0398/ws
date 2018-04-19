@@ -56,7 +56,7 @@
                         <li><a href="/about/">О ПРОЕКТЕ</a></li>
                         <li><a href="/under-construction/">КУРСЫ</a></li>
                         <li><a href="/educational-institutions/">ВУЗЫ И ШКОЛЫ</a></li>
-                        <li><a href="/under-construction/">ПРЕПОДАВАТЕЛИ</a></li>
+                        <li><a href="/teachers/">ПРЕПОДАВАТЕЛИ</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">

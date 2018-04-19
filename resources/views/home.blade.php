@@ -549,7 +549,7 @@
                     @foreach($teachers as $teacher)
                         <div class="item">
                             <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
-                            <a href="/institution/{{ $item['id'] }}/" onclick="return false;" class="img__teacher" style="background-image: url({{ $img }})"></a> 
+                            <a href="/institution/{{ $teacher['id'] }}/" onclick="return false;" class="img__teacher" style="background-image: url({{ $img }})"></a> 
                             <h3>{{ $teacher['name'] }} {{ $teacher['surname'] }}</h3>
                             <!-- <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p> -->
                         </div> 

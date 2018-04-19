@@ -58,7 +58,9 @@
 <script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/select2/select2.min.js"></script>
 <script>   
   $(window).on('load', function() { // makes sure the whole site is loaded 
-    $('#status').fadeOut(); // will first fade out the loading animation 
+    setTimeout(function(){
+      $('#status').fadeOut(350); 
+   }, 300);
     $('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website. 
     $('body').delay(350).css({'overflow':'visible'});
   });  

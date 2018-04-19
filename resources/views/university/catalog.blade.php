@@ -28,16 +28,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <style>
-            .univ__img{
-                display: block;
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                width: 252px;
-                height: 194px;
-            }
-        </style>
+        </div> 
     @endif
 @stop

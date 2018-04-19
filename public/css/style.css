@@ -409,14 +409,15 @@ span.req{
 }
 
 .profile__img{
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 50%;
-        padding-bottom: 50%;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        border-radius: 50%;
-        margin-bottom: 20px;
-    }
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50%;
+    padding-bottom: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    background-color: #fff;
+}

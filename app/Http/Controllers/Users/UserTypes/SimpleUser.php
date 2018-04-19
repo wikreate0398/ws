@@ -18,7 +18,6 @@ use App\Http\Controllers\Users\UserTypes\UserTypesInterface;
 */
 class SimpleUser extends Controller implements UserTypesInterface
 {
-
 	private $niceNames = [
 		'password'         => 'Пароль',
         'repeat_password'  => 'Повторите пароль',
@@ -36,6 +35,8 @@ class SimpleUser extends Controller implements UserTypesInterface
         'password'              => 'required|string|min:6|confirmed',
         'password_confirmation' => 'required',
 	];
+
+    private $viewPath = 'users.profile_types.user.';
 
 	protected $_evokeClass;
 
@@ -77,11 +78,11 @@ class SimpleUser extends Controller implements UserTypesInterface
             'user_type'    => $this->_evokeClass->userType,
             'phone'        => $data['phone'],
             'email'        => $data['email'], 
-            'city'         => !empty($data['city']) ? $data['city'] : '',
+            'city'         => $data['city'],
             'phone'        => $data['phone'],
-            'phone2'       => !empty($data['phone2']) ? $data['phone2'] : '',
-            'fax'          => !empty($data['fax']) ? $data['fax'] : '',
-            'site'         => !empty($data['site']) ? $data['site'] : '',
+            'phone2'       => $data['phone2'],
+            'fax'          => $data['fax'],
+            'site'         => $data['site'],
             'image'        => $this->_evokeClass->saveImage(),
             'confirm_hash' => $confirm_hash, 
             'password'     => bcrypt($data['password']),
@@ -91,14 +92,46 @@ class SimpleUser extends Controller implements UserTypesInterface
         return true;
 	}
 
-    public function showProfile()
+    public function showCourse()
     { 
-        return view('users.profile', [
-            'cities'             => Cities::orderBy('name', 'asc')->get(),  
+        return view('users.user_profile', [ 
             'user'               => Auth::user(), 
-            'include'            => 'users.profile_types.user',
+            'include'            => $this->viewPath . 'courses',
         ]); 
     }
+
+    public function showEditForm()
+    { 
+        return view('users.user_profile', [
+            'cities'  => Cities::orderBy('name', 'asc')->get(),  
+            'user'    => Auth::user(), 
+            'include' => $this->viewPath . 'edit'
+        ]); 
+    } 
+
+    public function showSubscriptions()
+    {
+        return view('users.user_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'subscriptions',
+        ]); 
+    }
+
+    public function showReviews()
+    {
+        return view('users.user_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'reviews',
+        ]); 
+    }  
+
+    public function showBookmarks()
+    {
+        return view('users.user_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'bookmarks',
+        ]); 
+    }  
 
     public function editProfile(array $data)
     {   

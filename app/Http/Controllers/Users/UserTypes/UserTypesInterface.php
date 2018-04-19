@@ -26,7 +26,7 @@ interface UserTypesInterface
 	* @param array $data
 	* @return bool
 	*/
-	public function showProfile();
+	public function showEditForm();
 
 	/**
 	* Edit user profile

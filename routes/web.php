@@ -33,10 +33,17 @@ Route::get('institution/{id}', 'InstitutionController@view');
 
 Route::get('teachers', 'TeachersController@index');  
 
-Route::group(['middlewars' => 'auth'], function(){
-	Route::get('user/profile', 'ProfileController@userProfile')->name('user_profile');
+Route::group(['middleware' => 'auth'], function(){
+	Route::get('user/profile/course', 'ProfileController@showCourse')->name('user_profile');
+	Route::get('user/profile/reviews', 'ProfileController@showReviews')->name('user_reviews');
+	Route::get('user/profile/subscriptions', 'ProfileController@showSubscriptions')->name('user_subscriptions'); 
+	Route::get('user/profile/bookmarks', 'ProfileController@showBookmarks')->name('user_bookmarks'); 
+	Route::get('user/profile/diplomas', 'ProfileController@showDiploms')->name('user_diplomas'); 
+	Route::get('user/profile/edit', 'ProfileController@showEditForm')->name('user_edit');	 
+
 	Route::post('user/updatePass', 'ProfileController@updatePassword')->name('update_pass'); 
 	Route::post('user/update-profile', 'ProfileController@editProfile')->name('update_profile'); 
+	Route::post('user/update-image', 'ProfileController@updateImage')->name('update_image'); 
 
 	Route::get('user/deleteUserEducation/{id}', 'ProfileController@deleteUserEducation'); 
 	Route::get('user/deleteUserActivities/{id}', 'ProfileController@deleteUserActivities'); 
@@ -46,7 +53,7 @@ Route::group(['middlewars' => 'auth'], function(){
 	Route::post('user/forgot-password', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('send_reset_link'); 
 });
 
-Route::get('user/logout', function(){
+Route::get('user/logout', function(){ 
 	Auth::guard('web')->logout(); 
 	return  redirect('/');
 })->name('logout');
@@ -79,7 +86,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement'); 
 	}); 
 
-	Route::get('logout', 'LoginController@logout')->name('logout'); 
+	Route::get('logout', 'LoginController@logout')->name('admin_logout'); 
 });
  
 

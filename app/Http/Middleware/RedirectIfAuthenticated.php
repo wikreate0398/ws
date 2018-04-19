@@ -16,14 +16,14 @@ class RedirectIfAuthenticated
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
-    {  
+    {   
         if (Auth::guard($guard)->check()) {
             if ($guard == 'web') {
                 return redirect('/');
             } 
             return redirect()->route('admin_menu'); 
-        } 
- 
+        }
+        
         return $next($request);
              
     }

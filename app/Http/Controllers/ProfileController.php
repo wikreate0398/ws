@@ -17,16 +17,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Users\UserTypes\UserTypesService;
- 
 
 class ProfileController extends Controller
 {
-    private $userTypes = [
-        '1' => \App\Http\Controllers\Users\UserTypes\SimpleUser::class,
-        '2' => \App\Http\Controllers\Users\UserTypes\TeacherUser::class,
-        '3' => \App\Http\Controllers\Users\UserTypes\UniversityUser::class,
-    ]; 
-
     public $niceNames = [
         'password'         => 'Пароль',
         'repeat_password'  => 'Повторите пароль',
@@ -39,24 +32,72 @@ class ProfileController extends Controller
      * @return void
      */
     public function __construct()
-    {  
+    { 
         //$this->middleware('guest')->except('logout');
     } 
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function userProfile()
+ 
+    public function showCourse()
     { 
-        return \App\Http\Controllers\Users\UserTypes\UserTypesService::init(Auth::user()->user_type, $this, 'showProfile');  
+        return UserTypesService::init(Auth::user()->user_type, $this, 'showCourse');  
     } 
+
+    public function showEditForm()
+    { 
+        return UserTypesService::init(Auth::user()->user_type, $this, 'showEditForm');  
+    }
+
+    public function showSubscriptions()
+    {
+        return UserTypesService::init(Auth::user()->user_type, $this, 'showSubscriptions'); 
+    }
+
+    public function showReviews()
+    {
+        return UserTypesService::init(Auth::user()->user_type, $this, 'showReviews'); 
+    }
+
+    public function showBookmarks()
+    {
+        return UserTypesService::init(Auth::user()->user_type, $this, 'showBookmarks'); 
+    }
 
     public function editProfile(Request $request)
     {
-        return \App\Http\Controllers\Users\UserTypes\UserTypesService::init(Auth::user()->user_type, $this, 'editProfile', $request->all());  
+        return UserTypesService::init(Auth::user()->user_type, $this, 'editProfile', $request->all());  
     } 
+
+    public function showDiploms()
+    {
+        return UserTypesService::init(Auth::user()->user_type, $this, 'showDiploms');  
+    } 
+
+    public function updateImage(Request $request)
+    {
+        if ($request->hasFile('image') == false) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Изображение не выбрано']); 
+        }
+
+        $validator = Validator::make($request->all(), [
+            'image' => 'file|mimes:jpeg,jpg,png|max:200000' 
+        ]);
+        $validator->setAttributeNames(['image' => 'Изображение']);  
+
+        if ($validator->fails()) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $validator->errors()->toArray()]); 
+        } 
+
+        $file     = request()->file('image');
+        $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+        $file->move(public_path() . '/uploads/users/', $fileName);   
+        User::where('id', Auth::user()->id)->
+          update([ 
+            'image' => $fileName 
+        ]); 
+
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Изображение успешно изменено!');
+    }
   
     public function updatePassword()
     { 
@@ -78,14 +119,14 @@ class ProfileController extends Controller
   
         if (!empty($errors)) 
         {
-            return \App\Json\JsonResponse::error(['messages' => $errors]);
+            return \App\Utils\JsonResponse::error(['messages' => $errors]);
         }
 
         $obj_user           = User::find(Auth::user()->id);
         $obj_user->password = Hash::make(request()->input('password'));
         $obj_user->save(); 
 
-        return \App\Json\JsonResponse::success(['redirect' => '/user/profile'], 'Пароль успешно изменен!');
+        return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], 'Пароль успешно изменен!');
     }
 
     public function deleteUserEducation($id)

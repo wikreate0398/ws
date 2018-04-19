@@ -379,3 +379,44 @@ span.req{
   width: 252px;
   height: 194px;
 }
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.dashed__link{
+    color: #333;
+    border-bottom: 1px dashed #333;
+    text-transform: uppercase;
+    font-size: 16px;
+    text-decoration: none !important;
+}
+
+.profile__img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 50%;
+        padding-bottom: 50%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 50%;
+        margin-bottom: 20px;
+    }

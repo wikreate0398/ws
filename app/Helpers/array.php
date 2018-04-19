@@ -173,6 +173,11 @@ function uri($segment)
     return request()->segment($segment);
 }
 
+function isActive($route, $domain='')
+{   
+    return (request()->url() == $route) ? true :  false;
+}
+
 function adminMenu()
 {
     return [

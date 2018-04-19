@@ -66,6 +66,8 @@ class TeacherUser extends Controller implements UserTypesInterface
 
     private $edit_teach_activity = [];
 
+    private $viewPath = 'users.profile_types.teacher.';
+
 	function __construct($evokeClass)
 	{
 		$this->_evokeClass = $evokeClass;
@@ -204,10 +206,10 @@ class TeacherUser extends Controller implements UserTypesInterface
         }
     }
 
-    public function showProfile()
+    public function showEditForm()
     {
         $user = Auth::user();
-        return view('users.profile', [
+        return view('users.teacher_profile', [
             'cities'          => Cities::orderBy('name', 'asc')->get(),
             'grade_education' => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
             'programs_type'   => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
@@ -217,7 +219,7 @@ class TeacherUser extends Controller implements UserTypesInterface
             'usersEducations' => UsersEducations::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
             'usersTeachingActivities' => UsersTeachingActivities::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
             'usersWorkExperience'     => UsersWorkExperience::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
-            'include'                 => 'users.profile_types.teacher',
+            'include'                 => $this->viewPath . 'edit',
         ]); 
     } 
  
@@ -232,12 +234,43 @@ class TeacherUser extends Controller implements UserTypesInterface
         $this->edit_work_experience = sortValue(request()->input('edit_work_experience'));
  
         $validateMultiArr = validateArray([
-            '0' => ['array' => $this->education, 'excepts' => ['description', 'department'], 'fName' => 'education', 'required' => empty($this->edit_education) ? true : false],
-            '1' => ['array' => $this->teach_activity, 'excepts' => ['description'], 'fName' => 'teach_activity'],
-            '2' => ['array' => $this->work_experience, 'excepts' => ['description', 'responsibility'], 'fName' => 'work_experience'],
-            '3' => ['array' => $this->edit_education, 'excepts' => ['notes', 'department'], 'fName' => 'edit_education', 'required' => empty($this->education) ? true : false],
-            '4' => ['array' => $this->edit_teach_activity, 'excepts' => ['description'], 'fName' => 'edit_teach_activity'],
-            '5' => ['array' => $this->edit_work_experience, 'excepts' => ['description', 'responsibility'], 'fName' => 'edit_work_experience'],
+            '0' => [
+                'array'    => $this->education, 
+                'excepts'  => ['description', 'department'], 
+                'fName'    => 'education', 
+                'required' => empty($this->edit_education) ? true : false
+            ],
+
+            '1' => [
+                'array'   => $this->teach_activity, 
+                'excepts' => ['description'], 
+                'fName'   => 'teach_activity'
+            ],
+
+            '2' => [
+                'array'   => $this->work_experience, 
+                'excepts' => ['description', 'responsibility'], 
+                'fName'   => 'work_experience'
+            ],
+
+            '3' => [
+                'array'    => $this->edit_education, 
+                'excepts'  => ['notes', 'department'], 
+                'fName'    => 'edit_education', 
+                'required' => empty($this->education) ? true : false
+            ],
+
+            '4' => [
+                'array'   => $this->edit_teach_activity, 
+                'excepts' => ['description'], 
+                'fName'   => 'edit_teach_activity'
+            ],
+
+            '5' => [
+                'array'   => $this->edit_work_experience, 
+                'excepts' => ['description', 'responsibility'], 
+                'fName'   => 'edit_work_experience'
+            ]
         ]);
 
         if ($validateMultiArr['status'] == false) 
@@ -381,4 +414,36 @@ class TeacherUser extends Controller implements UserTypesInterface
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
     }
+
+    public function showCourse()
+    { 
+        return view('users.teacher_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'courses',
+        ]); 
+    }
+
+    public function showSubscriptions()
+    {
+        return view('users.teacher_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'subscriptions',
+        ]); 
+    }
+
+    public function showReviews()
+    {
+        return view('users.teacher_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'reviews',
+        ]); 
+    } 
+
+    public function showDiploms()
+    {
+        return view('users.teacher_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'diplomas',
+        ]); 
+    }  
 }

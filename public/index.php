@@ -57,3 +57,4 @@ $response->send();
 
 $kernel->terminate($request, $response);
  
+ // echo bcrypt('dddddd');

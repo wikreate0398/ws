@@ -110,7 +110,7 @@
                      <i class="fa fa-cogs" aria-hidden="true"></i> Настройки </a>
                   </li> -->
                   <li>
-                     <a href="/admin/logout">
+                     <a href="{{ route('admin_logout') }}">
                      <i class="icon-key"></i> Выйти </a>
                   </li>
                </ul>

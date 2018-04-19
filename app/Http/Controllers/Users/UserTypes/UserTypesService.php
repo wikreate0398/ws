@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Users\UserTypes;
 
 use App\Http\Controllers\Users\UserTypes\UserTypesInterface;
+use Illuminate\Support\Facades\Auth;
 
 /**
 * 
@@ -18,9 +19,9 @@ class UserTypesService
 	
 	function __construct() {}
 
-	static public function init($userType, $class, $method, $params = false)
+	static public function init($user_type, $class, $method, $params = false)
 	{  
-		return self::call((new self::$userTypes[$userType]($class)), $method, $params);
+		return self::call((new self::$userTypes[$user_type]($class)), $method, $params);
 	}
 
 	static private function call(UserTypesInterface $userTypeInterface, $method, $params = false)

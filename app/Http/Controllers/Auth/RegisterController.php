@@ -87,7 +87,11 @@ class RegisterController extends Controller
 
         $errors = \App\Http\Controllers\Users\UserTypes\UserTypesService::init($this->userType, $this, 'validateRegistration', $request->all());
 
-        if ($errors->fails()) 
+        if (is_array($errors) && !empty($errors['messages']))
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $errors['messages']]);
+        }
+        elseif ($errors->fails()) 
         {  
             return \App\Utils\JsonResponse::error(['messages' => $errors->errors()->toArray()]); 
         }

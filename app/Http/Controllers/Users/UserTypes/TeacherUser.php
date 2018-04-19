@@ -86,16 +86,31 @@ class TeacherUser extends Controller implements UserTypesInterface
         $work_experience = sortValue(request()->input('work_experience'));
  
         $validateMultiArr = validateArray([
-            '0' => ['array' => $education, 'excepts' => ['description', 'department'], 'fName' => 'education', 'required' => true],
-            '1' => ['array' => $teach_activity, 'excepts' => ['description'], 'fName' => 'teach_activity'],
-            '2' => ['array' => $work_experience, 'excepts' => ['description', 'responsibility'], 'fName' => 'work_experience'] 
+            '0' => [
+                'array'    => $education, 
+                'excepts'  => ['notes', 'department'], 
+                'fName'    => 'education', 
+                'required' => true
+            ],
+            '1' => [
+                'array'   => $teach_activity, 
+                'excepts' => ['description'], 
+                'fName'   => 'teach_activity'
+            ],
+            '2' => [
+                'array'   => $work_experience, 
+                'excepts' => ['description', 'responsibility'], 
+                'fName'   => 'work_experience'
+            ] 
         ]);
 
-        if ($validateMultiArr['status'] == false) 
-        {
-            \App\Utils\JsonResponse::error(['messages' => [$validateMultiArr['field'] => ['Заполните все обязательные поля!']]]);
-        }
+         
 
+        if ($validateMultiArr['status'] == false) 
+        { 
+            return ['status' => false, 'messages' => [$validateMultiArr['field'] => ['Заполните все обязательные поля!']]]; 
+        }
+ 
         $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames);  
 		return $validator;
@@ -236,7 +251,7 @@ class TeacherUser extends Controller implements UserTypesInterface
         $validateMultiArr = validateArray([
             '0' => [
                 'array'    => $this->education, 
-                'excepts'  => ['description', 'department'], 
+                'excepts'  => ['notes', 'department'], 
                 'fName'    => 'education', 
                 'required' => empty($this->edit_education) ? true : false
             ],

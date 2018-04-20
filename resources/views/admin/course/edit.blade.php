@@ -15,7 +15,7 @@
 				</li> 
 			</ul> 
  
-			<form action="/{{ $method }}/{{ $data['id'] }}/update" class="ajax__submit">  
+			<form action="/{{ $method }}/{{ $data['id'] }}/update" class="ajax__submit form-horizontal">  
 
 				{{ csrf_field() }}
 				

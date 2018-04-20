@@ -10,7 +10,7 @@ interface UserTypesInterface
 	* @param array $data
 	* @return bool or array of errors
 	*/
-	public function validateRegistration(array $data);
+	public function validation(array $data);
 
 	/**
 	* Saving user data
@@ -18,7 +18,15 @@ interface UserTypesInterface
 	* @param array $data
 	* @return bool
 	*/
-	public function createUser(array $data);
+	public function create(array $data);
+
+	/**
+	* Edit user profile
+	*
+	* @param array $data
+	* @return bool
+	*/
+	public function edit(array $data, $id_user);
 
 	/**
 	* Show user profile
@@ -27,12 +35,4 @@ interface UserTypesInterface
 	* @return bool
 	*/
 	public function showEditForm();
-
-	/**
-	* Edit user profile
-	*
-	* @param array $data
-	* @return bool
-	*/
-	public function editProfile(array $data);
 }

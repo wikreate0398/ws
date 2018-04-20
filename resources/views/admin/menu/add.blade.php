@@ -15,7 +15,7 @@
 				</li> 
 			</ul> 
  
-			<form action="/{{ $method }}/create" class="ajax__submit">  
+			<form action="/{{ $method }}/create" class="ajax__submit form-horizontal">  
 
 				{{ csrf_field() }}
 

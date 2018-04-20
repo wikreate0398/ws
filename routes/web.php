@@ -90,6 +90,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('addNewUser', 'ProfileController@addNewUser');
 	}); 
 
+	Route::group(['prefix' => 'users/pupil', 'namespace' => 'Users',], function() { 
+		Route::get('/', 'SimpleUserController@show')->name('admin_user_disciple');    
+		Route::get('{id}/edit', 'SimpleUserController@showeditForm'); 
+		Route::get('add', 'SimpleUserController@showAddForm');
+		Route::post('{id}/updatePassword', 'SimpleUserController@updatePassword'); 
+		Route::post('create', 'SimpleUserController@create'); 
+		Route::post('{id}/update', 'SimpleUserController@update');
+	}); 
+
 	Route::group(['prefix' => 'ajax'], function() {  
 		Route::post('depth-sort', 'AjaxController@depthSort')->name('depth_sort');
 		Route::post('viewElement', 'AjaxController@viewElement')->name('viewElement'); 

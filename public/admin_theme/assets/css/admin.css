@@ -192,3 +192,7 @@ span[data-notify="message"] p:last-child{
 .dd3-item > button{ 
   display: none !important;
 } 
+
+table.table tr th{
+  vertical-align: middle; 
+}

@@ -57,7 +57,8 @@ class LoginController extends Controller
    
             if (Auth::guard('web')->attempt(['email' => $request->input('email'), 
                                'password' => $request->input('password'), 
-                               'activate' => 1], $remember) == true) 
+                               'activate' => 1,
+                               'confirm'  => 1], $remember) == true) 
             { 
                  
                 return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], trans('auth.success_login'));

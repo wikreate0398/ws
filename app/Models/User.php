@@ -34,7 +34,9 @@ class User extends Authenticatable
         'fax', 
         'site', 
         'image', 
-        'confirm_hash'
+        'confirm_hash',
+        'activate',
+        'confirm'
     ];
 
     /**
@@ -49,5 +51,10 @@ class User extends Authenticatable
     public function cityData()
     {
         return $this->hasOne('App\Models\Cities', 'id', 'city');
+    }
+
+    public function university()
+    {
+        return $this->hasOne('App\Models\UsersUniversity', 'id_user', 'id');
     }
 }

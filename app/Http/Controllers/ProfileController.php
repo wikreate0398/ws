@@ -16,64 +16,60 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Users\UserTypes\UserTypesService;
+use App\Http\Controllers\Users\UserService;
 
 class ProfileController extends Controller
-{
-    public $niceNames = [
-        'password'         => 'Пароль',
-        'repeat_password'  => 'Повторите пароль',
-        'image'            => 'Фото' 
-    ];
-
+{ 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    { 
-        //$this->middleware('guest')->except('logout');
-    } 
+    public function __construct() {}  
  
     public function showCourse()
-    { 
-        return UserTypesService::init(Auth::user()->user_type, $this, 'showCourse');  
+    {  
+        return UserService::init(Auth::user()->user_type)->showCourse();  
     } 
 
     public function showEditForm()
     { 
-        return UserTypesService::init(Auth::user()->user_type, $this, 'showEditForm');  
+        return UserService::init(Auth::user()->user_type)->showEditForm(); 
     }
 
     public function showSubscriptions()
     {
-        return UserTypesService::init(Auth::user()->user_type, $this, 'showSubscriptions'); 
+        return UserService::init(Auth::user()->user_type)->showSubscriptions();  
     }
 
     public function showReviews()
     {
-        return UserTypesService::init(Auth::user()->user_type, $this, 'showReviews'); 
+        return UserService::init(Auth::user()->user_type)->showReviews();  
     }
 
     public function showBookmarks()
     {
-        return UserTypesService::init(Auth::user()->user_type, $this, 'showBookmarks'); 
+        return UserService::init(Auth::user()->user_type)->showBookmarks();  
     }
 
     public function editProfile(Request $request)
     {
-        return UserTypesService::init(Auth::user()->user_type, $this, 'editProfile', $request->all());  
+        $edit = UserService::init(Auth::user()->user_type)->edit($request->all(), Auth::user()->id);   
+        if ($edit !== true) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $edit]);  
+        } 
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
     } 
 
     public function showDiploms()
     {
-        return UserTypesService::init(Auth::user()->user_type, $this, 'showDiploms');  
+        return UserService::init(Auth::user()->user_type)->showDiploms();  
     } 
 
     public function showCourseForm()
     {
-        return UserTypesService::init(Auth::user()->user_type, $this, 'showCourseForm');  
+        return UserService::init(Auth::user()->user_type)->showCourseForm();  
     }
 
     public function updateImage(Request $request)
@@ -93,9 +89,7 @@ class ProfileController extends Controller
             return \App\Utils\JsonResponse::error(['messages' => $validator->errors()->toArray()]); 
         } 
 
-        $file     = request()->file('image');
-        $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-        $file->move(public_path() . '/uploads/users/', $fileName);   
+        $fileName = UserService::init(Auth::user()->user_type)->uploadImage();   
         User::where('id', Auth::user()->id)->
           update([ 
             'image' => $fileName 
@@ -111,7 +105,11 @@ class ProfileController extends Controller
             'password'              => 'required|string|min:6|confirmed|',
             'password_confirmation' => 'required',
         ]);
-        $validator->setAttributeNames($this->niceNames);
+        $validator->setAttributeNames([
+            'password'         => 'Пароль',
+            'repeat_password'  => 'Повторите пароль',
+            'image'            => 'Фото' 
+        ]);
   
         if ($validator->fails()) 
         {
@@ -131,24 +129,24 @@ class ProfileController extends Controller
         $obj_user->password = Hash::make(request()->input('password'));
         $obj_user->save(); 
 
-        return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], 'Пароль успешно изменен!');
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Пароль успешно изменен!');
     }
 
     public function deleteUserEducation($id)
     { 
         \App\Models\UsersEducations::where('id', $id)->where('id_user', Auth::user()->id)->delete();
-        return redirect(route('user_profile'))->with('flas_message', 'Образование успешно удалено');
+        return redirect()->back()->with('flash_message', 'Образование успешно удалено');
     } 
 
     public function deleteUserActivities($id)
     { 
         \App\Models\UsersTeachingActivities::where('id', $id)->where('id_user', Auth::user()->id)->delete();
-        return redirect(route('user_profile'))->with('flas_message', 'Преподовательская деятельность успешно удалена');
+        return redirect()->back()->with('flash_message', 'Преподовательская деятельность успешно удалена');
     } 
 
     public function deleteUserExperience($id)
     { 
         \App\Models\UsersWorkExperience::where('id', $id)->where('id_user', Auth::user()->id)->delete();
-        return redirect(route('user_profile'))->with('flas_message', 'Трудовая деятельность успешно удалена');
+        return redirect()->back()->with('flash_message', 'Трудовая деятельность успешно удалена');
     } 
 }

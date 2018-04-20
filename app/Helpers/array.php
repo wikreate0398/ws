@@ -189,13 +189,6 @@ function adminMenu()
             'edit' => 'Редактировать' 
         ], 
 
-        'profile' => [
-            'name' => 'Разделы сайта',  
-            'link' => '/admin/profile/',
-            'view' => false,
-            'edit' => 'Редактировать' 
-        ],  
- 
         'course' => [
             'name'   => 'Курсы', 
             'icon'   => '<i class="fa fa-graduation-cap" aria-hidden="true"></i>',
@@ -210,6 +203,39 @@ function adminMenu()
                     'view' => true,
                     'edit' => 'Редактировать' 
                 ] 
+            ]
+        ],  
+ 
+        'users' => [
+            'name'   => 'Пользователи', 
+            'icon'   => '<i class="fa fa-users" aria-hidden="true"></i>',
+            'link'   => '/admin/users/',
+            'view'   => true,
+            'edit'   => 'Редактировать',
+            'childs' => [
+                'disciple' => [
+                    'name' => 'Ученики', 
+                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                    'link' => '/admin/users/disciple/',
+                    'view' => true,
+                    'edit' => 'Редактировать' 
+                ],
+
+                'teachers' => [
+                    'name' => 'Учителя', 
+                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                    'link' => '/admin/users/teachers/',
+                    'view' => true,
+                    'edit' => 'Редактировать' 
+                ],
+
+                'university' => [
+                    'name' => 'Учебные заведения', 
+                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                    'link' => '/admin/users/university/',
+                    'view' => true,
+                    'edit' => 'Редактировать' 
+                ],
             ]
         ], 
 
@@ -227,6 +253,15 @@ function adminMenu()
             'link' => '/admin/settings/',
             'view' => false,
             'edit' => 'Редактировать' 
-        ] 
+        ],
+
+        // Скрытые страницы
+
+        'profile' => [
+            'name' => 'Разделы сайта',  
+            'link' => '/admin/profile/',
+            'view' => false,
+            'edit' => 'Редактировать' 
+        ], 
     ]; 
 }

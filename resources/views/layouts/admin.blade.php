@@ -228,7 +228,7 @@
          <!-- BEGIN PAGE CONTENT-->
    
 
-            @if(Session::has('flash_message'))
+            @if(Session::has('admin_flash_message'))
                <div class="row">
                   <div class="col-md-12">
                      <div class="alert alert-success" style="margin-top: 20px;">

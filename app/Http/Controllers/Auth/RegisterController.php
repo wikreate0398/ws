@@ -16,8 +16,8 @@ use App\Models\TeachActivityCategories;
 use App\Models\WorkExperienceDirection;
 use App\Models\InstitutionTypes;
 use App\Models\University; 
-use App\Models\UniversityFormAttitude; 
-use App\Http\Controllers\Users\UserTypes\UserTypesInterface;
+use App\Models\UniversityFormAttitude;  
+use App\Http\Controllers\Users\UserService;
 
 class RegisterController extends Controller
 {
@@ -85,64 +85,28 @@ class RegisterController extends Controller
     { 
         $this->userType = $request->input('user_type');  
 
-        $errors = \App\Http\Controllers\Users\UserTypes\UserTypesService::init($this->userType, $this, 'validateRegistration', $request->all());
+        $errors = UserService::init($this->userType)->validation($request->all());
 
-        if (is_array($errors) && !empty($errors['messages']))
+        if ($errors !== true) 
         {
-            return \App\Utils\JsonResponse::error(['messages' => $errors['messages']]);
-        }
-        elseif ($errors->fails()) 
-        {  
-            return \App\Utils\JsonResponse::error(['messages' => $errors->errors()->toArray()]); 
-        }
+            return \App\Utils\JsonResponse::error(['messages' => $errors]);
+        } 
 
-        $createUser = \App\Http\Controllers\Users\UserTypes\UserTypesService::init($this->userType, $this, 'createUser', $request->all());
-
-        if ($createUser == true) 
+        $createUser = UserService::init($this->userType)->create($request->all()); 
+        if ($createUser) 
         { 
+            $user = User::whereId($createUser)->first(); 
+            $this->sendConfirmationEmail($user['email'], $user['confirm_hash']); 
             return \App\Utils\JsonResponse::success(['redirect' => route('finish_registration')]); 
         }  
-    } 
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-       //  
     }
- 
-    public function saveImage()
-    { 
-        $fileName = '';
-        if (request()->hasFile('image')) {
-            $file = request()->file('image');
-            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-            $file->move(public_path() . '/uploads/users/', $fileName);    
-        } 
-        return $fileName;
-    }
-
+  
     public function sendConfirmationEmail($email, $hash)
     {   
         if (request()->server('SERVER_NAME') != 'ws.loc') { 
             Mail::to($email)->send(new UserMail($hash)); 
         }
         request()->session()->put('reg', 'На вашу почту было отравленно письмо с ссылкой для подтверждения регистрации.');  
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {    
-        //
     }
 
     public function finish_registration(Request $request)
@@ -163,7 +127,7 @@ class RegisterController extends Controller
   
         if (empty($user->activate)) {
             User::where('id', $user->id)
-                  ->update(['activate' => 1]);
+                  ->update(['activate' => 1, 'confirm_date' => date('Y-m-d H:i:s'), 'confirm' => 1]);
         }
 
         return view('auth.confirmation', compact('user')); 

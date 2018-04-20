@@ -10,14 +10,11 @@ $(document).ready(function(){
         }
     });
 
-    $('.c-picker').datepicker({
-        rtl: Metronic.isRTL(),
-        orientation: "left",
-        autoclose: true,
-        format: "mm.yyyy",
-        startView: "months", 
-        minViewMode: "months",
-        language: 'ru-RU' 
+    $( ".datepicker" ).datepicker({
+        dateFormat: "dd-mm-yy",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1945:'+(new Date).getFullYear()
     });
 
     $('[data-toggle="tooltip"]').tooltip();

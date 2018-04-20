@@ -213,10 +213,10 @@ function adminMenu()
             'view'   => true,
             'edit'   => 'Редактировать',
             'childs' => [
-                'disciple' => [
+                'pupil' => [
                     'name' => 'Ученики', 
                     'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
-                    'link' => '/admin/users/disciple/',
+                    'link' => '/admin/users/pupil/',
                     'view' => true,
                     'edit' => 'Редактировать' 
                 ],

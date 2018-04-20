@@ -221,21 +221,21 @@ function adminMenu()
                     'edit' => 'Редактировать' 
                 ],
 
-                'teachers' => [
-                    'name' => 'Учителя', 
-                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
-                    'link' => '/admin/users/teachers/',
-                    'view' => true,
-                    'edit' => 'Редактировать' 
-                ],
+                // 'teachers' => [
+                //     'name' => 'Учителя', 
+                //     'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                //     'link' => '/admin/users/teachers/',
+                //     'view' => true,
+                //     'edit' => 'Редактировать' 
+                // ],
 
-                'university' => [
-                    'name' => 'Учебные заведения', 
-                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
-                    'link' => '/admin/users/university/',
-                    'view' => true,
-                    'edit' => 'Редактировать' 
-                ],
+                // 'university' => [
+                //     'name' => 'Учебные заведения', 
+                //     'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                //     'link' => '/admin/users/university/',
+                //     'view' => true,
+                //     'edit' => 'Редактировать' 
+                // ],
             ]
         ], 
 

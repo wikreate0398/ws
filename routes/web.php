@@ -91,12 +91,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 	}); 
 
 	Route::group(['prefix' => 'users/pupil', 'namespace' => 'Users',], function() { 
-		Route::get('/', 'SimpleUserController@show')->name('admin_user_disciple');    
-		Route::get('{id}/edit', 'SimpleUserController@showeditForm'); 
-		Route::get('add', 'SimpleUserController@showAddForm');
-		Route::post('{id}/updatePassword', 'SimpleUserController@updatePassword'); 
-		Route::post('create', 'SimpleUserController@create'); 
-		Route::post('{id}/update', 'SimpleUserController@update');
+		Route::get('/', 'PupilUserController@show')->name('admin_user_pupil');    
+		Route::get('{id}/edit', 'PupilUserController@showeditForm'); 
+		Route::get('add', 'PupilUserController@showAddForm');
+		Route::post('{id}/updatePassword', 'PupilUserController@updatePassword'); 
+		Route::post('create', 'PupilUserController@createUser'); 
+		Route::post('{id}/update', 'PupilUserController@updateUser');
 	}); 
 
 	Route::group(['prefix' => 'ajax'], function() {  

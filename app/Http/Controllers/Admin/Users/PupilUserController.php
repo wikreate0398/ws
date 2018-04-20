@@ -9,32 +9,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Cities;
  
-class SimpleUserController extends Controller
+class PupilUserController extends Controller
 {
 
-    private $method = 'admin/users/disciple'; 
+    private $method = 'admin/users/pupil'; 
 
     private $folder = 'users.user';
 
-    private $redirectRoute = 'admin_user_disciple';
+    private $redirectRoute = 'admin_user_pupil';
 
-    private $niceNames = [
-        'password'         => 'Пароль',
-        'repeat_password'  => 'Повторите пароль',
-        'image'            => 'Фото' 
-    ];
-
-    private $rules = [
-        'name'                  => 'required',
-        'surname'               =>  'required',
-        'patronymic'            => 'required', 
-        'date_birth'            => 'required',
-        'phone'                 => 'required', 
-        'image'                 => 'file|mimes:jpeg,jpg,png',
-        'email'                 => 'required|string|email|unique:users',
-        'password'              => 'required|string|min:6|confirmed',
-        'password_confirmation' => 'required',
-    ];
+    use \App\Http\Controllers\Users\Traits\PupilTrait;
 
     /**
      * Create a new controller instance.
@@ -74,34 +58,36 @@ class SimpleUserController extends Controller
         return $validator;
     }
 
-    public function create(Request $request)
+    public function createUser(Request $request)
     {
-        $data   = $request->all();  
-        $errors = $this->validateInputs($data); 
-        if ($errors->fails()) 
+ 
+        $data     = $request->all();  
+        $validate = $this->validation($data);
+        if ($validate !== true) 
         {  
-            return \App\Utils\JsonResponse::error(['messages' => $errors->errors()->toArray()]); 
+            return \App\Utils\JsonResponse::error(['messages' => $validate]); 
         } 
 
-        User::create([ 
-            'name'         => $data['name'],
-            'surname'      => $data['surname'],
-            'patronymic'   => $data['patronymic'],
-            'date_birth'   => date('Y-m-d', strtotime($data['date_birth'])),
-            'user_type'    => 1,
-            'phone'        => $data['phone'],
-            'email'        => $data['email'], 
-            'city'         => $data['city'],
-            'phone'        => $data['phone'], 
-            'site'         => $data['site'],
-            'image'        => $this->saveImage(),
-            'activate'     => '1',
-            'confirm'      => '1',
-            'confirm_date' => date('Y-m-d H:i:s'),
-            'password'     => bcrypt($data['password'])
-        ]); 
+        $create = $this->create($data);
+ 
+        User::where('id', $create)->
+            update([ 
+                'activate'     => '1',
+                'confirm'      => '1', 
+                'confirm_date' => date('Y-m-d H:i:s'),
+        ]);
 
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
+    }
+
+    public function updateUser($id, Request $request)
+    {
+        $edit = $this->edit($request->all(), $id);   
+        if ($edit !== true) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $edit]);  
+        } 
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
     }
 
     public function updatePassword($id)

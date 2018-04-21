@@ -92,8 +92,7 @@ class PupilUserController extends Controller
 
     public function updatePassword($id)
     { 
-        $validator = Validator::make(request()->all(), [
-            'old_password'          => 'required',
+        $validator = Validator::make(request()->all(), [ 
             'password'              => 'required|string|min:6|confirmed|',
             'password_confirmation' => 'required',
         ]);
@@ -102,13 +101,7 @@ class PupilUserController extends Controller
         if ($validator->fails()) 
         {
             $errors = $validator->errors()->toArray(); 
-        } 
-
-        $user = User::findOrFail($id);
-
-        if(Hash::check(request()->input('old_password'), $user->password) == false) {
-            $errors[]['password'] = 'Старый пароль не верный';
-        }
+        }  
   
         if (!empty($errors)) 
         {

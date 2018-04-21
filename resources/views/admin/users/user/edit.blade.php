@@ -111,13 +111,6 @@
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-md-12"> 
-                        <div class="form-group">
-                            <label class="col-md-12 control-label">Старый Пароль <span class="req">*</span></label>
-                            <div class="col-md-12">
-                                <input type="password" class="form-control" name="old_password"
-                                       value="" required>
-                            </div>
-                        </div>
                           
                         <div class="form-group">
                             <label class="col-md-12 control-label">Пароль <span class="req">*</span></label>

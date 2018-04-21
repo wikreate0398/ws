@@ -37,7 +37,7 @@ class Authenticate
      * @throws \Illuminate\Auth\AuthenticationException
      */
     public function handle($request, Closure $next, ...$guards)
-    {
+    { 
         $this->authenticate($guards);
 
         return $next($request);

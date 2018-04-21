@@ -3,6 +3,8 @@
 @section('content')
 <div class="row">
 	<div class="col-md-12"> 
+		<div class="portlet light bg-inverse"> 
+			<div class="portlet-body form"> 
 		<div class="tabbable-line"> 
 			<ul class="nav nav-tabs" style="border-bottom: 1px solid #ededed;">
 				<li class="active">
@@ -44,6 +46,9 @@
 					</div> 
 				</div>
 			</form>
+		</div>
+
+		</div>
 		</div>
 	</div>
 </div>

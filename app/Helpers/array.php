@@ -19,7 +19,7 @@ if (!function_exists('map_tree')) {
         $dataset = key_to_id($dataset);
         $tree    = array();
         foreach ($dataset as $id => &$node) {
-            if (!$node['parent_id']) {
+            if (empty($node['parent_id'])) {
                 $tree[$id] =& $node;
             } else {
                 $dataset[$node['parent_id']]['childs'][$id] =& $node;
@@ -188,6 +188,14 @@ function adminMenu()
             'view' => true,
             'edit' => 'Редактировать' 
         ], 
+
+        'cities' => [
+            'name' => 'Города', 
+            'icon' => '<i class="fa fa-map" aria-hidden="true"></i>',
+            'link' => '/admin/cities/',
+            'view' => true,
+            'edit' => 'Редактировать' 
+        ],  
 
         'course' => [
             'name'   => 'Курсы', 

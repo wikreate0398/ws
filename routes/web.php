@@ -33,7 +33,7 @@ Route::get('institution/{id}', 'InstitutionController@view');
 
 Route::get('teachers', 'TeachersController@index');  
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => ['web_auth']], function(){
 	Route::get('user/profile/course', 'ProfileController@showCourse')->name('user_profile');
 	Route::get('user/profile/reviews', 'ProfileController@showReviews')->name('user_reviews');
 	Route::get('user/profile/subscriptions', 'ProfileController@showSubscriptions')->name('user_subscriptions'); 
@@ -82,6 +82,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::get('add', 'CourseController@showAddForm');
 		Route::post('create', 'CourseController@create'); 
 		Route::post('{id}/update', 'CourseController@update'); 
+	});
+
+	Route::group(['prefix' => 'cities'], function() { 
+		Route::get('/', 'CitiesController@show')->name('admin_cities');    
+		Route::get('{id}/edit', 'CitiesController@showeditForm'); 
+		Route::get('add', 'CitiesController@showAddForm');
+		Route::post('create', 'CitiesController@create'); 
+		Route::post('{id}/update', 'CitiesController@update'); 
 	});  
 
 	Route::group(['prefix' => 'profile'], function() { 

@@ -6,19 +6,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\User; 
+use App\Models\UsersEducations;
+use App\Models\UsersTeachingActivities;
+use App\Models\UsersWorkExperience;
+use App\Models\ProgramsType;
+use App\Models\GradeEducation;
 use App\Models\Cities;
+use App\Models\TeachActivityCategories;
+use App\Models\WorkExperienceDirection;
  
-class PupilUserController extends Controller
+class TeacherUserController extends Controller
 {
 
-    private $method = 'admin/users/pupil'; 
+    private $method = 'admin/users/teachers'; 
 
-    private $folder = 'users.user';
+    private $folder = 'users.teacher';
 
-    private $redirectRoute = 'admin_user_pupil'; 
+    private $redirectRoute = 'admin_user_teacher';
 
-    use \App\Http\Controllers\Users\Traits\PupilTrait;
+    use \App\Http\Controllers\Users\Traits\TeacherTrait;
 
     /**
      * Create a new controller instance.
@@ -33,9 +40,9 @@ class PupilUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    { 
+    {
         $data = [
-            'data'   => User::where('user_type', '1')->orderByRaw('created_at desc')->get(),
+            'data'   => User::where('user_type', '2')->orderByRaw('created_at desc')->get(),
             'table'  => (new User)->getTable(),
             'method' => $this->method
         ]; 
@@ -44,10 +51,15 @@ class PupilUserController extends Controller
     } 
 
     public function showAddForm()
-    {
+    {  
         return view('admin.'.$this->folder.'.add', [
-            'method' => $this->method,
-            'cities' => Cities::orderBy('name', 'asc')->get(), 
+            'method'          => $this->method,  
+            'cities'          => Cities::orderBy('name', 'asc')->get(),
+            'grade_education' => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
+            'programs_type'   => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
+            'teach_activ_cat' => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),
+            'work_experience_direction' => WorkExperienceDirection::orderBy('page_up','asc')->get(), 
+            
         ]);
     }
 
@@ -113,14 +125,21 @@ class PupilUserController extends Controller
         $obj_user->save(); 
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Пароль успешно изменен!');  
-    } 
-
+    }
+ 
     public function showeditForm($id)
     { 
         return view('admin.'.$this->folder.'.edit', [
             'method' => $this->method, 
             'user'   => User::findOrFail($id),
-            'cities' => Cities::orderBy('name', 'asc')->get()
+            'cities'          => Cities::orderBy('name', 'asc')->get(),
+            'grade_education' => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
+            'programs_type'   => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
+            'teach_activ_cat' => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),
+            'work_experience_direction' => WorkExperienceDirection::orderBy('page_up','asc')->get(), 
+            'usersEducations' => UsersEducations::where('id_user', $id)->orderBy('from_year', 'desc')->get(),
+            'usersTeachingActivities' => UsersTeachingActivities::where('id_user', $id)->orderBy('from_year', 'desc')->get(),
+            'usersWorkExperience'     => UsersWorkExperience::where('id_user', $id)->orderBy('from_year', 'desc')->get(),
         ]);
-    }  
+    } 
 }

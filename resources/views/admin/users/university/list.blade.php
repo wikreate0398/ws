@@ -10,7 +10,7 @@
 	      	<table class="table table-striped table-bordered table-hover" style="margin: 0; margin-top: -1px;">
 	      		<thead>
 	      			<tr>
-	      				<th>Фио</th>
+	      				<th style="width: 30%;">Название</th>
 	      				<th>E-mail</th>
 	      				<th>Дата регистрации</th>
 	      				<th style="text-align: center;">Подтверждение <br> Аккаунта</th>
@@ -20,7 +20,7 @@
 	      		<tbody>
 	      			@foreach($data as $user)
 	      			<tr>
-	      				<td>{{ $user['surname'] }} {{ $user['name'] }} {{ $user['patronymic'] }}</td>
+	      				<td>{{ $user['university']['full_name'] }}</td>
 	      				<td>{{ $user['email'] }}</td>
 	      				<td>{{ date('d.m.Y H:i', strtotime($user['created_at'])) }}</td>
 	      				<td style="text-align: center;">

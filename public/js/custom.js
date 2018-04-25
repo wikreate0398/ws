@@ -241,8 +241,7 @@ function disableBlock(checkbox){
         $(checkbox).closest('.panel').find('button.add__more').attr('disabled', true); 
     } 
 }
-
-
+ 
 function setEqualHeight2(columns, parent) {   
     if (!$(columns).length ) { 
         return false;

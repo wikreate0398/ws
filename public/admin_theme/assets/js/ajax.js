@@ -115,7 +115,14 @@ function serializeForm(form, button, action, button_txt){
 }
 
 var Ajax = {
-    toDelete: function(element, table, id){
+    toDelete: function(element, table, id, conf){
+
+        if (conf == true) {
+            if (confirm('Вы действительно хотите удалить?') == false) {
+                return false;
+            }
+        }
+
         jQuery.ajax({  
             url: '/admin/ajax/deleteElement',
             type: 'POST', 
@@ -139,6 +146,8 @@ var Ajax = {
                     $('.modal, .modal-backdrop').fadeOut(100);
                     if ( $(element).closest('.dd-item').length == true) {
                         $(element).closest('.dd-item').fadeOut(200);
+                    } else if($(element).closest('.row.multi__container').length == true){
+                        $(element).closest('.row').remove();
                     } else{
                         if ($(element).closest('tbody').find('tr').length <= 1) {
                             $(element).closest('table').fadeOut(200);

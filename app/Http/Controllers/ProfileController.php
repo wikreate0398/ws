@@ -28,7 +28,7 @@ class ProfileController extends Controller
     public function __construct() {}  
  
     public function showCourse()
-    {  
+    {   
         return UserService::init(Auth::user()->user_type)->showCourse();  
     } 
 
@@ -108,7 +108,7 @@ class ProfileController extends Controller
         $validator->setAttributeNames([
             'password'         => 'Пароль',
             'repeat_password'  => 'Повторите пароль',
-            'image'            => 'Фото' 
+            'old_password'     => 'Старый Пароль'
         ]);
   
         if ($validator->fails()) 

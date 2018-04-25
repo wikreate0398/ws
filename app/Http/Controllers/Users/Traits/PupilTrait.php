@@ -10,7 +10,8 @@ trait PupilTrait
 	private $niceNames = [
 		'password'         => 'Пароль',
         'repeat_password'  => 'Повторите пароль',
-        'image'            => 'Фото' 
+        'image'            => 'Фото',
+        'old_password'     => 'Старый Пароль' 
 	];
 
 	private $rules = [

@@ -196,3 +196,30 @@ span[data-notify="message"] p:last-child{
 table.table tr th{
   vertical-align: middle; 
 }
+
+.close__item{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 16px; 
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.multi__container {
+    border-top: 1px solid #ddd;
+    position: relative;
+}
+
+.multi__container:nth-child(1){
+    border-top: none;
+}
+
+#error-respond{ 
+  display: none;
+  text-transform: capitalize !important;  
+  line-height: 20px;
+  color: #cb0710;
+  font-size: 14px; 
+}
+ 

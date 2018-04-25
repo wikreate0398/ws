@@ -6,19 +6,25 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\User; 
 use App\Models\Cities;
+use App\Models\UsersUniversity;
+use App\Models\UniversityFormAttitude; 
+use App\Models\InstitutionTypes;
+use App\Models\University; 
+use App\Models\ProgramsType;
+use App\Models\TeachActivityCategories;
  
-class PupilUserController extends Controller
+class UniversityUserController extends Controller
 {
 
-    private $method = 'admin/users/pupil'; 
+    private $method = 'admin/users/university'; 
 
-    private $folder = 'users.user';
+    private $folder = 'users.university';
 
-    private $redirectRoute = 'admin_user_pupil'; 
+    private $redirectRoute = 'admin_user_university'; 
 
-    use \App\Http\Controllers\Users\Traits\PupilTrait;
+    use \App\Http\Controllers\Users\Traits\UniversityTrait;
 
     /**
      * Create a new controller instance.
@@ -35,7 +41,7 @@ class PupilUserController extends Controller
     public function show()
     { 
         $data = [
-            'data'   => User::where('user_type', '1')->orderByRaw('created_at desc')->get(),
+            'data'   => User::with('university')->where('user_type', '3')->orderByRaw('created_at desc')->get(),   
             'table'  => (new User)->getTable(),
             'method' => $this->method
         ]; 
@@ -47,7 +53,12 @@ class PupilUserController extends Controller
     {
         return view('admin.'.$this->folder.'.add', [
             'method' => $this->method,
-            'cities' => Cities::orderBy('name', 'asc')->get(), 
+            'cities'             => Cities::orderBy('name', 'asc')->get(), 
+            'programs_type'      => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
+            'teach_activ_cat'    => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),  
+            'inst_type'          => InstitutionTypes::orderBy('page_up','asc')->get(),
+            'university'         => University::orderBy('page_up','asc')->get(),
+            'univ_form_attitude' => UniversityFormAttitude::orderBy('page_up','asc')->get(),
         ]);
     }
 
@@ -117,10 +128,17 @@ class PupilUserController extends Controller
 
     public function showeditForm($id)
     { 
-        return view('admin.'.$this->folder.'.edit', [
-            'method' => $this->method, 
-            'user'   => User::findOrFail($id),
-            'cities' => Cities::orderBy('name', 'asc')->get()
-        ]);
+        $data = [
+            'method'             => $this->method, 
+            'user'               => User::with('university')->where('id', $id)->first(), 
+            'cities'             => Cities::orderBy('name', 'asc')->get(), 
+            'programs_type'      => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
+            'teach_activ_cat'    => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),  
+            'inst_type'          => InstitutionTypes::orderBy('page_up','asc')->get(),
+            'university'         => University::orderBy('page_up','asc')->get(),
+            'univ_form_attitude' => UniversityFormAttitude::orderBy('page_up','asc')->get(),
+        ];
+        $data['userUniversity'] = $data['user']['university'];
+        return view('admin.'.$this->folder.'.edit', $data);
     }  
 }

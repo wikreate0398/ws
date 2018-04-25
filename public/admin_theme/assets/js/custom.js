@@ -58,3 +58,69 @@ function startMaskNewInput(){
         });
     });
 } 
+
+jQuery(document).ready(function($) {
+
+    var classBlocks = ['.work_experience_container', '.teach_activity_container'];
+
+    $.each(classBlocks, function(k,v){
+        var disabledCheckbox  = $(v).closest('.panel').find('input.disable_block'); 
+        var disabled          = true;
+        if ($(disabledCheckbox).prop('checked') == true) {
+            disabled = false;
+        } 
+
+        $(v).find('input,select,textarea').not(disabledCheckbox).attr('disabled', disabled); 
+        $(v).closest('.panel').find('button.add__more').attr('disabled', disabled); 
+    }); 
+
+}); 
+function disableBlock(checkbox){ 
+    if ($(checkbox).prop('checked') == true) {
+        $(checkbox).closest('.panel').find('input,select,textarea').not(checkbox).attr('disabled', false); 
+        $(checkbox).closest('.panel').find('button.add__more').attr('disabled', false); 
+    }else{
+        $(checkbox).closest('.panel').find('input,select,textarea').not(checkbox).attr('disabled', true); 
+        $(checkbox).closest('.panel').find('button.add__more').attr('disabled', true); 
+    } 
+}
+
+function addBlock(blockClass) {
+    var first_block = $('.' + blockClass + '.first_block');
+    var cloneBlock = $(first_block).clone();
+    $(cloneBlock).removeClass('first_block');
+    $(cloneBlock).removeClass('error__input');
+     
+    $(cloneBlock).append('<div class="close__item" onclick="deleteBlock(this);">X</div>');
+    $(cloneBlock).find('input').val('');
+    $(cloneBlock).find('textarea').val(''); 
+    $(cloneBlock).find('select option').prop('selected', false);
+    $(cloneBlock).find('select option:first').prop('selected', true);
+    $(cloneBlock).find('input.id__block').remove();
+
+    $(cloneBlock).find('select').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', ''))
+    });
+
+    $(cloneBlock).find('input').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', ''))
+    });
+
+    $(cloneBlock).find('textarea').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', ''))
+    }); 
+  
+    $(cloneBlock).insertAfter('.' + blockClass + ':last');
+}
+
+function deleteBlock(item){
+    $(item).closest('.row').remove();
+}
+
+function institutionCheck(input){
+    if ($(input).prop('checked') == true) {
+        $('.parent_institution').show();
+    }else{
+        $('.parent_institution').hide();
+    }
+}

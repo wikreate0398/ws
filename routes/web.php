@@ -33,7 +33,7 @@ Route::get('institution/{id}', 'InstitutionController@view');
 
 Route::get('teachers', 'TeachersController@index');  
 
-Route::group(['middleware' => ['web_auth']], function(){
+Route::group(['middleware' => ['web_auth']], function(){ 
 	Route::get('user/profile/course', 'ProfileController@showCourse')->name('user_profile');
 	Route::get('user/profile/reviews', 'ProfileController@showReviews')->name('user_reviews');
 	Route::get('user/profile/subscriptions', 'ProfileController@showSubscriptions')->name('user_subscriptions'); 
@@ -106,6 +106,24 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('create', 'PupilUserController@createUser'); 
 		Route::post('{id}/update', 'PupilUserController@updateUser');
 	}); 
+
+	Route::group(['prefix' => 'users/teachers', 'namespace' => 'Users',], function() { 
+		Route::get('/', 'TeacherUserController@show')->name('admin_user_teacher');    
+		Route::get('{id}/edit', 'TeacherUserController@showeditForm'); 
+		Route::get('add', 'TeacherUserController@showAddForm');
+		Route::post('{id}/updatePassword', 'TeacherUserController@updatePassword'); 
+		Route::post('create', 'TeacherUserController@createUser'); 
+		Route::post('{id}/update', 'TeacherUserController@updateUser');
+	});	 
+
+	Route::group(['prefix' => 'users/university', 'namespace' => 'Users',], function() { 
+		Route::get('/', 'UniversityUserController@show')->name('admin_user_university');    
+		Route::get('{id}/edit', 'UniversityUserController@showeditForm'); 
+		Route::get('add', 'UniversityUserController@showAddForm');
+		Route::post('{id}/updatePassword', 'UniversityUserController@updatePassword'); 
+		Route::post('create', 'UniversityUserController@createUser'); 
+		Route::post('{id}/update', 'UniversityUserController@updateUser');
+	});	 
 
 	Route::group(['prefix' => 'ajax'], function() {  
 		Route::post('depth-sort', 'AjaxController@depthSort')->name('depth_sort');

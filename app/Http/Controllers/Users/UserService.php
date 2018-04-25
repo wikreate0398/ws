@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 * 
 */
 class UserService
-{
-	
+{ 
+
 	private static $userTypes = [
         '1' => \App\Http\Controllers\Users\UserTypes\PupilUser::class,
         '2' => \App\Http\Controllers\Users\UserTypes\TeacherUser::class,

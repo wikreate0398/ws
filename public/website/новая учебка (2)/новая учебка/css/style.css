@@ -456,7 +456,6 @@ footer .footer_bottom ul{
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 30px;
-    margin-top: 30px;
 }
 .filter_top a{
     font-size: 12px;
@@ -479,35 +478,10 @@ margin-bottom: 30px;
     margin-bottom: 10px;
     display: block;
     text-align: center;
-    background-color: rgba(228, 228, 228, 1);
 }
 .teachers_external_card .left_teachers_external_card .more_link{
     display: block;
     text-align: center;
-    background-color: rgba(228, 228, 228, 1);
+    background-color: rgba(248,248,248,0.7);
     border-radius: 15px;
-    padding: 5px;
-}
-.teachers_external_card .right_teachers_external_card h2{
-    font-size: 21px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
-.teachers_external_card .right_teachers_external_card h2 span{
-    font-size: 16px;
-}
-.teachers_external_card .right_teachers_external_card .type_training{
-    text-align: center;
-    font-size: 12px;
-}
-.teachers_external_card .right_teachers_external_card .type_training span{
-    display: block;
-    font-size: 16px;
-}
-.teachers_external_card .right_teachers_external_card .price_block{
-    text-align: right;
-}
-.teachers_external_card .right_teachers_external_card .teacher_about{
-    margin-top: 10px;
-    margin-bottom: 10px;
 }

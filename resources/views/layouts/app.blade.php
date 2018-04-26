@@ -110,6 +110,83 @@
       </div>
     </nav> -->
 
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-xs-12">
+                    <a href="/"><img src="images/logo.png" alt=""></a>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <ul class="list-inline footer_menu">
+                        <li><a href="#">О ПРОЕКТЕ</a></li>
+                        <li><a href="#">РЕКЛАМА НА САЙТЕ</a></li>
+                        <li><a href="#">ВУЗАМ И ПРЕПОДАВАТЕЛЯМ</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-xs-12">
+                    <ul class="list-inline social_menu">
+                        <li>МЫ В СОЦ, СЕТЯХ</li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-vk" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-odnoklassniki-square" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row footer_bottom">
+                <div class="col-lg-12">
+                    <br>
+                </div>
+                <div class="col-lg-3">
+                    <p>
+                        Все права защищены <br>
+                        © КОРПОРАЦИЯ МОЗГА, 2018
+                    </p>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h3>ЛИЧНЫЙ КАБИНЕТ</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Войти</a></li>
+                                <li><a href="#">Регистрация</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3">
+                            <h3>КУРСЫ</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Разместить курс</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3">
+                            <h3>ВУЗЫ И ШКОЛЫ</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Стать партнером сайта</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3">
+                            <h3>ПРЕПОДВАТЕЛИ</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Опубликооать профиль</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 </html>

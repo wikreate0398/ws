@@ -87,9 +87,6 @@ header .main_menu li > a {
     margin-top: 30px;
     margin-bottom: 30px;
 }
-.header_page{
-    text-align: center;
-}
 .popular_courses{
     text-align: center;
     margin-bottom: 20px;
@@ -423,91 +420,4 @@ span.req{
     border-radius: 50%;
     margin-bottom: 20px;
     background-color: #fff;
-}
-footer{
-    background-color: rgba(248,248,248,0.7);
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-footer .footer_menu{
-    margin-top: 22.5px;
-    margin-bottom: 0px;
-}
-footer .social_menu{
-    margin-top: 22.5px;
-    margin-bottom: 0px;
-}
-footer .footer_bottom h3{
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 0px;
-    margin-bottom: 10px;
-}
-footer .footer_bottom ul{
-    font-size: 15px;
-    margin-bottom: 0px;
-}
-
-/* Страница преподователей */
-.filter_top{
-    font-size: 12px;
-    border-top: 2px solid;
-    border-bottom: 2px solid;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-    margin-top: 30px;
-}
-.filter_top a{
-    font-size: 12px;
-}
-.filter_top ul{
-    margin-bottom: 0px;
-}
-.teachers_external_card{
--webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-margin-bottom: 30px;
-}
-.teachers_external_card .left_teachers_external_card{
-    padding: 10px;
-    border-right: 1px solid;
-}
-.teachers_external_card .left_teachers_external_card span{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: block;
-    text-align: center;
-    background-color: rgba(228, 228, 228, 1);
-}
-.teachers_external_card .left_teachers_external_card .more_link{
-    display: block;
-    text-align: center;
-    background-color: rgba(228, 228, 228, 1);
-    border-radius: 15px;
-    padding: 5px;
-}
-.teachers_external_card .right_teachers_external_card h2{
-    font-size: 21px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
-.teachers_external_card .right_teachers_external_card h2 span{
-    font-size: 16px;
-}
-.teachers_external_card .right_teachers_external_card .type_training{
-    text-align: center;
-    font-size: 12px;
-}
-.teachers_external_card .right_teachers_external_card .type_training span{
-    display: block;
-    font-size: 16px;
-}
-.teachers_external_card .right_teachers_external_card .price_block{
-    text-align: right;
-}
-.teachers_external_card .right_teachers_external_card .teacher_about{
-    margin-top: 10px;
-    margin-bottom: 10px;
 }

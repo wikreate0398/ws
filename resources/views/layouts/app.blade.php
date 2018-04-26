@@ -158,9 +158,13 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <h3>ЛИЧНЫЙ КАБИНЕТ</h3>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Войти</a></li>
-                                <li><a href="#">Регистрация</a></li>
+                            <ul class="list-unstyled"> 
+                                @if(Auth::check())
+                                <li><a href="{{ route('user_profile') }}">Профиль</a></li> 
+                                @else  
+                                <li><a href="{{ route('login') }}">Войти</a></li>
+                                <li><a href="{{ route('registration') }}">Регистрация</a></li>
+                                @endif  
                             </ul>
                         </div>
                         <div class="col-lg-3">

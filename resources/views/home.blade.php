@@ -560,44 +560,41 @@
             </div>
         </div>
     </div> 
-
-    <div class="container-fluid user_type_block">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="header_block">НАЙДЕМ МЕСТО КАЖДОМУ</h2>
-                </div>
-                <div class="col-lg-4">
-                    <div class="user_type_home">
-                        <img class="img-circle" src="http://via.placeholder.com/120x120" alt="">
-                        <h3>УЧЕНИКАМ/АББИТУРИЕНТАМ</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
-                        </p>
-                        <a href="">ИСКАТЬ КУРС</a>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="user_type_home">
-                        <img class="img-circle" src="http://via.placeholder.com/120x120" alt="">
-                        <h3>ВУЗАМ И ОНЛАЙН ШКОЛАМ</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
-                        </p>
-                        <a href="">СТАТЬ ПАРТНЕРАМИ</a>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="user_type_home">
-                        <img class="img-circle" src="http://via.placeholder.com/120x120" alt="">
-                        <h3>ПРЕПОДАВАТЕЛЯМ</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
-                        </p>
-                        <a href="">НАЧАТЬ ОБУЧАТЬ</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container user_type_block">
+		<div class="row">
+			<div class="col-lg-12">
+				<h2 class="header_block">НАЙДЕМ МЕСТО КАЖДОМУ</h2>
+			</div>
+			<div class="col-lg-4">
+				<div class="user_type_home">
+					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_one.png" alt="">
+					<h3>УЧЕНИКАМ/АББИТУРИЕНТАМ</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+					</p>
+					<a href="">ИСКАТЬ КУРС</a>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="user_type_home">
+					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_two.png" alt="">
+					<h3>ВУЗАМ И ОНЛАЙН ШКОЛАМ</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+					</p>
+					<a href="">СТАТЬ ПАРТНЕРАМИ</a>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="user_type_home">
+					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_three.png" alt="">
+					<h3>ПРЕПОДАВАТЕЛЯМ</h3>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+					</p>
+					<a href="">НАЧАТЬ ОБУЧАТЬ</a>
+				</div>
+			</div>
+		</div>
+	</div>
 @stop

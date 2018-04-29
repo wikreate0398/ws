@@ -11,6 +11,8 @@ use App\Models\GradeEducation;
 use App\Models\Cities;
 use App\Models\TeachActivityCategories;
 use App\Models\WorkExperienceDirection;
+use App\Models\CourseCategory;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -82,8 +84,9 @@ class TeacherUser extends Controller implements UserTypesInterface
     public function showCourseForm()
     {
         return view('users.teacher_profile', [ 
-            'user'               => Auth::user(), 
-            'include'            => $this->viewPath . 'add_course',
+            'user'       => Auth::user(), 
+            'include'    => $this->viewPath . 'add_course',
+            'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
         ]); 
-    }
+    } 
 }

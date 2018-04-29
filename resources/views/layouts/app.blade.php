@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Проект</title>
 
@@ -34,8 +35,9 @@
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') . '?v=' . time() }}"></script>
     <script src="{{ asset('js/custom.js') . '?v=' . time() }}"></script>
-     
-
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'); 
+    </script>
 </head>
 
 <body>

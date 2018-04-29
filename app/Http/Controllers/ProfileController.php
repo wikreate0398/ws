@@ -72,6 +72,17 @@ class ProfileController extends Controller
         return UserService::init(Auth::user()->user_type)->showCourseForm();  
     }
 
+    public function saveCourse(Request $request)
+    {
+        $course = new \App\Http\Controllers\Users\CourseController;
+
+        $validate = $course->validation($request->all());
+        if ($validate !== true) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $validate]);  
+        }  
+    } 
+
     public function updateImage(Request $request)
     {
         if ($request->hasFile('image') == false) 
@@ -96,6 +107,26 @@ class ProfileController extends Controller
         ]); 
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Изображение успешно изменено!');
+    }
+
+    public function loadCourseSubcats(Request $request)
+    {
+        $id = $request->input('id');
+        if (empty($id)) die();
+        $subcats = \App\Models\CourseCategory::where('parent_id', intval($id))->get();
+
+        $content = '';
+        if (!empty($subcats)) 
+        {
+            $content .= '<select name="subcat_id"  class="form-control">
+                         <option value="">Выбрать</option>';
+            foreach ($subcats as $item)
+            {
+                $content .= '<option value="'.$item['id'].'">'.$item['name'].'</option>';
+            }
+            $content .= '</select>';
+        }
+        echo $content;
     }
   
     public function updatePassword()

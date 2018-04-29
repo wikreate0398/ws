@@ -39,7 +39,11 @@ Route::group(['middleware' => ['web_auth']], function(){
 	Route::get('user/profile/subscriptions', 'ProfileController@showSubscriptions')->name('user_subscriptions'); 
 	Route::get('user/profile/bookmarks', 'ProfileController@showBookmarks')->name('user_bookmarks'); 
 	Route::get('user/profile/diplomas', 'ProfileController@showDiploms')->name('user_diplomas'); 
+
 	Route::get('user/profile/add-course', 'ProfileController@showCourseForm')->name('add_course'); 
+	Route::post('user/profile/save-course', 'ProfileController@saveCourse')->name('save_course'); 
+	 
+	Route::post('user/profile/loadCourseSubcats', 'ProfileController@loadCourseSubcats');  
 
 	Route::get('user/profile/edit', 'ProfileController@showEditForm')->name('user_edit');	 
 

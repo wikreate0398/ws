@@ -11,7 +11,7 @@ use App\Models\UsersWorkExperience;
 
 trait TeacherTrait
 {
-	 private $niceNames = [
+	private $niceNames = [
         'password'           => 'Пароль',
         'repeat_password'    => 'Повторите пароль',
         'image'              => 'Фото',
@@ -55,6 +55,13 @@ trait TeacherTrait
         $teach_activity  = sortValue(request()->input('teach_activity')); 
         $work_experience = sortValue(request()->input('work_experience'));
  
+        $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
+        $validator->setAttributeNames($this->niceNames);  
+        if ($validator->fails()) 
+        {
+            return $validator->errors()->toArray();
+        }
+
         $validateMultiArr = validateArray([
             '0' => [
                 'array'    => $education, 
@@ -78,13 +85,7 @@ trait TeacherTrait
         { 
             return [$validateMultiArr['field'] => ['Заполните все обязательные поля!']]; 
         }
- 
-        $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
-        $validator->setAttributeNames($this->niceNames);  
-        if ($validator->fails()) 
-        {
-            return $validator->errors()->toArray();
-        }
+
         return true;
     }
 

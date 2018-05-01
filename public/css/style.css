@@ -540,7 +540,7 @@ margin-bottom: 30px;
 /* Подвал */
 footer{
     background-image: url(../images/footer_bg.png);
-	background-size: 100% 100%;
+	background-size: cover;
 	padding-top: 50px;
 	padding-bottom: 75px;
 }

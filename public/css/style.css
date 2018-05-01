@@ -435,7 +435,6 @@ footer{
     padding-bottom: 30px;
 }
 footer .footer_menu{
-    margin-top: 22.5px;
     margin-bottom: 0px;
 }
 footer .social_menu{
@@ -515,4 +514,95 @@ margin-bottom: 30px;
 .teachers_external_card .right_teachers_external_card .teacher_about{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+
+/* Новые стили после перевёрстки всего сайта выше css удалить */
+/* Подключаем шрифты */
+@font-face {
+	font-family: 'Cuprum Regular';
+	src: url('../fonts/Cuprum-Regular.eot');
+	src: url('../fonts/Cuprum-Regular.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/Cuprum-Regular.woff') format('woff'),
+	url('../fonts/Cuprum-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Bebas Neue Regular';
+	src: url('../fonts/BebasNeueRegular.eot');
+	src: url('../fonts/BebasNeueRegular.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/BebasNeueRegular.woff') format('woff'),
+	url('../fonts/BebasNeueRegular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+/* Подвал */
+footer{
+    background-image: url(../images/footer_bg.png);
+	background-size: 100% 100%;
+	padding-top: 50px;
+	padding-bottom: 75px;
+}
+footer .footer_logo{
+    text-align: center;
+	margin-top: 20px;
+}
+footer .footer_logo .img-responsive{
+    display: inline-block;
+}
+footer .social_menu{
+	margin-top: 70px;
+}
+footer .social_menu li a{
+    color: #463e39;
+}
+footer .social_menu li a:focus,
+footer .social_menu li a:hover{
+    color: #b1b1b1;
+}
+footer .footer_menu{
+	margin-bottom: 50px;
+}
+footer .footer_menu li a{
+	font-family: 'Cuprum Regular';
+    color: #463e39;
+	font-size: 18px;
+	text-transform: uppercase;
+}
+footer .footer_menu li a:focus,
+footer .footer_menu li a:hover{
+    color: #fff;
+	text-decoration: none;
+}
+footer .footer_menu_bottom h3{
+	font-family: 'Bebas Neue Regular';
+    font-size: 15px;
+	color: #ffffff;
+	margin-top: 0px;
+	margin-bottom: 25px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+}
+footer .footer_menu_bottom ul li{
+	margin-bottom: 15px;
+}
+footer .footer_menu_bottom ul li a{
+	font-family: 'Cuprum Regular';
+    font-size: 16px;
+	color: #b1b1b1;
+}
+footer .footer_menu_bottom ul li a:focus,
+footer .footer_menu_bottom ul li a:hover{
+	color: #fff;
+	text-decoration: none;
+}
+footer .copyright{
+	font-family: 'Bebas Neue Regular';
+    font-size: 12px;
+	color: #59514c;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	display: block;
+	margin-top: 15px;
 }

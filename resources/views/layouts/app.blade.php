@@ -113,7 +113,113 @@
     </nav> -->
 
     <footer>
-        <div class="container">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-3">
+					<div class="footer_logo">
+						<img class="img-responsive" src="images/footer_logo.png" alt="">
+					</div>
+					<ul class="list-inline nav-justified social_menu">
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-vk fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-odnoklassniki fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-skype fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<ul class="list-inline footer_menu">
+								<li><a href="">О ПРОЕКТЕ</a></li>
+								<li><a href="">РЕКЛАМА НА САЙТЕ</a></li>
+								<li><a href="">ВУЗАМ И ПРЕПОДАВАТЕЛЯМ</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+                        <div class="col-lg-3">
+							<div class="footer_menu_bottom">
+								<h3>ЛИЧНЫЙ КАБИНЕТ</h3>
+								<ul class="list-unstyled"> 
+									@if(Auth::check())
+									<li><a href="{{ route('user_profile') }}">Профиль</a></li> 
+									@else  
+									<li><a href="{{ route('login') }}">Войти</a></li>
+									<li><a href="{{ route('registration') }}">Регистрация</a></li>
+									@endif  
+								</ul>
+							</div>
+                        </div>
+                        <div class="col-lg-3">
+							<div class="footer_menu_bottom">
+								<h3>КУРСЫ</h3>
+								<ul class="list-unstyled">
+									<li><a href="#">Разместить курс</a></li>
+								</ul>
+							</div>
+                        </div>
+                        <div class="col-lg-3">
+							<div class="footer_menu_bottom">
+								<h3>ВУЗЫ И ШКОЛЫ</h3>
+								<ul class="list-unstyled">
+									<li><a href="#">Стать партнером сайта</a></li>
+								</ul>
+							</div>
+                        </div>
+                        <div class="col-lg-3">
+							<div class="footer_menu_bottom">
+								<h3>ПРЕПОДВАТЕЛИ</h3>
+								<ul class="list-unstyled">
+									<li><a href="#">Опубликооать профиль</a></li>
+								</ul>
+							</div>
+                        </div>
+					</div>
+					<div class="row">
+                        <div class="col-lg-12 col-md-12">
+							<span class="copyright">Все права защищены © КОРПОРАЦИЯ МОЗГА, 2018</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <!--<div class="container">
             <div class="row">
                 <div class="col-lg-3 col-xs-12">
                     <a href="/"><img src="images/logo.png" alt=""></a>
@@ -190,7 +296,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </footer>
 
 </body>

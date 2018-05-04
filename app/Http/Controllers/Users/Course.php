@@ -105,7 +105,7 @@ class Course extends Controller
             'pay'           => intval($data['pay']),
             'is_open_until' => date('Y-m-d', strtotime($data['is_open_until'])),
             'available'     => intval($data['available']),
-            'price'         => priceString($data['price'])
+            'price'         => !empty($data['price']) ? priceString($data['price']) : 0
         ])->id; 
     }
 

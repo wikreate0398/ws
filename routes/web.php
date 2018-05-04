@@ -35,13 +35,16 @@ Route::get('teachers', 'TeachersController@index');
 
 Route::group(['middleware' => ['web_auth']], function(){ 
 	Route::get('user/profile/course', 'ProfileController@showCourse')->name('user_profile');
+
+	Route::get('user/profile/course/{id_course}/edit', 'ProfileController@editCourseForm');
+
 	Route::get('user/profile/reviews', 'ProfileController@showReviews')->name('user_reviews');
 	Route::get('user/profile/subscriptions', 'ProfileController@showSubscriptions')->name('user_subscriptions'); 
 	Route::get('user/profile/bookmarks', 'ProfileController@showBookmarks')->name('user_bookmarks'); 
 	Route::get('user/profile/diplomas', 'ProfileController@showDiploms')->name('user_diplomas'); 
 
-	Route::get('user/profile/add-course', 'ProfileController@showCourseForm')->name('add_course'); 
-	Route::post('user/profile/save-course', 'ProfileController@saveCourse')->name('save_course'); 
+	Route::get('user/profile/course/add', 'ProfileController@showCourseForm')->name('add_course'); 
+	Route::post('user/profile/course/save', 'ProfileController@saveCourse')->name('save_course'); 
 	 
 	Route::post('user/profile/loadCourseSubcats', 'ProfileController@loadCourseSubcats');  
 

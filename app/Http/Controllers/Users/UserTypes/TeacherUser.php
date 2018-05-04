@@ -12,6 +12,7 @@ use App\Models\Cities;
 use App\Models\TeachActivityCategories;
 use App\Models\WorkExperienceDirection;
 use App\Models\CourseCategory;
+use App\Models\Courses;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -51,8 +52,12 @@ class TeacherUser extends Controller implements UserTypesInterface
 
     public function showCourse()
     { 
+        $user    = Auth::user();
+        $courses = Courses::with('courseSections')->where('id_user', $user->id)->get();
+
         return view('users.teacher_profile', [ 
-            'user'               => Auth::user(), 
+            'user'               => $user, 
+            'courses'            => $courses,
             'include'            => $this->viewPath . 'courses',
         ]); 
     }
@@ -89,4 +94,17 @@ class TeacherUser extends Controller implements UserTypesInterface
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
         ]); 
     } 
+
+    public function editCourseForm($id_course)
+    {
+        $user    = Auth::user();
+        $courses = Courses::with('courseSections')->where('id_user', $user->id)->findOrFail($id_course); 
+
+        return view('users.teacher_profile', [ 
+            'user'       => Auth::user(), 
+            'include'    => $this->viewPath . 'edit_course',
+            'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
+            'course'     => $courses
+        ]); 
+    }  
 }

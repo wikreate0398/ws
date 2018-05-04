@@ -72,15 +72,29 @@ class ProfileController extends Controller
         return UserService::init(Auth::user()->user_type)->showCourseForm();  
     }
 
+    public function editCourseForm($id_course)
+    {
+        return UserService::init(Auth::user()->user_type)->editCourseForm($id_course);
+    }
+
     public function saveCourse(Request $request)
     {
-        $course = new \App\Http\Controllers\Users\CourseController;
+        $course = new \App\Http\Controllers\Users\Course;
 
         $validate = $course->validation($request->all());
         if ($validate !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $validate]);  
-        }  
+        } 
+
+        $course->save($request->all(), Auth::user()->id); 
+
+        if (!empty($course->sections)) 
+        {
+            $course->saveSections();
+        }
+
+        return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], 'Курс успешно добавлен!');
     } 
 
     public function updateImage(Request $request)
@@ -110,19 +124,22 @@ class ProfileController extends Controller
     }
 
     public function loadCourseSubcats(Request $request)
-    {
-        $id = $request->input('id');
+    { 
+        $id        = $request->input('id'); 
+        $id_subcat = @$request->input('id_subcat'); 
+
         if (empty($id)) die();
         $subcats = \App\Models\CourseCategory::where('parent_id', intval($id))->get();
-
+ 
         $content = '';
-        if (!empty($subcats)) 
-        {
+        if (count($subcats) > 0) 
+        { 
             $content .= '<select name="subcat_id"  class="form-control">
                          <option value="">Выбрать</option>';
             foreach ($subcats as $item)
             {
-                $content .= '<option value="'.$item['id'].'">'.$item['name'].'</option>';
+                $selected = ($id_subcat == $item['id']) ? 'selected' : '';
+                $content .= '<option '.$selected.' value="'.$item['id'].'">'.$item['name'].'</option>';
             }
             $content .= '</select>';
         }

@@ -18,21 +18,21 @@
 		<div class="form-group">
             <label class="col-md-12 control-label">Название курса <span class="req">*</span></label>
             <div class="col-md-12">
-                <input type="text" class="form-control" name="name" value="" required autofocus>
+                <input type="text" class="form-control" name="name" value="{{ $course->name }}" required autofocus>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-12 control-label">Краткое описание курса <span class="req">*</span></label>
             <div class="col-md-12">
-            	<textarea name="description" class="form-control" placeholder="200" required></textarea> 
+            	<textarea name="description" class="form-control" placeholder="200" required>{{ $course->description }}</textarea> 
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-12 control-label">Подробное описание курса</label>
             <div class="col-md-12">
-            	<textarea name="text" class="form-control" placeholder="2000"></textarea> 
+            	<textarea name="text" class="form-control" placeholder="2000">{{ $course->text }}</textarea> 
             </div>
         </div>
 
@@ -51,13 +51,18 @@
         <div class="form-group">
             <label class="col-md-12 control-label">Категория и подкатегория <span class="req">*</span></label>
             <div class="col-md-12">
-                <select name="id_category"  class="form-control" onchange="loadCourseSubcats(this)">
+                <select name="id_category" id="id_category" class="form-control" onchange="loadCourseSubcats(this, '{{ $course->id_subcat }}')">
                     <option value="">Выбрать</option>
                     @foreach($categories as $item)
-                        <option value="{{$item['id']}}">{{$item['name']}}</option>
+                        <option {{ ($course->id_category == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
+                        	{{$item['name']}}
+                        </option>
                     @endforeach
                 </select>
             </div>
+            <script>
+            	$(window).load(function(){ $('select#id_category').change(); });
+            </script>
 
             <div class="col-md-12" id="load__subcats" style="display: none; margin-top: 20px;"> 
             </div>
@@ -67,16 +72,22 @@
 		
 		 
 	        <div class="form-check">
-		        <input type="radio" name="pay" value="1" onchange="setPayCourse(this)" class="form-check-input" id="exampleCheck1">
+		        <input type="radio" name="pay" value="1" {{ ($course->pay == 1) ? 'checked' : '' }} onchange="setPayCourse(this)" class="form-check-input" id="exampleCheck1">
 		        <label class="form-check-label" for="exampleCheck1">Бесплатный курс</label>
 		  	</div> 
 
 	      	<div class="form-check">
-	        	<input type="radio" name="pay" value="2" onchange="setPayCourse(this)" class="form-check-input" id="exampleCheck2">
+	        	<input type="radio" name="pay" value="2" {{ ($course->pay == 2) ? 'checked' : '' }} onchange="setPayCourse(this)" class="form-check-input" id="exampleCheck2">
 	        	<label class="form-check-label" for="exampleCheck2">Платный курс</label>
 	      	</div>
 	      	<br>
-	       	<input type="text" class="form-control price__course" name="price" value="" placeholder="Стоимость, руб *" required disabled>
+	       	<input type="text" 
+	       	       class="form-control price__course" 
+	       	       name="price"  
+	       	       placeholder="Стоимость, руб *" 
+	       	       required 
+	       	       value="{{ $course->price }}" 
+	       	       {{ ($course->pay == 1) ? 'disabled' : '' }}>
        
 	</div>
 
@@ -85,7 +96,7 @@
             <div class="form-group">
                 <label class="col-md-12 control-label" style="white-space: nowrap;">Запись курса открыта до <span class="req">*</span></label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control datepicker" name="is_open_until" value="" placeholder="DD/MM/YY" required>
+                    <input type="text" class="form-control datepicker" name="is_open_until" value="{{ date('d/m/Y', strtotime($course->is_open_until)) }}" placeholder="DD/MM/YY" required>
                 </div>
             </div> 
         </div>
@@ -94,15 +105,15 @@
                 <label class="col-md-12 control-label" style="white-space: nowrap;">Доступность на сайте <span class="req">*</span></label>
                 <div class="col-md-9"> 
                     <div class="form-check">
-				        <input type="radio" name="available" value="1" class="form-check-input" id="exampleCheck11">
+				        <input type="radio" {{ ($course->available == 1) ? 'checked' : '' }} name="available" value="1" class="form-check-input" id="exampleCheck11">
 				        <label class="form-check-label" for="exampleCheck11">Всем желающим</label>
 				  	</div>
 			      	<div class="form-check">
-			        	<input type="radio" name="available" value="2" class="form-check-input" id="exampleCheck22">
+			        	<input type="radio" {{ ($course->available == 2) ? 'checked' : '' }} name="available" value="2" class="form-check-input" id="exampleCheck22">
 			        	<label class="form-check-label" for="exampleCheck22">Только для зарегистрированных пользователей</label>
 			      	</div>
 			      	<div class="form-check">
-				        <input type="radio" name="available" value="3" class="form-check-input" id="exampleCheck33">
+				        <input type="radio" {{ ($course->available == 3) ? 'checked' : '' }} name="available" value="3" class="form-check-input" id="exampleCheck33">
 				        <label class="form-check-label" for="exampleCheck33">Скрыть курс по окончанию набора</label>
 				  	</div>  
                 </div>
@@ -181,9 +192,10 @@
 <div style="margin-top: 30px;">
 	<div id="error-respond"></div>
 	<button type="submit" class="btn btn-success" style="display: inline-block; width: auto;">
-	    Добавить 
+	    Редактировать 
 	</button>
 </div>
 
 </form> 
+
  

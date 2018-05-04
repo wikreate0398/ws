@@ -606,3 +606,11 @@ footer .copyright{
 	display: block;
 	margin-top: 15px;
 }
+
+.form-check label{
+    font-weight: 400;
+}
+
+.course__section, .lecture__section{
+    position: relative;
+}

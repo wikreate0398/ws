@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 
 class PagesController extends Controller
 {
@@ -27,8 +28,13 @@ class PagesController extends Controller
     { 
         $data = [
             'university' => \App\Models\UsersUniversity::with('user')->orderBy('full_name', 'asc')->get(),
-            'teachers'   => \App\Models\User::where('user_type', 2)->orderBy('created_at', 'desc')->get(),
-        ];
+            'teachers'   => User::where('user_type', 2)->orderBy('created_at', 'desc')->get(),
+            'stats'      => [
+                'institutions' => User::where('user_type', 3)->count(),
+                'teachers'     => User::where('user_type', 2)->count(),
+                'courses'      => \App\Models\Courses::count(),
+            ]
+        ]; 
 
         return view('home', $data);
     }

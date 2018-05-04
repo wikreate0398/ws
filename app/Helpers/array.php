@@ -54,14 +54,6 @@ function sortValue($arr){
     return $data; 
 }
 
-function ifNull($data=''){
-    if (empty($data)) {
-        return '';
-    }
-    return $data;
-}
- 
-
 function validateArray($data)
 {
     foreach ($data as $row) {  
@@ -81,6 +73,14 @@ function validateArray($data)
     }
     return ['status' => true];
 }
+
+function ifNull($data=''){
+    if (empty($data)) {
+        return '';
+    }
+    return $data;
+}
+  
   
 if (!function_exists('newthumbs')) {
     function newthumbs($photo = '', $dir = '', $width = 0, $height = 0, $version = 0, $zc = 0)
@@ -273,3 +273,22 @@ function adminMenu()
         ], 
     ]; 
 }
+
+function priceString($price){ 
+    if (empty($price)) return '0.00'; 
+    return number_format($price, 0, '.', ' ');
+}
+
+function toFloat($s) {
+    // convert "," to "."
+    $s = str_replace(',', '.', $s);
+
+    // remove everything except numbers and dot "."
+    $s = preg_replace("/[^0-9\.]/", "", $s);
+
+    // remove all seperators from first part and keep the end
+   // $s = str_replace('.', '',substr($s, 0, -3)) . substr($s, -3);
+
+    // return float
+    return (float) $s;
+}  

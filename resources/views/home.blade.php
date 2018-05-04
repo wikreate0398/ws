@@ -10,9 +10,42 @@
                             НАЙДИТЕ СВОЕ ПРИЗВАНИЕ <br> В ПОЛНОМ КАТАЛОГЕ ВУЗОВ И КУРСОВ
                         </h2>
                         <ul class="list-inline list_information">
-                            <li><a href="">300 ВУЗОВ</a></li>
-                            <li><a href="">5 600 КУРСОВ</a></li>
-                            <li><a href="">1 200 ПРЕПОДАВАТЕЛЕЙ</a></li>
+                            <li>
+                                <a href="/educational-institution/">
+                                    {{ $stats['institutions'] }} 
+                                    @if($stats['institutions'] == 1)
+                                        ВУЗ
+                                    @elseif($stats['institutions'] <= 4)
+                                        ВУЗА
+                                    @else
+                                        ВУЗОВ 
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    {{ $stats['courses'] }} 
+                                    @if($stats['courses'] == 1)
+                                        КУРС
+                                    @elseif($stats['courses'] <= 4)
+                                        КУРСА
+                                    @else
+                                        КУРСОВ 
+                                    @endif 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/teachers/">
+                                    {{ $stats['teachers'] }} 
+                                    @if($stats['teachers'] == 1)
+                                        ПРЕПОДАВАТЕЛь
+                                    @elseif($stats['teachers'] <= 4)
+                                        ПРЕПОДАВАТЕЛЯ
+                                    @else
+                                        ПРЕПОДАВАТЕЛЕЙ 
+                                    @endif  
+                                </a>
+                            </li>
                         </ul>
                         <form id="search_form">
                             <div class="row">

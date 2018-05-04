@@ -10,6 +10,7 @@ use App\Models\InstitutionTypes;
 use App\Models\University; 
 use App\Models\ProgramsType;
 use App\Models\TeachActivityCategories;
+use App\Models\CourseCategory;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,9 +32,21 @@ class UniversityUser extends Controller implements UserTypesInterface
 
 	function __construct() {} 
 
-    public function showProfile()
+    public function showCourse()
+    { 
+        return view('users.teacher_profile', [ 
+            'user'               => Auth::user(), 
+            'include'            => $this->viewPath . 'courses',
+        ]); 
+    }
+
+    public function showCourseForm()
     {
-    
+        return view('users.teacher_profile', [ 
+            'user'       => Auth::user(), 
+            'include'    => 'users.profile_types.teacher.add_course',
+            'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
+        ]); 
     } 
 
     public function showEditForm()

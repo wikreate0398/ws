@@ -297,3 +297,117 @@ function setEqualHeight(columns) {
 $(window).on('load', function() { 
     setEqualHeight($('#partner_universities .item h3'));   
 }); 
+
+function addLecture(){
+    var first_block = $('.lecture__sections .lecture__section.first_block');
+    var cloneBlock = $(first_block).clone();
+    $(cloneBlock).removeClass('first_block');
+    $(cloneBlock).removeClass('error__input');
+     
+    $(cloneBlock).append('<div class="close__item" onclick="deleteLectureBlock(this);">X</div>');
+    $(cloneBlock).find('input').val('');
+    $(cloneBlock).find('textarea').val(''); 
+    $(cloneBlock).find('select option').prop('selected', false);
+    $(cloneBlock).find('select option:first').prop('selected', true);
+    $(cloneBlock).find('input.id__block').remove();
+
+    var sectionId = $('.course__sections .course__section').length;
+    if (sectionId >= 1) {
+        sectionId--;
+    }
+
+    $(cloneBlock).find('select').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', '')); 
+    });
+
+    $(cloneBlock).find('input').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', '')); 
+    });
+
+    $(cloneBlock).find('textarea').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', '')); 
+    });  
+  
+    $(cloneBlock).insertAfter('.lecture__sections .lecture__section:last'); 
+
+    attrLectureInputName();
+}
+
+function attrLectureInputName(){
+    $('.course__sections .course__section').each(function(sectionId){
+        $(this).find('select').each(function(){ 
+        $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
+    });
+
+    $(this).find('input').each(function(){ 
+        $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
+    });
+
+    $(this).find('textarea').each(function(){ 
+        $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
+    }); 
+    });
+}
+
+function addCourseSection()
+{ 
+    var first_block = $('.course__sections .course__section.first_block');
+    var cloneBlock = $(first_block).clone();
+    $(cloneBlock).removeClass('first_block');
+    $(cloneBlock).removeClass('error__input');
+     
+    $(cloneBlock).append('<div class="close__item" onclick="deleteSectionBlock(this);">X</div>');
+    $(cloneBlock).find('input').val('');
+    $(cloneBlock).find('textarea').val(''); 
+    $(cloneBlock).find('select option').prop('selected', false);
+    $(cloneBlock).find('select option:first').prop('selected', true);
+    $(cloneBlock).find('input.id__block').remove();
+
+    $(cloneBlock).find('select').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', ''))
+    });
+
+    $(cloneBlock).find('input').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', ''))
+    });
+
+    $(cloneBlock).find('textarea').each(function(){
+        $(this).attr('name', $(this).attr('name').replace('edit_', ''))
+    }); 
+
+    $(cloneBlock).find('.lecture__section').not('.first_block').remove();
+  
+    $(cloneBlock).insertAfter('.course__sections .course__section:last'); 
+
+    attrLectureInputName();
+}
+
+function deleteSectionBlock(item){
+    $(item).closest('.course__section').remove();
+}
+
+function deleteLectureBlock(item){
+    $(item).closest('.lecture__section').remove();
+}    
+
+function loadCourseSubcats(select, subcat){  
+ 
+    var cacheStr = String((new Date()).getTime()).replace(/\D/gi, '');
+    $( "#load__subcats").load( "/user/profile/loadCourseSubcats?rnd=" + cacheStr,{'id': $(select).val(), 'id_subcat': subcat, '_token': CSRF_TOKEN}, function( response, status, xhr ) { 
+        if ( response == "" ) {
+            $('#load__subcats').hide();
+            $('#load__subcats').html('');
+        }else{
+            $('#load__subcats').show();
+        }
+    });
+}
+
+function setPayCourse(input){
+    var val = $(input).val();
+    if (val == 1) {
+        $('.price__course').attr('disabled', true);
+    }else{
+        $('.price__course').attr('disabled', false);
+    } 
+}

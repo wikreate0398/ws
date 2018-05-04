@@ -24,6 +24,7 @@ class PupilUser extends Controller implements UserTypesInterface
 
 	function __construct() {} 
  
+ 
     public function showCourse()
     { 
         return view('users.user_profile', [ 

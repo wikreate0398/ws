@@ -8,12 +8,12 @@
 
             <div class="row" style="padding-top:20px;">
                 <div class="col-md-6">
-                    <div class="form-group">
+                   <!--  <div class="form-group">
                         <label class="col-md-12 control-label">Фамилия <span class="req">*</span></label>
                         <div class="col-md-12">
                             <input type="text" class="form-control" name="surname" value="" required autofocus>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label class="col-md-12 control-label">Имя <span class="req">*</span></label>
@@ -22,14 +22,14 @@
                                    required>
                         </div>
                     </div>
-
+<!-- 
                     <div class="form-group">
                         <label class="col-md-12 control-label">Отчество <span class="req">*</span></label>
                         <div class="col-md-12">
                             <input type="text" class="form-control" name="patronymic"
                                    value="" required>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label class="col-md-12 control-label">Город</label>

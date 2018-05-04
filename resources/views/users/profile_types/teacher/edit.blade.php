@@ -3,13 +3,6 @@
     <input type="hidden" name="user_type" value="2">
     <div class="row" style="padding-top:20px;">
         <div class="col-md-6">
-            <div class="form-group">
-                <label class="col-md-12 control-label">Фамилия <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control" name="surname" value="{{ $user->surname }}"
-                           required autofocus>
-                </div>
-            </div>
 
             <div class="form-group">
                 <label class="col-md-12 control-label">Имя <span class="req">*</span></label>
@@ -18,27 +11,7 @@
                            required>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Отчество <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control" name="patronymic" 
-                           value="{{ $user->patronymic }}" required>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="col-md-12 control-label">Дата рождения <span class="req">*</span>
-
-                </label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control datepicker" name="date_birth"
-                           value="{{ date('d-m-Y', strtotime($user->date_birth)) }}" required placeholder="DD/MM/YY">
-                </div>
-            </div>
+ 
 
             <div class="form-group">
                 <label class="col-md-12 control-label">Номер телефона <span class="req">*</span>
@@ -47,6 +20,22 @@
                 <div class="col-md-12">
                     <input  type="text" class="form-control" name="phone" value="{{ $user->phone }}"
                            required>
+                </div>
+            </div> 
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-12 control-label">Дата рождения <span class="req">*</span>
+
+                </label>
+                <div class="col-md-12">
+                    <input type="text" 
+                           class="form-control datepicker" 
+                           name="date_birth"
+                           value="{{ !empty($user->date_birth) ? date('d-m-Y', strtotime($user->date_birth)) : '' }}" 
+                           required 
+                           placeholder="DD/MM/YY">
                 </div>
             </div>
 
@@ -66,6 +55,8 @@
             <h3 class="panel-title">ОБРАЗОВАНИЕ</h3>
         </div>
         <div class="panel-body">
+
+            @if(count($usersEducations) > 0) 
             <?php $i=0; ?>
             @foreach($usersEducations as $education) 
             <div class="row multi__container education__container {{ ($i == 0) ? 'first_block' : '' }}"> 
@@ -159,6 +150,96 @@
             </div>
             <?php $i++ ?>
             @endforeach
+
+            @else
+
+            <div class="row multi__container education__container first_block"> 
+                 
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">Время обучения <span class="req">*</span></label>
+                        <div class="col-md-3">
+                            <select name="education[from][]"  class="form-control">
+                                <option value="">С</option>
+                                @for($year = date('Y'); $year > (date('Y')-25); $year--)
+                                    <option value="{{$year}}">{{$year}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="education[to][]"  class="form-control">
+                                <option value="">По</option>
+                                @for($year = date('Y'); $year > (date('Y')-25); $year--)
+                                    <option value="{{$year}}">{{$year}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">Образовательное
+                            учреждение <span class="req">*</span>
+
+                        </label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control"
+                                   name="education[institution][]" value="" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label  
+                               class="col-md-12 control-label">Кафедра</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control"
+                                   name="education[department][]" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  
+                               class="col-md-12 control-label">Примечания</label>
+                        <div class="col-md-12">
+                            <textarea name="education[notes][]" class="form-control" style="min-height: 120px;"></textarea> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">Специальность <span class="req">*</span></label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control"
+                                   name="education[specialty][]" value="" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">Степень <span class="req">*</span></label>
+                        <div class="col-md-12">
+                            <select name="education[grade][]"  class="form-control">
+                                <option value="">Выбрать</option>
+                                @foreach($grade_education as $item)
+                                    @if(!empty($item['childs']))
+                                        <optgroup label="{{$item['name']}}">
+                                            @foreach($item['childs'] as $child)
+                                                <option value="{{$child['id']}}">{{$child['name']}}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @else
+                                        <option value="{{$item['id']}}">
+                                            {{$item['name']}}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+            @endif
 
             <div class="row">
                 <div class="col-md-12">

@@ -52,7 +52,7 @@
 								            </p>
 								         </div>
 								         <div class="modal-footer" style="text-align: left;">
-								            <button type="button" data-dismiss="modal" class="btn default">Отмена</button> 
+								            <button type="button" data-dismiss="modal" class="btn default">Закрыть</button> 
 								         </div>
 								      </div>
 								   </div>

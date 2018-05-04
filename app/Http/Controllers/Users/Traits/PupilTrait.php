@@ -11,13 +11,12 @@ trait PupilTrait
 		'password'         => 'Пароль',
         'repeat_password'  => 'Повторите пароль',
         'image'            => 'Фото',
-        'old_password'     => 'Старый Пароль' 
+        'old_password'     => 'Старый Пароль',
+        'phone'            => 'Телефон'
 	];
 
 	private $rules = [
-        'name'                  => 'required',
-        'surname'               =>  'required',
-        'patronymic'            => 'required', 
+        'name'                  => 'required',  
         'date_birth'            => 'required',
         'phone'                 => 'required', 
         'image'                 => 'file|mimes:jpeg,jpg,png',
@@ -41,15 +40,12 @@ trait PupilTrait
 	{
 		$confirm_hash = md5(microtime()); 
         return User::create([ 
-            'name'         => $data['name'],
-            'surname'      => $data['surname'],
-            'patronymic'   => $data['patronymic'],
+            'name'         => $data['name'],  
             'date_birth'   => date('Y-m-d', strtotime($data['date_birth'])),
             'user_type'    => '1',
             'phone'        => $data['phone'],
             'email'        => $data['email'], 
-            'city'         => $data['city'],
-            'phone'        => $data['phone'], 
+            'city'         => $data['city'], 
             'site'         => $data['site'],
             'image'        => $this->uploadImage(),
             'confirm_hash' => $confirm_hash, 
@@ -78,9 +74,7 @@ trait PupilTrait
 
         User::where('id', $id_user)->
           	update([ 
-                'name'         => $data['name'],
-                'surname'      => $data['surname'],
-                'patronymic'   => $data['patronymic'],
+                'name'         => $data['name'],  
                 'date_birth'   => date('Y-m-d', strtotime($data['date_birth'])), 
                 'phone'        => $data['phone'],
                 'email'        => $data['email'], 

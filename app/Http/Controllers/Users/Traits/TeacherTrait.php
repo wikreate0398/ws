@@ -25,8 +25,8 @@ trait TeacherTrait
 
     private $rules = [
         'name'                  =>   'required',
-        'surname'               =>   'required',
-        'patronymic'            => 'required', 
+        // 'surname'               =>   'required',
+        // 'patronymic'            => 'required', 
         'date_birth'            =>   'required',
         'phone'                 => 'required', 
         'image'                 => 'file|mimes:jpeg,jpg,png',
@@ -99,8 +99,8 @@ trait TeacherTrait
  
         $createUser = User::create([ 
             'name' => $data['name'],
-            'surname' => $data['surname'],
-            'patronymic' => $data['patronymic'],
+            // 'surname' => $data['surname'],
+            // 'patronymic' => $data['patronymic'],
             'date_birth' => date('Y-m-d', strtotime($data['date_birth'])),
             'user_type'  => '2',
             'phone'      => $data['phone'],
@@ -273,8 +273,8 @@ trait TeacherTrait
         User::where('id', $id_user)
             ->update([ 
             'name'       => $data['name'],
-            'surname'    => $data['surname'],
-            'patronymic' => $data['patronymic'],
+            // 'surname'    => $data['surname'],
+            // 'patronymic' => $data['patronymic'],
             'date_birth' => date('Y-m-d', strtotime($data['date_birth'])), 
             'phone'      => $data['phone'],
             'email'      => $data['email'], 

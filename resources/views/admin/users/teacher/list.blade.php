@@ -20,7 +20,7 @@
 	      		<tbody>
 	      			@foreach($data as $user)
 	      			<tr>
-	      				<td>{{ $user['surname'] }} {{ $user['name'] }} {{ $user['patronymic'] }}</td>
+	      				<td>{{ $user['name'] }}</td>
 	      				<td>{{ $user['email'] }}</td>
 	      				<td>{{ date('d.m.Y H:i', strtotime($user['created_at'])) }}</td>
 	      				<td style="text-align: center;">
@@ -52,7 +52,7 @@
 								            </p>
 								         </div>
 								         <div class="modal-footer" style="text-align: left;">
-								            <button type="button" data-dismiss="modal" class="btn default">Отмена</button> 
+								            <button type="button" data-dismiss="modal" class="btn default">Закрыть</button> 
 								         </div>
 								      </div>
 								   </div>

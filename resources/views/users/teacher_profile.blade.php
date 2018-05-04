@@ -19,7 +19,7 @@
 				</div>
 
 				<div class="col-md-10">
-					<h1 style="margin-top: 30px;">{{ $user->name }} {{ $user->surname }}</h1>
+					<h1 style="margin-top: 30px;">{{ $user->name }}</h1>
 					<a class="dashed__link" href="{{ route('user_edit') }}">Редактировать профиль</a><br><br>
 					<button class="btn btn-info btn-sm" style="display: inline-block; width: auto; border-radius: 20px; cursor: default;">Преподаватель</button>
 				</div> 

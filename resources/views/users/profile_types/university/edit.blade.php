@@ -141,7 +141,9 @@
             <div class="form-group">
                 <label class="col-md-3 control-label" style="white-space: nowrap;">От <span class="req">*</span></label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control datepicker" name="license_nr_from" value="{{ date('d-m-Y', strtotime($userUniversity->license_nr_from)) }}" placeholder="DD/MM/YY" required>
+                    <input type="text" class="form-control datepicker" name="license_nr_from" 
+                    value="{{!empty($userUniversity->license_nr_from) ? date('d-m-Y', strtotime($userUniversity->license_nr_from)) : ''}}" placeholder="DD/MM/YY" required> 
+
                 </div>
             </div> 
         </div>
@@ -158,7 +160,9 @@
             <div class="form-group">
                 <label class="col-md-3 control-label" style="white-space: nowrap;">От <span class="req">*</span></label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control datepicker" name="accreditation_nr_from" value="{{ date('d-m-Y', strtotime($userUniversity->accreditation_nr_from)) }}" placeholder="DD/MM/YY" required>
+                    <input type="text" class="form-control datepicker" name="accreditation_nr_from"
+                     value="{{ !empty($userUniversity->accreditation_nr_from) ? date('d-m-Y', strtotime($userUniversity->accreditation_nr_from)) : '' }}" placeholder="DD/MM/YY" required>
+                      
                 </div>
             </div> 
         </div>

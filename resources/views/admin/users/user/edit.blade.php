@@ -10,12 +10,12 @@
 
                 <div class="row" style="padding-top:20px;">
                     <div class="col-md-6">
-                        <div class="form-group">
+                       <!--  <div class="form-group">
                             <label class="col-md-12 control-label">Фамилия <span class="req">*</span></label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control" name="surname" value="{{ $user->surname }}" required autofocus>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label class="col-md-12 control-label">Имя <span class="req">*</span></label>
@@ -25,13 +25,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="col-md-12 control-label">Отчество <span class="req">*</span></label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control" name="patronymic"
                                        value="{{ $user->patronymic }}" required>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label class="col-md-12 control-label">Город</label>
@@ -60,7 +60,7 @@
                             </label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control datepicker" name="date_birth"
-                                       value="{{ date('d-m-Y', strtotime($user->date_birth)) }}" required placeholder="DD/MM/YY">
+                                       value="{{ !empty($user->date_birth) ? date('d-m-Y', strtotime($user->date_birth)) : '' }}" required placeholder="DD/MM/YY">
                             </div>
                         </div>
 

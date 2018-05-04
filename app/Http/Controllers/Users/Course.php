@@ -54,7 +54,7 @@ class Course extends Controller
         $this->sections  = sortValue(request()->input('section'));
         $this->lectures  = request()->input('lecture'); //sortValue(request()->input('lecture')); 
  
-        if (!empty($data['pay']) && $data['pay'] == 1) 
+        if (!empty($data['pay']) && $data['pay'] == 2) 
         {
             $this->rules['price'] = 'required';
         }

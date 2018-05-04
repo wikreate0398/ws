@@ -93,8 +93,7 @@ jQuery(document).ready(function($) {
                     //     $(form).find('#form-respond').fadeOut(700);
                     // }, 1000);
   
-                } else {   
-                    console.log(jsonResponse);
+                } else {    
                     if (jsonResponse.redirect != '') { 
                         window.location = jsonResponse.redirect;
                     }
@@ -299,7 +298,7 @@ $(window).on('load', function() {
 }); 
 
 function addLecture(){
-    var first_block = $('.lecture__sections .lecture__section.first_block');
+    var first_block = $('.course__sections .course__section.first_block').find('.lecture__sections .lecture__section.first_block');
     var cloneBlock = $(first_block).clone();
     $(cloneBlock).removeClass('first_block');
     $(cloneBlock).removeClass('error__input');
@@ -334,18 +333,20 @@ function addLecture(){
 }
 
 function attrLectureInputName(){
+    
     $('.course__sections .course__section').each(function(sectionId){
+ 
         $(this).find('select').each(function(){ 
-        $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
-    });
+            $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
+        });
 
-    $(this).find('input').each(function(){ 
-        $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
-    });
+        $(this).find('input').each(function(){ 
+            $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
+        });
 
-    $(this).find('textarea').each(function(){ 
-        $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
-    }); 
+        $(this).find('textarea').each(function(){ 
+            $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
+        }); 
     });
 }
 
@@ -354,6 +355,7 @@ function addCourseSection()
     var first_block = $('.course__sections .course__section.first_block');
     var cloneBlock = $(first_block).clone();
     $(cloneBlock).removeClass('first_block');
+    //$(cloneBlock).find('.lecture__sections').find('.first_block').removeClass('first_block');
     $(cloneBlock).removeClass('error__input');
      
     $(cloneBlock).append('<div class="close__item" onclick="deleteSectionBlock(this);">X</div>');
@@ -382,12 +384,65 @@ function addCourseSection()
     attrLectureInputName();
 }
 
-function deleteSectionBlock(item){
-    $(item).closest('.course__section').remove();
+function deleteSectionBlock(item, id){
+    if (!confirm('Вы действительно хотите удалить?')) {
+        return false;
+    } 
+
+    if (id > 0) {
+        $.ajax({
+            url: '/user/profile/deleteCourseSection',
+            type: 'POST', 
+            data: {id_section: id, _token: CSRF_TOKEN}, 
+            cache: false, 
+            dataType: 'json',
+            beforeSend: function() {},
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                if (XMLHttpRequest.status === 401) document.location.reload(true);
+            },
+            success: function(jsonResponse, textStatus, request) {    
+                if (jsonResponse.msg === true) {
+                    $(item).closest('.course__section').remove();
+                } else {   
+                    alert('Ошибка');
+                } 
+            },
+            complete: function() {}
+        });
+    }else{
+        $(item).closest('.course__section').remove();
+    } 
 }
 
-function deleteLectureBlock(item){
-    $(item).closest('.lecture__section').remove();
+function deleteLectureBlock(item, id){
+
+    if (!confirm('Вы действительно хотите удалить?')) {
+        return false;
+    } 
+
+    if (id > 0) {
+        $.ajax({
+            url: '/user/profile/deleteCourseSectionLecture',
+            type: 'POST', 
+            data: {id_lecture: id, _token: CSRF_TOKEN}, 
+            cache: false, 
+            dataType: 'json',
+            beforeSend: function() {},
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                if (XMLHttpRequest.status === 401) document.location.reload(true);
+            },
+            success: function(jsonResponse, textStatus, request) {    
+                if (jsonResponse.msg === true) {
+                    $(item).closest('.lecture__section').remove();
+                } else {   
+                    alert('Ошибка');
+                } 
+            },
+            complete: function() {}
+        });
+    }else{
+        $(item).closest('.lecture__section').remove();
+    }  
 }    
 
 function loadCourseSubcats(select, subcat){  

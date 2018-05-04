@@ -22,7 +22,7 @@ class Courses extends Model
         'price'
     ];
 
-    public function courseSections()
+    public function sections()
     {
         return $this->hasMany('App\Models\CourseSections', 'id_course', 'id');
     } 

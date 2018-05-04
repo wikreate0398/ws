@@ -10,7 +10,7 @@
     </li> 
 </ul>
 
-<form class="form-horizontal ajax__submit" method="POST" action="{{ route('save_course') }}">
+<form class="form-horizontal ajax__submit" method="POST" action="{{ route('edit_course', ['id' => $course->id]) }}">
 	 {{ csrf_field() }}
 <div class="tab-content">
 	<div role="tabpanel" class="tab-pane active" id="about" style="padding-top: 20px;">
@@ -123,67 +123,91 @@
 
 	<div role="tabpanel" class="tab-pane" id="programm" style="padding-top: 20px;">
 	
-		<div class="course__sections"> 
+		<div class="course__sections">  
+			<?php $sectionsNum = 0; $lecturesNum = 0; ?> 
+			@foreach($course->sections as $section)
+			<div class="panel panel-default course__section {{ ($sectionsNum==0) ? 'first_block' : '' }}">
+				
+				@if($sectionsNum>0)
+					<div class="close__item" onclick="deleteSectionBlock(this, '{{ $section->id }}');">X</div>
+				@endif
 
-				<div class="panel panel-default course__section first_block">
-			        <div class="panel-heading">
-			            <h3 class="panel-title">Раздел</h3>
-			        </div>
-			        <div class="panel-body"> 
-			            <div class="row">
-			                <div class="col-md-12">
-                     
-					            <div class="form-group">
-					                <label class="col-md-12 control-label" style="white-space: nowrap;">Название Раздела<span class="req">*</span></label>
-					                <div class="col-md-9">
-					                    <input type="text" class="form-control" name="section[name][]" value="" placeholder="" required>
-					                </div>
-					            </div> 
+		        <div class="panel-heading">
+		            <h3 class="panel-title">Раздел</h3>
+		        </div>
+		        <div class="panel-body"> 
+		            <div class="row">
+		                <div class="col-md-12">
+                 
+				            <div class="form-group">
+				                <label class="col-md-12 control-label" style="white-space: nowrap;">Название Раздела<span class="req">*</span></label>
+				                <div class="col-md-9">
+				                    <input type="text" class="form-control" name="section[name][]" value="{{ $section->name }}" placeholder="" required>
+				                </div>
+				            </div> 
 
-					            <div class="lecture__sections"> 
-						            <div class="panel panel-warning lecture__section first_block">
-						            	<div class="panel-heading">
-								            <h3 class="panel-title">Добавления лекции</h3>
+				            <div class="lecture__sections">  
+				            	<?php $l = 0; ?>
+				            	@foreach($section->lectures as $lecture)
+					            <div class="panel panel-warning lecture__section {{ ($lecturesNum==0) ? 'first_block' : '' }}">
+
+					            	@if($l>0)
+										<div class="close__item" onclick="deleteLectureBlock(this, '{{ $lecture->id }}');">X</div>
+									@endif
+
+					            	<div class="panel-heading">
+							            <h3 class="panel-title">Добавления лекции</h3>
+							        </div>
+					            	<div class="panel-body"> 
+					            		<div class="form-group">
+								            <label class="col-md-12 control-label">Название лекции <span class="req">*</span></label>
+								            <div class="col-md-12">
+								                <input type="text" class="form-control" name="lecture[{{$sectionsNum}}][name][]" value="{{ $lecture->name }}" required>
+								            </div>
 								        </div>
-						            	<div class="panel-body"> 
-						            		<div class="form-group">
-									            <label class="col-md-12 control-label">Название лекции <span class="req">*</span></label>
-									            <div class="col-md-12">
-									                <input type="text" class="form-control" name="lecture[0][name][]" value="" required>
-									            </div>
-									        </div>
 
-									        <div class="form-group">
-									            <label class="col-md-12 control-label">Описание лекции <span class="req">*</span></label>
-									            <div class="col-md-12">
-									            	<textarea name="lecture[0][description][]" class="form-control" placeholder="" required=""></textarea> 
-									            </div>
-									        </div>
+								        <div class="form-group">
+								            <label class="col-md-12 control-label">Описание лекции <span class="req">*</span></label>
+								            <div class="col-md-12">
+								            	<textarea name="lecture[{{$sectionsNum}}][description][]" class="form-control" placeholder="" required="">{{ $lecture->description }}</textarea> 
+								            </div>
+								        </div>
 
-									        <div class="form-group">
-									            <label class="col-md-12 control-label">Длительность лекции <span class="req">*</span></label>
-									            <div class="col-md-2">
-									            	<input type="text" class="form-control number_field" name="lecture[0][hourse][]" placeholder="чч" value="" required>
-									            </div>
-									            <div class="col-md-2">
-									            	<input type="text" class="form-control number_field" name="lecture[0][minutes][]" placeholder="мм" value="">
-									            </div>
-									        </div>
-						            	</div>
-						            </div>
+								        <div class="form-group">
+								            <label class="col-md-12 control-label">Длительность лекции <span class="req">*</span></label>
+								            <div class="col-md-2">
+								            	<input type="text" 
+								            	       class="form-control number_field" 
+								            	       name="lecture[{{$sectionsNum}}][hourse][]" 
+								            	       placeholder="чч" 
+								            	       value="{{ $lecture->duration_hourse }}" 
+								            	       required>
+								            </div>
+								            <div class="col-md-2">
+								            	<input type="text" 
+								            	       class="form-control number_field" 
+								            	       name="lecture[{{$sectionsNum}}][minutes][]" 
+								            	       placeholder="мм" value="{{ $lecture->duration_minutes }}">
+								            </div>
+								        </div>
+					            	</div>
 					            </div>
-			         
-			                </div> 
-			 
-			                <div class="col-md-12">
-			                    <button type="button" onclick="addLecture(this);" class="btn btn-sm btn-dafault add__more">
-			                    	Добавить лекцию
-			                    </button>
-			                </div> 			            
-			            </div> 
-			        </div>
-    			</div>
- 
+					            <?php $lecturesNum++; $l++; ?>
+					            @endforeach
+				            </div>
+		         
+		                </div> 
+		 
+		                <div class="col-md-12">
+		                    <button type="button" onclick="addLecture(this);" class="btn btn-sm btn-dafault add__more">
+		                    	Добавить лекцию
+		                    </button>
+		                </div> 			            
+		            </div> 
+		        </div>
+			</div>
+			<?php $sectionsNum++ ?>
+			@endforeach 
 		</div>
 
 		<button class="btn btn-default btn-sm" type="button" onclick="addCourseSection()">Добавить раздел</button>

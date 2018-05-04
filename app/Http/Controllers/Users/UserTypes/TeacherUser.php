@@ -53,7 +53,7 @@ class TeacherUser extends Controller implements UserTypesInterface
     public function showCourse()
     { 
         $user    = Auth::user();
-        $courses = Courses::with('courseSections')->where('id_user', $user->id)->get();
+        $courses = Courses::with('sections')->where('id_user', $user->id)->get();
 
         return view('users.teacher_profile', [ 
             'user'               => $user, 
@@ -98,7 +98,7 @@ class TeacherUser extends Controller implements UserTypesInterface
     public function editCourseForm($id_course)
     {
         $user    = Auth::user();
-        $courses = Courses::with('courseSections')->where('id_user', $user->id)->findOrFail($id_course); 
+        $courses = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
 
         return view('users.teacher_profile', [ 
             'user'       => Auth::user(), 

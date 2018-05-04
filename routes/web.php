@@ -45,8 +45,12 @@ Route::group(['middleware' => ['web_auth']], function(){
 
 	Route::get('user/profile/course/add', 'ProfileController@showCourseForm')->name('add_course'); 
 	Route::post('user/profile/course/save', 'ProfileController@saveCourse')->name('save_course'); 
+	Route::post('user/profile/course/{id}/edit', 'ProfileController@editCourse')->name('edit_course'); 
+	Route::get('user/profile/course/{id}/delete', 'ProfileController@deleteCourse')->name('delete_course');  
 	 
 	Route::post('user/profile/loadCourseSubcats', 'ProfileController@loadCourseSubcats');  
+	Route::post('user/profile/deleteCourseSection', 'ProfileController@deleteCourseSection');   
+	Route::post('user/profile/deleteCourseSectionLecture', 'ProfileController@deleteCourseSectionLecture');   
 
 	Route::get('user/profile/edit', 'ProfileController@showEditForm')->name('user_edit');	 
 

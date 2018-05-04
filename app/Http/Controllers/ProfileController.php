@@ -87,15 +87,74 @@ class ProfileController extends Controller
             return \App\Utils\JsonResponse::error(['messages' => $validate]);  
         } 
 
-        $course->save($request->all(), Auth::user()->id); 
+        $idCourse = $course->save($request->all(), Auth::user()->id); 
 
         if (!empty($course->sections)) 
         {
-            $course->saveSections();
+            $course->saveSections($idCourse);
         }
 
         return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], 'Курс успешно добавлен!');
     } 
+
+    public function editCourse($idCourse, Request $request)
+    {
+        $course = new \App\Http\Controllers\Users\Course;
+
+        if (!$course->hasAccessCourse($idCourse, Auth::user()->id)) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
+        }
+
+        $validate = $course->validation($request->all());
+        if ($validate !== true) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $validate]);  
+        } 
+
+        $course->deleteSectionsAndLectures($idCourse, Auth::user()->id); 
+        $course->edit($request->all(), $idCourse, Auth::user()->id); 
+        if (!empty($course->sections)) 
+        {
+            $course->saveSections($idCourse);
+        }
+        return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], 'Курс успешно изменен!');
+    }
+
+    public function deleteCourseSection(Request $request)
+    {
+        $course     = new \App\Http\Controllers\Users\Course;
+        $id_section = intval($request->input('id_section')); 
+
+        if ($course->hasAccessSection($id_section, Auth::user()->id)) 
+        {
+            $course->deleteSection($id_section);
+            return \App\Utils\JsonResponse::success();
+        } 
+    }
+
+    public function deleteCourseSectionLecture(Request $request)
+    {
+        $course     = new \App\Http\Controllers\Users\Course;
+        $id_lecture = intval($request->input('id_lecture')); 
+
+        if ($course->hasAccessLecture($id_lecture, Auth::user()->id)) 
+        {
+            $course->deleteLecture($id_lecture);
+            return \App\Utils\JsonResponse::success(); 
+        } 
+    }
+
+    public function deleteCourse($id_course)
+    {
+        $course = new \App\Http\Controllers\Users\Course;
+
+        if ($course->hasAccessCourse($id_course, Auth::user()->id)) 
+        {
+            $course->delete($id_course); 
+        }
+        return redirect()->route('user_profile');
+    }
 
     public function updateImage(Request $request)
     {
@@ -144,7 +203,7 @@ class ProfileController extends Controller
             $content .= '</select>';
         }
         echo $content;
-    }
+    } 
   
     public function updatePassword()
     { 

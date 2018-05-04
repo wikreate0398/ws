@@ -11,6 +11,7 @@ use App\Models\University;
 use App\Models\ProgramsType;
 use App\Models\TeachActivityCategories;
 use App\Models\CourseCategory;
+use App\Models\Courses;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,10 +34,14 @@ class UniversityUser extends Controller implements UserTypesInterface
 	function __construct() {} 
 
     public function showCourse()
-    { 
+    {
+        $user    = Auth::user();
+        $courses = Courses::with('sections')->where('id_user', $user->id)->get();
+
         return view('users.teacher_profile', [ 
-            'user'               => Auth::user(), 
-            'include'            => $this->viewPath . 'courses',
+            'user'    => Auth::user(), 
+            'courses' => $courses,
+            'include' => $this->viewPath . 'courses',
         ]); 
     }
 
@@ -48,6 +53,19 @@ class UniversityUser extends Controller implements UserTypesInterface
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
         ]); 
     } 
+
+    public function editCourseForm($id_course)
+    {
+        $user    = Auth::user();
+        $courses = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
+
+        return view('users.teacher_profile', [ 
+            'user'       => Auth::user(), 
+            'include'    => 'users.profile_types.teacher.edit_course',
+            'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
+            'course'     => $courses
+        ]); 
+    }
 
     public function showEditForm()
     {  

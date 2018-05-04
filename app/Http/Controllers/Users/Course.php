@@ -101,11 +101,11 @@ class Course extends Controller
             'id_subcat'     => !empty($data['subcat_id']) ? $data['subcat_id'] : '',
             'name'          => $data['name'],
             'description'   => $data['description'],
-            'text'          => $data['description'],
+            'text'          => $data['text'],
             'pay'           => intval($data['pay']),
             'is_open_until' => date('Y-m-d', strtotime($data['is_open_until'])),
             'available'     => intval($data['available']),
-            'price'         => !empty($data['price']) ? priceString($data['price']) : 0
+            'price'         => !empty($data['price']) ? priceString($data['price']) : ''
         ])->id; 
     }
 

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h2 class="header_block">Регистрация</h2>
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs registration_type" role="tablist">
                     <li role="presentation" class="active">
 						<a href="#user" aria-controls="user" role="tab" data-toggle="tab">Ученик</a>
 					</li>
@@ -16,7 +16,7 @@
 						<a href="#university" aria-controls="university" role="tab" data-toggle="tab">Учебное заведение</a>
 					</li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content tab_registration">
                     <div role="tabpanel" class="tab-pane active" id="user">
                         <form class="form-horizontal ajax__submit" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
@@ -71,10 +71,13 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12" id="error-respond"></div>
-                                <div class="col-md-6 ">
-                                    <button type="submit" class="btn btn-primary">
-                                        Зарегистрироваться
-                                    </button>
+                                <div class="col-md-12">
+									<div class="btn_form">
+										<p>Нажимая кнопку «Зарегистрироваться», Вы принимаете условия <a href="">Пользовательского соглашения</a> и <a href="">политики конфиденциальности</a> нашего портала</p>
+										<button type="submit" class="btn btn-primary btn_registration">
+											Зарегистрироваться
+										</button>
+									</div>
                                 </div>
                             </div>
                         </form>
@@ -134,10 +137,13 @@
  
                             <div class="form-group">
                                 <div class="col-md-12" id="error-respond"></div>
-                                <div class="col-md-6 ">
-                                    <button type="submit" class="btn btn-primary">
-                                        Зарегистрироваться
-                                    </button>
+                                <div class="col-md-12">
+									<div class="btn_form">
+										<p>Нажимая кнопку «Зарегистрироваться», Вы принимаете условия <a href="">Пользовательского соглашения</a> и <a href="">политики конфиденциальности</a> нашего портала</p>
+										<button type="submit" class="btn btn-primary btn_registration">
+											Зарегистрироваться
+										</button>
+									</div>
                                 </div>
                             </div>
                         </form>
@@ -198,10 +204,13 @@
                             </div>  
                             <div class="form-group">
                                 <div class="col-md-12" id="error-respond"></div>
-                                <div class="col-md-6 ">
-                                    <button type="submit" class="btn btn-primary">
-                                        Зарегистрироваться 
-                                    </button>
+                                <div class="col-md-12 text-center">
+									<div class="btn_form">
+										<p>Нажимая кнопку «Зарегистрироваться», Вы принимаете условия <a href="">Пользовательского соглашения</a> и <a href="">политики конфиденциальности</a> нашего портала</p>
+										<button type="submit" class="btn btn-primary btn_registration">
+											Зарегистрироваться 
+										</button>
+									</div>
                                 </div>
                             </div>
                         </form>

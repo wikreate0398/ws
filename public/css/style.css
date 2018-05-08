@@ -603,6 +603,79 @@ margin-bottom: 30px;
     display: inline-block;
 	text-transform: uppercase;
 }
+/* Страница регистрации */
+.registration_type{
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e3e5e8;
+}
+.registration_type li{
+    float: none;
+    display: inline-block;
+	margin-left: -5px;
+}
+.registration_type > li > a{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+	color: #a8a8a8;
+    text-transform: uppercase;
+	margin-right: 0px;
+	border-radius: 0px;
+}
+.registration_type > li > a:focus,
+.registration_type > li > a:hover{
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
+.registration_type > li.active > a, .registration_type > li.active > a:focus, .registration_type > li.active > a:hover {
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
+.tab_registration .form-horizontal .control-label{
+	font-family: 'Bebas Neue Regular';
+	font-size: 15px;
+	letter-spacing: 0.2em;
+	font-weight: 300;
+}
+.tab_registration .form-control {
+    color: #5f5f5f;
+    border: 1px solid #5f5f5f;
+    border-radius: 0px;
+}
+.btn_form{
+	text-align: center;
+}
+.btn_form p{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	line-height: 26px;
+	color: #5f5f5f;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.btn_registration{
+    font-family: 'Bebas Neue Regular';
+    color: #000;
+	font-weight: 600;
+    letter-spacing: 0.2em;
+    background: transparent;
+    border: none;
+    padding: 10px 25px;
+	display: inline-block;
+	width: auto;
+}
+.btn_registration:focus,
+.btn_registration:hover{
+    color: #b93777;
+    background: transparent;
+    border: none;
+}
 /* Подвал */
 footer{
     background-image: url(../images/footer_bg.png);

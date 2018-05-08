@@ -534,39 +534,34 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid about_us_block">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h1>ПРОЕКТ "КОРПОРАЦИЯ МОЗГА"</h1>
-                    <p>LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. AENEAN EUISMOD BIBENDUM LAOREET. PROIN GRAVIDA DOLOR SIT AMET LACUS ACCUMSAN ET VIVERRA JUSTO COMMODO. PROIN SODALES PULVINAR TEMPOR. CUM SOCIIS NATOQUE PENATIBUS ET MAGNIS DIS PARTURIENT MONTES, NASCETUR RIDICULUS MUS. NAM FERMENTUM, NULLA LUCTUS PHARETRA VULPUTATE, FELIS TELLUS MOLLIS ORCI, SED RHONCUS SAPIEN NUNC EGET.</p>
-                    <div class="text-center">
-                        <a href="">Подробнее</a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <img class="img-responsive" src="/images/about_us.png" alt="" style="height: 360px;width: 600px;">
-                </div>
-            </div>
-        </div>
-    </div>
-
-     
+	<div class="container about_us_block">
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1">
+				<h1>ПРОЕКТ "КОРПОРАЦИЯ МОЗГА"</h1>
+				<p>LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. AENEAN EUISMOD BIBENDUM LAOREET. PROIN GRAVIDA DOLOR SIT AMET LACUS ACCUMSAN ET VIVERRA JUSTO COMMODO. PROIN SODALES PULVINAR TEMPOR. CUM SOCIIS NATOQUE PENATIBUS ET MAGNIS DIS PARTURIENT MONTES, NASCETUR RIDICULUS MUS. NAM FERMENTUM, NULLA LUCTUS PHARETRA VULPUTATE, FELIS TELLUS MOLLIS ORCI, SED RHONCUS SAPIEN NUNC EGET.</p>
+			</div>
+			<div class="col-lg-12">
+				<img class="img-responsive" src="/images/about_us.png" alt="">
+			</div>
+		</div>
+	</div>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 @if(!empty($university))
                     <h2 class="header_block">ВУЗЫ ПАРТНЕРЫ</h2>
-                    <div id="partner_universities" class="owl-carousel owl-theme center__slider">
+                    <div id="partner_universities" class="owl-carousel owl-theme">
                         @foreach($university as $item)
                             <div class="item"> 
                                 <?php $img = !empty($item['user']['image']) ? '/public/uploads/users/' . $item['user']['image'] : noImg()  ?>
-                                <a href="/institution/{{ $item['id'] }}/" class="img__institution" style="background-image: url({{ $img }})"></a> 
-                                <h3 style="cursor: pointer;" onclick="window.location='/institution/{{ $item['id'] }}/'">{{ $item['full_name'] }}</h3>
-                               <!--  <ul class="list-unstyled">
+                                <a href="/institution/{{ $item['id'] }}/">
+									<img class="img-responsive" src="{{ $img }}">
+								</a> 
+                                <h3><a href="/institution/{{ $item['id'] }}">{{ $item['full_name'] }}</a></h3>
+                                <ul class="list-unstyled">
                                     <li>10 КУРСОВ</li>
                                     <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-                                </ul> -->
+                                </ul>
                             </div> 
                         @endforeach 
                     </div>
@@ -578,13 +573,15 @@
 
                 @if(!empty($teachers))
                 <h2 class="header_block">ЛУЧШИЕ ПРЕПОДАВАТЕЛИ</h2>
-                <div id="teacher_carousel" class="owl-carousel owl-theme center__slider">
+                <div id="teacher_carousel" class="owl-carousel owl-theme">
                     @foreach($teachers as $teacher)
                         <div class="item">
                             <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
-                            <a href="/institution/{{ $teacher['id'] }}/" onclick="return false;" class="img__teacher" style="background-image: url({{ $img }})"></a> 
-                            <h3>{{ $teacher['name'] }} {{ $teacher['surname'] }}</h3>
-                            <!-- <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p> -->
+                            <a href="/institution/{{ $teacher['id'] }}/" onclick="return false;">
+								<img style="width: 180px; height: 180px;" class="img-responsive img-circle" src="{{ $img }}">
+							</a> 
+                            <h3><a href="/institution/{{ $teacher['id'] }}/" onclick="return false;">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
+                            <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
                         </div> 
                     @endforeach
                 </div>

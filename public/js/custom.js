@@ -1,10 +1,10 @@
 jQuery(document).ready(function($) {
     $('#teacher_carousel').owlCarousel({
-        loop:false,
+        loop:true,
         margin:60,
-        nav:false,
-        dots:true,
-        navText: ['<i class="fa fa-angle-double-left" aria-hidden="true"></i>', '<i class="fa fa-angle-double-right" aria-hidden="true"></i>'],
+        nav:true,
+        dots:false,
+        navText: ['<img src="public/images/left-arrow.png">', '<img src="public/images/right-arrow.png">'],
         responsive:{
             0:{
                 items:1
@@ -18,11 +18,11 @@ jQuery(document).ready(function($) {
         }
     });
     $('#partner_universities').owlCarousel({
-        loop:false,
+        loop:true,
         margin:60,
-        nav:false,
-        dots:true,
-        navText: ['<i class="fa fa-angle-double-left" aria-hidden="true"></i>', '<i class="fa fa-angle-double-right" aria-hidden="true"></i>'],
+        nav:true,
+        dots:false,
+        navText: ['<img src="public/images/left-arrow.png">', '<img src="public/images/right-arrow.png">'],
         responsive:{
             0:{
                 items:1
@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
                 items:3
             },
             1000:{
-                items:4
+                items:3
             }
         }
     });

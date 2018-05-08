@@ -4,27 +4,23 @@
     <div class="container no__home">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-
-                <h2>Регистрация</h2><br><br>
-
-                <!-- Nav tabs -->
+                <h2 class="header_block">Регистрация</h2>
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#user" aria-controls="user" role="tab"
-                                                              data-toggle="tab">Ученик</a></li>
-                    <li role="presentation"><a href="#teacher" aria-controls="teacher" role="tab" data-toggle="tab">Учитель </a>
+                    <li role="presentation" class="active">
+						<a href="#user" aria-controls="user" role="tab" data-toggle="tab">Ученик</a>
+					</li>
+                    <li role="presentation">
+						<a href="#teacher" aria-controls="teacher" role="tab" data-toggle="tab">Учитель </a>
                     </li>
-                    <li role="presentation"><a href="#university" aria-controls="university" role="tab"
-                                               data-toggle="tab">Учебное заведение</a></li>
+                    <li role="presentation">
+						<a href="#university" aria-controls="university" role="tab" data-toggle="tab">Учебное заведение</a>
+					</li>
                 </ul>
-
-                <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="user">
                         <form class="form-horizontal ajax__submit" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
-
                             <input type="hidden" name="user_type" value="1">
-
                             <div class="row" style="padding-top:20px;">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -211,7 +207,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
 
         </div>

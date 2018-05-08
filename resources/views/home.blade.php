@@ -70,11 +70,11 @@
             <div class="col-lg-12">
                 <h2 class="header_block">ПОПУЛЯРНЫЕ КУРСЫ</h2>
                 <ul class="nav nav-tabs popular_courses">
-                    <li class="active"><a data-toggle="tab" href="#panel1">ВСЕ КУРСЫ (450)</a></li>
-                    <li><a data-toggle="tab" href="#panel2">IT-КУРСЫ (5)</a></li>
-                    <li><a data-toggle="tab" href="#panel1">ПРОФЕССИОНАЛЬНЫЙ РОСТ(10)</a></li>
-                    <li><a data-toggle="tab" href="#panel2">БИЗНЕС И ФИНАНСЫ (40)</a></li>
-                    <li><a data-toggle="tab" href="#panel1">WEB-ДИЗАЙН (10)</a></li>
+                    <li class="active"><a data-toggle="tab" href="#panel1">ВСЕ КУРСЫ 450</a></li>
+                    <li><a data-toggle="tab" href="#panel2">IT-КУРСЫ 5</a></li>
+                    <li><a data-toggle="tab" href="#panel1">ПРОФЕССИОНАЛЬНЫЙ РОСТ 10</a></li>
+                    <li><a data-toggle="tab" href="#panel2">БИЗНЕС И ФИНАНСЫ 40</a></li>
+                    <li><a data-toggle="tab" href="#panel1">WEB-ДИЗАЙН 10</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -82,15 +82,17 @@
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -102,32 +104,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -139,32 +147,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -176,32 +190,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -213,32 +233,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -250,32 +276,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -287,34 +319,40 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div id="panel2" class="tab-pane fade">
-                    <div class="col-lg-4">
+					<div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -326,32 +364,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -363,32 +407,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -400,32 +450,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -437,32 +493,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -474,32 +536,38 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="external_card">
                             <div class="caption">
-                                <ul class="list-unstyled card_tag">
-                                    <li>
-                                        ПРОФЕССИОНАЛЬНЫЙ РОСТ
+                                <ul class="list-inline card_tag">
+                                    <li class="tag_sticker">
+										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+									</li>
+                                    <li class="bookmark_tag">
                                         <span>
                                            <button class="btn btn-default">
                                                <i class="fa fa-heart-o"></i>
                                            </button>
                                        </span>
-                                    </li>
+									</li>
                                 </ul>
                                 <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
                                 <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
@@ -511,17 +579,21 @@
                                         Длительность <span> 1 месяц </span>
                                     </li>
                                     <li>
-                                        Рейтинг <span> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                        Рейтинг 
+										<span class="rating_star"> 
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half-o"></i> 
+										</span>
                                     </li>
                                 </ul>
-                                <div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                            <div class="caption_footer">
-                                <ul class="list-inline card_date_info">
+								<ul class="list-inline card_date_info">
                                     <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar fa-2x"></i></li>
-                                    <li class="right_date">ИДЕТ НАБОР ДО<br>20.10.2018</li>
+                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
                                 </ul>
+								<div class="more_card"><a href="#">Подробнее</a></div>
                             </div>
                         </div>
                     </div>
@@ -567,6 +639,10 @@
                     </div>
                 @endif
 
+                <div class="link_more">
+                    <a href="/educational-institution/">Все вузы</a>
+                </div>
+				
                 <div class="banner_block">
                     <img class="img-responsive" src="/images/banner_2.jpg" alt="">
                 </div>

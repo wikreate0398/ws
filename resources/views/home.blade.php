@@ -598,6 +598,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="link_more">
+                    <a href="">Все курсы</a>
+                </div>
             </div>
             <div class="col-lg-12">
                 <div class="banner_block">

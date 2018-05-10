@@ -36,6 +36,13 @@ jQuery(document).ready(function($) {
         }
     });
 
+    $("input#teacher_status").switchButton({
+        on_label: 'Свободен',
+        off_label: 'Занят', 
+        width: 50,
+        height: 20,
+        button_width: 25
+    });
 
     $( ".datepicker" ).datepicker({
         dateFormat: "dd-mm-yy",
@@ -465,4 +472,136 @@ function setPayCourse(input){
     }else{
         $('.price__course').attr('disabled', false);
     } 
+}
+
+$('form#search_form').on('submit', function(e){
+    var len = $('input#search__input').val().length;
+    if (len < 3) {
+        alert('Введите не менее 3 символов');
+        e.preventDefault();
+    }  
+});
+
+$('input#search__input').focus(function(){
+    $(this).keyup();
+}); 
+
+$('form#search_form').find('input#search__input').keyup(function(){  
+    if ($(this).val().length >= 3) {   
+        $.ajax({
+            type: "GET",
+            url: '/autocomplete',
+            data:{search: $(this).val()},
+            dataType: 'json',
+            beforeSend: function(){},
+            success: function(jsonData){
+                if (jsonData.content != '') {
+                    $('.loaded__search_result').show();
+                    $('.loaded__search_result').html(jsonData.content); 
+                }else{
+                    $('.loaded__search_result').hide();
+                    $('.loaded__search_result').html(''); 
+                } 
+            }
+        }); 
+    }else{
+        $('.loaded__search_result').hide();
+        $('.loaded__search_result').html(''); 
+    }
+});
+
+$(document).on('click', function(e) {  
+    if($(e.target).closest('.input-search-area').length <= 0) {
+        $('.loaded__search_result').hide();
+    } 
+});
+ 
+function teacherStatus(input){
+    var status = $(input).prop('checked');
+
+    $.ajax({
+        url: '/user/profile/changeStatus',
+        type: 'POST', 
+        data: {status:status, _token: CSRF_TOKEN}, 
+        dataType: 'json',
+        beforeSend: function() {},
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status === 401) document.location.reload(true);
+        },
+        success: function(jsonResponse, textStatus, request) {},
+        complete: function() {}
+    }); 
+}
+
+function getRoundedCanvas(sourceCanvas) {
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var width = sourceCanvas.width;
+    var height = sourceCanvas.height;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    context.imageSmoothingEnabled = true;
+    context.drawImage(sourceCanvas, 0, 0, width, height);
+    context.globalCompositeOperation = 'destination-in';
+    context.beginPath();
+    context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+    context.fill();
+
+    return canvas;
+}
+
+function profilePhoto(fileName){
+
+    var reader = new FileReader(); 
+
+    reader.readAsDataURL(fileName.files[0]);
+
+    reader.onload = function (e) {
+
+        $('.cropper__section, #overlay').fadeIn(150); 
+
+        $('.edit__profile__photo-icon').show();
+        $('.cropper__image_content').html('<img src="" id="image__crop">');
+        var image = $('img#image__crop');
+
+        $(image).attr('src', reader.result); 
+        $('input#avatar').val(reader.result);
+
+        var image = document.getElementById('image__crop');
+        var button = document.getElementById('crop__btn');
+         
+        var croppable = false;
+        var cropper = new Cropper(image, { 
+          aspectRatio: 1,
+          viewMode: 1,
+          ready: function () { 
+            croppable = true;
+          }
+        });
+
+        button.onclick = function () {
+          var croppedCanvas;
+          var roundedCanvas;
+          var roundedImage;
+
+          if (!croppable) {
+            return;
+          }
+
+          // Crop
+          croppedCanvas = cropper.getCroppedCanvas();
+
+          // Round
+          roundedCanvas = getRoundedCanvas(croppedCanvas);
+
+          // Show
+          roundedImage     = document.createElement('img');
+          roundedImage.src = roundedCanvas.toDataURL();
+          $('input#avatar').val(roundedImage.src);
+          $('.profile__img').css('background-image', 'url('+roundedImage.src+')'); 
+          $('.save__cropped_image').show();
+        };
+    }; 
 }

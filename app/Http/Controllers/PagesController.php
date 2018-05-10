@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
@@ -60,6 +61,56 @@ class PagesController extends Controller
         ];  
 
         return view('university.show', $data);
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $query      = $request->input('search'); 
+        $getCourses = \App\Models\Courses::where('name', 'like', "%$query%")->get(); 
+        $content    = '';    
+        if (count($getCourses)) 
+        {
+            $content .= '<div> <label>Курсы</label>';
+            foreach ($getCourses as $course) 
+            {
+                $content .= '<a href=""> 
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>' . $course['name'] .  '
+                            </a>';
+            }
+            $content .= '</div>';
+        }
+
+        $getTeachers = User::where('user_type', 2)->where('name', 'like', "%$query%")->orderBy('created_at', 'desc')->get(); 
+        
+        if (count($getTeachers)) 
+        {
+            $content .= '<div> <label>Учителя</label>';
+            foreach ($getTeachers as $teacher) 
+            {
+                $content .= '<a href=""> 
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>' . $teacher['name'] .  '
+                            </a>';
+            }
+            $content .= '</div>';
+        }
+
+        $getUniversity = \App\Models\UsersUniversity::where('full_name', 'like', "%$query%")
+                                                     ->orderBy('created_at', 'desc')
+                                                     ->get(); 
+           
+        if (count($getUniversity)) 
+        {
+            $content .= '<div> <label>Учебные заведения</label>';
+            foreach ($getUniversity as $university)
+            {
+                $content .= '<a href="/institution/'.$university['id'].'/">
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>  ' . $university['full_name'] .  '
+                            </a>';
+            }
+            $content .= '</div>';
+        }
+
+        return \App\Utils\JsonResponse::success(['content' => $content]);
     }
 
     public function termsOfUse()

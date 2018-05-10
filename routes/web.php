@@ -23,7 +23,9 @@ Route::group(['middlewars' => 'guest'], function(){
 	Route::get('test_mail', 'Auth\RegisterController@test_mail');
 });
 
-Route::get('about', 'PagesController@about'); 
+Route::get('about', 'PagesController@about');
+Route::get('autocomplete', 'PagesController@autocomplete'); 
+ 
 Route::get('contacts', 'PagesController@contacts'); 
 Route::get('under-construction', 'PagesController@underConstruction');
 Route::get('terms-of-use', 'PagesController@termsOfUse');
@@ -50,7 +52,8 @@ Route::group(['middleware' => ['web_auth']], function(){
 	 
 	Route::post('user/profile/loadCourseSubcats', 'ProfileController@loadCourseSubcats');  
 	Route::post('user/profile/deleteCourseSection', 'ProfileController@deleteCourseSection');   
-	Route::post('user/profile/deleteCourseSectionLecture', 'ProfileController@deleteCourseSectionLecture');   
+	Route::post('user/profile/deleteCourseSectionLecture', 'ProfileController@deleteCourseSectionLecture'); 
+	Route::post('user/profile/changeStatus', 'ProfileController@changeStatus');   
 
 	Route::get('user/profile/edit', 'ProfileController@showEditForm')->name('user_edit');	 
 

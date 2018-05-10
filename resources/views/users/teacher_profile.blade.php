@@ -1,27 +1,35 @@
 @extends('layouts.app')
 
-@section('content') 
+@section('content')  
 
 <div class="no__home" style="margin-top: 66px;"> 
 	<div style="background: rgba(188, 188, 188, 1); padding:30px 0;">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-2" style="text-align: center;"> 
-					<form class="form-horizontal ajax__submit" method="POST" action="{{ route('update_image') }}">
+					<form class="form-horizontal ajax__submit profile__image_form" method="POST" action="{{ route('update_image') }}">
 		    			{{ csrf_field() }}
-						<div class="profile__img" style="background-image: url(/public/uploads/users/{{ $user->image }});"></div>
+						<div class="profile__img" style="background-image: url(/public/uploads/users/{{ $user->avatar ? $user->avatar : $user->image }});"></div>
 						<div id="error-respond"></div>
 						<span class="btn btn-default btn-sm btn-file">
-						    Выбрать <input type="file" name="image">
+						    Выбрать <input type="file" name="image" onchange="profilePhoto(this)">
 						</span>
-						<button type="submit" class="btn primary btn-sm">Сохранить</button>  
+						<input type="hidden" name="avatar" id="avatar">
+						<button type="button" 
+						        style="display: none;" 
+						        onclick="$('.cropper__section, #overlay').fadeIn(150); " 
+						        class="btn primary btn-sm edit__profile__photo-icon">
+						        	<i style="position: relative; top: 1px;left: 1px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+						</button>
+						<!-- <button type="submit" class="btn primary btn-sm">Сохранить</button>   -->
 					</form>
 				</div>
 
 				<div class="col-md-10">
 					<h1 style="margin-top: 30px;">{{ $user->name }}</h1>
 					<a class="dashed__link" href="{{ route('user_edit') }}">Редактировать профиль</a><br><br>
-					<button class="btn btn-info btn-sm" style="display: inline-block; width: auto; border-radius: 20px; cursor: default;">Преподаватель</button>
+					<input type="checkbox" id="teacher_status" {{ ($user->is_available==1) ? 'checked' : '' }} onchange="teacherStatus(this)">
+					<button class="btn btn-info btn-sm" style="display: inline-block; width: auto; margin-top: 10px; border-radius: 20px; cursor: default;">Преподаватель</button>
 				</div> 
 			</div>
 		</div>

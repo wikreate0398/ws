@@ -34,7 +34,13 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') . '?v=' . time() }}"></script>
-    <script src="{{ asset('js/custom.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('js/switcher.js') }}"></script>
+
+    <link  href="{{ asset('js/cropperjs/dist/cropper.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/cropperjs/dist/cropper.js') }}"></script>
+
+    <script src="{{ asset('js/custom.js') . '?v=' . time() }}"></script> <!-- http://olance.github.io/jQuery-switchButton/ -->
+     
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'); 
     </script>
@@ -299,6 +305,30 @@
         </div>-->
     </footer>
 
+    <div id="overlay"></div>
+
+    @if(Auth::check())
+    <div class="cropper__section">
+        <div class="cropper__close" onclick="$('.cropper__section, #overlay').fadeOut(150);">Закрыть</div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="cropper__image_content">
+                    <img src="" id="image__crop" alt="">
+                </div>
+            </div> 
+
+            <div class="col-md-12">
+                <button id="crop__btn" class="btn btn-default">обрезать</button>
+                <button type="submit" 
+                        style="display: none;" 
+                        class="btn primary btn-sm save__cropped_image"
+                        onclick="$('form.profile__image_form').submit();">Сохранить</button>  
+                <div id="result"></div>
+            </div> 
+        </div> 
+    </div>  
+    @endif
 </body>
 
 </html>

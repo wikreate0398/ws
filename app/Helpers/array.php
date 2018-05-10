@@ -292,3 +292,11 @@ function toFloat($s) {
     // return float
     return (float) $s;
 }  
+
+function uploadBase64($base64, $path){
+    $data = $base64;
+    $data = str_replace('data:image/png;base64,', '', $data);
+    $data = str_replace(' ', '+', $data);
+    $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));    
+    file_put_contents($path, $data); 
+}

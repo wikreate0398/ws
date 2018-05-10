@@ -204,7 +204,7 @@ span.req{
     margin-right: auto;
     padding-top: 50%;
     padding-bottom: 50%;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 50%;
@@ -233,6 +233,60 @@ footer .footer_bottom ul{
     font-size: 15px;
     margin-bottom: 0px;
 }
+
+/* Обрезка фото */
+
+#overlay{
+    display: none;
+    background-color: rgba(0,0,0,.8);
+    position: fixed;
+    z-index: 1031;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.cropper__section{
+    padding:20px;
+    display: none;
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    position: fixed;
+    z-index: 1032;
+    left: 0; top: 0; bottom: 0; right: 0;
+    border: 1px solid #ededed;
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 14px rgba(0,0,0,.8);
+    box-shadow: 0 2px 14px rgba(0,0,0,.8);
+}
+
+.cropper__image_content{
+    text-align: center;
+    margin-bottom: 20px;
+    height: 300px;
+}
+
+.cropper__image_content img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
+
+.cropper__close{
+    position: absolute;
+    top: -15px;
+    right: 0;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 9px;
+    cursor: pointer;
+    }
 
 /* Страница преподователей */
 .filter_top{
@@ -669,13 +723,19 @@ margin-bottom: 30px;
     padding: 10px 25px;
 	display: inline-block;
 	width: auto;
+     outline: none !important;
 }
 .btn_registration:focus,
 .btn_registration:hover{
-    color: #b93777;
-    background: transparent;
-    border: none;
+     outline: none !important;
+    color: #b93777 !important;;
+    background: transparent !important;;
+    border: none !important;;
 }
+.btn_registration > .loader-inner div{
+    background-color: #b93777;
+}
+
 /* Страница авторизации */
 .login_page .form-horizontal .control-label{
 	font-family: 'Bebas Neue Regular';
@@ -698,13 +758,113 @@ margin-bottom: 30px;
     padding: 10px 25px;
 	display: inline-block;
 	width: auto;
+    outline: none !important;
 }
 .btn_login:focus,
 .btn_login:hover{
-    color: #b93777;
-    background: transparent;
-    border: none;
+    outline: none !important;
+    color: #b93777 !important;
+    background: transparent !important;
+    border: none !important;
 }
+
+.btn_login > .loader-inner div{
+    background-color: #b93777;
+}
+
+/* Поиск */
+.input-search-area{
+    position: relative;
+}
+
+.loaded__search_result{
+    display: none;
+    position: absolute;
+    width: 100%;
+    top:50px;
+    padding: 15px;
+    border-radius: 5px;
+    left: 0px;
+    background: #fff;
+    z-index: 999;
+}
+
+.loaded__search_result label, .loaded__search_result a{
+    display: block;
+}
+
+.loaded__search_result label{
+    color: #a8a8a8;
+    font-family: 'Helvetica Neue Cyr Roman';
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 12px;
+    border-bottom: 1px solid #ededed;
+} 
+
+.loaded__search_result a{
+    color: #b93777;
+    font-family: 'Helvetica Neue Cyr Roman';
+    font-weight: 300; 
+    font-size: 13px; 
+    text-decoration: none;
+} 
+
+.loaded__search_result a i{
+    padding-right: 5px;
+}
+
+/* Switcher */
+
+.switch-button-label {
+    float: left;
+
+    font-size: 10pt;
+    cursor: pointer;
+}
+
+.switch-button-label.off {
+    color: #7e8282;
+}
+
+.switch-button-label.on {
+    color: #fff;
+}
+
+.switch-button-background {
+    float: left;
+    position: relative;
+
+    background: #ccc;
+    border: 1px solid #aaa;
+
+    margin: 1px 10px;
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+    cursor: pointer;
+}
+
+.switch-button-button {
+    position: absolute;
+
+    left: -1px;
+    top : -1px;
+
+    background: #FAFAFA;
+    border: 1px solid #aaa;
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.switch-button-label{
+    line-height: 25px;
+}
+
 /* Подвал */
 footer{
     background-image: url(../images/footer_bg.png);

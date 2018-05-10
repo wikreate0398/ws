@@ -47,11 +47,12 @@
                                 </a>
                             </li>
                         </ul>
-                        <form id="search_form">
+                        <form id="search_form" action="/search/">
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="Введите название">
+                                    <div class="form-group input-search-area">
+                                        <input name="q" class="form-control" id="search__input" placeholder="Введите название">
+                                        <div class="loaded__search_result"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -64,7 +65,7 @@
             </div>
         </div>
     </div>
-
+  
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -655,7 +656,7 @@
                 <div id="teacher_carousel" class="owl-carousel owl-theme">
                     @foreach($teachers as $teacher)
                         <div class="item">
-                            <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
+                            <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['avatar'] : noImg()  ?>
                             <a href="/institution/{{ $teacher['id'] }}/" onclick="return false;">
 								<img style="width: 180px; height: 180px;" class="img-responsive img-circle" src="{{ $img }}">
 							</a> 

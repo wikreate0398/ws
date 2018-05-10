@@ -14,7 +14,7 @@
                             @foreach($teachers as $teacher)
                                 <div class="col-md-2"> 
                                     <div class="item">
-                                        <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
+                                        <?php $img = !empty($teacher['avatar']) ? '/public/uploads/users/' . $teacher['avatar'] : noImg()  ?>
                                         <a href="/institution/{{ $teacher['id'] }}/" onclick="return false;" class="img__teacher" style="background-image: url({{ $img }})"></a> 
                                         <h3>{{ $teacher['name'] }}</h3>
                                         <!-- <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p> -->

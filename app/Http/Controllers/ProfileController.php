@@ -173,10 +173,21 @@ class ProfileController extends Controller
             return \App\Utils\JsonResponse::error(['messages' => $validator->errors()->toArray()]); 
         } 
 
-        $fileName = UserService::init(Auth::user()->user_type)->uploadImage();   
+        $fileName = UserService::init(Auth::user()->user_type)->uploadImage();  
+
+        $avatarbase64    = $request->input('avatar');
+        $avatarImageName = '';
+        if (!empty($avatarbase64)) 
+        {
+            $avatarImageName = 'user-' . Auth::user()->id . '.png';
+            $avatarImagePath = public_path() . '/uploads/users/' . $avatarImageName;  
+            uploadBase64($avatarbase64, $avatarImagePath); 
+        }
+
         User::where('id', Auth::user()->id)->
           update([ 
-            'image' => $fileName 
+            'image'  => $fileName ,
+            'avatar' => $avatarImageName
         ]); 
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Изображение успешно изменено!');
@@ -204,6 +215,15 @@ class ProfileController extends Controller
         }
         echo $content;
     } 
+
+    public function changeStatus(Request $request)
+    {
+        $status = $request->input('status'); 
+        $obj_user               = User::find(Auth::user()->id);
+        $obj_user->is_available = ($status == 'true') ? '1' : '0'; 
+        $obj_user->save();  
+        return \App\Utils\JsonResponse::success();
+    }
   
     public function updatePassword()
     { 

@@ -57,7 +57,7 @@ class UniversityUser extends Controller implements UserTypesInterface
     public function editCourseForm($id_course)
     {
         $user    = Auth::user();
-        $courses = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
+        $courses = Courses::with('sections')->where('id_user', $user->id)->orderBy('created_at', 'desc')->findOrFail($id_course); 
 
         return view('users.teacher_profile', [ 
             'user'       => Auth::user(), 

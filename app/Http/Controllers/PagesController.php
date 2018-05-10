@@ -116,7 +116,7 @@ class PagesController extends Controller
 
     public function search(Request $request)
     {
-        $query      = $request->input('q');  
+        $query      = urldecode($request->input('q'));  
         $searchData = $this->generateSearch($query);
         return view('pages.search', ['data' => $searchData]);
     }

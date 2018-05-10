@@ -63,6 +63,48 @@ jQuery(document).ready(function($) {
         }
     });  
 
+    $('form#search_form').on('submit', function(e){
+        var len = $('input#search__input').val().length;
+        if (len < 3) {
+            alert('Введите не менее 3 символов');
+            e.preventDefault();
+        }  
+    });
+
+    $('input#search__input').focus(function(){
+        $(this).keyup();
+    }); 
+
+    $('form#search_form').find('input#search__input').keyup(function(){  
+        if ($(this).val().length >= 3) {   
+            $.ajax({
+                type: "GET",
+                url: '/autocomplete',
+                data:{search: $(this).val()},
+                dataType: 'json',
+                beforeSend: function(){},
+                success: function(jsonData){
+                    if (jsonData.content != '') {
+                        $('.loaded__search_result').show();
+                        $('.loaded__search_result').html(jsonData.content); 
+                    }else{
+                        $('.loaded__search_result').hide();
+                        $('.loaded__search_result').html(''); 
+                    } 
+                }
+            }); 
+        }else{
+            $('.loaded__search_result').hide();
+            $('.loaded__search_result').html(''); 
+        }
+    });
+
+    $(document).on('click', function(e) {  
+        if($(e.target).closest('.input-search-area').length <= 0) {
+            $('.loaded__search_result').hide();
+        } 
+    });
+  
     function serializeForm(form, button, action, button_txt){
         $.ajax({
             url: action,
@@ -473,48 +515,6 @@ function setPayCourse(input){
         $('.price__course').attr('disabled', false);
     } 
 }
-
-$('form#search_form').on('submit', function(e){
-    var len = $('input#search__input').val().length;
-    if (len < 3) {
-        alert('Введите не менее 3 символов');
-        e.preventDefault();
-    }  
-});
-
-$('input#search__input').focus(function(){
-    $(this).keyup();
-}); 
-
-$('form#search_form').find('input#search__input').keyup(function(){  
-    if ($(this).val().length >= 3) {   
-        $.ajax({
-            type: "GET",
-            url: '/autocomplete',
-            data:{search: $(this).val()},
-            dataType: 'json',
-            beforeSend: function(){},
-            success: function(jsonData){
-                if (jsonData.content != '') {
-                    $('.loaded__search_result').show();
-                    $('.loaded__search_result').html(jsonData.content); 
-                }else{
-                    $('.loaded__search_result').hide();
-                    $('.loaded__search_result').html(''); 
-                } 
-            }
-        }); 
-    }else{
-        $('.loaded__search_result').hide();
-        $('.loaded__search_result').html(''); 
-    }
-});
-
-$(document).on('click', function(e) {  
-    if($(e.target).closest('.input-search-area').length <= 0) {
-        $('.loaded__search_result').hide();
-    } 
-});
  
 function teacherStatus(input){
     var status = $(input).prop('checked');

@@ -33,4 +33,13 @@ class TeachersController extends Controller
 
         return view('teachers.catalog', $data);
     } 
+
+    public function show($id)
+    { 
+        $data = [
+            'teacher' => \App\Models\User::findOrFail($id),
+        ]; 
+
+        return view('teachers.show', $data);
+    } 
 }

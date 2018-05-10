@@ -51,12 +51,12 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <div class="form-group input-search-area">
-                                        <input name="q" class="form-control" id="search__input" placeholder="Введите название">
+                                        <input name="q" autocomplete="off" class="form-control" id="search__input" placeholder="Введите название">
                                         <div class="loaded__search_result"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
-                                    <button type="button" class="btn btn-primary">Поиск</button>
+                                    <button type="submit" class="btn btn-primary">Поиск</button>
                                 </div>
                             </div>
                         </form>
@@ -657,10 +657,10 @@
                     @foreach($teachers as $teacher)
                         <div class="item">
                             <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['avatar'] : noImg()  ?>
-                            <a href="/institution/{{ $teacher['id'] }}/" onclick="return false;">
+                            <a href="/teacher/{{ $teacher['id'] }}/" onclick="return false;">
 								<img style="width: 180px; height: 180px;" class="img-responsive img-circle" src="{{ $img }}">
 							</a> 
-                            <h3><a href="/institution/{{ $teacher['id'] }}/" onclick="return false;">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
+                            <h3><a href="/teacher/{{ $teacher['id'] }}/" onclick="return false;">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
                             <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
                         </div> 
                     @endforeach

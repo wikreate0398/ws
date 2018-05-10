@@ -63,45 +63,46 @@ class PagesController extends Controller
         return view('university.show', $data);
     }
 
+    public function courses()
+    {
+        return view('courses.list');
+    } 
+
     public function autocomplete(Request $request)
     {
-        $query      = $request->input('search'); 
-        $getCourses = \App\Models\Courses::where('name', 'like', "%$query%")->get(); 
+        $query      = $request->input('search');  
+        $searchData = $this->generateSearch($query);
+        if (empty($searchData)) die();
+         
         $content    = '';    
-        if (count($getCourses)) 
+        if (@count($searchData['courses'])) 
         {
             $content .= '<div> <label>Курсы</label>';
-            foreach ($getCourses as $course) 
+            foreach ($searchData['courses'] as $course) 
             {
                 $content .= '<a href=""> 
                                 <i class="fa fa-angle-right" aria-hidden="true"></i>' . $course['name'] .  '
                             </a>';
             }
             $content .= '</div>';
-        }
-
-        $getTeachers = User::where('user_type', 2)->where('name', 'like', "%$query%")->orderBy('created_at', 'desc')->get(); 
+        } 
         
-        if (count($getTeachers)) 
+        if (@count($searchData['teachers'])) 
         {
             $content .= '<div> <label>Учителя</label>';
-            foreach ($getTeachers as $teacher) 
+            foreach ($searchData['teachers'] as $teacher) 
             {
-                $content .= '<a href=""> 
+                $content .= '<a href="/teacher/'.$teacher['id'].'/"> 
                                 <i class="fa fa-angle-right" aria-hidden="true"></i>' . $teacher['name'] .  '
                             </a>';
             }
             $content .= '</div>';
-        }
-
-        $getUniversity = \App\Models\UsersUniversity::where('full_name', 'like', "%$query%")
-                                                     ->orderBy('created_at', 'desc')
-                                                     ->get(); 
+        } 
            
-        if (count($getUniversity)) 
+        if (@count($searchData['university'])) 
         {
             $content .= '<div> <label>Учебные заведения</label>';
-            foreach ($getUniversity as $university)
+            foreach ($searchData['university'] as $university)
             {
                 $content .= '<a href="/institution/'.$university['id'].'/">
                                 <i class="fa fa-angle-right" aria-hidden="true"></i>  ' . $university['full_name'] .  '
@@ -111,6 +112,44 @@ class PagesController extends Controller
         }
 
         return \App\Utils\JsonResponse::success(['content' => $content]);
+    }
+
+    public function search(Request $request)
+    {
+        $query      = $request->input('q');  
+        $searchData = $this->generateSearch($query);
+        return view('pages.search', ['data' => $searchData]);
+    }
+
+    private function generateSearch($query, $data = [])
+    {
+
+        if (empty($query)) 
+        {
+            return array();
+        }
+
+        $getCourses = \App\Models\Courses::where('name', 'like', "%$query%")->get(); 
+        if (count($getCourses)) 
+        {
+            $data['courses'] = $getCourses;
+        }
+
+        $getTeachers = User::where('user_type', 2)->where('name', 'like', "%$query%")->orderBy('created_at', 'desc')->get(); 
+        if (count($getTeachers)) 
+        {
+            $data['teachers'] = $getTeachers;
+        }
+
+        $getUniversity = \App\Models\UsersUniversity::where('full_name', 'like', "%$query%")
+                                                     ->orderBy('created_at', 'desc')
+                                                     ->get();  
+        if (count($getUniversity)) 
+        {
+            $data['university'] = $getUniversity;
+        }
+
+        return $data;
     }
 
     public function termsOfUse()

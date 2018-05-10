@@ -15,7 +15,7 @@
                                 <div class="col-md-2"> 
                                     <div class="item">
                                         <?php $img = !empty($teacher['avatar']) ? '/public/uploads/users/' . $teacher['avatar'] : noImg()  ?>
-                                        <a href="/institution/{{ $teacher['id'] }}/" onclick="return false;" class="img__teacher" style="background-image: url({{ $img }})"></a> 
+                                        <a href="/teacher/{{ $teacher['id'] }}/" onclick="return false;" class="img__teacher" style="background-image: url({{ $img }})"></a> 
                                         <h3>{{ $teacher['name'] }}</h3>
                                         <!-- <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p> -->
                                     </div> 
@@ -90,20 +90,19 @@
                         <div class="col-lg-2">
                             <div class="left_teachers_external_card">
                                 <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
-                                <a href="/institution/{{ $teacher['id'] }}/" 
-                                   class="img__teacher" 
-                                   onclick="return false;" 
+                                <a href="/teacher/{{ $teacher['id'] }}/" 
+                                   class="img__teacher"  
                                    style="background-image: url({{ $img }})"></a>
                                 <span>Свободен</span>
-                                <a class="more_link">Подробнее</a>
+                                <a class="more_link" href="/teacher/{{ $teacher['id'] }}/">Подробнее</a>
                             </div>
                         </div>
                         <div class="col-lg-10">
                             <div class="right_teachers_external_card">
                                 <div class="row">
                                     <div class="col-lg-9">
-                                        <h2>{{ $teacher['name'] }} <br>
-                                        {{ $teacher['surname'] }} {{ $teacher['patronymic'] }} <span>38 лет, опыт работы 5 лет</span></h2>
+                                        <h2> <a href="/teacher/{{ $teacher['id'] }}/"> {{ $teacher['name'] }}</a> <br>
+                                         <span>38 лет, опыт работы 5 лет</span></h2>
                                         <ul class="list-inline">
                                             <li>ПОДГОТОВКА К ЕГЭ</li>
                                             <li>ВСТУПИТЕЛЬНЫЕ ЭКЗАМЕНЫ</li>

@@ -31,9 +31,11 @@ Route::get('under-construction', 'PagesController@underConstruction');
 Route::get('terms-of-use', 'PagesController@termsOfUse');
  
 Route::get('educational-institutions', 'InstitutionController@index'); 
-Route::get('institution/{id}', 'InstitutionController@view');
-
-Route::get('teachers', 'TeachersController@index');  
+Route::get('institution/{id}', 'InstitutionController@view'); 
+Route::get('teachers', 'TeachersController@index');
+Route::get('teacher/{id}', 'TeachersController@show');
+Route::get('courses', 'PagesController@courses'); 
+Route::get('search', 'PagesController@search');  
 
 Route::group(['middleware' => ['web_auth']], function(){ 
 	Route::get('user/profile/course', 'ProfileController@showCourse')->name('user_profile');

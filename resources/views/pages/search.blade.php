@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-lg-9">
                         <div class="form-group input-search-area">
-                            <input name="q" autocomplete="off" value="{{ request()->input('q') }}" class="form-control" id="search__input" placeholder="Введите название">
+                            <input name="q" autocomplete="off" value="{{ urldecode(request()->input('q')) }}" class="form-control" id="search__input" placeholder="Введите название">
                             <div class="loaded__search_result"></div>
                         </div>
                     </div>

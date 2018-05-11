@@ -1,3 +1,228 @@
+<div class="row">
+	<div class="col-lg-2">
+		<ul class="nav nav-tabs user_edit">
+			<li class="active">
+				<a data-toggle="tab" href="#panel1">
+					<span><i class="fa fa-user"></i></span> О Вас
+				</a>
+			</li>
+			<li>
+				<a data-toggle="tab" href="#panel2">
+					<span><i class="fa fa-cog"></i></span> Я репетитор
+				</a>
+			</li>
+			<li>
+				<a data-toggle="tab" href="#panel3">
+					<span><i class="fa fa-certificate"></i></span> Сертификат/Диплом
+				</a>
+			</li>
+		</ul>
+	</div> 
+	<div class="col-lg-10">
+		<div class="tab-content">
+			<div id="panel1" class="tab-pane fade in active">
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Общий профиль</h3>
+				</div>
+				
+				<label class="col-md-3 control-label">ВАШЕ ФИО <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<label class="col-md-3 control-label">КОРОТКО  О ВАС <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<textarea class="form-control" value="" required="" autofocus=""></textarea>
+					</div>
+				</div>
+				<label class="col-md-3 control-label">ДАТА РОЖДЕНИЯ <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<label class="col-md-3 control-label">ВАШ ПОЛ <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<label class="radio-inline">
+						  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Женский
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Мужской
+						</label>
+					</div>
+				</div>
+				<label class="col-md-3 control-label">ГОРОД <span class="req">*</span></label>
+				<div class="col-md-4">
+					<div class="form-group">
+						<select class="form-control">
+						  <option>Город</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<select class="form-control">
+						  <option>Район города</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Мое образование</h3>
+				</div>
+				<label class="col-md-3 control-label">ГДЕ ВЫ УЧИЛИСЬ? <span class="req">*</span></label>
+				<div class="col-md-4">
+					<div class="form-group">
+						<select class="form-control">
+						  <option>Список всех ВУЗОВ</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<select class="form-control">
+						  <option>Уровень образования</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Контактные данные</h3>
+				</div>
+				<label class="col-md-3 control-label">АДРЕС <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<label class="col-md-3 control-label">ТЕЛЕФОН <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Регистрационные данные</h3>
+				</div>
+				<label class="col-md-3 control-label">E-MAIL <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<label class="col-md-3 control-label">ПАРОЛЬ <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<label class="col-md-3 control-label">ПОВТОРИТЕ ПАРОЛЬ <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+			</div>
+			<div id="panel2" class="tab-pane fade">
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Я умею учить</h3>
+				</div>
+				<label class="col-md-4 control-label">СТЕПЕНЬ ВАШЕГО ОПЫТА <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<select class="form-control">
+						  <option>Студент педагогического вуза</option>
+						</select>
+					</div>
+				</div>
+				<label class="col-md-4 control-label">ОПЫТ РАБОТЫ УЧИТЕЛЕМ С <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Ваша специализация</h3>
+				</div>
+				<div class="col-md-12">
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="option1"> ДОШКОЛЬНИК
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox2" value="option2"> 1-3 КЛАСС
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" value="option3"> 4-9 КЛАСС
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ПОДГОТОВКА К ЕГЭ
+					</label>
+				</div>
+				<div class="col-md-12">
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" value="option3"> 10 - 11 КЛАСС
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ПОДГОТОВКА К ОГЭ
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ВСТУПИТЕЛЬНЫЕ ЭКЗАМЕНЫ
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" value="option3"> СТУДЕНТАМ ВУЗОВ
+					</label>
+				</div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Ваша предметная область</h3>
+				</div>
+				<label class="col-md-4 control-label">ПРЕДМЕТЫ <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" required="" autofocus="" type="text">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Варианты проведения занятий</h3>
+				</div>
+				<div class="col-md-12">
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox1" value="option1"> ВОЗМОЖЕН ВЫЕЗД К УЧЕНИКУ
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox2" value="option2"> ЗАНЯТИЯ В ГРУППАХ
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ТОЛЬКО ИНДИВИДУАЛЬНЫЕ ЗАНЯТИЯ
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ОНЛАЙН-ЗАНЯТИЯ
+					</label>
+				</div>
+				<label class="col-md-4 control-label">У ВАС (РЕПЕТИТОРА) НА ДОМУ <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<textarea class="form-control" value="" required="" autofocus=""></textarea>
+					</div>
+				</div>
+			</div>
+			<div id="panel3" class="tab-pane fade">
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Мои дипломы/сертификаты</h3>
+					<input type="file" id="exampleInputFile">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+
 <form class="form-horizontal ajax__submit" method="POST" action="{{ route('update_profile') }}">
     {{ csrf_field() }}
     <input type="hidden" name="user_type" value="2">

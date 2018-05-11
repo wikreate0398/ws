@@ -771,7 +771,35 @@ margin-bottom: 30px;
 .btn_login > .loader-inner div{
     background-color: #b93777;
 }
-
+/* Личный кабинет */
+/* Редактирование профиля */
+.user_edit li {
+    float: none;
+}
+.user_edit li a{
+    font-family: 'Cuprum Regular';
+	font-size: 15px;
+	text-transform: uppercase;
+	padding: 0px;
+	text-align: center;
+}
+.user_edit li a span{
+	font-size: 30px;
+	text-align: center;
+    display: block;
+}
+.header_blok_user{
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+.header_blok_user:after{
+	content: "";
+	width: 15%;
+	height: 3px;
+	background: rgba(153, 153, 204, 1);
+	display: block;
+	margin-top: 5px;
+}
 /* Поиск */
 .input-search-area{
     position: relative;

@@ -38,7 +38,7 @@ class UniversityUser extends Controller implements UserTypesInterface
         $user    = Auth::user();
         $courses = Courses::with('sections')->where('id_user', $user->id)->get();
 
-        return view('users.teacher_profile', [ 
+        return view('users.university_profile', [ 
             'user'    => Auth::user(), 
             'courses' => $courses,
             'include' => $this->viewPath . 'courses',
@@ -47,7 +47,7 @@ class UniversityUser extends Controller implements UserTypesInterface
 
     public function showCourseForm()
     {
-        return view('users.teacher_profile', [ 
+        return view('users.university_profile', [ 
             'user'       => Auth::user(), 
             'include'    => 'users.profile_types.teacher.add_course',
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
@@ -59,7 +59,7 @@ class UniversityUser extends Controller implements UserTypesInterface
         $user    = Auth::user();
         $courses = Courses::with('sections')->where('id_user', $user->id)->orderBy('created_at', 'desc')->findOrFail($id_course); 
 
-        return view('users.teacher_profile', [ 
+        return view('users.university_profile', [ 
             'user'       => Auth::user(), 
             'include'    => 'users.profile_types.teacher.edit_course',
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),

@@ -27,19 +27,19 @@
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.<br>
 			МЕСТА ПРОВЕДЕНИЯ ЗАНЯТИЙ<br>
 			<ul class="list-inline">
-				<li class="active">
+				<li>
 					<i class="fa fa-map-marker"></i>
 					МОСКВА, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ
 				</li>
-				<li>
+				<li class="active">
 					<i class="fa fa-chevron-circle-down"></i>
 					ВОЗМОЖЕН ВЫЕЗД
 				</li>
-				<li>
+				<li class="active">
 					<i class="fa fa-chevron-circle-down"></i>
 					ЗАНЯТИЯ В ГРУППЕ
 				</li>
-				<li>
+				<li class="active">
 					<i class="fa fa-chevron-circle-down"></i>
 					ИНДИВИДУАЛЬНО
 				</li>

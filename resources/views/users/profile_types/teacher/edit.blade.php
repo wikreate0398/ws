@@ -18,7 +18,11 @@
 			</li>
 		</ul>
 	</div> 
-	<div class="col-lg-10">
+
+	<form class="ajax__submit" method="POST" action="{{ route('update_profile') }}">
+    {{ csrf_field() }}
+    <input type="hidden" name="user_type" value="2">
+	<div class="col-lg-10" style="min-height: 300px;">
 		<div class="tab-content">
 			<div id="panel1" class="tab-pane fade in active">
 				<div class="col-md-12">
@@ -28,43 +32,51 @@
 				<label class="col-md-3 control-label">ВАШЕ ФИО <span class="req">*</span></label>
 				<div class="col-md-9">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						<input class="form-control" value="{{ $user->name }}" name="name" required type="text">
 					</div>
 				</div>
 				<label class="col-md-3 control-label">КОРОТКО  О ВАС <span class="req">*</span></label>
 				<div class="col-md-9">
 					<div class="form-group">
-						<textarea class="form-control" value="" required="" autofocus=""></textarea>
+						<textarea class="form-control" name="about" required autofocus="">{{ $user->about }}</textarea>
 					</div>
 				</div>
 				<label class="col-md-3 control-label">ДАТА РОЖДЕНИЯ <span class="req">*</span></label>
 				<div class="col-md-9">
-					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+					<div class="form-group"> 
+						<input type="text" 
+                           class="form-control datepicker" 
+                           name="date_birth"
+                           value="{{ !empty($user->date_birth) ? date('d-m-Y', strtotime($user->date_birth)) : '' }}" 
+                           required 
+                           placeholder="DD/MM/YY"> 
 					</div>
 				</div>
 				<label class="col-md-3 control-label">ВАШ ПОЛ <span class="req">*</span></label>
 				<div class="col-md-9">
 					<div class="form-group">
 						<label class="radio-inline">
-						  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Женский
+						  <input type="radio" required name="sex" {{ ($user->sex=='female') ? 'checked' : '' }} id="inlineRadio1" value="female"> Женский
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Мужской
+						  <input type="radio" name="sex" {{ ($user->sex=='male') ? 'checked' : '' }} id="inlineRadio2" value="male"> Мужской
 						</label>
 					</div>
 				</div>
-				<label class="col-md-3 control-label">ГОРОД <span class="req">*</span></label>
+				<label class="col-md-3 control-label">ГОРОД</label>
 				<div class="col-md-4">
 					<div class="form-group">
-						<select class="form-control">
-						  <option>Город</option>
+						<select class="form-control" name="city">
+							<option value="0">Город</option>
+							@foreach($cities as $item)
+                           		<option {{ ($user['city'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
+                        	@endforeach
 						</select>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<select class="form-control">
+						<select class="form-control" name="region">
 						  <option>Район города</option>
 						</select>
 					</div>
@@ -73,33 +85,38 @@
 					<h3 class="header_blok_user">Мое образование</h3>
 				</div>
 				<label class="col-md-3 control-label">ГДЕ ВЫ УЧИЛИСЬ? <span class="req">*</span></label>
-				<div class="col-md-4">
-					<div class="form-group">
-						<select class="form-control">
-						  <option>Список всех ВУЗОВ</option>
-						</select>
-					</div>
+				<div class="col-md-9">
+					@if(count($usersEducations))
+						<?php $i=0; ?>
+						@foreach($usersEducations as $education) 
+							<div class="row multi__container education__container {{ ($i == 0) ? 'first_block' : '' }}">
+								@if($i > 0)
+				                    <a class="close__item delete__item" href="/user/deleteUserEducation/<?=$education['id']?>">X</a>
+				                @endif
+								@include('users.profile_types.teacher.partials.grade_education')
+							</div> 
+							<?php $i++ ?>
+						@endforeach
+					@else
+						<div class="row multi__container education__container first_block">
+							@include('users.profile_types.teacher.partials.grade_education')		
+						</div> 
+					@endif 
 				</div>
-				<div class="col-md-4">
-					<div class="form-group">
-						<select class="form-control">
-						  <option>Уровень образования</option>
-						</select>
-					</div>
-				</div>
+
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Контактные данные</h3>
 				</div>
 				<label class="col-md-3 control-label">АДРЕС <span class="req">*</span></label>
 				<div class="col-md-9">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						<input class="form-control" name="address" value="{{ $user->address }}" required type="text">
 					</div>
 				</div>
 				<label class="col-md-3 control-label">ТЕЛЕФОН <span class="req">*</span></label>
 				<div class="col-md-9">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						<input class="form-control" name="phone" value="{{ $user->phone }}" required type="text">
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -108,19 +125,25 @@
 				<label class="col-md-3 control-label">E-MAIL <span class="req">*</span></label>
 				<div class="col-md-9">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						<input class="form-control" name="email" value="{{ $user->email }}" required type="text">
+					</div>
+				</div>
+				<label class="col-md-3 control-label">СТАРЫЙ ПАРОЛЬ <span class="req">*</span></label>
+				<div class="col-md-9">
+					<div class="form-group">
+						<input class="form-control" name="old_password" value="" type="password">
 					</div>
 				</div>
 				<label class="col-md-3 control-label">ПАРОЛЬ <span class="req">*</span></label>
 				<div class="col-md-9">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						<input class="form-control" name="password" value="" type="password">
 					</div>
 				</div>
 				<label class="col-md-3 control-label">ПОВТОРИТЕ ПАРОЛЬ <span class="req">*</span></label>
 				<div class="col-md-9">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						<input class="form-control" name="password_confirmation" value="" type="password">
 					</div>
 				</div>
 			</div>
@@ -131,7 +154,7 @@
 				<label class="col-md-4 control-label">СТЕПЕНЬ ВАШЕГО ОПЫТА <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<select class="form-control">
+						<select class="form-control" name="grade_experience">
 						  <option>Студент педагогического вуза</option>
 						</select>
 					</div>
@@ -139,90 +162,220 @@
 				<label class="col-md-4 control-label">ОПЫТ РАБОТЫ УЧИТЕЛЕМ С <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						<input class="form-control number_field" name="experience_from" value="{{ $user->experience_from }}" required="" type="text">
 					</div>
 				</div>
 				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						<input class="form-control" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
 					</div>
 				</div>
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Ваша специализация</h3>
 				</div>
 				<div class="col-md-12">
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox1" value="option1"> ДОШКОЛЬНИК
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox2" value="option2"> 1-3 КЛАСС
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox3" value="option3"> 4-9 КЛАСС
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ПОДГОТОВКА К ЕГЭ
-					</label>
+					@php
+						$teacher_specializations = array_map(function ($item) {
+						    return $item['id_specialization'];
+						}, $teacher_specializations->toArray());    
+					@endphp
+					@foreach($specializations_list as $specialization)
+						<label class="checkbox-inline">
+							<input type="checkbox" 
+							       {{ in_array($specialization->id, $teacher_specializations) ? 'checked' : '' }}
+							       name="specializations[{{ $specialization->id }}]" 
+							       id="specialization{{ $specialization->id }}"> {{ $specialization->name }}
+						</label>
+					@endforeach 
 				</div>
-				<div class="col-md-12">
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox3" value="option3"> 10 - 11 КЛАСС
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ПОДГОТОВКА К ОГЭ
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ВСТУПИТЕЛЬНЫЕ ЭКЗАМЕНЫ
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox3" value="option3"> СТУДЕНТАМ ВУЗОВ
-					</label>
-				</div>
+				 
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Ваша предметная область</h3>
 				</div>
 				<label class="col-md-4 control-label">ПРЕДМЕТЫ <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" required="" autofocus="" type="text">
+						@php
+							$teacher_subjects = array_map(function ($item) {
+							    return $item['name'];
+							}, $teacher_subjects->toArray());    
+						@endphp
+						<input class="form-control" 
+						       name="teacher_subjects" 
+						       value="{{ implode(', ', $teacher_subjects)  }}" 
+						       required
+						       type="text">
 					</div>
 				</div>
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Варианты проведения занятий</h3>
 				</div>
-				<div class="col-md-12">
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox1" value="option1"> ВОЗМОЖЕН ВЫЕЗД К УЧЕНИКУ
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox2" value="option2"> ЗАНЯТИЯ В ГРУППАХ
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ТОЛЬКО ИНДИВИДУАЛЬНЫЕ ЗАНЯТИЯ
-					</label>
-					<label class="checkbox-inline">
-					  <input type="checkbox" id="inlineCheckbox3" value="option3"> ОНЛАЙН-ЗАНЯТИЯ
-					</label>
+				<div class="col-md-12"> 
+					@php
+						$teacher_lesson_options = array_map(function ($item) {
+						    return $item['id_lesson_option'];
+						}, $teacher_lesson_options->toArray());    
+					@endphp
+					@foreach($lesson_options_list as $lesson_option)
+						<label class="checkbox-inline">
+							<input type="checkbox" 
+								   {{ in_array($lesson_option->id, $teacher_lesson_options) ? 'checked' : '' }}
+							       name="lesson_options[{{ $lesson_option->id }}]" 
+							       id="lesson_options_list{{ $lesson_option->id }}"> {{ $lesson_option->name }}
+						</label>
+					@endforeach 
 				</div>
 				<label class="col-md-4 control-label">У ВАС (РЕПЕТИТОРА) НА ДОМУ <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<textarea class="form-control" value="" required="" autofocus=""></textarea>
+						<textarea class="form-control" value="" autofocus=""></textarea>
 					</div>
 				</div>
 			</div>
 			<div id="panel3" class="tab-pane fade">
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Мои дипломы/сертификаты</h3>
-					<input type="file" id="exampleInputFile">
+					<input type="file" 
+					       name="diploms[]" 
+					       multiple 
+					       id="exampleInputFile" 
+					       onchange="multipleImages(this, '#certificates__images')">
+					<div id="certificates__images" class="uploaderContainter">
+						@foreach($certificates as $certificate)
+							<div class='img-thumbnail'>
+            		            <div class='actions__upload_img'>
+            		            	<i onclick='deleteUploadImg(this, {{ $certificate->id }})' 
+            		            	   class='fa fa-trash-o' 
+            		            	   aria-hidden='true'></i>
+                                </div>
+        		            	<img class='uploadedImg' src='/public/uploads/users/certificates/{{ $certificate->image }}'> 
+            		     	</div>
+						@endforeach
+					</div> 
 				</div>
 			</div>
-		</div>
+		</div> 
 	</div>
+	<div class="col-lg-10 col-lg-offset-2">
+		<div class="form-group">
+	        <div class="col-md-12" id="error-respond"></div>
+	        <div class="col-md-6 ">
+	            <button type="submit" class="btn btn-primary btn-sm" style="width: auto;">
+	                Сохранить
+	            </button>
+	        </div>
+	    </div>
+	</div>
+	</form>
+<style>
+	.uploaderContainter img.uploadedImg{
+		max-height: 100%;
+		max-width: 100%;
+	}
+	
+	.uploaderContainter .img-thumbnail{
+		max-width: 100px;
+		margin-right: 10px;
+		position: relative;
+		transition: none !important;
+	}
+
+	.uploaderContainter{
+		justify-content: flex-start;
+		display: flex;
+		width: 100%;
+		align-items: center;
+		margin-top: 20px;
+	}
+
+	.uploaderContainter .actions__upload_img{
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		font-size: 14px;
+		justify-content: center;
+		align-items: center;
+		display: none;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,.6);
+		color: #fff;
+		text-transform: uppercase; 
+	}
+
+	.uploaderContainter .actions__upload_img i{
+		cursor: pointer;
+	}
+
+	.uploaderContainter .img-thumbnail:hover .actions__upload_img{
+		display: flex; 
+	}
+</style>
+<script>
+	function multipleImages(input, uploaderContainter){
+		if (input.files && input.files[0]) {
+			$(input.files).each(function(i) { 
+				var fileExtension = ["image/gif", "image/jpeg", "image/png", "image/jpg"];
+	            var fileType = this["type"];
+	            var fileName = this["name"];
+	            var fileSize = parseInt(this["size"]) / 1000;
+
+	            var error = false;
+	            if (jQuery.inArray(fileType, fileExtension) == -1) {
+	                alert('Ошибка в расширении файла!');
+	                error = true; 
+	            }  
+
+	            if (fileSize > 2048) {
+	                alert('Максимальный размер изображения 2МБ');
+	                error = true; 
+	            }
+
+	            var reader = new FileReader();
+            	reader.readAsDataURL(this);
+
+            	reader.onload = function(e) { 
+            		$(uploaderContainter).show();
+            		var content = "<div class='img-thumbnail'>"+
+            		              "<div class='actions__upload_img'>"+
+            		              "<i onclick='deleteUploadImg(this)' class='fa fa-trash-o' aria-hidden='true'></i>"+
+                                  "</div>"+
+            		              "<img class='uploadedImg' src='"+reader.result+"'>"+
+            		              "<input type='hidden' name='certificates[]' value='"+reader.result+"'>"+
+            		              "</div>";
+            		$(uploaderContainter).append(content);
+            	} 
+			}); 
+		} 
+	}
+
+	function deleteUploadImg(item, id){
+		if (!confirm('Вы действительно хотите удалить?')) {
+			return false;
+		}
+		$(item).closest('.img-thumbnail').remove(); 
+		if (id) {
+			$.ajax({
+	            url: '/user/deleteCertificate',
+	            type: 'POST', 
+	            data: {'id':id, _token: CSRF_TOKEN}, 
+	            dataType: 'json',
+	            beforeSend: function() {},
+	            error: function(XMLHttpRequest, textStatus, errorThrown) {
+	                if (XMLHttpRequest.status === 401) document.location.reload(true);
+	            },
+	            success: function(jsonResponse, textStatus, request) {},
+	            complete: function() { }
+	        });
+		}
+	}  
+</script>
 </div>
 <div class="clearfix"></div>
 
+<?php if (false): ?> 
+ 
 <form class="form-horizontal ajax__submit" method="POST" action="{{ route('update_profile') }}">
     {{ csrf_field() }}
     <input type="hidden" name="user_type" value="2">
@@ -237,7 +390,6 @@
                 </div>
             </div>
  
-
             <div class="form-group">
                 <label class="col-md-12 control-label">Номер телефона <span class="req">*</span>
 
@@ -895,7 +1047,9 @@
         </div>
     </div>
 </form>
+<?php endif ?>
 
+<?php if (false): ?> 
 <br><br>
 <h4>Сменить пароль</h4>
 <hr>
@@ -939,3 +1093,4 @@
         </div>
     </div>
 </form>
+<?php endif ?>

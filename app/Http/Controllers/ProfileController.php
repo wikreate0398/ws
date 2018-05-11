@@ -62,6 +62,12 @@ class ProfileController extends Controller
         return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
     } 
 
+    public function deleteCertificate(Request $request)
+    {
+        $id = $request->input('id');
+        \App\Models\TeacherCertificates::whereId($id)->where('id_teacher', Auth::user()->id)->delete();
+    }
+
     public function showDiploms()
     {
         return UserService::init(Auth::user()->user_type)->showDiploms();  

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers\Users\UserTypes;
 
-use App\Models\User; 
+use App\Models\User;  
+use App\Models\TeacherSubjects;
+use App\Models\TeacherSpecializations;
+use App\Models\TeacherLessonOptions;
+use App\Models\TeacherCertificates;
+
 use App\Models\UsersEducations;
 use App\Models\UsersTeachingActivities;
 use App\Models\UsersWorkExperience;
@@ -22,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\UserMail;
 use App\Http\Controllers\Users\UserTypes\UserTypesInterface; 
 
+use Illuminate\Support\Facades\DB;
 /**
 * Регистрация обычного пользователя
 */
@@ -46,6 +52,13 @@ class TeacherUser extends Controller implements UserTypesInterface
             'usersEducations' => UsersEducations::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
             'usersTeachingActivities' => UsersTeachingActivities::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
             'usersWorkExperience'     => UsersWorkExperience::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
+
+            'specializations_list'    => DB::table('specializations_list')->where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
+            'lesson_options_list'     => DB::table('lesson_options_list')->where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
+            'teacher_subjects'        => TeacherSubjects::where('id_teacher', $user->id)->orderBy('id', 'asc')->get(), 
+            'teacher_specializations' => TeacherSpecializations::where('id_teacher', $user->id)->get(),  
+            'teacher_lesson_options'  => TeacherLessonOptions::where('id_teacher', $user->id)->get(),
+            'certificates'            => TeacherCertificates::where('id_teacher', $user->id)->orderBy('id', 'asc')->get(), 
             'include'                 => $this->viewPath . 'edit',
         ]); 
     }   

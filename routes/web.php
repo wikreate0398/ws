@@ -65,7 +65,9 @@ Route::group(['middleware' => ['web_auth']], function(){
 
 	Route::get('user/deleteUserEducation/{id}', 'ProfileController@deleteUserEducation'); 
 	Route::get('user/deleteUserActivities/{id}', 'ProfileController@deleteUserActivities'); 
-	Route::get('user/deleteUserExperience/{id}', 'ProfileController@deleteUserExperience'); 
+	Route::get('user/deleteUserExperience/{id}', 'ProfileController@deleteUserExperience');
+	Route::post('user/deleteCertificate', 'ProfileController@deleteCertificate'); 
+	 
 
 	Route::get('user/forgot-password', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('forgot_password');
 	Route::post('user/forgot-password', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('send_reset_link'); 

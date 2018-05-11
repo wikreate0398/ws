@@ -112,15 +112,16 @@ span.req{
 .close__item{
     position: absolute;
     right: 10px;
-    top: 10px;
+    top: -25px;
     font-size: 16px; 
     cursor: pointer;
     z-index: 9999;
 }
 
 .multi__container {
-    border-top: 1px solid #ddd;
+    /*border-top: 1px solid #ddd;*/
     position: relative;
+    margin-bottom: 20px;
 }
 
 .multi__container:nth-child(1){

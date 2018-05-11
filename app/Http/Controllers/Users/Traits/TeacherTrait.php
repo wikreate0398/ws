@@ -9,6 +9,13 @@ use App\Models\UsersEducations;
 use App\Models\UsersTeachingActivities;
 use App\Models\UsersWorkExperience;
 
+use App\Models\TeacherSubjects;
+use App\Models\TeacherSpecializations;
+use App\Models\TeacherLessonOptions;
+use App\Models\TeacherCertificates;
+
+use Illuminate\Support\Facades\Hash;
+
 trait TeacherTrait
 {
 	private $niceNames = [
@@ -20,40 +27,36 @@ trait TeacherTrait
         'program_type'       => 'Типы программ',
         'id_category'        => 'Основные рубрики',
         'parent_institution' => 'Родительское ВУЗ',
-        'form_attitude'      => 'Форма отношения'
+        'form_attitude'      => 'Форма отношения',
+        'sex'                => 'Пол',
+        'address'            => 'Адрес',
+        'teacher_subjects'   => 'Предметы',
+        'specializations'    => 'Специализация',
+        'lesson_options'     => 'проведения занятий' 
     ];
 
     private $rules = [
-        'name'                  =>   'required',
-        // 'surname'               =>   'required',
-        // 'patronymic'            => 'required', 
-        'date_birth'            =>   'required',
-        'phone'                 => 'required', 
-        'image'                 => 'file|mimes:jpeg,jpg,png',
+        'name'                  => 'required', 
+        'date_birth'            => 'required',
+        'phone'                 => 'required',
+        'sex'                   => 'required',
+        'address'               => 'required',
+        'image'                 => 'image|mimes:jpeg,jpg,png',
         'email'                 => 'required|string|email|unique:users',
         'password'              => 'required|string|min:6|confirmed',
         'password_confirmation' => 'required',
+        'teacher_subjects'      => 'required',
+        'specializations'       => 'required',
+        'lesson_options'        => 'required'
     ]; 
 
-    private $education = [];
-
-    private $edit_education = [];
-
-    private $work_experience = [];
-
-    private $edit_work_experience = [];
-
-    private $teach_activity = [];
-
-    private $edit_teach_activity = [];
+    private $education = []; 
 
     private $_id_user;
-
+ 
     public function validation(array $data)
     { 
         $education       = sortValue(request()->input('education'));
-        $teach_activity  = sortValue(request()->input('teach_activity')); 
-        $work_experience = sortValue(request()->input('work_experience'));
  
         $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames);  
@@ -65,20 +68,20 @@ trait TeacherTrait
         $validateMultiArr = validateArray([
             '0' => [
                 'array'    => $education, 
-                'excepts'  => ['notes', 'department'], 
+                'excepts'  => [], 
                 'fName'    => 'education', 
                 'required' => true
             ],
-            '1' => [
-                'array'   => $teach_activity, 
-                'excepts' => ['description'], 
-                'fName'   => 'teach_activity'
-            ],
-            '2' => [
-                'array'   => $work_experience, 
-                'excepts' => ['description', 'responsibility'], 
-                'fName'   => 'work_experience'
-            ] 
+            // '1' => [
+            //     'array'   => $teach_activity, 
+            //     'excepts' => ['description'], 
+            //     'fName'   => 'teach_activity'
+            // ],
+            // '2' => [
+            //     'array'   => $work_experience, 
+            //     'excepts' => ['description', 'responsibility'], 
+            //     'fName'   => 'work_experience'
+            // ] 
         ]); 
 
         if ($validateMultiArr['status'] == false) 
@@ -117,8 +120,6 @@ trait TeacherTrait
 
         $this->_id_user = $createUser->id; 
         $this->saveEducations();
-        $this->saveTeachingActivities();
-        $this->saveWorkExperience();  
         return $this->_id_user;
     }
 
@@ -127,13 +128,8 @@ trait TeacherTrait
         $insert = [];
         foreach ($this->education as $key => $item) { 
             $insert[] = [
-                'id_user'          => $this->_id_user,
-                'from_year'        => $item['from'],
-                'to_year'          => $item['to'],
-                'institution_name' => $item['institution'],
-                'department'       => $item['department'],
-                'notes'            => $item['notes'],
-                'specialty'        => $item['specialty'],
+                'id_user'          => $this->_id_user, 
+                'institution_name' => $item['institution'], 
                 'grade'            => $item['grade'], 
             ];
         } 
@@ -186,57 +182,21 @@ trait TeacherTrait
 
     private function validateEdit(array $data)
     {   
-        $this->education       = sortValue(request()->input('education'));
-        $this->teach_activity  = sortValue(request()->input('teach_activity')); 
-        $this->work_experience = sortValue(request()->input('work_experience'));
-        $this->edit_education       = sortValue(request()->input('edit_education'));
-        $this->edit_teach_activity  = sortValue(request()->input('edit_teach_activity')); 
-        $this->edit_work_experience = sortValue(request()->input('edit_work_experience'));
+        $this->education       = sortValue(request()->input('education')); 
  
         $validateMultiArr = validateArray([
             '0' => [
                 'array'    => $this->education, 
-                'excepts'  => ['notes', 'department'], 
+                'excepts'  => [], 
                 'fName'    => 'education', 
-                'required' => empty($this->edit_education) ? true : false
-            ],
-
-            '1' => [
-                'array'   => $this->teach_activity, 
-                'excepts' => ['description'], 
-                'fName'   => 'teach_activity'
-            ],
-
-            '2' => [
-                'array'   => $this->work_experience, 
-                'excepts' => ['description', 'responsibility'], 
-                'fName'   => 'work_experience'
-            ],
-
-            '3' => [
-                'array'    => $this->edit_education, 
-                'excepts'  => ['notes', 'department'], 
-                'fName'    => 'edit_education', 
-                'required' => empty($this->education) ? true : false
-            ],
-
-            '4' => [
-                'array'   => $this->edit_teach_activity, 
-                'excepts' => ['description'], 
-                'fName'   => 'edit_teach_activity'
-            ],
-
-            '5' => [
-                'array'   => $this->edit_work_experience, 
-                'excepts' => ['description', 'responsibility'], 
-                'fName'   => 'edit_work_experience'
-            ]
+                'required' => true
+            ] 
         ]);
 
         if ($validateMultiArr['status'] == false) 
         {
             return [$validateMultiArr['field'] => ['Заполните все обязательные поля!']];
-        }
+        } 
   
         $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames);  
@@ -249,7 +209,7 @@ trait TeacherTrait
 
     public function edit(array $data, $id_user)
     {  
-
+ 
         $this->_id_user = $id_user; 
         
         foreach (['email', 'password', 'password_confirmation'] as $key => $value) 
@@ -258,7 +218,7 @@ trait TeacherTrait
         }   
 
         $errors = $this->validateEdit($data); 
-
+ 
         if ($errors !== true) 
         {
             return $errors; 
@@ -269,20 +229,21 @@ trait TeacherTrait
         {
             return 'Пользователь с таким имейлом уже существует!'; 
         } 
-
+  
         User::where('id', $id_user)
             ->update([ 
-            'name'       => $data['name'],
-            // 'surname'    => $data['surname'],
-            // 'patronymic' => $data['patronymic'],
+            'name'       => $data['name'], 
             'date_birth' => date('Y-m-d', strtotime($data['date_birth'])), 
             'phone'      => $data['phone'],
             'email'      => $data['email'], 
-            'city'       => !empty($data['city']) ? $data['city'] : '',
+            'city'       => $data['city'],
+            'region'     => $data['region'],
             'phone'      => $data['phone'],
-            'phone2'     => !empty($data['phone2']) ? $data['phone2'] : '',
-            'fax'        => !empty($data['fax']) ? $data['fax'] : '',
-            'site'       => !empty($data['site']) ? $data['site'] : '' 
+            'about'      => $data['about'],
+            'sex'        => $data['sex'],
+            'address'    => $data['address'],
+            'experience_from' => intval($data['experience_from']),
+            'price_hour'      => toFloat($data['price_hour'])
         ]);  
 
         if (request()->hasFile('image')) { 
@@ -293,85 +254,107 @@ trait TeacherTrait
             ]); 
         }
 
-        if (!empty($this->education)) {
-            $this->saveEducations();
-        }
-         
-        $this->saveTeachingActivities();
-        $this->saveWorkExperience(); 
-
-        if (!empty($this->edit_education)) 
+        TeacherSubjects::where('id_teacher', $id_user)->delete();
+        if (!empty($data['teacher_subjects'])) 
         {
-            foreach ($this->edit_education as $key => $item) 
-            { 
-                if (!empty($item['id'])) 
-                { 
-                    $update = [  
-                        'from_year'        => $item['from'],
-                        'to_year'          => $item['to'],
-                        'institution_name' => $item['institution'],
-                        'department'       => ifNull($item['department']),
-                        'notes'            => ifNull($item['notes']),
-                        'specialty'        => $item['specialty'],
-                        'grade'            => $item['grade'], 
-                    ];  
-
-                    UsersEducations::where('id', $item['id'])->where('id_user', $id_user)->update($update);
-                }
-            }   
+            $teacher_subjects = explode(',', $data['teacher_subjects']);
+            $insert           = [];
+            foreach ($teacher_subjects as $key => $subject) 
+            {
+                $insert[] = [
+                    'id_teacher' => $id_user,
+                    'name'       => $subject
+                ];
+            }
+            TeacherSubjects::insert($insert);
         }
 
-        if (empty($this->edit_teach_activity) && empty($this->teach_activity)) 
-        {
-            UsersTeachingActivities::where('id_user', $id_user)->delete();
-        }
-        elseif(!empty($this->edit_teach_activity))
+        TeacherSpecializations::where('id_teacher', $id_user)->delete();
+        if (!empty($data['specializations'])) 
         { 
-            foreach ($this->edit_teach_activity as $key => $item) 
-            { 
-                if (!empty($item['id'] )) 
-                { 
-                    $update = [ 
-                        'from_year'        => $item['from'],
-                        'to_year'          => $item['to'],
-                        'institution_name' => $item['institution'],
-                        'position'         => $item['position'],
-                        'description'      => ifNull($item['description']),
-                        'id_category'      => $item['id_category'],
-                        'program_type'     => $item['program_type']  
-                    ];  
-                }
-
-                UsersTeachingActivities::where('id', $item['id'])->where('id_user', $id_user)->update($update);
-            }  
+            $insert          = [];
+            foreach ($data['specializations'] as $id_specialization => $value) 
+            {
+                $insert[] = [
+                    'id_teacher'        => $id_user,
+                    'id_specialization' => $id_specialization
+                ];
+            }
+            TeacherSpecializations::insert($insert);
         }
 
-        if (empty($this->edit_work_experience) && empty($this->work_experience)) 
-        {
-            UsersWorkExperience::where('id_user', $id_user)->where('id_user', $id_user)->delete();
-        }
-        elseif (!empty($this->edit_work_experience)) 
+        TeacherLessonOptions::where('id_teacher', $id_user)->delete();
+        if (!empty($data['lesson_options'])) 
         { 
-            foreach ($this->edit_work_experience as $key => $item) 
-            { 
-                if (!empty($item['id'])) 
-                {
-                    $update = [ 
-                        'from_year'        => $item['from'],
-                        'to_year'          => $item['to'],
-                        'institution_name' => $item['institution'],
-                        'position'         => $item['position'],
-                        'description'      => ifNull($item['description']),
-                        'direction'        => $item['direction'],
-                        'responsibility'   => ifNull($item['responsibility']), 
-                    ];
-                }
+            $insert         = [];
+            foreach ($data['lesson_options'] as $id_lesson_option => $value) 
+            {
+                $insert[] = [
+                    'id_teacher'       => $id_user,
+                    'id_lesson_option' => $id_lesson_option
+                ];
+            } 
+            TeacherLessonOptions::insert($insert);
+        }
 
-                UsersWorkExperience::where('id', $item['id'])->where('id_user', $id_user)->update($update);
-            }  
+        UsersEducations::where('id_user', $id_user)->delete();
+        $this->saveEducations(); 
+
+        if (!empty($data['certificates'])) 
+        {
+            $this->saveCertificates($data['certificates'], $id_user);
+        }
+
+        if (!empty($data['old_password'])) 
+        {
+ 
+            $validator = Validator::make($data, [
+                'old_password'          => 'required',
+                'password'              => 'required|string|min:6|confirmed|',
+                'password_confirmation' => 'required',
+            ]);
+            $validator->setAttributeNames([
+                'password'         => 'Пароль',
+                'repeat_password'  => 'Повторите пароль',
+                'old_password'     => 'Старый Пароль'
+            ]);
+            $errors=false;
+            if ($validator->fails()) 
+            {
+                $errors = $validator->errors()->toArray(); 
+            } 
+
+            $obj_user = User::find($id_user);
+
+            if(Hash::check($data['old_password'], $obj_user->password) == false) {
+                $errors[]['password'] = 'Старый пароль не верный';
+            } 
+
+            if (!empty($errors)) 
+            {   
+                return $errors;
+            } 
+ 
+            $obj_user->password = Hash::make($data['password']);
+            $obj_user->save(); 
         }
 
         return true; 
+    } 
+
+    public function saveCertificates($certificates, $id_user)
+    {
+        $insert = [];
+        foreach ($certificates as $key => $value) 
+        {
+            $fileName = md5(microtime()) . '.png';
+            uploadBase64($value, public_path() . "/uploads/users/certificates/$fileName");
+            $insert[] = [
+                'id_teacher' => $id_user,
+                'image'      => $fileName
+            ];
+        } 
+        TeacherCertificates::insert($insert);
     }
 
     public function uploadImage()

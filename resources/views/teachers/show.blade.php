@@ -3,8 +3,8 @@
 @section('content')
 <div class="container no__home">
 	<div class="row">
-		<div class="col-lg-3">
-			<img class="img-responsive img-circle" src="http://via.placeholder.com/400x400">
+		<div class="col-lg-3"> 
+			<img class="img-responsive img-circle" src="/public/uploads/users/{{ $teacher->avatar ? $teacher->avatar : $teacher->image }}">
 			<div>
 			от {{ $teacher->price_hour }} руб/час
 			</div>

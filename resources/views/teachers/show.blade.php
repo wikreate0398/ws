@@ -6,60 +6,81 @@
 		<div class="col-lg-3">
 			<img class="img-responsive img-circle" src="http://via.placeholder.com/400x400">
 			<div>
-			от 500 руб/час
+			от {{ $teacher->price_hour }} руб/час
 			</div>
 		</div>
 		<div class="col-lg-9">
 			<ul class="list-inline">
-				<li>Свободен</li>
+				<li>{{ $teacher->is_available ? 'Свободен' : 'Занят' }}</li>
 				<li>Добавить в избранное</li>
 			</ul>
-			<h1>Гапонова Маргарита Поликарповна</h1>
-			38 лет, опыт преподавания 5 лет <br>
+			<h1>{{ $teacher->name }}</h1>
+			{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, опыт преподавания {{ date('Y') - $teacher->experience_from }} лет <br>
 			ГОРОД:<br>
-			МОСКВА, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ<br>
-			СПЕЦИАЛИЗАЦИЯ: ПОДГОТОВКА К ЕГЭ ВСТУПИТЕЛЬНЫЕ ЭКЗАМЕНЫ 10-11 КЛАСС<br>
-			ПРЕДМЕТНАЯ ОБЛАСТЬ: МАТЕМАТИКА, ФИЗИКА ГЕОМЕТРИЯ<br>
-			ПОЛ:ЖЕНСКИЙ<br>
-			ОБРАЗОВАНИЕ <br>
-			ЮФУ (РГУ), биолого-почвенный факультет, специальность – биология, зоология, преподаватель химии и биологии<br>
+			{{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ<br>
+
+			@if(count($teacher_specializations))
+				@php 
+					$teacher_specializations = array_map(function ($item) {
+					    return $item['id_specialization'];
+					}, $teacher_specializations->toArray());     
+				@endphp
+				СПЕЦИАЛИЗАЦИЯ: {{ implode(', ', $teacher_specializations) }}<br>
+			@endif
+			
+			@if(count($teacher_subjects))
+				@php
+					$teacher_subjects = array_map(function ($item) {
+					    return $item['name'];
+					}, $teacher_subjects->toArray());    
+				@endphp 
+				ПРЕДМЕТНАЯ ОБЛАСТЬ: {{ implode(', ', $teacher_subjects) }}<br>
+			@endif
+
+			ПОЛ:{{ ($teacher->sex == 'male') ? 'Мужской' : 'Женский' }}<br>
+
+			@if(count($educations))
+				@php
+					$educations = array_map(function ($item) {
+					    return $item['institution_name'];
+					}, $educations->toArray());    
+				@endphp 
+				ОБРАЗОВАНИЕ <br>
+				{{ implode(', ', $educations) }}<br>
+			@endif
+
+			 
 			О СЕБЕ<br>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.<br>
+			{{ $teacher->about }}<br>
 			МЕСТА ПРОВЕДЕНИЯ ЗАНЯТИЙ<br>
 			<ul class="list-inline">
 				<li>
 					<i class="fa fa-map-marker"></i>
 					МОСКВА, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ
 				</li>
-				<li class="active">
-					<i class="fa fa-chevron-circle-down"></i>
-					ВОЗМОЖЕН ВЫЕЗД
-				</li>
-				<li class="active">
-					<i class="fa fa-chevron-circle-down"></i>
-					ЗАНЯТИЯ В ГРУППЕ
-				</li>
-				<li class="active">
-					<i class="fa fa-chevron-circle-down"></i>
-					ИНДИВИДУАЛЬНО
-				</li>
-				<li>
-					<i class="fa fa-chevron-circle-down"></i>
-					ОНЛАЙН
-				</li>
+				@php
+					$teacher_lesson_options = array_map(function ($item) {
+					    return $item['id_lesson_option'];
+					}, $teacher_lesson_options->toArray());    
+				@endphp  
+				@foreach($lesson_options as $lesson_option)
+					<li class="{{ in_array($lesson_option['id'], $teacher_lesson_options) ? 'active' : '' }}"> 
+						<i class="fa fa-chevron-circle-down"></i>
+						{{ $lesson_option->name }}
+					</li>
+				@endforeach 
 			</ul>
+
+			@if(count($certificates))
 			ЛИЦЕНЗИИ И ДИПЛОМЫ
 			<div class="row">
-				<div class="col-lg-4">
-					<img class="img-responsive" src="http://via.placeholder.com/280x350">
-				</div>
-				<div class="col-lg-4">
-					<img class="img-responsive" src="http://via.placeholder.com/280x350">
-				</div>
-				<div class="col-lg-4">
-					<img class="img-responsive" src="http://via.placeholder.com/280x350">
-				</div>
+				@foreach($certificates as $certificate)
+					<div class="col-lg-4">
+						<img class="img-responsive" src="/public/uploads/users/certificates/{{ $certificate->image }}">
+					</div> 
+				@endforeach
 			</div>
+			@endif
 		</div>
 	</div>
 </div>

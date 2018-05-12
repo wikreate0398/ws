@@ -13,5 +13,12 @@ class TeacherSpecializations extends Model
 	protected $fillable = [ 
         'id_teacher',
         'id_specialization'
-    ];
+    ]; 
+
+    public function specializations_list()
+    {
+    	return $this->hasOne(SpecializationsList::class, 'id', 'id_specialization')
+    	            ->orderBy('page_up', 'asc')
+                    ->orderBy('id', 'desc');
+    }
 }

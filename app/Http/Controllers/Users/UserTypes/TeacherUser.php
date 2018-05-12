@@ -49,7 +49,7 @@ class TeacherUser extends Controller implements UserTypesInterface
             'teach_activ_cat' => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),
             'work_experience_direction' => WorkExperienceDirection::orderBy('page_up','asc')->get(),
             'user'            => $user,
-            'usersEducations' => UsersEducations::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
+            'usersEducations' => UsersEducations::where('id_user', $user->id)->orderBy('id', 'asc')->get(),
             'usersTeachingActivities' => UsersTeachingActivities::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
             'usersWorkExperience'     => UsersWorkExperience::where('id_user', $user->id)->orderBy('from_year', 'desc')->get(),
 

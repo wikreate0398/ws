@@ -145,7 +145,7 @@ jQuery(document).ready(function($) {
                     // }, 1000);
   
                 } else {    
-                    if (jsonResponse.redirect != '') { 
+                    if (jsonResponse.redirect == true) {  
                         window.location = jsonResponse.redirect;
                     }
 
@@ -584,6 +584,7 @@ function profilePhoto(fileName){
         });
 
         button.onclick = function () {
+          $('.cropper__section, #overlay').fadeOut(150);
           var croppedCanvas;
           var roundedCanvas;
           var roundedImage;
@@ -604,6 +605,7 @@ function profilePhoto(fileName){
           $('input#avatar').val(roundedImage.src);
           $('.profile__img').css('background-image', 'url('+roundedImage.src+')'); 
           $('.save__cropped_image').show();
+          $('form.profile__image_form').submit();
         };
     }; 
 }

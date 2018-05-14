@@ -319,11 +319,10 @@
             </div> 
 
             <div class="col-md-12">
-                <button id="crop__btn" class="btn btn-default">обрезать</button>
-                <button type="submit" 
-                        style="display: none;" 
+                <button id="crop__btn"  type="button" class="btn btn-default">Сохранить</button>
+                <!-- <button style="display: none;" 
                         class="btn primary btn-sm save__cropped_image"
-                        onclick="$('form.profile__image_form').submit();">Сохранить</button>  
+                        onclick="$('form.profile__image_form').submit();">Сохранить</button> -->  
                 <div id="result"></div>
             </div> 
         </div> 

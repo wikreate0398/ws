@@ -196,7 +196,7 @@ class ProfileController extends Controller
             'avatar' => $avatarImageName
         ]); 
 
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Изображение успешно изменено!');
+        return \App\Utils\JsonResponse::success(); // ['reload' => true], 'Изображение успешно изменено!'
     }
 
     public function loadCourseSubcats(Request $request)

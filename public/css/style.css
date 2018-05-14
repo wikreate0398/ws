@@ -33,6 +33,11 @@ body{
     background-image: url(../images/header_bg.jpg);
     background-size: cover;
 }*/
+
+.cropper-dashed{
+    border:none !important;
+}
+
 .header-bg{
     background-image: url(../images/header_bg.jpg);
     background-size: cover;

@@ -7,7 +7,7 @@
 	</div>
 </div> 
 <div class="col-md-6">
-	<div class="form-group">
+	<div class="form-group select_form">
 		<select class="form-control" name="education[grade][]">
 		  <option value="0">Уровень образования</option>
 		    @foreach($grade_education as $item)
@@ -30,6 +30,6 @@
 	<button class="btn btn-sm btn-dafault add__more" 
 	        onclick="addBlock('education__container');" 
 	        type="button">
-	    Добавить еще
+	    + Добавить еще
 	</button>
 </div>

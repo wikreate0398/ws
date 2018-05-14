@@ -31,9 +31,13 @@ Route::get('under-construction', 'PagesController@underConstruction');
 Route::get('terms-of-use', 'PagesController@termsOfUse');
  
 Route::get('educational-institutions', 'InstitutionController@index'); 
-Route::get('institution/{id}', 'InstitutionController@view'); 
+Route::get('institution/{id}', 'InstitutionController@view');
+
+
 Route::get('teachers', 'TeachersController@index');
 Route::get('teacher/{id}', 'TeachersController@show');
+Route::get('teachers/autocomplete', 'TeachersController@autocomplete');
+
 Route::get('courses', 'PagesController@courses'); 
 Route::get('search', 'PagesController@search');  
 

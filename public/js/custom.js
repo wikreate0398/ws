@@ -76,10 +76,12 @@ jQuery(document).ready(function($) {
     }); 
 
     $('form#search_form').find('input#search__input').keyup(function(){  
-        if ($(this).val().length >= 3) {   
+        if ($(this).val().length >= 3) {  
+            var url = $(this).closest('form').attr('data-url-autocomplete');
+            console.log(url);
             $.ajax({
                 type: "GET",
-                url: '/autocomplete',
+                url: url,
                 data:{search: $(this).val()},
                 dataType: 'json',
                 beforeSend: function(){},
@@ -605,3 +607,62 @@ function profilePhoto(fileName){
         };
     }; 
 }
+
+/* Edit profile upload image */
+function multipleImages(input, uploaderContainter){
+    if (input.files && input.files[0]) {
+        $(input.files).each(function(i) { 
+            var fileExtension = ["image/gif", "image/jpeg", "image/png", "image/jpg"];
+            var fileType = this["type"];
+            var fileName = this["name"];
+            var fileSize = parseInt(this["size"]) / 1000;
+
+            var error = false;
+            if (jQuery.inArray(fileType, fileExtension) == -1) {
+                alert('Ошибка в расширении файла!');
+                error = true; 
+            }  
+
+            if (fileSize > 2048) {
+                alert('Максимальный размер изображения 2МБ');
+                error = true; 
+            }
+
+            var reader = new FileReader();
+            reader.readAsDataURL(this);
+
+            reader.onload = function(e) { 
+                $(uploaderContainter).show();
+                var content = "<div class='img-thumbnail'>"+
+                              "<div class='actions__upload_img'>"+
+                              "<i onclick='deleteUploadImg(this)' class='fa fa-trash-o' aria-hidden='true'></i>"+
+                              "</div>"+
+                              "<img class='uploadedImg' src='"+reader.result+"'>"+
+                              "<input type='hidden' name='certificates[]' value='"+reader.result+"'>"+
+                              "</div>";
+                $(uploaderContainter).append(content);
+            } 
+        }); 
+    } 
+}
+
+function deleteUploadImg(item, id){
+    if (!confirm('Вы действительно хотите удалить?')) {
+        return false;
+    }
+    $(item).closest('.img-thumbnail').remove(); 
+    if (id) {
+        $.ajax({
+            url: '/user/deleteCertificate',
+            type: 'POST', 
+            data: {'id':id, _token: CSRF_TOKEN}, 
+            dataType: 'json',
+            beforeSend: function() {},
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                if (XMLHttpRequest.status === 401) document.location.reload(true);
+            },
+            success: function(jsonResponse, textStatus, request) {},
+            complete: function() { }
+        });
+    }
+} 

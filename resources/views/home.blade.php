@@ -47,7 +47,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <form id="search_form" action="/search/">
+                        <form id="search_form" action="/search/" data-url-autocomplete="/autocomplete">
                             <div class="row">
                                 <div class="col-lg-9">
                                     <div class="form-group input-search-area">

@@ -16,6 +16,9 @@ use App\Models\SpecializationsList;
 use App\Models\LessonOptionsList;
 use App\Models\UsersEducations;
 
+use App\Models\User;
+use Illuminate\Http\Request;
+
 class TeachersController extends Controller
 {
     /**
@@ -32,11 +35,23 @@ class TeachersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     { 
         $data = [
-            'teachers' => \App\Models\User::where('user_type', 2)->orderBy('created_at', 'desc')->get(),
-        ]; 
+            'teachers'        => User::getTeachers($request),
+            'subjects'        => TeacherSubjects::groupBy('name')->orderBy('name', 'asc')->get(),
+            'specializations' => TeacherSpecializations::has('specializations_list')->groupBy('id_specialization')->get(),
+            'minMaxPrice'     => User::getTeachersMinMaxPrice(),
+            'lesson_filter_options'  => TeacherLessonOptions::has('lesson_options_list')
+                                                     ->groupBy('id_lesson_option')
+                                                     ->get(),
+
+            'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
+                                                          ->orderBy('id', 'desc')
+                                                          ->get()
+        ];  
+
+        //exit(print_arr($data['teachers']->toArray()));
 
         return view('teachers.catalog', $data);
     } 
@@ -44,20 +59,42 @@ class TeachersController extends Controller
     public function show($id)
     { 
         $data = [
-            'teacher'                 => \App\Models\User::with('cityData')->findOrFail($id), 
-            'teacher_subjects'        => TeacherSubjects::where('id_teacher', $id)->orderBy('id', 'asc')->get(), 
-            'teacher_specializations' => TeacherSpecializations::with('specializations_list')
-                                                               ->where('id_teacher', $id)  
-                                                               ->get(),  
-
-            'teacher_lesson_options'  => TeacherLessonOptions::where('id_teacher', $id)->get(),
+            'teacher'                 => \App\Models\User::with(['cityData', 
+                                                                 'specializations', 
+                                                                 'certificates', 
+                                                                 'lesson_options', 
+                                                                 'educations', 
+                                                                 'subjects'])
+                                                           ->where('user_type', '2')
+                                                           ->where('activate', '1')
+                                                           ->where('confirm', '1')
+                                                           ->findOrFail($id),  
             'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')
-                                                          ->get(),
-            'educations'         => UsersEducations::where('id_user', $id)->orderBy('id', 'asc')->get(),
-            'certificates'            => TeacherCertificates::where('id_teacher', $id)->orderBy('id', 'asc')->get(),  
-        ];  
+                                                          ->get() 
+        ];   
 
         return view('teachers.show', $data);
     } 
+
+    public function autocomplete(Request $request)
+    {
+        $query      = $request->input('search');  
+        $searchData = User::where('user_type', 2)->where('name', 'like', "%$query%")->orderBy('created_at', 'desc')->get();
+        if (empty($searchData)) die();
+         
+        $content    = '';
+        if (@count($searchData)) 
+        {
+            foreach ($searchData as $teacher) 
+            {
+                $content .= '<a href="/teacher/'.$teacher['id'].'/"> 
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>' . $teacher['name'] .  '
+                            </a>';
+            }
+            $content .= '</div>';
+        } 
+
+        return \App\Utils\JsonResponse::success(['content' => $content]);
+    }
 }

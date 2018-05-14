@@ -19,36 +19,20 @@
 			ГОРОД:<br>
 			{{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ<br>
 
-			@if(count($teacher_specializations))
-				@php 
-					$teacher_specializations = array_map(function ($item) {
-					    return $item['id_specialization'];
-					}, $teacher_specializations->toArray());     
-				@endphp
-				СПЕЦИАЛИЗАЦИЯ: {{ implode(', ', $teacher_specializations) }}<br>
+			@if(count($teacher->specializations))
+				СПЕЦИАЛИЗАЦИЯ: {{ implode(', ', $teacher->specializations->pluck('name')->toArray()) }}<br>
 			@endif
 			
-			@if(count($teacher_subjects))
-				@php
-					$teacher_subjects = array_map(function ($item) {
-					    return $item['name'];
-					}, $teacher_subjects->toArray());    
-				@endphp 
-				ПРЕДМЕТНАЯ ОБЛАСТЬ: {{ implode(', ', $teacher_subjects) }}<br>
+			@if(count($teacher->subjects))
+				ПРЕДМЕТНАЯ ОБЛАСТЬ: {{ implode(', ', $teacher->subjects->pluck('name')->toArray()) }}<br>
 			@endif
 
 			ПОЛ:{{ ($teacher->sex == 'male') ? 'Мужской' : 'Женский' }}<br>
 
-			@if(count($educations))
-				@php
-					$educations = array_map(function ($item) {
-					    return $item['institution_name'];
-					}, $educations->toArray());    
-				@endphp 
+			@if(count($teacher->educations)) 
 				ОБРАЗОВАНИЕ <br>
-				{{ implode(', ', $educations) }}<br>
+				{{ implode(', ', $teacher->educations->pluck('institution_name')->toArray()) }}<br>
 			@endif
-
 			 
 			О СЕБЕ<br>
 			{{ $teacher->about }}<br>
@@ -58,23 +42,20 @@
 					<i class="fa fa-map-marker"></i>
 					МОСКВА, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ
 				</li>
-				@php
-					$teacher_lesson_options = array_map(function ($item) {
-					    return $item['id_lesson_option'];
-					}, $teacher_lesson_options->toArray());    
-				@endphp  
-				@foreach($lesson_options as $lesson_option)
-					<li class="{{ in_array($lesson_option['id'], $teacher_lesson_options) ? 'active' : '' }}"> 
-						<i class="fa fa-chevron-circle-down"></i>
-						{{ $lesson_option->name }}
-					</li>
-				@endforeach 
+				@if(count($teacher->lesson_options))
+					@foreach($lesson_options as $lesson_option)
+						<li class="{{ in_array($lesson_option['id'], $teacher->lesson_options->pluck('id')->toArray()) ? 'active' : '' }}"> 
+							<i class="fa fa-chevron-circle-down"></i>
+							{{ $lesson_option->name }}
+						</li>
+					@endforeach 
+				@endif
 			</ul>
 
-			@if(count($certificates))
+			@if(count($teacher->certificates))
 			ЛИЦЕНЗИИ И ДИПЛОМЫ
 			<div class="row">
-				@foreach($certificates as $certificate)
+				@foreach($teacher->certificates as $certificate)
 					<div class="col-lg-4">
 						<img class="img-responsive" src="/public/uploads/users/certificates/{{ $certificate->image }}">
 					</div> 

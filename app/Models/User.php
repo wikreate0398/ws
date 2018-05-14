@@ -112,7 +112,10 @@ class User extends Authenticatable
              ->where('confirm', '1')
              ->orderBy('created_at', 'desc');
 
-        return $user->paginate($request['page'], ['*'], 'page', $request['page']);
+        return $user->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
+                                      ['*'], 
+                                      'page', 
+                                      !empty($request['page']) ? $request['page'] : 1);
     }
 
     public function subjects()

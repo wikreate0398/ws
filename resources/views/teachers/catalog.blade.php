@@ -84,7 +84,70 @@
                         </div>
                     </div>
                 </div>
-
+				<div class="teachers_external_card">
+					<div class="row">
+						<div class="col-md-3">
+							<a href=""><img class="img-responsive" src="http://via.placeholder.com/400x400"></a>
+							<button type="button" class="btn submit_application">Оставить заявку</button>
+							<span class="price_hour">От 500 р/час</span>
+						</div>
+						<div class="col-md-9">
+							<div class="teachers_name">
+								<h2>Гапонова<br>Маргарита Поликарповна</h2>
+								<ul class="list-inline teachers_label">
+									<li class="teachers_employment">
+										Свободен
+									</li>
+									<li class="teachers_rating">
+										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+									</li>
+									<li class="teachers_comment">
+										15 отзывов
+									</li>
+								</ul>
+							</div>
+							<ul class="list-inline teachers_specialization">
+								<li>
+									Подготовка к ЕГЭ
+								</li>
+								<li>
+									Вступительные экзамены
+								</li>
+								<li>
+									10-11 класс
+								</li>
+							</ul>
+							<ul class="list-inline teachers_subjects">
+								<li>
+									Математика
+								</li>
+								<li>
+									Физика
+								</li>
+								<li>
+									Геометрия
+								</li>
+							</ul>
+							<div class="teachers_about">
+								<p>Являюсь постоянным участником научных конференций ЮФУ, имею собственные статьи и публикации. В работе и подготовке к экзаменам отдаю предпочтение зарубежным издательствам.</p>
+							</div>
+							<ul class="list-inline">
+								<li>
+									Выезд
+								</li>
+								<li>
+									Занятия в группе
+								</li>
+								<li>
+									Индивидуально
+								</li>
+								<li>
+									Онлайн
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
                 @foreach($teachers as $teacher)
                 <div class="teachers_external_card">
                     <div class="row">

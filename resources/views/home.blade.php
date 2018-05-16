@@ -657,10 +657,10 @@
                     @foreach($teachers as $teacher)
                         <div class="item">
                             <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['avatar'] : noImg()  ?>
-                            <a href="/teacher/{{ $teacher['id'] }}/" onclick="return false;">
+                            <a href="/teacher/{{ $teacher['id'] }}/">
 								<img style="width: 180px; height: 180px;" class="img-responsive img-circle" src="{{ $img }}">
 							</a> 
-                            <h3><a href="/teacher/{{ $teacher['id'] }}/" onclick="return false;">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
+                            <h3><a href="/teacher/{{ $teacher['id'] }}/">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
                             <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
                         </div> 
                     @endforeach

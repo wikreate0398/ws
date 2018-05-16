@@ -15,7 +15,7 @@
 				<li>Добавить в избранное</li>
 			</ul>
 			<h1>{{ $teacher->name }}</h1>
-			{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, опыт преподавания {{ date('Y') - $teacher->experience_from }} лет <br>
+			{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, опыт преподавания {{ date('Y', strtotime($teacher->experience_from)) }} лет <br>
 			ГОРОД:<br>
 			{{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ<br>
 

@@ -32,7 +32,10 @@ trait TeacherTrait
         'address'            => 'Адрес',
         'teacher_subjects'   => 'Предметы',
         'specializations'    => 'Специализация',
-        'lesson_options'     => 'проведения занятий' 
+        'lesson_options'     => 'проведения занятий',
+        'city'               => 'Город',
+        'region'             => 'Область',
+
     ];
 
     private $rules = [
@@ -40,8 +43,8 @@ trait TeacherTrait
         'date_birth'            => 'required',
         'phone'                 => 'required',
         'sex'                   => 'required',
-        'city'                  => 'required',
         'region'                => 'required',
+        'city'                  => 'required', 
         'address'               => 'required',
         'image'                 => 'image|mimes:jpeg,jpg,png',
         'email'                 => 'required|string|email|unique:users',

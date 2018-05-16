@@ -189,12 +189,12 @@ function adminMenu()
             'edit' => 'Редактировать' 
         ], 
 
-        'cities' => [
-            'name' => 'Города', 
+        'location' => [
+            'name' => 'Области', 
             'icon' => '<i class="fa fa-map" aria-hidden="true"></i>',
-            'link' => '/admin/cities/',
+            'link' => '/admin/location/',
             'view' => true,
-            'edit' => 'Редактировать' 
+            'edit' => 'Города' 
         ],  
 
         'course' => [
@@ -212,6 +212,14 @@ function adminMenu()
                     'edit' => 'Редактировать' 
                 ] 
             ]
+        ], 
+
+        'user-profile' => [
+            'name'   => 'Профиль пользователей', 
+            'icon'   => '<i class="fa fa-cogs" aria-hidden="true"></i>',
+            'link'   => '/admin/user-profile/',
+            'view'   => true,
+            'edit'   => 'Редактировать'
         ],  
  
         'users' => [

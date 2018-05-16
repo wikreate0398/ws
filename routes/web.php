@@ -65,7 +65,8 @@ Route::group(['middleware' => ['web_auth']], function(){
 
 	Route::post('user/updatePass', 'ProfileController@updatePassword')->name('update_pass'); 
 	Route::post('user/update-profile', 'ProfileController@editProfile')->name('update_profile'); 
-	Route::post('user/update-image', 'ProfileController@updateImage')->name('update_image'); 
+	Route::post('user/update-image', 'ProfileController@updateImage')->name('update_image');
+	Route::post('user/profile/loadRegionCities', 'ProfileController@loadRegionCities');  
 
 	Route::get('user/deleteUserEducation/{id}', 'ProfileController@deleteUserEducation'); 
 	Route::get('user/deleteUserActivities/{id}', 'ProfileController@deleteUserActivities'); 
@@ -98,6 +99,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('{id}/update', 'MenuController@update'); 
 	}); 
 
+	Route::group(['prefix' => 'user-profile'], function() { 
+		Route::get('/', 'UserProfileController@show')->name('admin_user_profile');  
+		Route::get('{id}/{table}/edit', 'UserProfileController@showeditForm'); 
+	    Route::post('create', 'UserProfileController@create'); 
+		Route::post('{id}/{table}/update', 'UserProfileController@update'); 
+	});  
+
 	Route::group(['prefix' => 'course/category'], function() { 
 		Route::get('/', 'CourseController@show')->name('admin_course_category');    
 		Route::get('{id}/edit', 'CourseController@showeditForm'); 
@@ -106,12 +114,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('{id}/update', 'CourseController@update'); 
 	});
 
-	Route::group(['prefix' => 'cities'], function() { 
-		Route::get('/', 'CitiesController@show')->name('admin_cities');    
-		Route::get('{id}/edit', 'CitiesController@showeditForm'); 
-		Route::get('add', 'CitiesController@showAddForm');
-		Route::post('create', 'CitiesController@create'); 
-		Route::post('{id}/update', 'CitiesController@update'); 
+	Route::group(['prefix' => 'location'], function() { 
+		Route::get('/', 'LocationController@show')->name('admin_location');    
+		Route::get('{id}/edit', 'LocationController@showeditForm'); 
+		Route::get('{id}/cities', 'LocationController@showCities'); 
+		Route::get('add', 'LocationController@showAddForm');
+		Route::post('create', 'LocationController@create'); 
+		Route::post('{id}/update', 'LocationController@update'); 
 	});  
 
 	Route::group(['prefix' => 'profile'], function() { 

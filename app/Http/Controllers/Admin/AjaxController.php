@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
- 
+use Illuminate\Support\Facades\Schema;
+
 class AjaxController extends Controller
 { 
     /**
@@ -17,12 +18,26 @@ class AjaxController extends Controller
   
     public function depthSort(Request $request)
     { 
-        $arr   = $request->input('arr'); 
-        $table =  $_POST['table'];  
-        foreach ($arr as $key => $value) 
+        $input = $request->all(); 
+        $arr   = $input['arr']; 
+        $table = $input['table']; 
+        $depth = !empty($input['depth']) ? $input['depth'] : 1;
+ 
+        if ($depth > 1) 
         { 
-           $data[] = $value; 
-           $this->sort($data, 0, $table);  
+            foreach ($arr as $key => $value) 
+            { 
+               $data[] = $value; 
+               $this->sort($data, 0, $table);  
+            }
+        } 
+        else
+        {
+            foreach ($arr as $key => $value) 
+            { 
+               DB::table($table)->where('id', $value['id'])
+                                ->update(['page_up' => $key+1]);  
+            }
         }
 
         return \App\Utils\JsonResponse::success(['message' => trans('admin.ajax_true')]); 
@@ -38,8 +53,8 @@ class AjaxController extends Controller
 
             if (!empty($item['children'])) 
             { 
-                $this->sort($item['children'], $item['id'], $table);
-            }  
+                $this->sort($item['children'], $item['id'], $table, 1);
+            }   
             $i++;
         }   
     }
@@ -61,6 +76,11 @@ class AjaxController extends Controller
         $id    = $request->input('id');
         $table = $request->input('table'); 
         DB::table($table)->where('id', $id)->delete();  
+
+        if (Schema::hasColumn($table, 'parent_id')) {
+            DB::table($table)->where('parent_id', $id)->update(['parent_id' => 0]);   
+        }
+
         return \App\Utils\JsonResponse::success(['message' => trans('admin.delete_true')]);
     }
 }

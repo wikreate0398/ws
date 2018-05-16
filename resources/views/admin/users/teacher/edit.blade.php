@@ -105,10 +105,10 @@
         </div>
         <div class="panel-body">
 
-            @if(count($usersEducations) > 0) 
+            @if(count($user->educations) > 0) 
 
             <?php $i=0; ?>
-            @foreach($usersEducations as $education) 
+            @foreach($user->educations as $education) 
             <div class="row multi__container education__container {{ ($i == 0) ? 'first_block' : '' }}"> 
                 @if($i > 0)
                     <a class="close__item delete__item" onclick="Ajax.toDelete(this, 'users_educations', '<?=$education['id']?>', true)">X</a>

@@ -32,7 +32,10 @@ trait TeacherTrait
         'address'            => 'Адрес',
         'teacher_subjects'   => 'Предметы',
         'specializations'    => 'Специализация',
-        'lesson_options'     => 'проведения занятий' 
+        'lesson_options'     => 'проведения занятий',
+        'city'               => 'Город',
+        'region'             => 'Область',
+        'grade_experience'   => 'Степень вашего опыта'
     ];
 
     private $rules = [
@@ -40,7 +43,10 @@ trait TeacherTrait
         'date_birth'            => 'required',
         'phone'                 => 'required',
         'sex'                   => 'required',
+        'region'                => 'required',
+        'city'                  => 'required', 
         'address'               => 'required',
+        'grade_experience'      => 'required',
         'image'                 => 'image|mimes:jpeg,jpg,png',
         'email'                 => 'required|string|email|unique:users',
         'password'              => 'required|string|min:6|confirmed',
@@ -242,7 +248,8 @@ trait TeacherTrait
             'about'      => $data['about'],
             'sex'        => $data['sex'],
             'address'    => $data['address'],
-            'experience_from' => intval($data['experience_from']),
+            'grade_experience' => $data['grade_experience'],
+            'experience_from' => date('Y-m-d', strtotime($data['experience_from'])),
             'price_hour'      => toFloat($data['price_hour'])
         ]);  
 
@@ -252,18 +259,16 @@ trait TeacherTrait
               update([ 
                 'image' => $fileName 
             ]); 
-        }
+        } 
 
         TeacherSubjects::where('id_teacher', $id_user)->delete();
         if (!empty($data['teacher_subjects'])) 
-        {
-            $teacher_subjects = explode(',', $data['teacher_subjects']);
-            $insert           = [];
-            foreach ($teacher_subjects as $key => $subject) 
+        { 
+            foreach ($data['teacher_subjects'] as $key => $id_subject) 
             {
                 $insert[] = [
                     'id_teacher' => $id_user,
-                    'name'       => $subject
+                    'id_subject' => $id_subject
                 ];
             }
             TeacherSubjects::insert($insert);

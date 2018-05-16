@@ -120,7 +120,7 @@ class User extends Authenticatable
 
     public function subjects()
     {
-        return $this->hasMany('App\Models\TeacherSubjects', 'id_teacher', 'id');
+        return $this->belongsToMany('App\Models\SubjectsList', 'teacher_subjects', 'id_teacher', 'id_subject')->orderBy('page_up', 'asc')->orderBy('id', 'desc');
     }
 
     public function specializations()

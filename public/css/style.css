@@ -936,8 +936,72 @@ margin-bottom: 30px;
     font-size: 13px;
 }
 /* Каталог преподователей */
+.filter_top {
+	font-family: 'Cuprum Regular';
+    font-size: 13px;
+    border: 1px solid #e3e5e8;
+	padding: 10px 25px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+.filter_top .available_list li a{
+	font-family: 'Cuprum Regular';
+    font-size: 16px;
+    color: #a8a8a8;
+	text-transform: uppercase;
+}
+.filter_top .available_list li a:focus,
+.filter_top .available_list li a:hover{
+    color: #b93777;
+	font-weight: 300;
+	text-decoration: none;
+}
+.filter_top .available_list .active a{
+    color: #b93777;
+	font-weight: 300;
+	text-decoration: none;
+}
+.filter_top .per_page_list li a{
+	font-family: 'Cuprum Regular';
+    font-size: 16px;
+    color: #a8a8a8;
+	text-transform: uppercase;
+}
+.filter_top .per_page_list li a:focus,
+.filter_top .per_page_list li a:hover{
+    color: #b93777;
+	font-weight: 300;
+	text-decoration: none;
+}
+.filter_top .per_page_list .active a{
+    color: #b93777;
+	font-weight: 300;
+	text-decoration: none;
+}
+.filter_top .sorting_list{
+	text-align: center;
+}
+.filter_top .sorting_list li a{
+	font-family: 'Cuprum Regular';
+    font-size: 16px;
+    color: #a8a8a8;
+	text-transform: uppercase;
+}
+.filter_top .sorting_list li a:focus,
+.filter_top .sorting_list li a:hover{
+    color: #b93777;
+	font-weight: 300;
+	text-decoration: none;
+}
+.filter_top .sorting_list .active a{
+    color: #b93777;
+	font-weight: 300;
+	text-decoration: none;
+}
 .teachers_external_card{
 	margin-bottom: 30px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #e3e5e8;
 }
 .teachers_external_card .submit_application{
 }
@@ -949,6 +1013,15 @@ margin-bottom: 30px;
 	font-size: 22px;
 	color: #5f5f5f;
 	margin-top: 0px;
+	margin-bottom: 5px;
+}
+.teachers_external_card .teachers_name .teachers_date{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #a8a8a8;
+	display: block;
+	margin-top: 0px;
+	margin-bottom: 20px;
 }
 .teachers_external_card .teachers_name .teachers_label{
     position: absolute;
@@ -968,6 +1041,7 @@ margin-bottom: 30px;
 }
 .teachers_external_card .teachers_specialization{
 	padding-left: 5px;
+	margin-bottom: 15px;
 }
 .teachers_external_card .teachers_specialization li{
 	font-family: 'Cuprum Regular';
@@ -979,6 +1053,7 @@ margin-bottom: 30px;
 }
 .teachers_external_card .teachers_subjects{
 	padding-left: 5px;
+	margin-bottom: 25px;
 }
 .teachers_external_card .teachers_subjects li{
 	font-family: 'Cuprum Regular';
@@ -988,6 +1063,14 @@ margin-bottom: 30px;
 	background: #c1c1c1;
 	padding: 3px 15px;
 	text-transform: uppercase;
+}
+.teachers_external_card .place_realization{
+	margin-bottom: 0px;
+}
+.teachers_external_card .place_realization li label{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #5f5f5f;
 }
 .teachers_external_card .submit_application{
     font-family: 'Cuprum Regular';
@@ -1013,6 +1096,49 @@ margin-bottom: 30px;
 	font-family: 'Cuprum Italic';
 	font-size: 15px;
 	color: #a8a8a8;
+}
+.teachers_external_card .teachers_about p{
+	margin-bottom: 20px;
+}
+/* Чекбоксы */
+.checkbox label{
+	padding-left: 0px;
+}
+.checkbox label:after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.checkbox .jackdaw{
+    position: relative;
+    display: inline-block;
+    border: 1px solid #5f5f5f;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+.checkbox .jackdaw .jackdaw-icon{
+    position: absolute;
+    font-size: 1.2em;
+    line-height: 0;
+    top: 50%;
+    left: 0%;
+}
+.checkbox label input[type="checkbox"]{
+    display: none;
+}
+.checkbox label input[type="checkbox"] + .jackdaw > .jackdaw-icon{
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+.checkbox label input[type="checkbox"]:checked + .jackdaw > .jackdaw-icon{
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+.checkbox label input[type="checkbox"]:disabled + .jackdaw{
+    opacity: .5;
 }
 /* Поиск */
 .input-search-area{

@@ -38,7 +38,7 @@
             <div class="col-lg-10">
                 <div class="filter_top">
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <ul class="list-inline available_list">
                                 <li class="{{ (request()->input('teacher_available') == 'all' or request()->input('teacher_available') == null) ? 'active' : '' }}">
                                     <a data-availbale="all" onclick="teacher_available_filter(this); return false;" href="#">ВСЕ</a>
@@ -54,16 +54,14 @@
                                    id="teacher_available" 
                                    value="{{ @request()->input('teacher_available') ? request()->input('teacher_available') : 'all' }}">
                         </div>
-                        <div class="col-lg-4">
-                            <ul class="list-inline">
-                                <li>СОРТИРОВАТЬ ПО: </li>
-                                <li><a href="">ПО ДАТЕ <i class="fa fa-long-arrow-down" aria-hidden="true"></i></a></li>
-                                <li><a href="">ПО ОТЗЫВАМ <i class="fa fa-long-arrow-up" aria-hidden="true"></i></a></li>
+                        <div class="col-lg-6">
+                            <ul class="list-inline sorting_list">
+                                <li><a href=""><i class="fa fa-caret-down" aria-hidden="true"></i> ДАТА</a></li>
+                                <li><a href=""><i class="fa fa-caret-up" aria-hidden="true"></i> ОТЗЫВЫ</a></li>
                             </ul>
                         </div>
-                        <div class="col-lg-4" style="text-align: right;">
+                        <div class="col-lg-3" style="text-align: right;">
                             <ul class="list-inline per_page_list">
-                                <li>ВЫВОДИТЬ ПО: </li>
                                 <li class="{{ (request()->input('per_page') == '6' or request()->input('per_page') == null) ? 'active' : '' }}">
                                     <a data-perpage="6" onclick="teacher_perpage_filter(this); return false;" href="#">6</a>
                                 </li>
@@ -84,19 +82,26 @@
                         </div>
                     </div>
                 </div>
+                @foreach($teachers as $teacher)
 				<div class="teachers_external_card">
 					<div class="row">
 						<div class="col-md-3">
-							<a href=""><img class="img-responsive" src="http://via.placeholder.com/400x400"></a>
+                            <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
+							<a href="/teacher/{{ $teacher['id'] }}/"><img class="img-responsive" src="{{ $img }}"></a>
 							<button type="button" class="btn submit_application">Оставить заявку</button>
-							<span class="price_hour">От 500 р/час</span>
+							<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
 						</div>
 						<div class="col-md-9">
 							<div class="teachers_name">
-								<h2>Гапонова<br>Маргарита Поликарповна</h2>
+								<h2>{{ $teacher['name'] }}</h2>
+								<span class="teachers_date">{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, 
+								@if($teacher->experience_from)
+									опыт работы {{date('Y') - date('Y', strtotime($teacher->experience_from)) }} лет
+								@endif
+								</span>
 								<ul class="list-inline teachers_label">
 									<li class="teachers_employment">
-										Свободен
+										{{ $teacher->is_available ? 'Свободен' : 'Занят' }}
 									</li>
 									<li class="teachers_rating">
 										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
@@ -106,50 +111,82 @@
 									</li>
 								</ul>
 							</div>
+							@if(count($teacher->specializations))			
 							<ul class="list-inline teachers_specialization">
+								@foreach($teacher->specializations as $specialization)
 								<li>
-									Подготовка к ЕГЭ
+									{{ $specialization->name }}
 								</li>
-								<li>
-									Вступительные экзамены
-								</li>
-								<li>
-									10-11 класс
-								</li>
+                                @endforeach
 							</ul>
+                            @endif
+                            @if(count($teacher->subjects))
 							<ul class="list-inline teachers_subjects">
-								<li>
-									Математика
-								</li>
-								<li>
-									Физика
-								</li>
-								<li>
-									Геометрия
-								</li>
+								@foreach($teacher->subjects as $subject)
+									<li>{{ $subject->name }}</li>
+								@endforeach                                            
 							</ul>
+							@endif
 							<div class="teachers_about">
-								<p>Являюсь постоянным участником научных конференций ЮФУ, имею собственные статьи и публикации. В работе и подготовке к экзаменам отдаю предпочтение зарубежным издательствам.</p>
+								<p>{{ $teacher->about }}</p>
 							</div>
-							<ul class="list-inline">
+							@if(count($lesson_options))
+							<ul class="list-inline place_realization">	
+								@foreach($lesson_options as $lesson_option)
 								<li>
-									Выезд
+									<div class="checkbox">
+									  <label>
+										<input type="checkbox" value="" disabled {{ in_array($lesson_option['id'], $teacher->lesson_options->pluck('id')->toArray()) ? 'checked' : '' }}>
+										<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+										{{ $lesson_option->name }}
+									  </label>
+									</div>
 								</li>
-								<li>
-									Занятия в группе
-								</li>
-								<li>
-									Индивидуально
-								</li>
-								<li>
-									Онлайн
-								</li>
+								@endforeach 
 							</ul>
+							@endif
+							<!--<ul class="list-inline place_realization">
+								<li>
+									<div class="checkbox">
+									  <label>
+										<input type="checkbox" value="" checked disabled>
+										<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+										Выезд
+									  </label>
+									</div>
+								</li>
+								<li>
+									<div class="checkbox">
+									  <label>
+										<input type="checkbox" value="" checked disabled>
+										<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+										Занятия в группе
+									  </label>
+									</div>
+								</li>
+								<li>
+									<div class="checkbox">
+									  <label>
+										<input type="checkbox" value="" checked disabled>
+										<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+										Индивидуально
+									  </label>
+									</div>
+								</li>
+								<li>
+									<div class="checkbox">
+									  <label>
+										<input type="checkbox" value="" disabled>
+										<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+										Онлайн
+									  </label>
+									</div>
+								</li>
+							</ul> -->
 						</div>
 					</div>
 				</div>
-                @foreach($teachers as $teacher)
-                <div class="teachers_external_card">
+                <!--<div class="teachers_external_card">
                     <div class="row">
                         <div class="col-lg-2">
                             <div class="left_teachers_external_card">
@@ -223,7 +260,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 @endforeach
 
                 {{ $teachers->appends(request()->input())->links() }}
@@ -233,11 +270,6 @@
                     .filter_block .control-label{
                         font-size: 12px;
                         font-weight: bold;
-                    }
-
-                    .available_list li.active a, .per_page_list li.active a{
-                        font-weight: bold;
-                        text-decoration:underline;
                     }
 
                     .type_training li{

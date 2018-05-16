@@ -103,7 +103,13 @@
                                 <div class="row">
                                     <div class="col-lg-9">
                                         <h2> <a href="/teacher/{{ $teacher['id'] }}/"> {{ $teacher['name'] }}</a> <br>
-                                         <span>{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, опыт преподавания {{ date('Y') - $teacher->experience_from }} лет </span></h2>
+                                            <span>{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет
+
+                                                @if($teacher->experience_from) 
+                                                    , опыт преподавания {{date('Y') - date('Y', strtotime($teacher->experience_from)) }} лет
+                                                @endif 
+                                            </span>
+                                        </h2>
 
                                         @if(count($teacher->specializations))
                                         <ul class="list-inline">

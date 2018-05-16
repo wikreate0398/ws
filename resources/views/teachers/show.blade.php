@@ -16,9 +16,9 @@
 			</ul>
 			<h1>{{ $teacher->name }}</h1>
 			{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет
-
-			@if($teacher->experience_from != null)
-                , опыт преподавания {{ date('Y', strtotime($teacher->experience_from)) }} лет
+		 
+			@if($teacher->experience_from)
+                , опыт преподавания {{date('Y') - date('Y', strtotime($teacher->experience_from)) }} лет
             @endif
  
 			  <br>

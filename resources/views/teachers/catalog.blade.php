@@ -14,28 +14,27 @@
          
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="header_page">ВСЕ ПРЕПОДАВАТЕЛИ</h1>
+                <h1 class="title_page">ВСЕ ПРЕПОДАВАТЕЛИ</h1>
             </div>
-            <form id="search_form" data-url-autocomplete="/teachers/autocomplete" >
-                <div class="col-lg-6 col-lg-offset-2">
-                    <div class="form-group">
-                        <input name="q" 
-                               autocomplete="off" 
-                               class="form-control" 
-                               id="search__input" 
-                               placeholder="Введите ФИО преподавателя">
-                        <div class="loaded__search_result"></div>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <button type="button" class="btn btn-primary">Начать поиск</button>
-                </div>
-            </form>
+            <div class="col-lg-6 col-lg-offset-3">
+				<form class="no_home" id="search_form" data-url-autocomplete="/teachers/autocomplete" >
+						<div class="input-group">
+							<input name="q" 
+								   autocomplete="off" 
+								   class="form-control" 
+								   id="search__input" 
+								   placeholder="Введите ФИО преподавателя">
+							<div class="loaded__search_result"></div>
+							<span class="input-group-btn">
+								<button type="button" class="btn btn_search">Начать поиск</button>
+							</span>
+						</div>
+				</form>
+            </div>
         </div>
-        
         @if(!empty($teachers))  
         <div class="row">
-            <div class="col-lg-10">
+            <div class="col-lg-9">
                 <div class="filter_top">
                     <div class="row">
                         <div class="col-lg-3">
@@ -265,23 +264,127 @@
 
                 {{ $teachers->appends(request()->input())->links() }}
             </div>
-            <div class="col-lg-2">
-                <style>
-                    .filter_block .control-label{
-                        font-size: 12px;
-                        font-weight: bold;
-                    }
-
-                    .type_training li{
-                        color: #ccc;
-                    }
-
-                    .type_training li.active{
-                        color: green;
-                    }
-
-                </style>
-
+            <div class="col-lg-3">
+			<div class="filter_block">
+				<div class="sex_person">
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							Мужчина
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							Женшина
+						</label>
+					</div>
+				</div>
+				<div class="specializations_teacher">
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							Дошкольник
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							1-3 Класс
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							4-9 Класс
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							10-11 Класс
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							Подготовка к ЕГЭ
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							Подготовка к ОГЭ
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							Вступительные экзамены
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							Студентам вузов
+						</label>
+					</div>
+				</div>
+				@if($minMaxPrice['min'] > 0 && $minMaxPrice['max'] > 0 && $minMaxPrice['min'] <> $minMaxPrice['max'])
+				<div class="price_options">
+					<div class="form-group">
+					<label class="control-label">СТОИМОСТЬ ЧАСА</label>
+						<input type="hidden" name="min_price" value="{{ @request()->input('min_price') }}" id="min_price">
+						<input type="hidden" name="max_price" value="{{ @request()->input('max_price') }}" id="max_price">
+						<div id="slider-range"></div>
+						<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+					</div>
+				</div>
+				@endif
+				<div class="lesson_options">
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							У преподователя
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							У ученика
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							В группе
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="" type="checkbox">
+							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+							Онлайн
+						</label>
+					</div>
+				</div>
+				<div class="reset_filter">
+					<a href="">Сбросить фильтр </a>
+				</div>
+			</div>
                 <script>
                     $(document).ready(function(){
                         var minMaxPrice = {'min':parseFloat({{ $minMaxPrice['min'] }}), 'max': parseFloat({{ $minMaxPrice['max'] }})};
@@ -386,7 +489,6 @@
 
                 <div class="filter_block">
                     <form action="">
-                        
                         @if(request()->input('flt') == 1)
                             <div style="margin-bottom: 20px;">
                                 <a href="/teachers" class="btn btn-warning">Сбросить</a>

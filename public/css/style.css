@@ -67,24 +67,6 @@ header .main_menu li > a {
     color: #fff;
     border-bottom: 1px dashed #fff;
 }
-#search_form{
-    margin-top: 60px;
-    margin-bottom: 120px;
-}
-#search_form .form-group{
-    margin-bottom: 0px;
-}
-#search_form .form-control{
-    height: auto;
-    padding: 10px 12px;
-    font-size: 18px
-}
-.btn-primary {
-    display: block;
-    width: 100%;
-    font-size: 18px;
-    padding: 10px 12px;
-}
 .header_page{
     text-align: center;
 }
@@ -431,7 +413,7 @@ margin-bottom: 30px;
 /* Хлебные крошки */
 .breadcrumb {
     padding: 0px;
-    margin-bottom: 35px;
+    margin-bottom: 0px;
     list-style: none;
     background-color: transparent;
     border-radius: 0px;
@@ -449,6 +431,48 @@ margin-bottom: 30px;
 }
 .breadcrumb > li a {
     color: #b93777;
+}
+/* Поиск */
+#search_form{
+    margin-top: 60px;
+    margin-bottom: 120px;
+}
+#search_form .form-group{
+    margin-bottom: 0px;
+}
+#search_form .form-control{
+	font-family: 'Cuprum Regular';
+    font-size: 16px;
+	color: #5f5f5f;
+	border-radius: 0px;
+	border: 1px solid #c1c1c1;
+	height: auto;
+}
+#search_form ::-webkit-input-placeholder{/* webkit */
+	color:#5f5f5f; opacity:1;
+}
+#search_form ::-moz-placeholder{/* Firefox 19+ */
+	color:#5f5f5f; opacity:1;
+}
+#search_form :-moz-placeholder{/* Firefox 18- */
+	color:#5f5f5f; opacity:1;
+}
+#search_form :-ms-input-placeholder{/* IE */
+	color:#5f5f5f; opacity:1;
+}
+#search_form.no_home{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+#search_form.no_home .form-control{
+	color: #5f5f5f;
+}
+#search_form.no_home .btn_search{
+	font-family: 'Cuprum Regular';
+    font-size: 16px;
+	color: #fff;
+    background: #b93777;
+	border-radius: 0px;
 }
 /* Кнопка подробнее на сайте */
 .link_more{
@@ -1100,6 +1124,73 @@ margin-bottom: 30px;
 .teachers_external_card .teachers_about p{
 	margin-bottom: 20px;
 }
+/* Фильтр */
+.filter_block{
+	margin-top: 30px;
+	border: 1px solid #c1c1c1;
+	padding: 30px;
+}
+.filter_block label{
+    font-family: 'Cuprum Regular';
+	font-size: 16px;
+}
+.filter_block .sex_person{
+	margin-bottom: 30px;
+}
+.filter_block .specializations_teacher{
+	margin-bottom: 30px;
+}
+.filter_block .price_options{
+	margin-bottom: 30px;
+}
+.filter_block .lesson_options{
+	margin-bottom: 30px;
+}
+.filter_block .price_options .ui-slider-horizontal {
+    height: 3px;
+}
+.filter_block .price_options .ui-widget.ui-widget-content {
+    border: 1px solid #c1c1c1;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.filter_block .price_options .ui-widget-header {
+    border: 1px solid #c1c1c1;
+    background: #bfbfbf;
+    color: #bfbfbf;
+}
+.filter_block .price_options .ui-corner-all, .filter_block .price_options .ui-corner-top, .filter_block .price_options .ui-corner-left, .filter_block .price_options .ui-corner-tl {
+    border-top-left-radius: 0px;
+}
+.filter_block .price_options .ui-corner-all, .filter_block .price_options .ui-corner-top, .filter_block .price_options .ui-corner-right, .filter_block .price_options .ui-corner-tr {
+    border-top-right-radius: 0px;
+}
+.filter_block .price_options .ui-corner-all, .filter_block .price_options .ui-corner-bottom, .filter_block .price_options .ui-corner-left, .filter_block .price_options .ui-corner-bl {
+    border-bottom-left-radius: 0px;
+}
+.filter_block .price_options .ui-corner-all, .filter_block .price_options .ui-corner-bottom, .filter_block .price_options .ui-corner-right, .filter_block .price_options .ui-corner-br {
+    border-bottom-right-radius: 0px;
+}
+.filter_block .price_options .ui-state-default, .filter_block .price_options .ui-widget-content .ui-state-default, .filter_block .price_options .ui-widget-header .ui-state-default, .filter_block .price_options .ui-button, .filter_block .price_options .ui-button.ui-state-disabled:hover, .filter_block .price_options .ui-button.ui-state-disabled:active {
+    border: 1px solid #5f5f5f;
+    background: #5f5f5f;
+    color: #454545;
+    border-radius: 50%;
+}
+.filter_block .price_options .ui-slider .ui-slider-handle {
+    width: 15px;
+    height: 15px;
+}
+.filter_block .price_options .ui-slider-horizontal .ui-slider-handle {
+    top: -7px;
+    margin-left: 0px;
+}
+.filter_block .reset_filter a{
+    font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #b93777;
+	font-weight: 300;
+}
 /* Чекбоксы */
 .checkbox label{
 	padding-left: 0px;
@@ -1129,12 +1220,10 @@ margin-bottom: 30px;
     display: none;
 }
 .checkbox label input[type="checkbox"] + .jackdaw > .jackdaw-icon{
-    transform: scale(3) rotateZ(-20deg);
     opacity: 0;
     transition: all .3s ease-in;
 }
 .checkbox label input[type="checkbox"]:checked + .jackdaw > .jackdaw-icon{
-    transform: scale(1) rotateZ(0deg);
     opacity: 1;
 }
 .checkbox label input[type="checkbox"]:disabled + .jackdaw{

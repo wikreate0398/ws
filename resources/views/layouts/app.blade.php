@@ -8,15 +8,24 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Проект</title>
+    
+    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
 
     <!-- Bootstrap -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/style.css') . '?v=' . time() }}" rel="stylesheet">
     <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media-queries.css') }}" rel="stylesheet">
+
+    <!-- Cropper -->
+    <link  href="{{ asset('js/cropperjs/dist/cropper.css') }}" rel="stylesheet">
+
+    <!-- Datepicker --> 
+    <link href="{{ asset('js/datepicker/datepicker.css') }}" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
@@ -26,7 +35,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+     
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -35,15 +44,19 @@
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') . '?v=' . time() }}"></script>
     <script src="{{ asset('js/switcher.js') }}"></script>
-
-    <link  href="{{ asset('js/cropperjs/dist/cropper.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/select2.js') }}"></script>
+    
+    <!-- Cropper --> 
     <script src="{{ asset('js/cropperjs/dist/cropper.js') }}"></script>
-
-    <script src="{{ asset('js/custom.js') . '?v=' . time() }}"></script> <!-- http://olance.github.io/jQuery-switchButton/ -->
-     
+    
+    <!-- Datepicker -->
+    <script src="{{ asset('js/datepicker/datepicker.js') }}"></script> 
+ 
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'); 
     </script>
+
+    <script src="{{ asset('js/custom.js') . '?v=' . time() }}"></script>
 </head>
 
 <body>

@@ -57,9 +57,9 @@
                     <input type="text" 
                            class="form-control datepicker" 
                            name="date_birth"
-                           value="{{ !empty($user->date_birth) ? date('d-m-Y', strtotime($user->date_birth)) : '' }}" 
+                           value="{{ !empty($user->date_birth) ? date('d.m.Y', strtotime($user->date_birth)) : '' }}" 
                            required 
-                           placeholder="DD/MM/YY">
+                           placeholder="ДД.ММ.ГГГГ">
                 </div>
             </div>
 

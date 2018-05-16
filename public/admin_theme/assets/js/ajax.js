@@ -25,7 +25,7 @@ $(document).ready(function(){
         }, 500);
     });
  
-    $('#nestable').each(function(i){
+    $('div.nestable').each(function(i){ 
         var newClass = 'nestable_' + i;
         $(this).addClass(newClass);
         var depth = $(this).attr('data-depth') ? $(this).attr('data-depth') : 1;
@@ -83,7 +83,7 @@ function serializeForm(form, button, action, button_txt){
 
             } else {    
                 if (jsonResponse.redirect != '') { 
-                    window.location = jsonResponse.redirect;
+                    window.location = jsonResponse.redirect; 
                 }
 
                 if (jsonResponse.reload == true) { 
@@ -169,14 +169,16 @@ var Ajax = {
         var arr = $(item).nestable('serialize');
         var table = $(item).attr('data-table'); 
         var action = $(item).attr('data-action')
- 
+        var depth = $(item).attr('data-depth') ? $(item).attr('data-depth') : 1;
+
         jQuery.ajax({  
             url: action,
             type: 'POST', 
             data: {
-                arr: arr,
-                table: table,
-                _token: CSRF_TOKEN
+                'arr': arr,
+                'depth': depth,
+                'table': table,
+                '_token': CSRF_TOKEN
             }, 
             headers: {'X-CSRF-TOKEN': CSRF_TOKEN}, 
             dataType: 'json',  

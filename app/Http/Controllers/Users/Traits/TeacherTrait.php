@@ -242,7 +242,7 @@ trait TeacherTrait
             'about'      => $data['about'],
             'sex'        => $data['sex'],
             'address'    => $data['address'],
-            'experience_from' => intval($data['experience_from']),
+            'experience_from' => date('Y-m-d', strtotime($data['experience_from'])),
             'price_hour'      => toFloat($data['price_hour'])
         ]);  
 
@@ -252,18 +252,16 @@ trait TeacherTrait
               update([ 
                 'image' => $fileName 
             ]); 
-        }
+        } 
 
         TeacherSubjects::where('id_teacher', $id_user)->delete();
         if (!empty($data['teacher_subjects'])) 
-        {
-            $teacher_subjects = explode(',', $data['teacher_subjects']);
-            $insert           = [];
-            foreach ($teacher_subjects as $key => $subject) 
+        { 
+            foreach ($data['teacher_subjects'] as $key => $id_subject) 
             {
                 $insert[] = [
                     'id_teacher' => $id_user,
-                    'name'       => $subject
+                    'id_subject' => $id_subject
                 ];
             }
             TeacherSubjects::insert($insert);

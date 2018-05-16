@@ -67,7 +67,7 @@
 	          		       data-off-text="<i class='fa fa-times'></i>" 
 	          		       onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $user["id"] }}', 'activate')"> 
 			             	<a style="margin-left: 5px;" href="/{{ $method }}/{{ $user['id'] }}/edit/" class="btn btn-primary btn-xs">Редактировать</a>  
-			             	<a class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal{{ $user['id'] }}">Удалить</a>  
+			             	<a class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal_{{ $table }}_{{ $user['id'] }}">Удалить</a>  
 			            	<!-- Modal -->
 			            		@include('admin.utils.delete', ['id' => $user['id'], 'table' => $table])
 			           		<!-- Modal --> 

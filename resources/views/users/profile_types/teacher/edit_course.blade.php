@@ -96,7 +96,7 @@
             <div class="form-group">
                 <label class="col-md-12 control-label" style="white-space: nowrap;">Запись курса открыта до <span class="req">*</span></label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control datepicker" name="is_open_until" value="{{ date('d/m/Y', strtotime($course->is_open_until)) }}" placeholder="DD/MM/YY" required>
+                    <input type="text" class="form-control datepicker" name="is_open_until" value="{{ date('d.m.Y', strtotime($course->is_open_until)) }}" placeholder="ДД.ММ.ГГГГ" required>
                 </div>
             </div> 
         </div>

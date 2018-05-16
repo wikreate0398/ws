@@ -1,4 +1,39 @@
 jQuery(document).ready(function($) {
+
+    // $.fn.datepicker.languages['ru-RU']  = {
+    //     closeText: 'Закрыть',
+    //     prevText: '&#x3c;Пред',
+    //     nextText: 'След&#x3e;',
+    //     currentText: 'Сегодня',
+    //     monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+    //     'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+    //     monthNamesShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+    //     'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+    //     dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+    //     dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+    //     dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+    //     weekHeader: 'Нед',
+    //     dateFormat: 'dd.mm.yy',
+    //     firstDay: 1,
+    //     isRTL: false, 
+    //     yearSuffix: ''
+    // }; 
+
+    $.fn.datepicker.languages['ru'] = {
+  format: 'dd.mm.yyyy',
+  days: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+  daysShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+  daysMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+  months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+  monthsShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+  weekStart: 1,
+  startView: 0,
+  yearFirst: true,
+  yearSuffix: ''
+};
+    
+    initSelect2();
+
     $('#teacher_carousel').owlCarousel({
         loop:true,
         margin:60,
@@ -45,10 +80,12 @@ jQuery(document).ready(function($) {
     });
 
     $( ".datepicker" ).datepicker({
-        dateFormat: "dd-mm-yy",
+        format: "dd.mm.yyyy",
         changeMonth: true,
+        language: 'ru',
         changeYear: true,
-        yearRange: '1945:'+(new Date).getFullYear()
+        autoHide: true 
+        //yearRange: '1945:'+(new Date).getFullYear()-18
     });
 
     $('.delete__item').click(function(e){
@@ -509,6 +546,33 @@ function loadCourseSubcats(select, subcat){
     });
 }
 
+function loadRegionCities(select, city){
+    var val      = $(select).val(); 
+    var cacheStr = String((new Date()).getTime()).replace(/\D/gi, '');
+    $( ".cities__area").load("/user/profile/loadRegionCities?rnd=" + cacheStr,
+                             {'id': $(select).val(), 'id_city': city, '_token': CSRF_TOKEN}, 
+                             function( response, status, xhr ) { 
+        if ( response == "" ) {
+            $('.cities__area').hide();
+            $('.regions__area').removeClass('col-md-4').addClass('col-md-8');
+        }else{
+            $('.cities__area').show(); 
+            $('.regions__area').removeClass('col-md-8').addClass('col-md-4');
+        }
+        initSelect2();
+    }); 
+}
+
+function initSelect2(){
+    //// $('.select2').select2('destroy');
+    $('.select2').each(function(){
+        if ($(this).hasClass('select2-hidden-accessible')) {
+            $(this).select2('destroy');
+        }
+        $(this).select2();
+    });  
+}
+
 function setPayCourse(input){
     var val = $(input).val();
     if (val == 1) {
@@ -635,14 +699,14 @@ function multipleImages(input, uploaderContainter){
 
             reader.onload = function(e) { 
                 $(uploaderContainter).show();
-                var content = "<div class='img-thumbnail'>"+
+                var content = "<div class='col-md-4 load-thumbnail'>"+ 
+                              "<div class='uploadedImg' style='background-image:url("+reader.result+")'></div>"+
                               "<div class='actions__upload_img'>"+
-                              "<i onclick='deleteUploadImg(this)' class='fa fa-trash-o' aria-hidden='true'></i>"+
+                              "<span onclick='deleteUploadImg(this)' class='delete__upload_img'></span> "+
                               "</div>"+
-                              "<img class='uploadedImg' src='"+reader.result+"'>"+
                               "<input type='hidden' name='certificates[]' value='"+reader.result+"'>"+
                               "</div>";
-                $(uploaderContainter).append(content);
+                $(uploaderContainter).prepend(content);
             } 
         }); 
     } 
@@ -652,7 +716,10 @@ function deleteUploadImg(item, id){
     if (!confirm('Вы действительно хотите удалить?')) {
         return false;
     }
-    $(item).closest('.img-thumbnail').remove(); 
+    $(item).closest('.load-thumbnail').fadeOut(150, function(){
+        $(this).closest('.load-thumbnail').remove();
+    });
+      
     if (id) {
         $.ajax({
             url: '/user/deleteCertificate',
@@ -668,3 +735,41 @@ function deleteUploadImg(item, id){
         });
     }
 } 
+
+
+/* Teacher Subjects */
+
+function teacherSubject(select){
+    var value = $(select).val();
+    if (value <= 0) return;
+    var name  = $(select).find('option[value="'+value+'"]').text(); 
+    $(select).find('option[value="'+value+'"]').attr('disabled',true);
+    var input = '<input type="hidden" id="teacher_subjects_input_'+value+'" value="'+value+'" name="teacher_subjects[]">';
+    $('.selected__teacher_inputs').append(input);
+    var tagLabel = '<span data-id="'+value+'" id="teacher_subjects_'+value+'">'+
+                   '<div class="subject_tag">'+name+'</div>'+
+                   '<div class="delete__subject" onclick="deleteTeacherSubject('+value+');"><i class="fa fa-times" aria-hidden="true"></i></div></span>';
+    $('.selected__teacher_subjects').append(tagLabel);
+    $('.selected__teacher_subjects').show();
+}
+
+function deleteTeacherSubject(id){
+    var span = $('span#teacher_subjects_' + id);
+    var name = $(span).find('.subject_tag').text(); 
+    var id = $(span).attr('data-id'); 
+    $('select.teacher_subjects_select option[value="'+id+'"]').attr('disabled',false);
+    $('input#teacher_subjects_input_' + id).remove();
+    $('span#teacher_subjects_' + id).remove();
+
+    if ($('.selected__teacher_subjects span').length <= 0) {
+        $('.selected__teacher_subjects').hide();
+
+        $('select.teacher_subjects_select option[selected="selected"]').each(
+            function() {
+                $(this).removeAttr('selected');
+            }
+        );
+
+        $('select.teacher_subjects_select option:first').attr('selected',true);
+    }
+}

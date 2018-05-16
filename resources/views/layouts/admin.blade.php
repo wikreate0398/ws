@@ -212,14 +212,22 @@
                      <?php endif ?> 
                   </li>
                   <?php if (uri(4)): ?>
-                     <li>
-                        <a href="javascript:;" style="text-decoration:none; cursor:pointer;">Редактировать</a>
-                     </li>
+                     <?php if (!empty($crumbs)): ?>
+                           <?php echo $crumbs; ?>
+                        <?php else: ?>
+                           <li>
+                           <a href="javascript:;" style="text-decoration:none; cursor:pointer;">Редактировать</a>
+                        </li>
+                     <?php endif ?>
                   <?php endif ?>
                <?php elseif(uri(3)): ?>
-                  <li>
-                     <a href="javascript:;" style="text-decoration:none; cursor:pointer;">Редактировать</a>
-                  </li>
+                  <?php if (!empty($crumbs)): ?>
+                        <?php echo $crumbs; ?>
+                     <?php else: ?>
+                        <li>
+                           <a href="javascript:;" style="text-decoration:none; cursor:pointer;">Редактировать</a>
+                        </li>
+                  <?php endif ?>
                <?php endif ?>
             </ul>
          </div>
@@ -311,8 +319,8 @@
 
 <!-- Main scripts -->
 <script src="/admin_theme/assets/js/jquery.nestable.js?v=<?=time()?>" type="text/javascript"></script>
-<script src="/admin_theme/assets/js/ajax.js?v={time()}" type="text/javascript"></script>
-<script src="/admin_theme/assets/js/custom.js?v={time()}" type="text/javascript"></script> 
+<script src="/admin_theme/assets/js/ajax.js?v={{ time() }}" type="text/javascript"></script>
+<script src="/admin_theme/assets/js/custom.js?v={{ time() }}" type="text/javascript"></script> 
 
 <script>
    jQuery(document).ready(function() {    

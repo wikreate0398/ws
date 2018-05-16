@@ -58,8 +58,7 @@ class TeacherUserController extends Controller
             'grade_education' => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
             'programs_type'   => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
             'teach_activ_cat' => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),
-            'work_experience_direction' => WorkExperienceDirection::orderBy('page_up','asc')->get(), 
-            
+            'work_experience_direction' => WorkExperienceDirection::orderBy('page_up','asc')->get(),  
         ]);
     }
 

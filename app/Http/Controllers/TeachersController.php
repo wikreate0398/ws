@@ -8,7 +8,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TeacherSubjects;
+use App\Models\SubjectsList;
+
 use App\Models\TeacherSpecializations;
 use App\Models\TeacherLessonOptions;
 use App\Models\TeacherCertificates;
@@ -39,7 +40,7 @@ class TeachersController extends Controller
     { 
         $data = [
             'teachers'        => User::getTeachers($request),
-            'subjects'        => TeacherSubjects::groupBy('name')->orderBy('name', 'asc')->get(),
+            'subjects'        => SubjectsList::has('users')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
             'specializations' => TeacherSpecializations::has('specializations_list')->groupBy('id_specialization')->get(),
             'minMaxPrice'     => User::getTeachersMinMaxPrice(),
             'lesson_filter_options'  => TeacherLessonOptions::has('lesson_options_list')
@@ -51,7 +52,7 @@ class TeachersController extends Controller
                                                           ->get()
         ];  
 
-        //exit(print_arr($data['teachers']->toArray()));
+        //exit(print_arr($data['subjects']->toArray()));
 
         return view('teachers.catalog', $data);
     } 

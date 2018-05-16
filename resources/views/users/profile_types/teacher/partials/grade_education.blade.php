@@ -25,11 +25,4 @@
             @endforeach
 		</select>
 	</div>
-</div>
-<div class="col-md-12">
-	<button class="btn btn-sm btn-dafault add__more" 
-	        onclick="addBlock('education__container');" 
-	        type="button">
-	    + Добавить еще
-	</button>
-</div>
+</div> 

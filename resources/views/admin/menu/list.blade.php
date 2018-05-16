@@ -14,7 +14,7 @@
 	          		       data-off-text="<i class='fa fa-times'></i>" 
 	          		       onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $item["id"] }}')"> 
 	             	<a style="margin-left: 5px;" href="/{{ $method }}/{{ $item['id'] }}/edit/" class="btn btn-primary btn-xs">Редактировать</a>  
-	             	<a class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal{{ $item['id'] }}">Удалить</a>  
+	             	<a class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal_{{ $table }}_{{ $item['id'] }}">Удалить</a>  
 	            	<!-- Modal -->
 	            		@include('admin.utils.delete', ['id' => $item['id'], 'table' => $table])
 	           		<!-- Modal --> 
@@ -36,7 +36,7 @@
 		</div>
 
 	   	<div class="col-md-12">  
-	      	<div class="dd" id="nestable" data-table="{{ $table }}" data-action="{{ route('depth_sort') }}">
+	      	<div class="dd nestable" data-table="{{ $table }}" data-action="{{ route('depth_sort') }}">
 	        	<ol class="dd-list">  
                	@catList(map_tree($menu->toArray()), $method, $table) 
 	        	</ol>

@@ -266,6 +266,9 @@
             </div>
             <div class="col-lg-3">
 			<div class="filter_block">
+				<div class="subjects_teacher">
+					Тут предметы вывести
+				</div>
 				<div class="sex_person">
 					<div class="checkbox">
 						<label>

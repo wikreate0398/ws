@@ -1134,6 +1134,9 @@ margin-bottom: 30px;
     font-family: 'Cuprum Regular';
 	font-size: 16px;
 }
+.filter_block .subjects_teacher{
+	margin-bottom: 30px;
+}
 .filter_block .sex_person{
 	margin-bottom: 30px;
 }

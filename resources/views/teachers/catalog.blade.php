@@ -356,21 +356,21 @@
 						<label>
 							<input name="" type="checkbox">
 							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							У преподователя
+							Выезд
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input name="" type="checkbox">
 							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							У ученика
+							Занятие в группе
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input name="" type="checkbox">
 							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							В группе
+							Индивидуально
 						</label>
 					</div>
 					<div class="checkbox">

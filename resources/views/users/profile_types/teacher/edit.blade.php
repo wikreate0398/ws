@@ -167,7 +167,12 @@
 				<div class="col-md-8">
 					<div class="form-group select_form">
 						<select class="form-control" name="grade_experience">
-						  <option>Студент педагогического вуза</option>
+						  <option value="0">Выбрать</option> 
+						  	@foreach($degree_experience as $item)
+                           		<option {{ ($user['grade_experience'] == $item->id) ? 'selected' : '' }} value="{{$item->id}}">
+                           			{{$item->name}}
+                           		</option>
+                        	@endforeach  
 						</select>
 					</div>
 				</div>

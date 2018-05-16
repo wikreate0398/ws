@@ -38,12 +38,13 @@ class TeacherUser extends Controller implements UserTypesInterface
 
     public function showEditForm()
     {
-        $user = Auth::user();
+        $user = Auth::user(); 
         return view('users.teacher_profile', [ 
             'regions'         => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
             'grade_education' => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
             'programs_type'   => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()), 
             'user'            => $user, 
+            'degree_experience' => DB::table('degree_experience')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
 
             'specializations_list'    => DB::table('specializations_list')->where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
             'lesson_options_list'     => DB::table('lesson_options_list')->where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),

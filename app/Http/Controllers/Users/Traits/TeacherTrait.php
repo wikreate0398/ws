@@ -35,7 +35,7 @@ trait TeacherTrait
         'lesson_options'     => 'проведения занятий',
         'city'               => 'Город',
         'region'             => 'Область',
-
+        'grade_experience'   => 'Степень вашего опыта'
     ];
 
     private $rules = [
@@ -46,6 +46,7 @@ trait TeacherTrait
         'region'                => 'required',
         'city'                  => 'required', 
         'address'               => 'required',
+        'grade_experience'      => 'required',
         'image'                 => 'image|mimes:jpeg,jpg,png',
         'email'                 => 'required|string|email|unique:users',
         'password'              => 'required|string|min:6|confirmed',
@@ -247,6 +248,7 @@ trait TeacherTrait
             'about'      => $data['about'],
             'sex'        => $data['sex'],
             'address'    => $data['address'],
+            'grade_experience' => $data['grade_experience'],
             'experience_from' => date('Y-m-d', strtotime($data['experience_from'])),
             'price_hour'      => toFloat($data['price_hour'])
         ]);  

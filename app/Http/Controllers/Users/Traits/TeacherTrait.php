@@ -40,6 +40,8 @@ trait TeacherTrait
         'date_birth'            => 'required',
         'phone'                 => 'required',
         'sex'                   => 'required',
+        'city'                  => 'required',
+        'region'                => 'required',
         'address'               => 'required',
         'image'                 => 'image|mimes:jpeg,jpg,png',
         'email'                 => 'required|string|email|unique:users',

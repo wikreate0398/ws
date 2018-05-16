@@ -66,7 +66,7 @@
 						</label>
 					</div>
 				</div>
-				<label class="col-md-4 control-label">Расположение</label> 
+				<label class="col-md-4 control-label">Расположение *</label> 
 				 
 				<div class="col-md-8 regions__area">
 					<div class="form-group select_form">

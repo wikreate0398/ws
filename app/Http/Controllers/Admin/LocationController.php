@@ -35,7 +35,7 @@ class LocationController extends Controller
         $regions = (new Regions)->newQuery();
         if (!empty($request['query'])) 
         {
-            $regions->where('name', 'like', '%'.$request['query'].'%');
+            $regions->where('name', 'like', '%'.urldecode($request['query']).'%');
         }
         $regions->where('country_id', 3159)->orderByRaw('name asc');
         $regions = $regions->paginate(!empty($request['per_page']) ? $request['per_page'] : 30, 
@@ -58,7 +58,7 @@ class LocationController extends Controller
         $cities = (new Cities)->newQuery();
         if (!empty($request['query'])) 
         {
-            $cities->where('name', 'like', '%'.$request['query'].'%');
+            $cities->where('name', 'like', '%'.urldecode($request['query']).'%');
         }
         $cities->where('region_id', $id)->orderByRaw('name asc');
         $cities = $cities->paginate(!empty($request['per_page']) ? $request['per_page'] : 30, 

@@ -31,7 +31,7 @@
 
 		<div class="col-md-12" style="margin-bottom: 20px;">
 			<form action="/{{ $method }}/">
-				<input value="{{ @request()->input('query') }}" name="query" style="width: 250px; float: left; margin-right: 10px;" type="text" placeholder="Поиск" class="form-control">  
+				<input value="{{ @urldecode(request()->input('query')) }}" name="query" style="width: 250px; float: left; margin-right: 10px;" type="text" placeholder="Поиск" class="form-control">  
 				<button type="submit" class="btn btn-success">Поиск</button>
 				@if(@request()->input('query'))
 					<a href="/{{ $method }}/" class="btn btn-danger">Сбросить</a>

@@ -229,7 +229,7 @@
 										$disabled = 'disabled';
 									}
 								@endphp
-									<option {{ $disabled }} value="{{ $subject->id }}">{{ $subject->name }}</option>
+								<option {{ $disabled }} value="{{ $subject->id }}">{{ $subject->name }}</option>
 							@endforeach
 						</select>  
 						<div class="selected__teacher_subjects" style=" {{ !count($user->subjects) ? 'display: none;' : ''  }}">

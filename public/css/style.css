@@ -1572,5 +1572,37 @@ select option:disabled {
     background-color: #ededed;
 }
 
+/* Фильтр с предметами */
+
+.subjects_filter__tags{
+    justify-content: flex-start;
+    display: flex;
+    flex-flow: wrap;
+    width: 100%;
+    align-items: center;
+    margin-top: 20px;
+}
+.subjects_filter__tags span{
+    background-color: #b93777;
+    color: #fff;
+    position: relative;
+    padding: 5px 20px 5px 10px;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.subjects_filter__tags span:nth-child(2n+1){
+    margin-left: 0;
+}
+
+.subjects_filter__tags span .delete__subject{
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    margin-top: -8px;
+    cursor: pointer;
+}
+
 
 

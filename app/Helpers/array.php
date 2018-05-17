@@ -308,3 +308,43 @@ function uploadBase64($base64, $path){
     $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));    
     file_put_contents($path, $data); 
 }
+
+function imageThumb($image, $path, $width, $height, $v)
+{
+    $path = str_replace('.', '/', $path); 
+
+    $thumbPath = '/thumb';
+    if (!is_dir(public_path($path . "/thumb"))) 
+    {  
+        mkdir(public_path($path . "/thumb"), 0777);
+        chmod(public_path($path . "/thumb"), 0777);
+    }
+
+    if (!empty($v)) 
+    {
+        if (!is_dir(public_path($path . "/thumb/version_$v"))) 
+        { 
+            mkdir(public_path($path . "/thumb/version_$v"), 0777);
+            chmod(public_path($path . "/thumb/version_$v"), 0777);
+        }
+        $thumbPath .= "/version_$v";
+    }
+    
+    $imgeThumbnailPath = public_path($path . $thumbPath . "/$image");
+    $filePath          = public_path($path . "/$image");
+
+    if (!file_exists($imgeThumbnailPath) && file_exists($filePath)) 
+    {   
+        $img = Image::make($filePath)->fit($width, $height, function ($constraint) {
+            $constraint->upsize();
+        });
+        $img->save($imgeThumbnailPath);
+    }  
+
+    if (!file_exists($imgeThumbnailPath) or empty($image)) 
+    {
+        return "http://via.placeholder.com/{$width}x{$height}/00d2ff/ffffff";
+    }
+
+    return env('APP_URL') . '/' . $path . $thumbPath . "/$image"; 
+}

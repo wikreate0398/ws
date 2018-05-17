@@ -63,6 +63,11 @@ class User extends Authenticatable
 
         $user = (new User)->newQuery(); 
 
+        if (isset($request['q'])) 
+        {
+            $user->where('name', 'like', '%'.$request['q'].'%');
+        }
+
         if (isset($request['sex']) && in_array($request['sex'], ['male', 'female'])) 
         {
             $user->where('sex', $request['sex']);
@@ -88,6 +93,14 @@ class User extends Authenticatable
             $subject = $request['subject'];
             $user->whereHas('subjects', function ($query) use ($subject) {
                 $query->where('name', urldecode($subject));
+            });
+        }
+
+        if (isset($request['subjects'])) 
+        {
+            $subjectsId = explode(',', $request['subjects']);
+            $user->whereHas('subjects', function ($query) use ($subjectsId) {
+                $query->whereIn('id_subject', $subjectsId);
             });
         }
 

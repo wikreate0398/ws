@@ -17,16 +17,17 @@
                 <h1 class="title_page">ВСЕ ПРЕПОДАВАТЕЛИ</h1>
             </div>
             <div class="col-lg-6 col-lg-offset-3">
-				<form class="no_home" id="search_form" data-url-autocomplete="/teachers/autocomplete" >
+				<form class="no_home" id="search_form" action="/teachers" method="Get" data-url-autocomplete="/teachers/autocomplete" >
 						<div class="input-group">
 							<input name="q" 
 								   autocomplete="off" 
 								   class="form-control" 
 								   id="search__input" 
-								   placeholder="Введите ФИО преподавателя">
+								   placeholder="Введите ФИО преподавателя"
+								   value="{{ @urldecode(request()->input('q')) }}">
 							<div class="loaded__search_result"></div>
 							<span class="input-group-btn">
-								<button type="button" class="btn btn_search">Начать поиск</button>
+								<button type="submit" class="btn btn_search">Начать поиск</button>
 							</span>
 						</div>
 				</form>
@@ -86,7 +87,9 @@
 					<div class="row">
 						<div class="col-md-3">
                             <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
-							<a href="/teacher/{{ $teacher['id'] }}/"><img class="img-responsive" src="{{ $img }}"></a>
+							<a href="/teacher/{{ $teacher['id'] }}/">
+								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 277, 368, 'list') }}">
+							</a>
 							<button type="button" class="btn submit_application">Оставить заявку</button>
 							<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
 						</div>
@@ -266,83 +269,114 @@
             </div>
             <div class="col-lg-3">
 			<div class="filter_block">
-				<div class="subjects_teacher">
-					Тут предметы вывести
-				</div>
+				 
+				@if(!empty($subjects))
+                    <div class="subjects_teacher">
+                        @php  
+                        	$subjectsArr = [];
+                        	if(@request()->input('subjects'))
+                        	{
+								$subjectsArr = explode(',', request()->input('subjects'));
+                        	} 
+						@endphp
+                        <select class="form-control" id="subjects" onchange="subjectsFilter(this)">
+                            <option value="0">Выбрать</option>
+                            @foreach($subjects as $subject)
+                            	@php
+									$disabled = '';
+									if(in_array($subject->id, $subjectsArr)){
+										$disabled = 'disabled';
+									}
+								@endphp
+                                <option {{ $disabled }} 
+                                        {{ (request()->input('subject') == $subject->name) ? 'selected' : '' }} 
+                                        value="{{ $subject->id }}">
+                                    {{ $subject->name }}
+                                </option> 
+                            @endforeach
+                        </select>
+						
+						@if(!empty($subjectsArr))
+                        <div class="subjects_filter__tags"> 
+                        	@foreach($subjects as $subject)
+                        		@if(in_array($subject['id'], $subjectsArr))
+									<span id="teacher_subjects_{{ $subject->id }}" data-id="{{ $subject->id }}">
+										<div class="subject_tag"> 
+											{{ $subject->name }} 
+										</div>
+										<div onclick="deleteFilterSubject({{ $subject->id }});" class="delete__subject">
+											<i class="fa fa-times" aria-hidden="true"></i>
+										</div>
+									</span>
+								@endif
+                        	@endforeach 
+                        </div>
+                        @endif
+
+                        <div class="subjects_filter__inputs">
+                        	@if(!empty($subjectsArr)) 
+	                        	@foreach($subjectsArr as $key => $subjectId)
+									<input type="hidden" 
+									       id="teacher_subject_input_{{ $subjectId }}" 
+									       class="teacher_subjects" 
+									       value="{{ $subjectId }}">
+	                        	@endforeach
+                        	@endif
+                        </div>
+                    </div>
+                @endif 
+				 
 				<div class="sex_person">
+					@php  
+						$sexArr = explode(',', request()->input('sex'));
+					@endphp
 					<div class="checkbox">
 						<label>
-							<input name="" type="checkbox">
+							<input class="sex" 
+							       name="" 
+							       type="checkbox" 
+							       value="male" 
+							       {{ (in_array('male', $sexArr)) ? 'checked' : '' }}>
 							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
 							Мужчина
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input name="" type="checkbox">
+							<input name="" 
+							       class="sex" 
+							       value="female" 
+							       type="checkbox" 
+							       {{ (in_array('female', $sexArr)) ? 'checked' : '' }}>
 							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
 							Женшина
 						</label>
 					</div>
-				</div>
-				<div class="specializations_teacher">
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Дошкольник
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							1-3 Класс
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							4-9 Класс
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							10-11 Класс
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Подготовка к ЕГЭ
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Подготовка к ОГЭ
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Вступительные экзамены
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Студентам вузов
-						</label>
-					</div>
-				</div>
+				</div>				 
+
+				@if(!empty($specializations))
+                    <div class="specializations_teacher">
+                        @php
+                            $specializationsArray = [];
+                            if(request()->input('specializations')){
+                                $specializationsArray = explode(',', request()->input('specializations'));
+                            }
+                        @endphp
+                        @foreach($specializations as $specialization) 
+                            <div class="checkbox">
+								<label>
+									<input value="{{ $specialization->id_specialization }}" 
+									       class="specialization_input"
+                                           {{ in_array($specialization->id_specialization, $specializationsArray) ? 'checked' : '' }}
+                                           type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									{{ $specialization->specializations_list->name }}
+								</label>
+							</div> 
+                        @endforeach
+                    </div>
+                @endif
+				 
 				@if($minMaxPrice['min'] > 0 && $minMaxPrice['max'] > 0 && $minMaxPrice['min'] <> $minMaxPrice['max'])
 				<div class="price_options">
 					<div class="form-group">
@@ -354,39 +388,35 @@
 					</div>
 				</div>
 				@endif
-				<div class="lesson_options">
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Выезд
-						</label>
+
+				@if(!empty($lesson_filter_options))  
+					<div class="lesson_options"> 
+				 		@php
+	                        $lessonOptionsArray = [];
+	                        if(request()->input('lesson_options')){
+	                            $lessonOptionsArray = explode(',', request()->input('lesson_options'));
+	                        }
+	                    @endphp
+	                    @foreach($lesson_filter_options as $lesson_option)  
+	                        <div class="checkbox">
+								<label>
+									<input value="{{ $lesson_option->id_lesson_option }}" 
+	                                       class="lesson_option_input"
+	                                       {{ in_array($lesson_option->id_lesson_option, $lessonOptionsArray) ? 'checked' : '' }} 
+	                                       type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									{{ $lesson_option->lesson_options_list->name }}
+								</label>
+							</div>
+	                    @endforeach 
 					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Занятие в группе
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Индивидуально
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input name="" type="checkbox">
-							<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-							Онлайн
-						</label>
-					</div>
-				</div>
-				<div class="reset_filter">
-					<a href="">Сбросить фильтр </a>
-				</div>
+				@endif
+
+				@if(request()->input('flt') == 1)
+                    <div class="reset_filter">
+						<a href="/teachers">Сбросить фильтр </a>
+					</div> 
+                @endif
 			</div>
                 <script>
                     $(document).ready(function(){
@@ -418,21 +448,33 @@
                             $('input#max_price').val($( "#slider-range" ).slider( "values", 1 ));
                         }
                     
-                        $('div.filter_block form').find('input').change(function(){
+                        $('div.filter_block').find('input').change(function(){
                             teacherFilter();
-                        });
-
-                        $('div.filter_block form').find('select').change(function(){
-                            teacherFilter();
-                        });
+                        }); 
                     });
+
+                    function subjectsFilter(select){
+                		var value = $(select).val();
+					    if (value <= 0) return;
+					    var name  = $(select).find('option[value="'+value+'"]').text(); 
+					    $(select).find('option[value="'+value+'"]').attr('disabled',true);
+
+					    var input = '<input type="hidden" class="teacher_subjects" value="'+value+'">';
+					    $('.subjects_filter__inputs').append(input); 
+					    teacherFilter();
+                	}
+
+                	function deleteFilterSubject(id){
+                		$('input#teacher_subject_input_' + id).remove();
+                		$('input#teacher_subjects_' + id).fadeOut(150);
+                		teacherFilter();
+                	}
 
                     function teacherFilter(){
                         var teacher_available = $('input#teacher_available').val();
                         var per_page  = $('input#per_page').val();
-                        var page      = $('input#page').val();
-                        var subject   = $('select#subjects').val();
-                        var sex       = $('input.sex:checked').val();
+                        var page      = $('input#page').val(); 
+                        var search__input = $('input#search__input').val();
                         var min_price = $('input#min_price').val();
                         var max_price = $('input#max_price').val();
 
@@ -447,6 +489,15 @@
                             });
                         }
 
+                        var subjects = '';
+                        if ($('input.teacher_subjects').length > 0) {
+                        pluser='';  
+                            $.each($('input.teacher_subjects'),function() {
+                                subjects+=pluser+$(this).val();
+                               	pluser=',';
+                            });
+                        }  
+
                         var lesson_options = '';
                         if ($('input.lesson_option_input').length > 0) {
                         pluser='';  
@@ -458,9 +509,21 @@
                             });
                         }
 
-                        flt='?flt=1';
+                        var sex = '';
+                        if ($('input.sex').length > 0) {
+                        pluser='';  
+                            $.each($('input.sex'),function() {
+                                if ($(this).is(':checked')) {
+                                    sex+=pluser+$(this).val();
+                                    pluser=',';
+                                }
+                            });
+                        }  
+
+                        flt='?flt=1'; 
+                        if(search__input) flt+='&q='+search__input;
                         if(teacher_available) flt+='&teacher_available='+teacher_available;
-                        if(subject != '0') flt+='&subject='+subject;
+                        if(subjects) flt+='&subjects='+subjects;
                         if(sex) flt+='&sex='+sex;
                         if(min_price) flt+='&min_price='+min_price;
                         if(max_price) flt+='&max_price='+max_price;
@@ -488,104 +551,7 @@
                         teacherFilter();
                     }
 
-                </script>
-
-                <div class="filter_block">
-                    <form action="">
-                        @if(request()->input('flt') == 1)
-                            <div style="margin-bottom: 20px;">
-                                <a href="/teachers" class="btn btn-warning">Сбросить</a>
-                            </div>
-                        @endif
-
-                        @if(count($subjects))
-                        <div class="form-group">
-                            <label class="control-label">ПРЕДМЕТ</label>
-                            <select class="form-control" id="subjects">
-                                <option value="0">Выбрать</option>
-                                @foreach($subjects as $subject)
-                                    <option {{ (request()->input('subject') == $subject->name) ? 'selected' : '' }} value="{{ $subject->name }}">
-                                        {{ $subject->name }}
-                                    </option> 
-                                @endforeach
-                            </select>
-                        </div>
-                        <hr>
-                        @endif
-
-                        <div class="form-group">
-                            <div class="control-label">ПОЛ</div>
-                            <label class="radio-inline">
-                                <input type="radio" name="sex" class="sex" value="all" {{ (request()->input('sex') == 'all' or !request()->input('sex')) ? 'checked' : '' }}>
-                                Все
-                            </label><br>
-                            <label class="radio-inline">
-                                <input type="radio" name="sex" class="sex" value="male" {{ (request()->input('sex') == 'male') ? 'checked' : '' }}>
-                                Мужской
-                            </label>
-
-                            <label class="radio-inline" style="margin-left: 0;">
-                                <input type="radio" name="sex" class="sex" value="female" {{ (request()->input('sex') == 'female') ? 'checked' : '' }}>
-                                Женский
-                            </label>
-                        </div>
-                        <hr>
-                        
-                        @if(!empty($specializations))
-                        <div class="form-group">
-                            <div class="control-label">КАТЕГОРИЯ ПРЕПОДАВАНИЯ</div>
-                            @php
-                                $specializationsArray = [];
-                                if(request()->input('specializations')){
-                                    $specializationsArray = explode(',', request()->input('specializations'));
-                                }
-                            @endphp
-                            @foreach($specializations as $specialization)
-                                <label class="checkbox-inline" style="margin-left: 0;">
-                                    <input type="checkbox"
-                                           value="{{ $specialization->id_specialization }}" 
-                                           class="specialization_input"
-                                           {{ in_array($specialization->id_specialization, $specializationsArray) ? 'checked' : '' }}>
-                                    {{ $specialization->specializations_list->name }}
-                                </label>
-                            @endforeach
-                        </div>
-                        <hr>
-                        @endif
-                        
-                        @if($minMaxPrice['min'] > 0 && $minMaxPrice['max'] > 0 && $minMaxPrice['min'] <> $minMaxPrice['max'])
-                        <div class="form-group">
-                            <label class="control-label">СТОИМОСТЬ ЧАСА</label>
-                            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                            <input type="hidden" name="min_price" value="{{ @request()->input('min_price') }}" id="min_price">
-                            <input type="hidden" name="max_price" value="{{ @request()->input('max_price') }}" id="max_price">
-                            <div id="slider-range"></div>
-                        </div><hr>
-                        @endif
-                        
-                        @if(!empty($lesson_filter_options))
-                        <div class="form-group">
-                            <div class="control-label">МЕСТО ПРОВЕДЕНИЯ</div>
-                            @php
-                                $lessonOptionsArray = [];
-                                if(request()->input('lesson_options')){
-                                    $lessonOptionsArray = explode(',', request()->input('lesson_options'));
-                                }
-                            @endphp
-                            @foreach($lesson_filter_options as $lesson_option)
-                                <label class="checkbox-inline" style="margin-left: 0;">
-                                    <input type="checkbox" 
-                                           value="{{ $lesson_option->id_lesson_option }}" 
-                                           class="lesson_option_input"
-                                           {{ in_array($lesson_option->id_lesson_option, $lessonOptionsArray) ? 'checked' : '' }}>
-                                    {{ $lesson_option->lesson_options_list->name }}
-                                </label>
-                            @endforeach
-                        </div>
-                        @endif
-
-                    </form>
-                </div>
+                </script> 
             </div>
         </div>
 

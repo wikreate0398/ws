@@ -49,7 +49,10 @@ class TeachersController extends Controller
 
             'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')
-                                                          ->get()
+                                                          ->get(),
+            'scripts' => [
+                'js/filter_teachers.js'
+            ]
         ];  
 
         //exit(print_arr($data['subjects']->toArray()));

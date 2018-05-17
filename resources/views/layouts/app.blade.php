@@ -341,6 +341,12 @@
         </div> 
     </div>  
     @endif
+
+    @if(!empty($scripts))
+        @foreach($scripts as $key => $script)
+            {!! setScript('/public/', $script) !!}
+        @endforeach
+    @endif 
 </body>
 
 </html>

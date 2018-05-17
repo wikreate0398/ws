@@ -348,3 +348,12 @@ function imageThumb($image, $path, $width, $height, $v)
 
     return env('APP_URL') . '/' . $path . $thumbPath . "/$image"; 
 }
+
+function setScript($js_folder, $path){
+    if (strpos($path, 'full:') !== false) {
+        $path = str_replace('full:', '', $path); 
+    }else{
+        $path = $js_folder.$path.'?v='.time();
+    }
+    return "<script src='{$path}'></script>";
+}

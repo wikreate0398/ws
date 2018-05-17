@@ -65,7 +65,7 @@ class PagesController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $query      = $request->input('search');  
+        $query      = urldecode($request->input('search'));   
         $searchData = $this->generateSearch($query);
         if (empty($searchData)) die();
          

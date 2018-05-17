@@ -74,7 +74,7 @@ class CoursesController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $query      = $request->input('search');  
+        $query      = urldecode($request->input('search'));  
         $searchData = Courses::whereHas('user', function($query){
             $query->where('user_type', '2')
                   ->where('activate', '1')

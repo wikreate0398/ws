@@ -83,7 +83,7 @@ class TeachersController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $query      = $request->input('search');  
+        $query      = urldecode($request->input('search'));  
         $searchData = User::where('user_type', 2)->where('name', 'like', "%$query%")->orderBy('created_at', 'desc')->get();
         if (empty($searchData)) die();
          

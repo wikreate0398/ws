@@ -37,7 +37,7 @@
     </div>
 
     <div class="row">
-    	<div class="col-lg-10">
+    	<div class="col-lg-9">
     		<div class="filter_top">
                 <div class="row">
                     <div class="col-lg-3">
@@ -159,7 +159,7 @@
             </div>
     	</div>
 		
-		<div class="col-lg-2">
+		<div class="col-lg-3">
 			<ul class="courses__cats">
 				<li class="{{ !request()->segment(2) ? 'active' : '' }}">
 					<a href="/courses">Все Курсы <span class="badge badge-default">{{ count($courses) }}</span></a>

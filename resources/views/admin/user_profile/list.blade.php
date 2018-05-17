@@ -255,7 +255,8 @@
 								<input type="hidden" name="tbname" value="lesson_options_list">
 
 								<div class="form-body" style="padding-top: 20px;">  
-									@include('admin.utils.input', ['label' => 'Название', 'name' => 'data[name]'])  
+									@include('admin.utils.input', ['label' => 'Название', 'name' => 'data[name]']) 
+									@include('admin.utils.input', ['label' => 'Короткое название', 'name' => 'data[name2]']) 
 								</div>
 								<div class="form-actions">
 									<div class="btn-set pull-left"> 

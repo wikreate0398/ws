@@ -87,9 +87,7 @@
 					    </div> 
 					    @php $sectionNum++ @endphp
 				    @endforeach
-				     
 				</div> 
-
 			</div>
 			<a href="/courses" class="btn btn-default">Вернуться в каталог курсов</a>
 		</div>

@@ -87,7 +87,7 @@
 					<div class="row">
 						<div class="col-md-3"> 
 							<a href="/teacher/{{ $teacher['id'] }}/">
-								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 277, 368, 'list') }}">
+								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 400, 'list') }}">
 							</a>
 							<button type="button" class="btn submit_application">Оставить заявку</button>
 							<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
@@ -146,7 +146,7 @@
 									  <label>
 										<input type="checkbox" value="" disabled {{ in_array($lesson_option['id'], $teacher->lesson_options->pluck('id')->toArray()) ? 'checked' : '' }}>
 										<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-										{{ $lesson_option->name }}
+										{{ $lesson_option->name2 ? $lesson_option->name2 : $lesson_option->name }}
 									  </label>
 									</div>
 								</li>
@@ -410,8 +410,8 @@
 	                                       class="lesson_option_input"
 	                                       {{ in_array($lesson_option->id_lesson_option, $lessonOptionsArray) ? 'checked' : '' }} 
 	                                       type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									{{ $lesson_option->lesson_options_list->name }}
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>  
+                                    {{ $lesson_option->lesson_options_list->name2 ? $lesson_option->lesson_options_list->name2 : $lesson_option->lesson_options_list->name }} 
 								</label>
 							</div>
 	                    @endforeach 

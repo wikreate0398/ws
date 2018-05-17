@@ -52,7 +52,7 @@
 					@foreach($lesson_options as $lesson_option)
 						<li class="{{ in_array($lesson_option['id'], $teacher->lesson_options->pluck('id')->toArray()) ? 'active' : '' }}"> 
 							<i class="fa fa-chevron-circle-down"></i>
-							{{ $lesson_option->name }}
+							{{ $lesson_option->name2 ? $lesson_option->name2 : $lesson_option->name }}
 						</li>
 					@endforeach 
 				@endif

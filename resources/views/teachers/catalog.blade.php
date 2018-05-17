@@ -85,8 +85,7 @@
                 @foreach($teachers as $teacher)
 				<div class="teachers_external_card">
 					<div class="row">
-						<div class="col-md-3">
-                            <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['image'] : noImg()  ?>
+						<div class="col-md-3"> 
 							<a href="/teacher/{{ $teacher['id'] }}/">
 								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 277, 368, 'list') }}">
 							</a>
@@ -95,7 +94,14 @@
 						</div>
 						<div class="col-md-9">
 							<div class="teachers_name">
-								<h2>{{ $teacher['name'] }}</h2>
+								<h2>
+									@php
+										$nameExplode = explode(' ', $teacher['name']);
+										echo $nameExplode[0] . '<br>'; unset($nameExplode[0]);
+										echo implode(' ', $nameExplode);
+									@endphp
+									 
+								</h2>
 								<span class="teachers_date">{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, 
 								@if($teacher->experience_from)
 									опыт работы {{date('Y') - date('Y', strtotime($teacher->experience_from)) }} лет

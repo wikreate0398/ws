@@ -181,6 +181,7 @@
 <style>
 
 	.courses__cats{
+		margin-top: 30px;
 		list-style: none; 
 		background-color: #ededed;
 		padding:10px;

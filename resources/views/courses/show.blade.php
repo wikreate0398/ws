@@ -91,6 +91,7 @@
 				</div> 
 
 			</div>
+			<a href="/courses" class="btn btn-default">Вернуться в каталог курсов</a>
 		</div>
 	</div>
 </div>

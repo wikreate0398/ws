@@ -101,7 +101,7 @@
 	            				@endif 
 	            			</div>
 		            		<h2>
-		            			<a href="">
+		            			<a href="/course/{{ $course->id }}">
 		            				{{ $course->name }}
 		            			</a>
 		            		</h2>
@@ -112,7 +112,7 @@
 										@if($course->pay == 1)
 											БЕСПЛАТНО
 										@else
-											₽ {{ $course->price }}
+											₽{{ $course->price }}
 			            				@endif 
 		            				 </td>
 		            			</tr>

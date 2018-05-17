@@ -40,8 +40,19 @@ class CoursesController extends Controller
 
         $data = [
             'courses'      => Courses::getCatalog($cat, $request->all()),
-            'totalCourses' => Courses::count(),
-            'categories'   => CourseCategory::has('courses', '>=', '1')->get(),
+            'totalCourses' => Courses::whereHas('user', function($query){
+                                        $query->where('user_type', '2')
+                                              ->where('activate', '1')
+                                              ->where('confirm', '1');
+                                    })->count(),
+
+            'categories'   => CourseCategory::with(['courses' => function($query){
+                                    $query->whereHas('user', function($query){
+                                        $query->where('user_type', '2')
+                                              ->where('activate', '1')
+                                              ->where('confirm', '1');
+                                    });
+                              }])->has('courses', '>=', '1')->get(),
             'baseUrl'      => $baseUrl,
             'scripts' => [
                 'js/filter_courses.js'
@@ -54,22 +65,14 @@ class CoursesController extends Controller
     public function show($id)
     { 
         $data = [
-            'teacher'                 => \App\Models\User::with(['cityData', 
-                                                                 'specializations', 
-                                                                 'certificates', 
-                                                                 'lesson_options', 
-                                                                 'educations', 
-                                                                 'subjects'])
-                                                           ->where('user_type', '2')
-                                                           ->where('activate', '1')
-                                                           ->where('confirm', '1')
-                                                           ->findOrFail($id),  
-            'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
-                                                          ->orderBy('id', 'desc')
-                                                          ->get() 
+            'course'                 => Courses::with('sections')->where('id', $id)->whereHas('user', function($query){
+                                            $query->where('user_type', '2')
+                                                  ->where('activate', '1')
+                                                  ->where('confirm', '1');
+                                        })->findOrFail($id) 
         ];   
 
-        return view('teachers.show', $data);
+        return view('courses.show', $data);
     } 
 
     public function autocomplete(Request $request)

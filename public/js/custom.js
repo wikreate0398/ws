@@ -181,8 +181,9 @@ jQuery(document).ready(function($) {
                     // }, 1000);
   
                 } else {    
-                    if (jsonResponse.redirect == true) {  
+                    if (jsonResponse.redirect != '') {   
                         window.location = jsonResponse.redirect;
+                         
                     }
 
                     if (jsonResponse.reload == true) { 

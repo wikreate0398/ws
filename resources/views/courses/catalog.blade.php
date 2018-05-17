@@ -40,7 +40,7 @@
     	<div class="col-lg-9">
     		<div class="filter_top">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <ul class="list-inline available_list">
                             <li class="{{ (request()->input('pay') == 'all' or request()->input('pay') == null) ? 'active' : '' }}">
                                 <a data-pay="all" onclick="courses_pay_filter(this); return false;" href="#">ВСЕ</a>
@@ -57,13 +57,13 @@
                                id="courses_pay" 
                                value="{{ @request()->input('pay') ? request()->input('pay') : 'all' }}">
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <ul class="list-inline sorting_list">
                             <li><a href=""><i class="fa fa-caret-down" aria-hidden="true"></i> ДАТА</a></li>
                             <li><a href=""><i class="fa fa-caret-up" aria-hidden="true"></i> ОТЗЫВЫ</a></li>
                         </ul>
                     </div>
-                    <div class="col-lg-3" style="text-align: right;">
+                    <div class="col-lg-4" style="text-align: right;">
                         <ul class="list-inline per_page_list">
                             <li class="{{ (request()->input('per_page') == '12' or request()->input('per_page') == null) ? 'active' : '' }}">
                                 <a data-perpage="12" onclick="courses_perpage_filter(this); return false;" href="#">12</a>

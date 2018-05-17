@@ -161,12 +161,12 @@
 		
 		<div class="col-lg-3">
 			<ul class="courses__cats">
-				<li class="{{ !request()->segment(2) ? 'active' : '' }}">
+				<li class="{{ !request()->segment(3) ? 'active' : '' }}">
 					<a href="/courses">Все Курсы <span class="badge badge-default">{{ $totalCourses }}</span></a>
 				</li>
 				@foreach($categories as $category)
-					<li class="{{ (request()->segment(2) == $category['url']) ? 'active' : '' }}">
-						<a href="/courses/{{ $category['url'] }}">
+					<li class="{{ (request()->segment(3) == $category['url']) ? 'active' : '' }}">
+						<a href="/courses/cat/{{ $category['url'] }}">
 							{{ $category['name'] }} 
 							<span class="badge badge-default">{{ count($category->courses) }}</span>
 						</a>

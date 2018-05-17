@@ -35,7 +35,7 @@ class CoursesController extends Controller
 
         $baseUrl = '/courses';
         if (!empty($cat)) {
-            $baseUrl .= "/$cat";
+            $baseUrl .= "/cat/$cat";
         }
 
         $data = [
@@ -73,7 +73,7 @@ class CoursesController extends Controller
     } 
 
     public function autocomplete(Request $request)
-    {
+    { 
         $query      = urldecode($request->input('search'));  
         $searchData = Courses::whereHas('user', function($query){
             $query->where('user_type', '2')

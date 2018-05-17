@@ -37,11 +37,11 @@ Route::get('teachers', 'TeachersController@index');
 Route::get('teacher/{id}', 'TeachersController@show');
 Route::get('teachers/autocomplete', 'TeachersController@autocomplete');
 
-Route::get('courses', 'CoursesController@index');
-Route::get('courses/{cat}', 'CoursesController@index');
+Route::get('courses', 'CoursesController@index'); 
+Route::get('courses/cat/{cat}', 'CoursesController@index');
 Route::get('course/{id}', 'CoursesController@show');
 Route::get('courses/autocomplete', 'CoursesController@autocomplete');
- 
+
 Route::get('search', 'PagesController@search');  
 
 Route::group(['middleware' => ['web_auth']], function(){  

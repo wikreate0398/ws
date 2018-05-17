@@ -114,8 +114,7 @@ jQuery(document).ready(function($) {
 
     $('form#search_form').find('input#search__input').keyup(function(){  
         if ($(this).val().length >= 3) {  
-            var url = $(this).closest('form').attr('data-url-autocomplete');
-            console.log(url);
+            var url = $(this).closest('form').attr('data-url-autocomplete'); 
             $.ajax({
                 type: "GET",
                 url: url,

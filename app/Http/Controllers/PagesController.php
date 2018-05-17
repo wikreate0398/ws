@@ -61,11 +61,6 @@ class PagesController extends Controller
         ];  
 
         return view('university.show', $data);
-    }
-
-    public function courses()
-    {
-        return view('courses.list');
     } 
 
     public function autocomplete(Request $request)

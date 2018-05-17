@@ -18,4 +18,9 @@ class CourseCategory extends Model
         'seo_description',
         'seo_keywords'
     ];
+
+    public function courses()
+    {
+        return $this->hasMany('App\Models\Courses', 'id_category', 'id');
+    }
 }

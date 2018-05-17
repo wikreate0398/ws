@@ -22,8 +22,45 @@ class Courses extends Model
         'price'
     ];
 
+    public function category()
+    {
+        return $this->hasOne('App\Models\CourseCategory', 'id', 'id_category');
+    } 
+
+    public function subCategory()
+    {
+        return $this->hasOne('App\Models\CourseCategory', 'id', 'id_subcat');
+    } 
+
     public function sections()
     {
         return $this->hasMany('App\Models\CourseSections', 'id_course', 'id');
     } 
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'id_user');
+    }  
+
+    public static function getCatalog($cat=false, $input=false)
+    {
+        $courses = (new Courses)->newQuery();
+
+        if (!empty($input['pay']) && in_array($input['pay'], ['1','2'])) 
+        {
+            $courses->where('pay', $input['pay']);
+        }
+
+        if (!empty($cat)) 
+        {
+            $courses->whereHas('category', function($query) use($cat){
+                $query->where('url', $cat);
+            });
+        }
+
+        return $courses->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
+                                      ['*'], 
+                                      'page', 
+                                      !empty($input['page']) ? $input['page'] : 1);
+    }
 }

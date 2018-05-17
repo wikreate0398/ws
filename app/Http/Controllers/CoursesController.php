@@ -39,13 +39,14 @@ class CoursesController extends Controller
         }
 
         $data = [
-            'courses'    => Courses::getCatalog($cat, $request->all()), 
-            'categories' => CourseCategory::has('courses', '>=', '1')->get(),
-            'baseUrl'    => $baseUrl,
+            'courses'      => Courses::getCatalog($cat, $request->all()),
+            'totalCourses' => Courses::count(),
+            'categories'   => CourseCategory::has('courses', '>=', '1')->get(),
+            'baseUrl'      => $baseUrl,
             'scripts' => [
                 'js/filter_courses.js'
             ]
-        ];   
+        ];    
 
         return view('courses.catalog', $data);
     } 

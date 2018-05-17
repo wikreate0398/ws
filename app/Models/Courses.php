@@ -46,6 +46,11 @@ class Courses extends Model
     {
         $courses = (new Courses)->newQuery();
 
+        if (isset($input['q'])) 
+        {
+            $courses->where('name', 'like', '%'.$input['q'].'%');
+        }
+
         if (!empty($input['pay']) && in_array($input['pay'], ['1','2'])) 
         {
             $courses->where('pay', $input['pay']);

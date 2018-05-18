@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -56,6 +57,15 @@ class User extends Authenticatable
     public function university()
     {
         return $this->hasOne('App\Models\UsersUniversity', 'id_user', 'id');
+    }
+
+    public static function allowTeacherUser(Builder $query)
+    {
+        return $query->where('user_type', '2')
+                     ->where('activate', '1')
+                     ->where('confirm', '1')
+                     ->where('data_filled', '1')
+                     ->where('data_filled','1');
     }
 
     public static function getTeachers($request = false)
@@ -120,10 +130,9 @@ class User extends Authenticatable
             });
         }
 
-        $user->where('user_type', '2')
-             ->where('activate', '1')
-             ->where('confirm', '1')
-             ->orderBy('created_at', 'desc');
+        $user->where(function($query){
+            return User::allowTeacherUser($query);
+        });
 
         return $user->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
                                       ['*'], 
@@ -158,15 +167,15 @@ class User extends Authenticatable
 
     public static function getTeachersMinMaxPrice()
     {
-        $min = self::where('user_type', '2')
-                   ->where('activate', '1')
-                   ->where('confirm', '1')
-                   ->where('price_hour', '>', '0')
-                   ->min('price_hour');
+        $min = self::where(function($query){
+                        return User::allowTeacherUser($query);
+                    })
+                    ->where('price_hour', '>', '0')
+                    ->min('price_hour');
 
-        $max = self::where('user_type', '2')
-                   ->where('activate', '1')
-                   ->where('confirm', '1')
+        $max = self::where(function($query){
+                        return User::allowTeacherUser($query);
+                    })
                    ->where('price_hour', '>', '0')
                    ->max('price_hour');
 

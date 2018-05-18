@@ -54,16 +54,29 @@ function sortValue($arr){
     return $data; 
 }
 
+function arrayNoEmpty($data)
+{ 
+    foreach ($data as $field => $value) 
+    {
+        if (!empty($value)) 
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 function validateArray($data)
 {
-    foreach ($data as $row) {  
+    foreach ($data as $row) {   
+
         if (empty($row['required']) && !empty($row['array']) or !empty($row['required'])) 
         { 
             foreach ($row['array'] as $key => $item) 
             {  
                 foreach ($item as $field => $value) 
                 { 
-                    if (!in_array($field, $row['excepts']) && empty($value)) 
+                    if (!in_array($field, $row['excepts']) && empty($value) && !empty($row['required'])) 
                     {  
                         return ['status' => false, 'field' => $row['fName'] . "[$field][]"];
                     } 

@@ -44,7 +44,7 @@
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') . '?v=' . time() }}"></script>
     <script src="{{ asset('js/switcher.js') }}"></script>
-    <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="{{ asset('js/select2.js') }}"></script> 
     
     <!-- Cropper --> 
     <script src="{{ asset('js/cropperjs/dist/cropper.js') }}"></script>

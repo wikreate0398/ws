@@ -64,9 +64,9 @@ class Courses extends Model
         }
 
         $courses->whereHas('user', function($query){
-            $query->where('user_type', '2')
-                  ->where('activate', '1')
-                  ->where('confirm', '1');
+            $query->where(function($query){
+                return User::allowTeacherUser($query);
+            });
         });
 
         return $courses->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 

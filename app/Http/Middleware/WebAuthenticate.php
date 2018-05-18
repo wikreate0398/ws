@@ -16,10 +16,12 @@ class WebAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() == true && in_array(0, array(Auth::user()->activate, Auth::user()->confirm)) or empty(Auth::user()->id)) {
+        if (Auth::check() == true && in_array(0, array(Auth::user()->activate, Auth::user()->confirm)) or empty(Auth::user()->id)) 
+        {
             Auth::guard('web')->logout(); 
             return  redirect()->route('login');
-        }    
+        }   
+ 
         return $next($request);
     }
 }

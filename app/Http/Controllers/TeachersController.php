@@ -69,9 +69,9 @@ class TeachersController extends Controller
                                                                  'lesson_options', 
                                                                  'educations', 
                                                                  'subjects'])
-                                                           ->where('user_type', '2')
-                                                           ->where('activate', '1')
-                                                           ->where('confirm', '1')
+                                                           ->where(function($query){
+                                                                return User::allowTeacherUser($query);
+                                                           }) 
                                                            ->findOrFail($id),  
             'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')

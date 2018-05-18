@@ -233,7 +233,7 @@ class ProfileController extends Controller
         if (count($cities) > 0) 
         { 
             $content .= '<div class="form-group select_form"><select name="city" class="form-control select2">
-                         <option value="">Выбрать</option>';
+                         <option value="">Город</option>';
             foreach ($cities as $item)
             {
                 $selected = ($id_city == $item['id']) ? 'selected' : '';

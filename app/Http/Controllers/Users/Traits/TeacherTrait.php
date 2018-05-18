@@ -33,13 +33,15 @@ trait TeacherTrait
         'teacher_subjects'   => 'Предметы',
         'specializations'    => 'Специализация',
         'lesson_options'     => 'проведения занятий',
-        'city'               => 'Город',
         'region'             => 'Область',
-        'grade_experience'   => 'Степень вашего опыта'
+        'city'               => 'Город', 
+        'grade_experience'   => 'Степень вашего опыта',
+        'name'               => 'Имя'
     ];
 
     private $rules = [
-        'name'                  => 'required', 
+        'name'                  => 'required|max:80|min:5', 
+        'about'                 => 'required|min:200|max:1200', 
         'date_birth'            => 'required',
         'phone'                 => 'required',
         'sex'                   => 'required',
@@ -56,6 +58,12 @@ trait TeacherTrait
         'lesson_options'        => 'required'
     ]; 
 
+    private $customMessage = [
+        'unique'                   => 'Пользователь уже Существует.',
+        'specializations.required' => 'Укажите вашу Специализацию',
+        'lesson_options.required'  => 'Укажите варианты проведения занятий'
+    ];
+
     private $education = []; 
 
     private $_id_user;
@@ -71,30 +79,6 @@ trait TeacherTrait
             return $validator->errors()->toArray();
         }
 
-        $validateMultiArr = validateArray([
-            '0' => [
-                'array'    => $education, 
-                'excepts'  => [], 
-                'fName'    => 'education', 
-                'required' => true
-            ],
-            // '1' => [
-            //     'array'   => $teach_activity, 
-            //     'excepts' => ['description'], 
-            //     'fName'   => 'teach_activity'
-            // ],
-            // '2' => [
-            //     'array'   => $work_experience, 
-            //     'excepts' => ['description', 'responsibility'], 
-            //     'fName'   => 'work_experience'
-            // ] 
-        ]); 
-
-        if ($validateMultiArr['status'] == false) 
-        { 
-            return [$validateMultiArr['field'] => ['Заполните все обязательные поля!']]; 
-        }
-
         return true;
     }
 
@@ -107,9 +91,7 @@ trait TeacherTrait
         $confirm_hash = md5(microtime());
  
         $createUser = User::create([ 
-            'name' => $data['name'],
-            // 'surname' => $data['surname'],
-            // 'patronymic' => $data['patronymic'],
+            'name' => $data['name'], 
             'date_birth' => date('Y-m-d', strtotime($data['date_birth'])),
             'user_type'  => '2',
             'phone'      => $data['phone'],
@@ -129,65 +111,55 @@ trait TeacherTrait
         return $this->_id_user;
     }
 
-    private function saveEducations()
+    private function saveEducations($id_user)
     {
+        UsersEducations::where('id_user', $id_user)->delete();
         $insert = [];
-        foreach ($this->education as $key => $item) { 
-            $insert[] = [
-                'id_user'          => $this->_id_user, 
-                'institution_name' => $item['institution'], 
-                'grade'            => $item['grade'], 
-            ];
-        } 
-        UsersEducations::insert($insert);
-    }
-
-    private function saveTeachingActivities()
-    {
-        if (!empty($this->teach_activity)) 
+        foreach ($this->education as $key => $item) 
         { 
-            $insert = [];
-            foreach ($this->teach_activity as $key => $item) 
+            if (arrayNoEmpty($item)) 
             { 
                 $insert[] = [
-                    'id_user'          => $this->_id_user,
-                    'from_year'        => $item['from'],
-                    'to_year'          => $item['to'],
-                    'institution_name' => $item['institution'],
-                    'position'         => $item['position'],
-                    'description'      => $item['description'],
-                    'id_category'      => $item['id_category'],
-                    'program_type'     => $item['program_type'], 
+                    'id_user'          => $id_user, 
+                    'institution_name' => $item['institution'], 
+                    'grade'            => $item['grade'], 
                 ];
-            } 
-            UsersTeachingActivities::insert($insert);
+            }
         } 
-    }
 
-    private function saveWorkExperience()
-    { 
-        if (!empty($this->work_experience)) 
-        { 
-            $insert = [];
-            foreach ($this->work_experience as $key => $item) 
-            { 
-                $insert[] = [
-                    'id_user'          => $this->_id_user,
-                    'from_year'        => $item['from'],
-                    'to_year'          => $item['to'],
-                    'institution_name' => $item['institution'],
-                    'position'         => $item['position'],
-                    'description'      => $item['description'],
-                    'direction'        => $item['direction'],
-                    'responsibility'   => $item['responsibility'], 
-                ];
-            } 
-            UsersWorkExperience::insert($insert); 
-        }
-    }
+        if (!empty($insert)) 
+        {
+            UsersEducations::insert($insert);
+        } 
+    } 
 
     private function validateEdit(array $data)
-    {   
+    {    
+        $error = '';
+
+        if (preg_match('/^[a-zA-Z\p{Cyrillic}\s\-]+$/u', $data['name']) == false) 
+        {
+
+            $error['name'][] = ['Поле <strong>ФИО</strong> должно содержать только буквы.']; 
+        }
+
+        if (count(explode(' ', $data['name'])) < 2) 
+        {
+            $error['name'][] = ['Укажите полное ФИО']; 
+        }
+
+        if (!empty($error)) 
+        {
+            return $error;
+        }  
+
+        $validator = Validator::make($data, $this->rules, $this->customMessage); 
+        $validator->setAttributeNames($this->niceNames);  
+        if ($validator->fails()) 
+        {
+            return $validator->errors()->toArray();
+        }
+
         $this->education       = sortValue(request()->input('education')); 
  
         $validateMultiArr = validateArray([
@@ -195,21 +167,14 @@ trait TeacherTrait
                 'array'    => $this->education, 
                 'excepts'  => [], 
                 'fName'    => 'education', 
-                'required' => true
+                'required' => false
             ] 
-        ]);
+        ]); 
 
         if ($validateMultiArr['status'] == false) 
         {
             return [$validateMultiArr['field'] => ['Заполните все обязательные поля!']];
         } 
-  
-        $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
-        $validator->setAttributeNames($this->niceNames);  
-        if ($validator->fails()) 
-        {
-            return $validator->errors()->toArray();
-        }
         return true;
     }
 
@@ -250,7 +215,8 @@ trait TeacherTrait
             'address'    => $data['address'],
             'grade_experience' => $data['grade_experience'],
             'experience_from' => date('Y-m-d', strtotime($data['experience_from'])),
-            'price_hour'      => toFloat($data['price_hour'])
+            'price_hour'      => toFloat($data['price_hour']),
+            'data_filled'     => '1'
         ]);  
 
         if (request()->hasFile('image')) { 
@@ -300,10 +266,9 @@ trait TeacherTrait
                 ];
             } 
             TeacherLessonOptions::insert($insert);
-        }
+        } 
 
-        UsersEducations::where('id_user', $id_user)->delete();
-        $this->saveEducations(); 
+        $this->saveEducations($id_user); 
 
         if (!empty($data['certificates'])) 
         {

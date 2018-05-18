@@ -1,36 +1,34 @@
 jQuery(document).ready(function($) {
 
-    // $.fn.datepicker.languages['ru-RU']  = {
-    //     closeText: 'Закрыть',
-    //     prevText: '&#x3c;Пред',
-    //     nextText: 'След&#x3e;',
-    //     currentText: 'Сегодня',
-    //     monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-    //     'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-    //     monthNamesShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-    //     'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-    //     dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
-    //     dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
-    //     dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-    //     weekHeader: 'Нед',
-    //     dateFormat: 'dd.mm.yy',
-    //     firstDay: 1,
-    //     isRTL: false, 
-    //     yearSuffix: ''
-    // }; 
+    // tinymce.init({
+    //   selector: 'textarea',  // change this value according to your HTML
+    //   auto_focus: 'element1'
+    // });
+
+    $("textarea[maxlength]").each(function(){
+        $(this).next('.maxlength__label').find('span').text(this.value.length);
+    });
+
+    $("textarea[maxlength]").on("propertychange input", function() {
+        if (this.value.length > this.maxlength) {
+            this.value = this.value.substring(0, this.maxlength);
+        }  
+
+        $("textarea[maxlength]").next('.maxlength__label').find('span').text(this.value.length);
+    });
 
     $.fn.datepicker.languages['ru'] = {
-  format: 'dd.mm.yyyy',
-  days: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
-  daysShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
-  daysMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-  months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-  monthsShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-  weekStart: 1,
-  startView: 0,
-  yearFirst: true,
-  yearSuffix: ''
-};
+      format: 'dd.mm.yyyy',
+      days: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+      daysShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+      daysMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+      months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+      monthsShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+      weekStart: 1,
+      startView: 0,
+      yearFirst: true,
+      yearSuffix: ''
+    };
     
     initSelect2();
 
@@ -162,10 +160,17 @@ jQuery(document).ready(function($) {
                 if (jsonResponse.msg === false) {
                     var message = ''; 
                     if (typeof jsonResponse.messages == 'object') { 
-                        $.each(jsonResponse.messages, function(key, value){ 
-                            $(form).find('[name="'+key+'"]').filter(function() {
-                                return !this.value;
-                            }).addClass("error__input") 
+                        $.each(jsonResponse.messages, function(key, value){  
+
+                            var inputError = $(form).find('[name="'+key+'"]');
+                            $(inputError).addClass("error__input");
+                            if ($(inputError).hasClass('select2-hidden-accessible')) {
+                                $(inputError).next('.select2-container').find('.select2-selection').addClass("error__input");
+                            }
+ 
+                            // .filter(function() {
+                            //     return !this.value;
+                            // })
 
                             $.each(value, function(k,v){
                                 message += '<p>'+v+'</p>';
@@ -682,22 +687,22 @@ function multipleImages(input, uploaderContainter){
             var fileType = this["type"];
             var fileName = this["name"];
             var fileSize = parseInt(this["size"]) / 1000;
-
-            var error = false;
+ 
             if (jQuery.inArray(fileType, fileExtension) == -1) {
                 alert('Ошибка в расширении файла!');
-                error = true; 
+                return;
             }  
 
             if (fileSize > 2048) {
                 alert('Максимальный размер изображения 2МБ');
-                error = true; 
+                return;
             }
 
             var reader = new FileReader();
             reader.readAsDataURL(this);
 
             reader.onload = function(e) { 
+                
                 $(uploaderContainter).show();
                 var content = "<div class='col-md-4 load-thumbnail'>"+ 
                               "<div class='uploadedImg' style='background-image:url("+reader.result+")'></div>"+
@@ -706,6 +711,7 @@ function multipleImages(input, uploaderContainter){
                               "</div>"+
                               "<input type='hidden' name='certificates[]' value='"+reader.result+"'>"+
                               "</div>";
+                $('.uploaderContainter .col-md-offset-4').removeClass('col-md-offset-4')             
                 $(uploaderContainter).prepend(content);
             } 
         }); 

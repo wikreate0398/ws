@@ -25,12 +25,20 @@
 					</form>
 				</div>
 
-				<div class="col-md-10">
+				<div class="col-md-7">
 					<h1 style="margin-top: 30px;">{{ $user->name }}</h1>
 					<a class="dashed__link" href="{{ route('user_edit') }}">Редактировать профиль</a><br><br>
 					<input type="checkbox" id="teacher_status" {{ ($user->is_available==1) ? 'checked' : '' }} onchange="teacherStatus(this)">
 					<button class="btn btn-info btn-sm" style="display: inline-block; width: auto; margin-top: 10px; border-radius: 20px; cursor: default;">Преподаватель</button>
 				</div> 
+
+				<div class="col-md-3" style="position: relative; top: 70px;">
+					@if(Auth::user()->data_filled == 0)
+						<div class="alert alert-danger">
+							Заполните профиль для дальнейших действий
+						</div>
+					@endif
+				</div>
 			</div>
 		</div>
 	</div> 
@@ -38,6 +46,7 @@
 	<nav class="navbar navbar-default">
 	  <div class="container"> 
 	    <ul class="nav navbar-nav">
+	    	@if(Auth::user()->data_filled == 1)
 	      	<li class="{{ isActive(route('user_profile')) ? 'active' : '' }}">
 	      		<a href="{{ route('user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
 	      	</li>
@@ -50,6 +59,7 @@
 			<li class="{{ isActive(route('user_reviews')) ? 'active' : '' }}">
 				<a href="{{ route('user_reviews') }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
 			</li>
+			@endif
 			<li class="{{ isActive(route('user_edit')) ? 'active' : '' }}">
 				<a href="{{ route('user_edit') }}">ЛИЧНЫЕ ДАННЫЕ</a>
 			</li>
@@ -74,4 +84,5 @@
 		</div>
 	</div>
 </div>  
+ 
 @stop

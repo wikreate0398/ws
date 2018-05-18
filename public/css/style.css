@@ -128,7 +128,7 @@ span.req{
 }
 
 .error__input{
-    border: 1px solid red;
+    border: 1px solid red !important;  
 }
 
 .img__institution{
@@ -901,6 +901,7 @@ margin-bottom: 30px;
     color: #a8a8a8;
     font-weight: 300;
 	margin-top: 8px;
+    text-transform: uppercase;
 }
 .user_form label.checkbox-inline, .user_form label.checkbox-inline + .user_form label.checkbox-inline, .user_form label.radio-inline, .user_form label.radio-inline + .radio-inline {
     margin-top: 8px;
@@ -929,6 +930,11 @@ margin-bottom: 30px;
 	-ms-appearance:  none;
 	appearance:  none;
 }
+
+.user_form select option{ 
+    font-size: 14px; 
+}
+
 .user_form select:focus,
 .user_form select:hover{
 	cursor: pointer;
@@ -1535,6 +1541,12 @@ footer .copyright{
 
 .select2-container--default .select2-selection--single .select2-selection__rendered{
     line-height: 34px;
+    font-size: 14px;
+    color: #a8a8a8;
+}
+
+.select2-results{
+    font-size: 14px;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b{
@@ -1610,5 +1622,11 @@ select option:disabled {
     cursor: pointer;
 }
 
+.maxlength__label{
+    font-size: 12px;
+    color: #a8a8a8;
+}
 
-
+.req{
+    color: red;
+}

@@ -41,7 +41,8 @@
 				<label class="col-md-4 control-label">КОРОТКО  О ВАС <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<textarea class="form-control" name="about" required autofocus="">{{ $user->about }}</textarea>
+						<textarea class="form-control" maxlength="1200" name="about" required autofocus="">{{ $user->about }}</textarea>
+						<div class="maxlength__label"><span>0</span> символов (1200 максимум)</div>
 					</div>
 				</div>
 				<label class="col-md-4 control-label">ДАТА РОЖДЕНИЯ <span class="req">*</span></label>
@@ -66,12 +67,12 @@
 						</label>
 					</div>
 				</div>
-				<label class="col-md-4 control-label">Расположение *</label> 
+				<label class="col-md-4 control-label">Расположение <span class="req">*</span></label> 
 				 
 				<div class="col-md-8 regions__area">
 					<div class="form-group select_form">
 						<select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
-						  	<option>Область</option>
+						  	<option value="">Область</option>
 						  	@foreach($regions as $item)
                            		<option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
                            			{{$item['name']}}
@@ -90,7 +91,7 @@
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Мое образование</h3>
 				</div>
-				<label class="col-md-4 control-label">ГДЕ ВЫ УЧИЛИСЬ? <span class="req">*</span></label>
+				<label class="col-md-4 control-label">ГДЕ ВЫ УЧИЛИСЬ?</label>
 				<div class="col-md-8">
 					@if(count($user->educations))
 						<?php $i=0; ?>
@@ -272,7 +273,7 @@
 						</label>
 					@endforeach 
 				</div>
-				<label class="col-md-4 control-label">У ВАС (РЕПЕТИТОРА) НА ДОМУ <span class="req">*</span></label>
+				<label class="col-md-4 control-label">У ВАС (РЕПЕТИТОРА) НА ДОМУ</label>
 				<div class="col-md-8">
 					<div class="form-group">
 						<textarea class="form-control" value="" autofocus=""></textarea>
@@ -294,7 +295,7 @@
         		     	</div>
 					@endforeach
                 	 
-					<div class="col-md-4">
+					<div class="col-md-4 {{ !count($user->certificates) ? 'col-md-offset-4' : ''}}">
 						<div class="certificateLoadArea">
 							<input type="file" 
 						       name="diploms[]" 

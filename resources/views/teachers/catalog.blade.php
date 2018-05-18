@@ -103,8 +103,35 @@
 									 
 								</h2>
 								<span class="teachers_date">{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, 
+                                @php 
+                                    $d1 = new DateTime(date('Y-m-d'));
+                                    $d2 = new DateTime($teacher->experience_from); 
+                                    $diff = $d2->diff($d1);  
+                                @endphp
 								@if($teacher->experience_from)
-									опыт работы {{date('Y') - date('Y', strtotime($teacher->experience_from)) }} лет
+									опыт работы   
+                                    @if($diff->y > 0)
+                                        {{ $diff->y }}
+                                        @if($diff->y == 1)
+                                            год
+                                        @elseif($diff->y > 1 && $diff->y < 5)
+                                            года
+                                        @else
+                                            лет
+                                        @endif
+                                    @endif
+                                    
+                                    @if($diff->m)
+                                        @if($diff->y > 0) и @endif
+                                        {{ $diff->m }}
+                                        @if($diff->m == 1)
+                                            месяц
+                                        @elseif($diff->m > 1 && $diff->m < 5)
+                                            месяца
+                                        @else
+                                            месяцев
+                                        @endif
+                                    @endif 
 								@endif
 								</span>
 								<ul class="list-inline teachers_label">

@@ -13,4 +13,9 @@ class SpecializationsList extends Model
 	protected $fillable = [ 
         'name' 
     ]; 
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'teacher_specializations', 'id_specialization', 'id_teacher');
+    }
 }

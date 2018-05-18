@@ -21,4 +21,6 @@ class TeacherLessonOptions extends Model
     	            ->orderBy('page_up', 'asc')
                     ->orderBy('id', 'desc');
     }
+
+    
 }

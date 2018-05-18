@@ -39,13 +39,21 @@ class TeachersController extends Controller
     public function index(Request $request)
     { 
         $data = [
-            'teachers'        => User::getTeachers($request),
-            'subjects'        => SubjectsList::has('users')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
-            'specializations' => TeacherSpecializations::has('specializations_list')->groupBy('id_specialization')->get(),
-            'minMaxPrice'     => User::getTeachersMinMaxPrice(),
-            'lesson_filter_options'  => TeacherLessonOptions::has('lesson_options_list')
-                                                     ->groupBy('id_lesson_option')
-                                                     ->get(),
+            'teachers'               => User::getTeachers($request),
+            'subjects'               => SubjectsList::whereHas('users', function($query){
+                                            return User::allowTeacherUser($query);
+                                        })->orderBy('page_up', 'asc')
+                                          ->orderBy('id', 'desc')->get(),
+
+            'specializations'        => SpecializationsList::whereHas('users', function($query){
+                                            return User::allowTeacherUser($query);
+                                        })->get(),
+
+            'minMaxPrice'            => User::getTeachersMinMaxPrice(),
+            'lesson_filter_options'  => LessonOptionsList::whereHas('users', function($query){
+                                                            return User::allowTeacherUser($query);
+                                                        })->orderBy('page_up', 'asc')
+                                                          ->orderBy('id', 'desc')->get(), 
 
             'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')
@@ -55,7 +63,7 @@ class TeachersController extends Controller
             ]
         ];  
 
-        //exit(print_arr($data['subjects']->toArray()));
+        //exit(print_arr($data['lesson_filter_options']->toArray()));
 
         return view('teachers.catalog', $data);
     } 

@@ -136,7 +136,7 @@
 							</ul>
 							@endif
 							<div class="teachers_about">
-								<p>{{ $teacher->about }}</p>
+								<p>{{ str_limit($teacher->about, 160, '...') }}</p>
 							</div>
 							@if(count($lesson_options))
 							<ul class="list-inline place_realization">	
@@ -373,10 +373,10 @@
 								<label>
 									<input value="{{ $specialization->id_specialization }}" 
 									       class="specialization_input"
-                                           {{ in_array($specialization->id_specialization, $specializationsArray) ? 'checked' : '' }}
+                                           {{ in_array($specialization->id, $specializationsArray) ? 'checked' : '' }}
                                            type="checkbox">
 									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									{{ $specialization->specializations_list->name }}
+									{{ $specialization->name }}
 								</label>
 							</div> 
                         @endforeach
@@ -408,10 +408,10 @@
 								<label>
 									<input value="{{ $lesson_option->id_lesson_option }}" 
 	                                       class="lesson_option_input"
-	                                       {{ in_array($lesson_option->id_lesson_option, $lessonOptionsArray) ? 'checked' : '' }} 
+	                                       {{ in_array($lesson_option->id, $lessonOptionsArray) ? 'checked' : '' }} 
 	                                       type="checkbox">
 									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>  
-                                    {{ $lesson_option->lesson_options_list->name2 ? $lesson_option->lesson_options_list->name2 : $lesson_option->lesson_options_list->name }} 
+                                    {{ $lesson_option->name2 ? $lesson_option->name2 : $lesson_option->name }} 
 								</label>
 							</div>
 	                    @endforeach 

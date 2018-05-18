@@ -13,4 +13,9 @@ class LessonOptionsList extends Model
 	protected $fillable = [ 
         'name' 
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'teacher_lesson_options', 'id_lesson_option', 'id_teacher');
+    }
 }

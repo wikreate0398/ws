@@ -95,15 +95,18 @@
 			</ul>
 			@endif
 			@if(count($teacher->educations)) 
-				<div class="ОБРАЗОВАНИЕ">
+				<div class="teachers_education">
 				{{ implode(', ', $teacher->educations->pluck('institution_name')->toArray()) }}
 				</div>
 			@endif
-			<div class="о себе">
+			<div class="teachers_about">
 				{{ $teacher->about }}
 			</div>
 		</div>
 		<div class="clearfix"></div>
+		<div class="col-lg-12">
+			<hr class="teacher_delimiter">
+		</div>
 		<div class="col-lg-3">
 		
 		</div>

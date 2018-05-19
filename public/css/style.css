@@ -1347,6 +1347,7 @@ margin-bottom: 30px;
 	font-size: 16px;
 	color: #a8a8a8;
 	margin-bottom: 10px;
+	margin-top: 0px;
 }
 .teacher_page .teachers_locations span{
 	font-size: 18px;
@@ -1414,6 +1415,7 @@ margin-bottom: 30px;
 	font-size: 16px;
 	color: #a8a8a8;
 	margin-bottom: 10px;
+	margin-top: 0px;
 }
 /* Поиск */
 .input-search-area{

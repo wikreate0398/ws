@@ -95,12 +95,13 @@
 						<div class="col-md-9">
 							<div class="teachers_name">
 								<h2>
+									<a href="/teacher/{{ $teacher['id'] }}/">
 									@php
 										$nameExplode = explode(' ', $teacher['name']);
 										echo $nameExplode[0] . '<br>'; unset($nameExplode[0]);
 										echo implode(' ', $nameExplode);
 									@endphp
-									 
+									</a> 
 								</h2>
 								<span class="teachers_date">{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, 
                                 @php 

@@ -1251,6 +1251,108 @@ margin-bottom: 30px;
 .checkbox label input[type="checkbox"]:disabled + .jackdaw{
     opacity: .5;
 }
+/* Страница преподователя */
+.teacher_page .teachers_name h2{
+    font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 22px;
+	color: #5f5f5f;
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+.teacher_page .teachers_name .teachers_date{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #a8a8a8;
+	display: block;
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+.teacher_page .teachers_name .teachers_label{
+	margin-bottom: 20px;
+}
+.teacher_page .teachers_name .teachers_label li{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #5f5f5f;
+}
+.teacher_page .teachers_name .teachers_label .teachers_bookmark{
+	color: #b93777;
+}
+.teacher_page .teachers_name .teachers_label .teachers_employment{
+	color: #6d950d;
+}
+.teacher_page .teachers_name .teachers_label .teachers_rating{
+	color: #ffcd00;
+}
+.teacher_page .teachers_adress{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 14px;
+	color: #5f5f5f;
+}
+.teacher_page .teachers_adress i{
+	color: #aaaaaa;
+}
+.teacher_page .teachers_specialization{
+	padding-left: 5px;
+	margin-bottom: 15px;
+}
+.teacher_page .teachers_specialization li{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #a8a8a8;
+	border: 1px solid #c1c1c1;
+	padding: 3px 15px;
+	text-transform: uppercase;
+}
+.teacher_page .teachers_subjects{
+	padding-left: 5px;
+	margin-bottom: 25px;
+}
+.teacher_page .teachers_subjects li{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #fff;
+	border: 1px solid #c1c1c1;
+	background: #c1c1c1;
+	padding: 3px 15px;
+	text-transform: uppercase;
+}
+.teacher_page .place_realization{
+	margin-bottom: 0px;
+}
+.teacher_page .place_realization li label{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #5f5f5f;
+}
+.teacher_page .submit_application{
+    font-family: 'Cuprum Regular';
+    font-size: 16px;
+    color: #fff;
+    background: #b93777;
+    text-transform: uppercase;
+    border-radius: 0px;
+    display: block;
+    width: 100%;
+	margin-top: 5px;
+}
+.teacher_page .price_hour{
+    font-family: 'Cuprum Regular';
+	font-size: 18px;
+	color: #5f5f5f;
+    display: block;
+	text-align: center;
+    text-transform: uppercase;
+	margin-top: 15px;
+}
+.teacher_page .teachers_about{
+	font-family: 'Cuprum Italic';
+	font-size: 15px;
+	color: #a8a8a8;
+}
+.teacher_page .teachers_about p{
+	margin-bottom: 20px;
+}
 /* Поиск */
 .input-search-area{
     position: relative;

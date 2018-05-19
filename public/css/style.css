@@ -1252,6 +1252,9 @@ margin-bottom: 30px;
     opacity: .5;
 }
 /* Страница преподователя */
+.teacher_page .breadcrumb {
+    margin-bottom: 35px;
+}
 .teacher_page .teachers_name h2{
     font-family: 'Helvetica Neue Cyr Roman';
 	font-size: 22px;

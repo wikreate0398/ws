@@ -68,6 +68,24 @@ jQuery(document).ready(function($) {
             }
         }
     });
+    $('#page_teacher_universities').owlCarousel({
+        loop:true,
+        margin:00,
+        nav:false,
+        dots:false,
+        navText: ['<img src="public/images/left-arrow.png">', '<img src="public/images/right-arrow.png">'],
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:1
+            },
+            1000:{
+                items:1
+            }
+        }
+    });
 
     $("input#teacher_status").switchButton({
         on_label: 'Свободен',

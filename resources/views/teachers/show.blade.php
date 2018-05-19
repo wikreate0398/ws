@@ -108,12 +108,49 @@
 			<hr class="teacher_delimiter">
 		</div>
 		<div class="col-lg-3">
-		
+			<div class="share_block">
+				<script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+				<script src="//yastatic.net/share2/share.js"></script>
+				<div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,twitter"></div>
+			</div>
+			<div id="page_teacher_universities" class="owl-carousel owl-theme">
+				<div class="item"> 
+					<a href="/institution/1/">
+						<img class="img-responsive" src="/public/uploads/no-image.png">
+					</a> 
+					<h3 style="height: 73px;"><a href="/institution/1">Высший международный люберецкий университет права, финансов и политики</a></h3>
+					<ul class="list-unstyled">
+						<li>10 КУРСОВ</li>
+						<li>15 ПРЕПОДАВАТЕЛЕЙ</li>
+					</ul>
+				</div>
+				<div class="item"> 
+					<a href="/institution/1/">
+						<img class="img-responsive" src="/public/uploads/no-image.png">
+					</a> 
+					<h3 style="height: 73px;"><a href="/institution/1">Высший международный люберецкий университет права, финансов и политики</a></h3>
+					<ul class="list-unstyled">
+						<li>10 КУРСОВ</li>
+						<li>15 ПРЕПОДАВАТЕЛЕЙ</li>
+					</ul>
+				</div>
+				<div class="item"> 
+					<a href="/institution/1/">
+						<img class="img-responsive" src="/public/uploads/no-image.png">
+					</a> 
+					<h3 style="height: 73px;"><a href="/institution/1">Высший международный люберецкий университет права, финансов и политики</a></h3>
+					<ul class="list-unstyled">
+						<li>10 КУРСОВ</li>
+						<li>15 ПРЕПОДАВАТЕЛЕЙ</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 		<div class="col-lg-9">
-			Места проведения занятий
-			<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ
-			
+			<div class="teachers_locations">
+			<h3>Места проведения занятий</h3>
+			<span><i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ</span>
+			</div>
 			@if(count($lesson_options))
 			<ul class="list-inline place_realization">	
 				@foreach($lesson_options as $lesson_option)
@@ -130,13 +167,15 @@
 			</ul>
 			@endif
 			@if(count($teacher->certificates))
-			ЛИЦЕНЗИИ И ДИПЛОМЫ
-			<div class="row">
-				@foreach($teacher->certificates as $certificate)
-					<div class="col-lg-4">
-						<img class="img-responsive" src="/public/uploads/users/certificates/{{ $certificate->image }}">
-					</div> 
-				@endforeach
+			<div class="licenses_diplomas">
+				<h3>ЛИЦЕНЗИИ И ДИПЛОМЫ</h3>
+				<div class="row">
+					@foreach($teacher->certificates as $certificate)
+						<div class="col-lg-4">
+							<img class="img-responsive" src="/public/uploads/users/certificates/{{ $certificate->image }}">
+						</div> 
+					@endforeach
+				</div>
 			</div>
 			@endif
 		</div>

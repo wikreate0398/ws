@@ -16,9 +16,11 @@ use App\Models\TeacherCertificates;
 use App\Models\SpecializationsList;
 use App\Models\LessonOptionsList;
 use App\Models\UsersEducations;
+use App\Models\TeacherBoockmarks;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeachersController extends Controller
 {
@@ -83,11 +85,31 @@ class TeachersController extends Controller
                                                            ->findOrFail($id),  
             'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')
-                                                          ->get() 
-        ];   
+                                                          ->get(),
+
+            'universities' => \App\Models\UsersUniversity::getUniversities(), 
+            'boockmark'    => TeacherBoockmarks::where([['id_user', @Auth::user()->id], ['id_teacher', $id]])->first()
+        ];    
 
         return view('teachers.show', $data);
     } 
+
+    public function setBoockmark(Request $request)
+    {
+        $id_teacher = $request->input('id');
+        $check = TeacherBoockmarks::where('id_user', Auth::user()->id)
+                                  ->where('id_teacher', $id_teacher)->count();
+
+        if ($check != false) {
+            TeacherBoockmarks::where([['id_user', Auth::user()->id], ['id_teacher', $id_teacher]])->delete();
+            $status = 0;
+        }else{
+            TeacherBoockmarks::insert(['id_user' => Auth::user()->id, 'id_teacher' => $id_teacher]);
+            $status = 1;
+        }
+
+        return \App\Utils\JsonResponse::success(['status' => $status]);
+    }
 
     public function autocomplete(Request $request)
     {

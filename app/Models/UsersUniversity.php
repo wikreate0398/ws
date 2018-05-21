@@ -44,4 +44,15 @@ class UsersUniversity extends Model
     {
 		return $this->hasOne('App\Models\TeachActivityCategories', 'id', 'id_category');
     }   
+
+    public static function getUniversities()
+    {
+        $university = (new UsersUniversity)->newQuery();
+
+        $university->with('user')->whereHas('user', function($query){
+                                return User::allowUniversityUser($query);
+                            })->orderBy('id_user', 'asc');
+
+        return $university->get(); 
+    }
 }

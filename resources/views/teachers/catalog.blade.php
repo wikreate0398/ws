@@ -87,7 +87,7 @@
 					<div class="row">
 						<div class="col-md-3"> 
 							<a href="/teacher/{{ $teacher['id'] }}/">
-								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 400, 'list') }}">
+								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
 							</a>
 							<button type="button" class="btn submit_application">Оставить заявку</button>
 							<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
@@ -154,6 +154,10 @@
 									</li>
 								</ul>
 							</div>
+							<div class="teachers_adress">
+				<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ
+			</div>
+			
 							@if(count($teacher->specializations))			
 							<ul class="list-inline teachers_specialization">
 								@foreach($teacher->specializations as $specialization)

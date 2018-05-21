@@ -28,7 +28,7 @@ class PagesController extends Controller
     public function index()
     { 
         $data = [
-            'university' => \App\Models\UsersUniversity::with('user')->orderBy('full_name', 'asc')->get(),
+            'university' => \App\Models\UsersUniversity::getUniversities(),
             'teachers'   => User::where('user_type', 2)->where(function($query){
                                     return User::allowTeacherUser($query);
                                 })->orderBy('created_at', 'desc')->get(),
@@ -43,29 +43,7 @@ class PagesController extends Controller
 
         return view('home', $data);
     }
-
-    public function university($id)
-    {
-        $university = \App\Models\UsersUniversity::with([
-            'user', 
-            'institutionType', 
-            'parentInstitution', 
-            'formAttitude',
-            'programType',
-            'teachActivity'
-        ])->where('id', $id)->get()->first();
-        
-        if (empty($university)) abort('404');
-
-        $user = \App\Models\User::with('cityData')->where('id', $university['id_user'])->first();
-
-        $data = [
-            'data' => $university, 
-            'user' => $user
-        ];  
-
-        return view('university.show', $data);
-    } 
+ 
 
     public function autocomplete(Request $request)
     {

@@ -8,6 +8,9 @@
 
 namespace App\Http\Controllers;
 
+use \App\Models\User;
+use \App\Models\UsersUniversity;
+
 
 class InstitutionController extends Controller
 {
@@ -28,7 +31,7 @@ class InstitutionController extends Controller
     public function index()
     { 
         $data = [
-            'university' => \App\Models\UsersUniversity::with('user')->orderBy('full_name', 'asc')->get()
+            'university' => UsersUniversity::getUniversities()
         ]; 
 
         return view('university.catalog', $data);
@@ -36,26 +39,18 @@ class InstitutionController extends Controller
 
     public function view($id)
     {
-        $university = \App\Models\UsersUniversity::with([
+        $university = UsersUniversity::with([
             'user', 
-            'institutionType', 
-            'parentInstitution', 
-            'formAttitude',
-            'programType',
-            'teachActivity'
-        ])->where('id', $id)->get()->first();
+        ])->whereHas('user', function($query){
+            return User::allowUniversityUser($query);
+        })->where('id', $id)->get()->first();
         
-        if (empty($university)) abort('404');
-
-        $user = \App\Models\User::with('cityData')->where('id', $university['id_user'])->first();
+        if (empty($university)) abort('404'); 
 
         $data = [
-            'data' => $university, 
-            'user' => $user
+            'data' => $university 
         ];  
 
         return view('university.show', $data);
     }
-
-     
 }

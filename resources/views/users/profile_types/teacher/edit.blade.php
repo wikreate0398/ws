@@ -276,7 +276,7 @@
 				<label class="col-md-4 control-label">У ВАС (РЕПЕТИТОРА) НА ДОМУ</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<textarea class="form-control" value="" autofocus=""></textarea>
+						<textarea class="form-control" name="lesson_place" value="{{ $user->lesson_place }}" autofocus=""></textarea>
 					</div>
 				</div>
 			</div>

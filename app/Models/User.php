@@ -24,9 +24,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 
         'email', 
-        'password', 
-        'surname', 
-        'patronymic', 
+        'password',  
         'user_type', 
         'phone', 
         'date_birth', 
@@ -54,6 +52,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Cities', 'id', 'city');
     }
 
+    public function teacherBoockmarks()
+    {
+        return $this->hasOne('App\Models\TeacherBoockmarks', 'id_user', 'id_teacher'); 
+    }
+
     public function university()
     {
         return $this->hasOne('App\Models\UsersUniversity', 'id_user', 'id');
@@ -63,10 +66,16 @@ class User extends Authenticatable
     {
         return $query->where('user_type', '2')
                      ->where('activate', '1')
-                     ->where('confirm', '1')
-                     ->where('data_filled', '1')
+                     ->where('confirm', '1') 
                      ->where('data_filled','1');
     }
+
+    public static function allowUniversityUser(Builder $query)
+    {
+        return $query->where('user_type', '3')
+                     ->where('activate', '1')
+                     ->where('confirm', '1');
+    }     
 
     public static function getTeachers($request = false)
     {

@@ -370,3 +370,11 @@ function setScript($js_folder, $path){
     }
     return "<script src='{$path}'></script>";
 }
+
+function getUserYears($birthDate)
+{
+    $d1 = new DateTime(date('Y-m-d'));
+    $d2 = new DateTime($birthDate); 
+    $diff = $d2->diff($d1);  
+    return $diff->y;
+}

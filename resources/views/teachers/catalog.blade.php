@@ -155,9 +155,9 @@
 								</ul>
 							</div>
 							<div class="teachers_adress">
-				<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ
-			</div>
-			
+								<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, {{ @$teacher->address }}
+							</div>
+
 							@if(count($teacher->specializations))			
 							<ul class="list-inline teachers_specialization">
 								@foreach($teacher->specializations as $specialization)

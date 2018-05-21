@@ -87,7 +87,7 @@
 				</span>
 			</div>
 			<div class="teachers_adress">
-				<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ
+				<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, {{ @$teacher->address }}
 			</div>
 			@if(count($teacher->specializations))			
 			<ul class="list-inline teachers_specialization">
@@ -141,12 +141,19 @@
 			</div>
 		</div>
 		<div class="col-lg-9">
-			@if($teacher->lesson_place)
-				<div class="teachers_locations">
-				<h3>Места проведения занятий</h3>
-				<span><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $teacher->lesson_place }}</span>
-				</div>
-			@endif
+			 
+			<div class="teachers_locations">
+			<h3>Места проведения занятий</h3>
+				<span>
+				<i class="fa fa-map-marker" aria-hidden="true"></i> 
+				@if($teacher->lesson_place)
+					{{ $teacher->lesson_place }}
+				@else
+					{{ @$teacher->cityData->name }}, {{ @$teacher->address }}
+				@endif
+				</span>
+			</div>
+			 
 			@if(count($lesson_options))
 			<ul class="list-inline place_realization">	
 				@foreach($lesson_options as $lesson_option)

@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UsersUniversity;
+use App\Models\Courses;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -28,7 +30,7 @@ class PagesController extends Controller
     public function index()
     { 
         $data = [
-            'university' => \App\Models\UsersUniversity::getUniversities(),
+            'university' => UsersUniversity::getUniversities(),
             'teachers'   => User::where('user_type', 2)->where(function($query){
                                     return User::allowTeacherUser($query);
                                 })->orderBy('created_at', 'desc')->get(),
@@ -37,7 +39,7 @@ class PagesController extends Controller
                 'teachers'     => User::where('user_type', 2)->where(function($query){
                                     return User::allowTeacherUser($query);
                                 })->count(),
-                'courses'      => \App\Models\Courses::count(),
+                'courses'      => Courses::count(),
             ]
         ]; 
 
@@ -112,15 +114,22 @@ class PagesController extends Controller
             $data['courses'] = $getCourses;
         }
 
-        $getTeachers = User::where('user_type', 2)->where('name', 'like', "%$query%")->orderBy('created_at', 'desc')->get(); 
+        $getTeachers = User::where('user_type', 2)->where(function($query){
+                                    return User::allowTeacherUser($query);
+                                })->where('name', 'like', "%$query%")
+                                ->orderBy('created_at', 'desc')
+                                ->get(); 
         if (count($getTeachers)) 
         {
             $data['teachers'] = $getTeachers;
         }
 
-        $getUniversity = \App\Models\UsersUniversity::where('full_name', 'like', "%$query%")
-                                                     ->orderBy('created_at', 'desc')
-                                                     ->get();  
+        $getUniversity = UsersUniversity::where('full_name', 'like', "%$query%")
+                                        ->whereHas('user', function($query){
+                                            return User::allowUniversityUser($query);
+                                        })
+                                        ->orderBy('created_at', 'desc')
+                                        ->get();  
         if (count($getUniversity)) 
         {
             $data['university'] = $getUniversity;

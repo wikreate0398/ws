@@ -29,10 +29,14 @@ class PagesController extends Controller
     { 
         $data = [
             'university' => \App\Models\UsersUniversity::with('user')->orderBy('full_name', 'asc')->get(),
-            'teachers'   => User::where('user_type', 2)->orderBy('created_at', 'desc')->get(),
+            'teachers'   => User::where('user_type', 2)->where(function($query){
+                                    return User::allowTeacherUser($query);
+                                })->orderBy('created_at', 'desc')->get(),
             'stats'      => [
                 'institutions' => User::where('user_type', 3)->count(),
-                'teachers'     => User::where('user_type', 2)->count(),
+                'teachers'     => User::where('user_type', 2)->where(function($query){
+                                    return User::allowTeacherUser($query);
+                                })->count(),
                 'courses'      => \App\Models\Courses::count(),
             ]
         ]; 

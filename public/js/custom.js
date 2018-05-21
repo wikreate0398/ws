@@ -33,7 +33,7 @@ jQuery(document).ready(function($) {
     initSelect2();
 
     $('#teacher_carousel').owlCarousel({
-        loop:true,
+        loop:false,
         margin:60,
         nav:true,
         dots:false,

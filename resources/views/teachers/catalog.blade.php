@@ -108,8 +108,8 @@
                                     $d2 = new DateTime($teacher->experience_from); 
                                     $diff = $d2->diff($d1);  
                                 @endphp
-								@if($teacher->experience_from)
-									опыт работы   
+								@if($teacher->experience_from) 
+                                    @if($diff->y > 0 or $diff->m > 1 ) опыт работы  @endif 
                                     @if($diff->y > 0)
                                         {{ $diff->y }}
                                         @if($diff->y == 1)
@@ -123,14 +123,21 @@
                                     
                                     @if($diff->m)
                                         @if($diff->y > 0) и @endif
-                                        {{ $diff->m }}
-                                        @if($diff->m == 1)
-                                            месяц
+                                         
+                                        @if($diff->m == 1) 
+                                            @if($diff->y > 0  && $diff->y > 0)
+                                                {{ $diff->m }} месяц  
+                                            @else
+                                                Без опыта
+                                            @endif 
+ 
                                         @elseif($diff->m > 1 && $diff->m < 5)
-                                            месяца
+                                            {{ $diff->m }} месяца
                                         @else
-                                            месяцев
+                                            {{ $diff->m }} месяцев
                                         @endif
+                                    @elseif($diff->y == 0 && $diff->m == 0)
+                                        Без опыта
                                     @endif 
 								@endif
 								</span>

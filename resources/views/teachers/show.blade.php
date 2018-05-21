@@ -18,9 +18,9 @@
 		<div class="col-lg-9">
 			<div class="teachers_name">
 				<ul class="list-inline teachers_label pull-left">
-					@if(Auth::check())
+					@if(@Auth::check())
 					<li class="teachers_bookmark"> 
-						<i class="fa fa-bookmark {{ count($boockmark) ? 'add_bkmrk' : '' }} " 
+						<i class="fa fa-bookmark {{ !empty($boockmark) ? 'add_bkmrk' : '' }} " 
 						   onclick="teacherBookmark(this, {{ $teacher->id }});" 
 						   aria-hidden="true"></i>
 					</li>

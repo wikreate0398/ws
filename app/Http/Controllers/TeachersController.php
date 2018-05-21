@@ -89,7 +89,7 @@ class TeachersController extends Controller
 
             'universities' => \App\Models\UsersUniversity::getUniversities(), 
             'boockmark'    => TeacherBoockmarks::where([['id_user', @Auth::user()->id], ['id_teacher', $id]])->first()
-        ];    
+        ];     
 
         return view('teachers.show', $data);
     } 
@@ -119,7 +119,7 @@ class TeachersController extends Controller
                             })
                             ->where('name', 'like', "%$query%")
                             ->orderBy('created_at', 'desc')->get();
-                            
+
         if (empty($searchData)) die();
         
         $content    = '';

@@ -1045,6 +1045,13 @@ margin-bottom: 30px;
 	margin-top: 0px;
 	margin-bottom: 5px;
 }
+.teachers_external_card .teachers_name h2 a{
+    font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 22px;
+	color: #5f5f5f;
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
 .teachers_external_card .teachers_name .teachers_date{
 	font-family: 'Cuprum Regular';
 	font-size: 16px;
@@ -1243,6 +1250,172 @@ margin-bottom: 30px;
 }
 .checkbox label input[type="checkbox"]:disabled + .jackdaw{
     opacity: .5;
+}
+/* Страница преподователя */
+.teacher_page .breadcrumb {
+    margin-bottom: 35px;
+}
+.teacher_page .teachers_name h2{
+    font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 22px;
+	color: #5f5f5f;
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+.teacher_page .teachers_name .teachers_date{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #a8a8a8;
+	display: block;
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+.teacher_page .teachers_name .teachers_label{
+	margin-bottom: 10px;
+}
+.teacher_page .teachers_name .teachers_label li{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #5f5f5f;
+}
+.teacher_page .teachers_name .teachers_label .teachers_bookmark{
+	color: #b93777;
+}
+.teacher_page .teachers_name .teachers_label .teachers_employment{
+	color: #6d950d;
+}
+.teacher_page .teachers_name .teachers_label .teachers_rating{
+	color: #ffcd00;
+}
+.teacher_page .teachers_adress{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #5f5f5f;
+	text-transform: capitalize;
+	margin-bottom: 20px;
+}
+.teacher_page .teachers_adress i{
+	color: #aaaaaa;
+}
+.teacher_page .teachers_specialization{
+	padding-left: 5px;
+	margin-bottom: 5px;
+}
+.teacher_page .teachers_specialization li{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #a8a8a8;
+	border: 1px solid #c1c1c1;
+	padding: 3px 15px;
+	text-transform: uppercase;
+}
+.teacher_page .teachers_subjects{
+	padding-left: 5px;
+	margin-bottom: 25px;
+}
+.teacher_page .teachers_subjects li{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #fff;
+	border: 1px solid #c1c1c1;
+	background: #c1c1c1;
+	padding: 3px 15px;
+	text-transform: uppercase;
+}
+.teachers_external_card .place_realization{
+	margin-bottom: 0px;
+}
+.teachers_external_card .place_realization li label{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #5f5f5f;
+}
+.teachers_education{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #5f5f5f;
+	margin-bottom: 25px;
+}
+.teacher_page .teachers_locations{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #a8a8a8;
+	margin-bottom: 25px;
+}
+.teacher_page .teachers_locations h3{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #a8a8a8;
+	margin-bottom: 10px;
+	margin-top: 0px;
+}
+.teacher_page .teachers_locations span{
+	font-size: 18px;
+	color: #5f5f5f;
+	display: block;
+}
+.teacher_page .teachers_locations span i{
+	color: #aaaaaa;
+}
+.teacher_page .submit_application{
+    font-family: 'Cuprum Regular';
+    font-size: 16px;
+    color: #fff;
+    background: #b93777;
+    text-transform: uppercase;
+    border-radius: 0px;
+    display: block;
+    width: 100%;
+	margin-top: 5px;
+}
+.teacher_page .price_hour{
+    font-family: 'Cuprum Regular';
+	font-size: 18px;
+	color: #5f5f5f;
+    display: block;
+	text-align: center;
+    text-transform: uppercase;
+	margin-top: 15px;
+}
+.teacher_page .teachers_about{
+	font-family: 'Cuprum Italic';
+	font-size: 15px;
+	color: #a8a8a8;
+}
+.teacher_page .teachers_about p{
+	margin-bottom: 20px;
+}
+.teacher_page .share_block{
+	margin-bottom: 25px;
+	text-align: center;
+}
+#page_teacher_universities {
+    margin-bottom: 30px;
+}
+#page_teacher_universities .item{
+    text-align: center;
+}
+#page_teacher_universities .item h3 a{
+	font-family: 'Cuprum Regular';
+    font-size: 22px;
+	color: #4f433a;
+	display: block;
+}
+#page_teacher_universities .item ul{
+    margin-bottom: 0px;
+}
+#page_teacher_universities .item ul li{
+	font-family: 'Cuprum Regular';
+    font-size: 15px;
+	color: #b93777;
+    margin-bottom: 0px;
+}
+.licenses_diplomas h3{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #a8a8a8;
+	margin-bottom: 10px;
+	margin-top: 0px;
 }
 /* Поиск */
 .input-search-area{

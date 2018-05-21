@@ -17,43 +17,9 @@
 			<h1>{{ $teacher->name }}</h1>
 			{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет
 		 
-			@php 
-                $d1 = new DateTime(date('Y-m-d'));
-                $d2 = new DateTime($teacher->experience_from); 
-                $diff = $d2->diff($d1);  
-            @endphp
-			@if($teacher->experience_from) 
-                @if($diff->y > 0 or $diff->m > 1 ) опыт работы  @endif 
-                @if($diff->y > 0)
-                    {{ $diff->y }}
-                    @if($diff->y == 1)
-                        год
-                    @elseif($diff->y > 1 && $diff->y < 5)
-                        года
-                    @else
-                        лет
-                    @endif
-                @endif
-                
-                @if($diff->m)
-                    @if($diff->y > 0) и @endif
-                     
-                    @if($diff->m == 1) 
-                        @if($diff->y > 0  && $diff->y > 0)
-                            {{ $diff->m }} месяц  
-                        @else
-                            Без опыта
-                        @endif 
-
-                    @elseif($diff->m > 1 && $diff->m < 5)
-                        {{ $diff->m }} месяца
-                    @else
-                        {{ $diff->m }} месяцев
-                    @endif
-                @elseif($diff->y == 0 && $diff->m == 0)
-                    Без опыта
-                @endif 
-			@endif
+			@if($teacher->experience_from)
+                , опыт преподавания {{date('Y') - date('Y', strtotime($teacher->experience_from)) }} лет
+            @endif
  
 			  <br>
 			ГОРОД:<br>

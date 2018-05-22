@@ -41,16 +41,12 @@ class CoursesController extends Controller
         $data = [
             'courses'      => Courses::getCatalog($cat, $request->all()),
             'totalCourses' => Courses::whereHas('user', function($query){
-                                        $query->where('user_type', '2')
-                                              ->where('activate', '1')
-                                              ->where('confirm', '1');
+                                        return User::allowTeacherUser($query);
                                     })->count(),
 
             'categories'   => CourseCategory::with(['courses' => function($query){
                                     $query->whereHas('user', function($query){
-                                        $query->where('user_type', '2')
-                                              ->where('activate', '1')
-                                              ->where('confirm', '1');
+                                        return User::allowTeacherUser($query);
                                     });
                               }])->has('courses', '>=', '1')->get(),
             'baseUrl'      => $baseUrl,
@@ -66,9 +62,7 @@ class CoursesController extends Controller
     { 
         $data = [
             'course'                 => Courses::with('sections')->where('id', $id)->whereHas('user', function($query){
-                                            $query->where('user_type', '2')
-                                                  ->where('activate', '1')
-                                                  ->where('confirm', '1');
+                                            return User::allowTeacherUser($query);
                                         })->findOrFail($id) 
         ];   
 

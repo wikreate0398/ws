@@ -1076,6 +1076,7 @@ margin-bottom: 30px;
 	color: #5f5f5f;
 	margin-top: 0px;
 	margin-bottom: 5px;
+    text-decoration: none;
 }
 .teachers_external_card .teachers_name .teachers_date{
 	font-family: 'Cuprum Regular';
@@ -1305,14 +1306,20 @@ margin-bottom: 30px;
 }
 .teacher_page .teachers_name .teachers_label .teachers_bookmark{
 	color: #b93777;
+    cursor: pointer;
 }
+
+.teacher_page .teachers_name .teachers_label .teachers_bookmark .add_bkmrk{
+    color: green !important;
+}
+
 .teacher_page .teachers_name .teachers_label .teachers_employment{
 	color: #6d950d;
 }
 .teacher_page .teachers_name .teachers_label .teachers_rating{
 	color: #ffcd00;
 }
-.teacher_page .teachers_adress{
+.teacher_page .teachers_adress, .teachers_external_card .teachers_adress{
 	font-family: 'Helvetica Neue Cyr Roman';
 	font-size: 16px;
 	color: #5f5f5f;

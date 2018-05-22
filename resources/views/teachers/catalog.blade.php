@@ -87,7 +87,7 @@
 					<div class="row">
 						<div class="col-md-3"> 
 							<a href="/teacher/{{ $teacher['id'] }}/">
-								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 400, 'list') }}">
+								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
 							</a>
 							<button type="button" class="btn submit_application">Оставить заявку</button>
 							<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
@@ -109,8 +109,8 @@
                                     $d2 = new DateTime($teacher->experience_from); 
                                     $diff = $d2->diff($d1);  
                                 @endphp
-								@if($teacher->experience_from)
-									опыт работы   
+								@if($teacher->experience_from) 
+                                    @if($diff->y > 0 or $diff->m > 1 ) опыт работы  @endif 
                                     @if($diff->y > 0)
                                         {{ $diff->y }}
                                         @if($diff->y == 1)
@@ -124,14 +124,21 @@
                                     
                                     @if($diff->m)
                                         @if($diff->y > 0) и @endif
-                                        {{ $diff->m }}
-                                        @if($diff->m == 1)
-                                            месяц
+                                         
+                                        @if($diff->m == 1) 
+                                            @if($diff->y > 0  && $diff->y > 0)
+                                                {{ $diff->m }} месяц  
+                                            @else
+                                                Без опыта
+                                            @endif 
+ 
                                         @elseif($diff->m > 1 && $diff->m < 5)
-                                            месяца
+                                            {{ $diff->m }} месяца
                                         @else
-                                            месяцев
+                                            {{ $diff->m }} месяцев
                                         @endif
+                                    @elseif($diff->y == 0 && $diff->m == 0)
+                                        Без опыта
                                     @endif 
 								@endif
 								</span>
@@ -147,6 +154,10 @@
 									</li>
 								</ul>
 							</div>
+							<div class="teachers_adress">
+								<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, {{ @$teacher->address }}
+							</div>
+
 							@if(count($teacher->specializations))			
 							<ul class="list-inline teachers_specialization">
 								@foreach($teacher->specializations as $specialization)

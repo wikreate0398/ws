@@ -33,7 +33,7 @@ jQuery(document).ready(function($) {
     initSelect2();
 
     $('#teacher_carousel').owlCarousel({
-        loop:true,
+        loop:false,
         margin:60,
         nav:true,
         dots:false,
@@ -759,6 +759,27 @@ function deleteUploadImg(item, id){
         });
     }
 } 
+
+function teacherBookmark(item, id){
+    $.ajax({
+        url: '/teachers/setBoockmark',
+        type: 'POST', 
+        data: {'id':id, _token: CSRF_TOKEN}, 
+        dataType: 'json',
+        beforeSend: function() {},
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status === 401) document.location.reload(true);
+        },
+        success: function(jsonResponse, textStatus, request) {
+            if (jsonResponse.status == 1) {
+                $(item).addClass('add_bkmrk');
+            }else{
+                $(item).removeClass('add_bkmrk');
+            }
+        },
+        complete: function() { }
+    });
+}
 
 
 /* Teacher Subjects */

@@ -36,6 +36,7 @@ Route::get('institution/{id}', 'InstitutionController@view');
 Route::get('teachers', 'TeachersController@index');
 Route::get('teacher/{id}', 'TeachersController@show');
 Route::get('teachers/autocomplete', 'TeachersController@autocomplete');
+Route::post('teachers/setBoockmark', 'TeachersController@setBoockmark');
 
 Route::get('courses', 'CoursesController@index'); 
 Route::get('courses/cat/{cat}', 'CoursesController@index');

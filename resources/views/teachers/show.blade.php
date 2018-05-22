@@ -11,16 +11,20 @@
 			</ul>
 		</div>
 		<div class="col-lg-3"> 
-			<img class="img-responsive" src="/public/uploads/users/{{ $teacher->avatar ? $teacher->avatar : $teacher->image }}">
+			<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
 			<button type="button" class="btn submit_application">Оставить заявку</button>
 			<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
 		</div>
 		<div class="col-lg-9">
 			<div class="teachers_name">
 				<ul class="list-inline teachers_label pull-left">
-					<li class="teachers_bookmark">
-						<i class="fa fa-bookmark" aria-hidden="true"></i>
+					@if(@Auth::check())
+					<li class="teachers_bookmark"> 
+						<i class="fa fa-bookmark {{ !empty($boockmark) ? 'add_bkmrk' : '' }} " 
+						   onclick="teacherBookmark(this, {{ $teacher->id }});" 
+						   aria-hidden="true"></i>
 					</li>
+					@endif
 					<li class="teachers_employment">
 						{{ $teacher->is_available ? 'Свободен' : 'Занят' }}
 					</li>
@@ -41,42 +45,49 @@
 						echo implode(' ', $nameExplode);
 					@endphp 
 				</h2>
-				<span class="teachers_date">{{ date('Y') - date('Y', strtotime($teacher->date_birth)) }} лет, 
+				<span class="teachers_date">{{ getUserYears($teacher->date_birth) }} лет, 
 				@php 
-					$d1 = new DateTime(date('Y-m-d'));
-					$d2 = new DateTime($teacher->experience_from); 
-					$diff = $d2->diff($d1);  
-				@endphp
-				@if($teacher->experience_from)
-					опыт работы   
-					@if($diff->y > 0)
-						{{ $diff->y }}
-						@if($diff->y == 1)
-							год
-						@elseif($diff->y > 1 && $diff->y < 5)
-							года
-						@else
-							лет
-						@endif
-					@endif
-					
-					@if($diff->m)
-						@if($diff->y > 0) и @endif
-						{{ $diff->m }}
-						@if($diff->m == 1)
-							месяц
-						@elseif($diff->m > 1 && $diff->m < 5)
-							месяца
-						@else
-							месяцев
-						@endif
-					@endif 
+                    $d1 = new DateTime(date('Y-m-d'));
+                    $d2 = new DateTime($teacher->experience_from); 
+                    $diff = $d2->diff($d1);  
+                @endphp
+				@if($teacher->experience_from) 
+                    @if($diff->y > 0 or $diff->m > 1 ) опыт работы  @endif 
+                    @if($diff->y > 0)
+                        {{ $diff->y }}
+                        @if($diff->y == 1)
+                            год
+                        @elseif($diff->y > 1 && $diff->y < 5)
+                            года
+                        @else
+                            лет
+                        @endif
+                    @endif
+                    
+                    @if($diff->m)
+                        @if($diff->y > 0) и @endif
+                         
+                        @if($diff->m == 1) 
+                            @if($diff->y > 0  && $diff->y > 0)
+                                {{ $diff->m }} месяц  
+                            @else
+                                Без опыта
+                            @endif 
+
+                        @elseif($diff->m > 1 && $diff->m < 5)
+                            {{ $diff->m }} месяца
+                        @else
+                            {{ $diff->m }} месяцев
+                        @endif
+                    @elseif($diff->y == 0 && $diff->m == 0)
+                        Без опыта
+                    @endif 
 				@endif
 				, {{ ($teacher->sex == 'male') ? 'Мужской' : 'Женский' }}
 				</span>
 			</div>
 			<div class="teachers_adress">
-				<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ
+				<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, {{ @$teacher->address }}
 			</div>
 			@if(count($teacher->specializations))			
 			<ul class="list-inline teachers_specialization">
@@ -114,43 +125,35 @@
 				<div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,twitter"></div>
 			</div>
 			<div id="page_teacher_universities" class="owl-carousel owl-theme">
+				@foreach($universities as $university)
 				<div class="item"> 
-					<a href="/institution/1/">
-						<img class="img-responsive" src="/public/uploads/no-image.png">
+					<a href="/institution/1/"> 
+						<img class="img-responsive" src="{{ imageThumb(@$university['user']['image'], 'uploads/users', 400, 400, 'university_list') }}">
 					</a> 
-					<h3 style="height: 73px;"><a href="/institution/1">Высший международный люберецкий университет права, финансов и политики</a></h3>
+					<h3><a href="/institution/1">{{ $university['full_name'] }}</a></h3>
 					<ul class="list-unstyled">
 						<li>10 КУРСОВ</li>
 						<li>15 ПРЕПОДАВАТЕЛЕЙ</li>
 					</ul>
 				</div>
-				<div class="item"> 
-					<a href="/institution/1/">
-						<img class="img-responsive" src="/public/uploads/no-image.png">
-					</a> 
-					<h3 style="height: 73px;"><a href="/institution/1">Высший международный люберецкий университет права, финансов и политики</a></h3>
-					<ul class="list-unstyled">
-						<li>10 КУРСОВ</li>
-						<li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-					</ul>
-				</div>
-				<div class="item"> 
-					<a href="/institution/1/">
-						<img class="img-responsive" src="/public/uploads/no-image.png">
-					</a> 
-					<h3 style="height: 73px;"><a href="/institution/1">Высший международный люберецкий университет права, финансов и политики</a></h3>
-					<ul class="list-unstyled">
-						<li>10 КУРСОВ</li>
-						<li>15 ПРЕПОДАВАТЕЛЕЙ</li>
-					</ul>
-				</div>
+				@endforeach
+				 
 			</div>
 		</div>
 		<div class="col-lg-9">
+			 
 			<div class="teachers_locations">
 			<h3>Места проведения занятий</h3>
-			<span><i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, ЦАО, ВОРОШИЛОВСКОЕ ШОССЕ</span>
+				<span>
+				<i class="fa fa-map-marker" aria-hidden="true"></i> 
+				@if($teacher->lesson_place)
+					{{ $teacher->lesson_place }}
+				@else
+					{{ @$teacher->cityData->name }}, {{ @$teacher->address }}
+				@endif
+				</span>
 			</div>
+			 
 			@if(count($lesson_options))
 			<ul class="list-inline place_realization">	
 				@foreach($lesson_options as $lesson_option)
@@ -172,7 +175,7 @@
 				<div class="row">
 					@foreach($teacher->certificates as $certificate)
 						<div class="col-lg-4">
-							<img class="img-responsive" src="/public/uploads/users/certificates/{{ $certificate->image }}">
+							<img class="img-responsive" src="{{ imageThumb(@$certificate->image, 'uploads/users/certificates', 400, 500, 'teacher_in') }}">  
 						</div> 
 					@endforeach
 				</div>

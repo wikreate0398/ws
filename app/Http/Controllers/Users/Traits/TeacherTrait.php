@@ -216,6 +216,7 @@ trait TeacherTrait
             'grade_experience' => $data['grade_experience'],
             'experience_from' => date('Y-m-d', strtotime($data['experience_from'])),
             'price_hour'      => toFloat($data['price_hour']),
+            'lesson_place'    => $data['lesson_place'],
             'data_filled'     => '1'
         ]);  
 

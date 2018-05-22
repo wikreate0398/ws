@@ -193,25 +193,25 @@
 
                         </label>
                         <div class="col-md-12"> 
-                            {{ $user['phone'] }}
+                            {{ $data['user']['phone'] }}
                         </div>
                     </div>
                         
-                    @if(!empty($user['phone2']))
+                    @if(!empty($data['user']['phone2']))
                     <div class="form-group">
                         <label class="col-md-12 control-label">Номер телефона 2
                         </label>
                         <div class="col-md-12">
-                            {{ $user['phone2'] }} 
+                            {{ $data['user']['phone2'] }} 
                         </div>
                     </div>
                     @endif
                     
-                    @if(!empty($user['cityData']['name']))
+                    @if(!empty($data['user']['cityData']['name']))
                     <div class="form-group">
                         <label class="col-md-12 control-label">Город</label>
                         <div class="col-md-12"> 
-                            {{ $user['cityData']['name'] }} 
+                            {{ $data['user']['cityData']['name'] }} 
                         </div>
                     </div>
                     @endif
@@ -229,20 +229,20 @@
                         </div>
                     </div>
                     
-                    @if(!empty($user['site']))
+                    @if(!empty($data['user']['site']))
                     <div class="form-group">
                         <label class="col-md-12 control-label">Факс  </label>
                         <div class="col-md-12"> 
-                            {{ $user['fax'] }} 
+                            {{ $data['user']['fax'] }} 
                         </div>
                     </div>
                     @endif
                     
-                    @if(!empty($user['site']))
+                    @if(!empty($data['user']['site']))
                     <div class="form-group">
                         <label class="col-md-12 control-label">Сайт  </label>
                         <div class="col-md-12"> 
-                            {{ $user['site'] }} 
+                            {{ $data['user']['site'] }} 
                         </div>
                     </div>
                     @endif

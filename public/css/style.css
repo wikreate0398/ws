@@ -383,6 +383,15 @@ margin-bottom: 30px;
 	font-weight: normal;
 	font-style: normal;
 }
+@font-face {
+	font-family: 'Helvetica Neue Cyr Light Italic';
+	src: url('../fonts/HelveticaNeueCyr-LightItalic.eot');
+	src: url('../fonts/HelveticaNeueCyr-LightItalic.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/HelveticaNeueCyr-LightItalic.woff') format('woff'),
+	url('../fonts/HelveticaNeueCyr-LightItalic.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
 /* Заголовки блоков */
 .header_block{
 	font-family: 'Cuprum Regular';
@@ -853,6 +862,22 @@ margin-bottom: 30px;
     background-color: #b93777;
 }
 /* Личный кабинет */
+.teacher_lk .teacher_type{
+	font-family: 'Cuprum Regular';
+	font-size: 13px;
+	line-height: 13px;
+	color: #ffffff;
+	background: #c1c1c1;
+	display: inline-block;
+	padding: 7px 14px;
+}
+.teacher_lk h1{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 20px;
+	color: #5f5f5f;
+	margin-top: 15px;
+	margin-bottom: 60px;
+}
 /* Редактирование профиля */
 .user_edit{
     text-align: center;

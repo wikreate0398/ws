@@ -247,5 +247,23 @@ var Ajax = {
          timer: 1000 ,
          
       });
+    },
+
+    loadRegionCities: function(select, city){
+        var val      = $(select).val(); 
+        var cacheStr = String((new Date()).getTime()).replace(/\D/gi, '');
+        $( ".cities__area").load("/admin/location/loadRegionCities?rnd=" + cacheStr,
+                                 {'id': $(select).val(), 'id_city': city, '_token': CSRF_TOKEN}, 
+                                 function( response, status, xhr ) { 
+            if ( response == "" ) {
+                $('.cities__area').hide();
+                $('.regions__area').removeClass('col-md-6').addClass('col-md-12');
+            }else{
+                $('.cities__area').show(); 
+                $('.regions__area').removeClass('col-md-12').addClass('col-md-6');
+            }
+            initSelect2();
+        }); 
     }
 }
+ 

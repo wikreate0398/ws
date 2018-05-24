@@ -77,6 +77,28 @@ class LocationController extends Controller
         return view('admin.'.$this->folder.'.cities', $data);
     }
 
+    public function loadRegionCities(Request $request)
+    { 
+        $id        = $request->input('id');   
+        $id_city   = $request->input('id_city');   
+        if (empty($id)) die();
+        $cities = Cities::where('region_id', intval($id))->get();
+ 
+        $content = '';
+        if (count($cities) > 0) 
+        { 
+            $content .= '<div class="select_form"><select name="city" class="form-control select2">
+                         <option value="">Город</option>';
+            foreach ($cities as $item)
+            {
+                $selected = ($id_city == $item['id']) ? 'selected' : '';
+                $content .= '<option '.$selected.' value="'.$item['id'].'">'.$item['name'].'</option>';
+            }
+            $content .= '</select> </div>';
+        }
+        echo $content;
+    }
+
     public function showAddForm()
     {
         return view('admin.'.$this->folder.'.add', ['method' => $this->method]);

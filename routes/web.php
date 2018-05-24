@@ -126,6 +126,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::get('add', 'LocationController@showAddForm');
 		Route::post('create', 'LocationController@create'); 
 		Route::post('{id}/update', 'LocationController@update'); 
+		Route::post('loadRegionCities', 'LocationController@loadRegionCities'); 
 	});  
 
 	Route::group(['prefix' => 'profile'], function() { 
@@ -150,6 +151,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('{id}/updatePassword', 'TeacherUserController@updatePassword'); 
 		Route::post('create', 'TeacherUserController@createUser'); 
 		Route::post('{id}/update', 'TeacherUserController@updateUser');
+		Route::post('deleteCertificate', 'TeacherUserController@deleteCertificate'); 
 	});	 
 
 	Route::group(['prefix' => 'users/university', 'namespace' => 'Users',], function() { 
@@ -164,7 +166,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 	Route::group(['prefix' => 'ajax'], function() {  
 		Route::post('depth-sort', 'AjaxController@depthSort')->name('depth_sort');
 		Route::post('viewElement', 'AjaxController@viewElement')->name('viewElement'); 
-		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement'); 
+		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement');  
 	}); 
 
 	Route::get('logout', 'LoginController@logout')->name('admin_logout'); 

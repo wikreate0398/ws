@@ -247,7 +247,7 @@ var ComponentsDropdowns = function () {
         });
     }
 
-    var multi_select = function(){ 
+    var multi_select = function(){  
             $('#multi_select, #multi_select2').multiSelect({
                 selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Поиск...'>",
                 selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Поиск...'>",

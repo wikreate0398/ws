@@ -34,15 +34,23 @@
                         </div> -->
 
                         <div class="form-group">
-                            <label class="col-md-12 control-label">Город</label>
-                            <div class="col-md-12">
-                                <select name="city"  class="form-control">
-                                    <option value="">Выбрать</option>
-                                    @foreach($cities as $item)
-                                        <option {{ ($user['city'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
-                                    @endforeach
-                                </select>
+                            <label class="col-md-12 control-label">Расположение</label>
+                            <div class="col-md-12 regions__area">
+                                <div class="select_form">
+                                    <select class="form-control select2" id="select__regions" onchange="Ajax.loadRegionCities(this, '{{ $user['city'] }}')" name="region">
+                                        <option value="">Область</option>
+                                        @foreach($regions as $item)
+                                            <option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
+                                                {{$item['name']}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
+                            <script>
+                                $(window).load(function(){ $('select#select__regions').change(); });
+                            </script> 
+                            <div class="col-md-6 cities__area" style="display: none;"></div>
                         </div>
 
                         <div class="form-group">

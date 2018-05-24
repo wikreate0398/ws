@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User; 
-use App\Models\Cities;
+use App\Models\Regions;
 use App\Models\UsersUniversity;
 use App\Models\UniversityFormAttitude; 
 use App\Models\InstitutionTypes;
@@ -52,13 +52,7 @@ class UniversityUserController extends Controller
     public function showAddForm()
     {
         return view('admin.'.$this->folder.'.add', [
-            'method' => $this->method,
-            'cities'             => Cities::orderBy('name', 'asc')->get(), 
-            'programs_type'      => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
-            'teach_activ_cat'    => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),  
-            'inst_type'          => InstitutionTypes::orderBy('page_up','asc')->get(),
-            'university'         => University::orderBy('page_up','asc')->get(),
-            'univ_form_attitude' => UniversityFormAttitude::orderBy('page_up','asc')->get(),
+            'method' => $this->method 
         ]);
     }
 
@@ -71,9 +65,8 @@ class UniversityUserController extends Controller
 
     public function createUser(Request $request)
     {
- 
         $data     = $request->all();  
-        $validate = $this->validation($data);
+        $validate = $this->validation($data, $this->addRules);
         if ($validate !== true) 
         {  
             return \App\Utils\JsonResponse::error(['messages' => $validate]); 
@@ -131,7 +124,7 @@ class UniversityUserController extends Controller
         $data = [
             'method'             => $this->method, 
             'user'               => User::with('university')->where('id', $id)->first(), 
-            'cities'             => Cities::orderBy('name', 'asc')->get(), 
+            'regions'            => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
             'programs_type'      => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
             'teach_activ_cat'    => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),  
             'inst_type'          => InstitutionTypes::orderBy('page_up','asc')->get(),

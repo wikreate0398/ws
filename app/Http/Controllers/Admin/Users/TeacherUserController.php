@@ -7,14 +7,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User; 
-use App\Models\UsersEducations;
-use App\Models\UsersTeachingActivities;
-use App\Models\UsersWorkExperience;
+use App\Models\Regions; 
 use App\Models\ProgramsType;
-use App\Models\GradeEducation;
-use App\Models\Cities;
-use App\Models\TeachActivityCategories;
-use App\Models\WorkExperienceDirection;
+use App\Models\GradeEducation; 
+
+use App\Models\TeacherSubjects;
+use App\Models\TeacherSpecializations;
+use App\Models\TeacherLessonOptions;
+use App\Models\TeacherCertificates;
+use App\Models\SubjectsList;
+
+use Illuminate\Support\Facades\DB;
  
 class TeacherUserController extends Controller
 {
@@ -73,7 +76,7 @@ class TeacherUserController extends Controller
     {
  
         $data     = $request->all();  
-        $validate = $this->validation($data);
+        $validate = $this->validation($data, $this->addRules);
         if ($validate !== true) 
         {  
             return \App\Utils\JsonResponse::error(['messages' => $validate]); 
@@ -99,6 +102,13 @@ class TeacherUserController extends Controller
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
         } 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+    }
+
+    public function deleteCertificate(Request $request)
+    {
+        $id         = $request->input('id');
+        $id_teacher = $request->input('id_user');
+        \App\Models\TeacherCertificates::whereId($id)->where('id_teacher', $id_teacher)->delete();
     }
 
     public function updatePassword($id)
@@ -128,17 +138,21 @@ class TeacherUserController extends Controller
  
     public function showeditForm($id)
     { 
+        $user = User::findOrFail($id); 
         return view('admin.'.$this->folder.'.edit', [
-            'method' => $this->method, 
-            'user'   => User::findOrFail($id),
-            'cities'          => Cities::orderBy('name', 'asc')->get(),
-            'grade_education' => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
-            'programs_type'   => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
-            'teach_activ_cat' => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),
-            'work_experience_direction' => WorkExperienceDirection::orderBy('page_up','asc')->get(), 
-            'usersEducations' => UsersEducations::where('id_user', $id)->orderBy('from_year', 'desc')->get(),
-            'usersTeachingActivities' => UsersTeachingActivities::where('id_user', $id)->orderBy('from_year', 'desc')->get(),
-            'usersWorkExperience'     => UsersWorkExperience::where('id_user', $id)->orderBy('from_year', 'desc')->get(),
+            'method'                  => $this->method, 
+            'user'                    => $user,
+            'regions'                 => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
+            'grade_education'         => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
+            'programs_type'           => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()), 
+             
+            'degree_experience'       => DB::table('degree_experience')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
+
+            'specializations_list'    => DB::table('specializations_list')->where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
+            'lesson_options_list'     => DB::table('lesson_options_list')->where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
+            'subjects_list'           => SubjectsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(), 
+            'teacher_specializations' => TeacherSpecializations::where('id_teacher', $user->id)->get(),  
+            'teacher_lesson_options'  => TeacherLessonOptions::where('id_teacher', $user->id)->get(),
         ]);
     } 
 }

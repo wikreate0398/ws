@@ -29,7 +29,7 @@
  
 
 <link rel="stylesheet" type="text/css" href="/admin_theme/theme/assets/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
-<link rel="stylesheet" type="text/css" href="/admin_theme/theme/assets/global/plugins/select2/select2.css"/>
+<link href="{{ asset('css/select2.css') }}" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="/admin_theme/theme/assets/global/plugins/jquery-multi-select/css/multi-select.css"/>
 
 <link rel="stylesheet" type="text/css" href="/admin_theme/theme/assets/global/plugins/jquery-tags-input/jquery.tagsinput.css"/>
@@ -55,7 +55,7 @@
 <link rel="shortcut icon" href="favicon.ico"/>
 <script src="/admin_theme/theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="/admin_theme/theme/assets/global/plugins/jstree/dist/jstree.min.js"></script> 
-<script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/select2/select2.min.js"></script>
+<script src="{{ asset('js/select2.js') }}"></script> 
 <script>   
   $(window).on('load', function() { // makes sure the whole site is loaded 
     setTimeout(function(){
@@ -293,7 +293,7 @@
 <!-- End Bootstrap plugins  -->
 
 <script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/jquery-tags-input/jquery.tagsinput.min.js"></script>  
-<script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/select2/select2.min.js"></script>
+ 
 <script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
 <script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js"></script> 
 <script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/fancybox/source/jquery.fancybox.pack.js"></script> 

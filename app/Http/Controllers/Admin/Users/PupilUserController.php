@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Cities;
+use App\Models\Regions;
  
 class PupilUserController extends Controller
 {
@@ -62,14 +62,14 @@ class PupilUserController extends Controller
     {
  
         $data     = $request->all();  
-        $validate = $this->validation($data);
+        $validate = $this->validation($data, $this->addRules);
         if ($validate !== true) 
         {  
             return \App\Utils\JsonResponse::error(['messages' => $validate]); 
         } 
 
         $create = $this->create($data);
- 
+
         User::where('id', $create)->
             update([ 
                 'activate'     => '1',
@@ -118,9 +118,9 @@ class PupilUserController extends Controller
     public function showeditForm($id)
     { 
         return view('admin.'.$this->folder.'.edit', [
-            'method' => $this->method, 
-            'user'   => User::findOrFail($id),
-            'cities' => Cities::orderBy('name', 'asc')->get()
+            'method'  => $this->method, 
+            'user'    => User::findOrFail($id),
+            'regions' => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
         ]);
     }  
 }

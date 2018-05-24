@@ -10,7 +10,7 @@ interface UserTypesInterface
 	* @param array $data
 	* @return bool or array of errors
 	*/
-	public function validation(array $data);
+	public function validation(array $data, $rules);
 
 	/**
 	* Saving user data

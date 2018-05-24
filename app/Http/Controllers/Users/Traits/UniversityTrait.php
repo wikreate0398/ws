@@ -17,10 +17,12 @@ trait UniversityTrait
         'program_type'       => 'Типы программ',
         'id_category'        => 'Основные рубрики',
         'parent_institution' => 'Родительское ВУЗ',
-        'form_attitude'      => 'Форма отношения'
+        'form_attitude'      => 'Форма отношения',
+        'region'                => 'Область',
+        'city'                  => 'Город', 
     ];
 
-    private $rules = [ 
+    private $editRules = [ 
         'phone'                 => 'required', 
         'image'                 => 'file|mimes:jpeg,jpg,png',
         'email'                 => 'required|string|email|unique:users',
@@ -38,18 +40,28 @@ trait UniversityTrait
         'accreditation_nr_from' => 'required',
         'program_type'          => 'required|integer|',
         'id_category'           => 'required|integer|',
-        'description'           => 'max:800' 
+        'description'           => 'max:800',
+        'region'                => 'required',
+        'city'                  => 'required',  
     ];
 
-    public function validation(array $data)
+    private $addRules = [
+        'email'                 => 'required|string|email|unique:users',
+        'name'                  => 'required', 
+        'phone'                 => 'required', 
+        'password'              => 'required|string|min:6|confirmed',
+        'password_confirmation' => 'required' 
+    ]; 
+
+    public function validation(array $data, $rules)
     { 
 
-        if (!empty(request()->input('secondary_inst'))) {
-            $this->rules['parent_institution'] = 'required|integer';
-            $this->rules['form_attitude']      = 'required|integer';
+        if (!empty($data['secondary_inst'])) {
+            $rules['parent_institution'] = 'required|integer';
+            $rules['form_attitude']      = 'required|integer';
         }
 
-        $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
+        $validator = Validator::make($data, $rules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames);  
         if ($validator->fails()) 
         {
@@ -62,42 +74,20 @@ trait UniversityTrait
     {
         $confirm_hash = md5(microtime());
 
-        $createUser = User::create([  
-            'user_type'  => 3,
-            'phone'      => $data['phone'],
-            'email'      => $data['email'], 
-            'city'       => !empty($data['city']) ? $data['city'] : '',
-            'phone'      => $data['phone'],
-            'phone2'     => !empty($data['phone2']) ? $data['phone2'] : '',
-            'fax'        => !empty($data['fax']) ? $data['fax'] : '',
-            'site'       => !empty($data['site']) ? $data['site'] : '',
-            'image'      => $this->uploadImage(),
+        $createUser = User::create([   
+            'user_type'    => 3,
+            'phone'        => $data['phone'],
+            'email'        => $data['email'],    
             'confirm_hash' => $confirm_hash, 
             'password'     => bcrypt($data['password']),
         ]); 
 
-        $id_user = $createUser->id;
+        $id_user = $createUser->id; 
 
         UsersUniversity::insert([
-            'id_user'                 => $id_user,
-            'institution_type'        => $data['institution_type'],
-            'status'                  => $data['status'],
-            'full_name'               => $data['full_name'],
-            'short_name'              => $data['short_name'],
-            'other_names'             => ifNull($data['other_names']),
-            'secondary_inst'          => !empty($data['secondary_inst']) ? 1 : 0,
-            'parent_institution'      => ifNull($data['parent_institution']),
-            'form_attitude'           => ifNull($data['form_attitude']),
-            'year_of_foundation'      => $data['year_of_foundation'],
-            'has_hostel'              => !empty($data['has_hostel']) ? 1 : 0,
-            'has_military_department' => !empty($data['has_military_department']) ? 1 : 0,
-            'license_nr'              => $data['license_nr'],
-            'license_nr_from'         => date('Y-m-d', strtotime($data['license_nr_from'])),  
-            'accreditation_nr'        => $data['accreditation_nr'],
-            'accreditation_nr_from'   => date('Y-m-d', strtotime($data['accreditation_nr_from'])),
-            'description'             => ifNull($data['description']),
-            'program_type'            => $data['program_type'],
-            'id_category'             => $data['id_category'],
+            'id_user'   => $id_user, 
+            'full_name' => $data['name'],
+             
         ]); 
         return $id_user;
     }
@@ -106,15 +96,15 @@ trait UniversityTrait
     {  
         foreach (['email', 'password', 'password_confirmation'] as $key => $value) 
         { 
-            unset($this->rules[$value]);
+            unset($this->editRules[$value]);
         }  
 
-        if (!empty(request()->input('secondary_inst'))) {
-            $this->rules['parent_institution'] = 'required|integer';
-            $this->rules['form_attitude']      = 'required|integer';
+        if (!empty($data['secondary_inst'])) {
+            $this->editRules['parent_institution'] = 'required|integer';
+            $this->editRules['form_attitude']      = 'required|integer';
         }
 
-        $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
+        $validator = Validator::make($data, $this->editRules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames);  
         if ($validator->fails()) 
         {
@@ -130,7 +120,8 @@ trait UniversityTrait
         User::where('id', $id_user)->update([   
             'phone'      => $data['phone'],
             'email'      => $data['email'], 
-            'city'       => !empty($data['city']) ? $data['city'] : '',
+            'city'       => $data['city'],
+            'region'     => $data['region'],
             'phone'      => $data['phone'],
             'phone2'     => !empty($data['phone2']) ? $data['phone2'] : '',
             'fax'        => !empty($data['fax']) ? $data['fax'] : '',

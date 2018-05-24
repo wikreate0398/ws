@@ -12,22 +12,35 @@ trait PupilTrait
         'repeat_password'  => 'Повторите пароль',
         'image'            => 'Фото',
         'old_password'     => 'Старый Пароль',
-        'phone'            => 'Телефон'
+        'phone'            => 'Телефон',
+        'name'             => 'Имя',
+        'date_birth'       => 'День рождения',
+        'region'           => 'Область',
+        'city'             => 'Город', 
 	];
 
-	private $rules = [
-        'name'                  => 'required',  
-        'date_birth'            => 'required',
-        'phone'                 => 'required', 
-        'image'                 => 'file|mimes:jpeg,jpg,png',
+	private $addRules = [
         'email'                 => 'required|string|email|unique:users',
+        'name'                  => 'required', 
+        'phone'                 => 'required', 
+        'password'              => 'required|string|min:6|confirmed',
+        'password_confirmation' => 'required'
+	];
+
+    private $editRules = [
+        'email'                 => 'required|string|email|unique:users',
+        'name'                  => 'required', 
+        'phone'                 => 'required', 
         'password'              => 'required|string|min:6|confirmed',
         'password_confirmation' => 'required',
-	];
+        'date_birth'            => 'required',
+        'region'                => 'required',
+        'city'                  => 'required'
+    ];
 
-	public function validation(array $data)
+	public function validation(array $data, $rules)
 	{ 
-        $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
+        $validator = Validator::make($data, $rules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames); 
         if ($validator->fails()) 
         {
@@ -40,14 +53,10 @@ trait PupilTrait
 	{
 		$confirm_hash = md5(microtime()); 
         return User::create([ 
-            'name'         => $data['name'],  
-            'date_birth'   => date('Y-m-d', strtotime($data['date_birth'])),
-            'user_type'    => '1',
+            'name'         => $data['name'], 
+            'user_type'    => 1,
             'phone'        => $data['phone'],
-            'email'        => $data['email'], 
-            'city'         => $data['city'], 
-            'site'         => $data['site'],
-            'image'        => $this->uploadImage(),
+            'email'        => $data['email'],    
             'confirm_hash' => $confirm_hash, 
             'password'     => bcrypt($data['password']),
         ])->id; 
@@ -57,10 +66,10 @@ trait PupilTrait
     {   
         foreach (['email', 'password', 'password_confirmation'] as $key => $value) 
         { 
-            unset($this->rules[$value]);
+            unset($this->editRules[$value]);
         }  
 
-        $validate = $this->validation($data);
+        $validate = $this->validation($data, $this->editRules);
         if ($validate != true) 
         {
             return $validate;
@@ -78,7 +87,8 @@ trait PupilTrait
                 'date_birth'   => date('Y-m-d', strtotime($data['date_birth'])), 
                 'phone'        => $data['phone'],
                 'email'        => $data['email'], 
-                'city'         => !empty($data['city']) ? $data['city'] : '',
+                'city'         => $data['city'],
+                'region'       => $data['region'],
                 'phone'        => $data['phone'],
                 'phone2'       => !empty($data['phone2']) ? $data['phone2'] : '',
                 'fax'          => !empty($data['fax']) ? $data['fax'] : '',

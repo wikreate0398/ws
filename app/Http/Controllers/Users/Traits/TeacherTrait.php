@@ -36,10 +36,12 @@ trait TeacherTrait
         'region'             => 'Область',
         'city'               => 'Город', 
         'grade_experience'   => 'Степень вашего опыта',
-        'name'               => 'Имя'
+        'name'               => 'Имя',
+        'region'             => 'Область',
+        'city'               => 'Город', 
     ];
 
-    private $rules = [
+    private $editRules = [
         'name'                  => 'required|max:80|min:5', 
         'about'                 => 'required|min:200|max:1200', 
         'date_birth'            => 'required',
@@ -55,7 +57,17 @@ trait TeacherTrait
         'password_confirmation' => 'required',
         'teacher_subjects'      => 'required',
         'specializations'       => 'required',
-        'lesson_options'        => 'required'
+        'lesson_options'        => 'required',
+        'region'                => 'required',
+        'city'                  => 'required', 
+    ]; 
+
+    private $addRules = [
+        'email'                 => 'required|string|email|unique:users',
+        'name'                  => 'required', 
+        'phone'                 => 'required', 
+        'password'              => 'required|string|min:6|confirmed',
+        'password_confirmation' => 'required' 
     ]; 
 
     private $customMessage = [
@@ -68,11 +80,9 @@ trait TeacherTrait
 
     private $_id_user;
  
-    public function validation(array $data)
-    { 
-        $education       = sortValue(request()->input('education'));
- 
-        $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
+    public function validation(array $data, $rules)
+    {  
+        $validator = Validator::make($data, $rules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames);  
         if ($validator->fails()) 
         {
@@ -91,24 +101,15 @@ trait TeacherTrait
         $confirm_hash = md5(microtime());
  
         $createUser = User::create([ 
-            'name' => $data['name'], 
-            'date_birth' => date('Y-m-d', strtotime($data['date_birth'])),
-            'user_type'  => '2',
-            'phone'      => $data['phone'],
-            'email'      => $data['email'], 
-            'city'       => !empty($data['city']) ? $data['city'] : '',
-            'phone'      => $data['phone'],
-            'phone2'     => !empty($data['phone2']) ? $data['phone2'] : '',
-            'fax'        => !empty($data['fax']) ? $data['fax'] : '',
-            'site'       => !empty($data['site']) ? $data['site'] : '',
-            'image'      => $this->uploadImage(),
+            'name'         => $data['name'], 
+            'user_type'    => 2,
+            'phone'        => $data['phone'],
+            'email'        => $data['email'],    
             'confirm_hash' => $confirm_hash, 
             'password'     => bcrypt($data['password']),
         ]);  
-
-        $this->_id_user = $createUser->id; 
-        $this->saveEducations();
-        return $this->_id_user;
+  
+        return $createUser->id;
     }
 
     private function saveEducations($id_user)
@@ -153,14 +154,14 @@ trait TeacherTrait
             return $error;
         }  
 
-        $validator = Validator::make($data, $this->rules, $this->customMessage); 
+        $validator = Validator::make($data, $this->editRules, $this->customMessage); 
         $validator->setAttributeNames($this->niceNames);  
         if ($validator->fails()) 
         {
             return $validator->errors()->toArray();
         }
 
-        $this->education       = sortValue(request()->input('education')); 
+        $this->education = sortValue(request()->input('education')); 
  
         $validateMultiArr = validateArray([
             '0' => [
@@ -185,7 +186,7 @@ trait TeacherTrait
         
         foreach (['email', 'password', 'password_confirmation'] as $key => $value) 
         { 
-            unset($this->rules[$value]);
+            unset($this->editRules[$value]);
         }   
 
         $errors = $this->validateEdit($data); 

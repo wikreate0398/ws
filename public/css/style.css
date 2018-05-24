@@ -971,6 +971,112 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
     display: inline-block;
 	padding: 7px 15px;
 }
+.teacher_employment .checkbox.checbox-switch {
+	padding-left: 0;
+}
+.teacher_employment .checkbox.checbox-switch label,
+.teacher_employment .checkbox-inline.checbox-switch {
+	display: inline-block;
+	position: relative;
+	padding-left: 0;
+}
+.teacher_employment .checkbox.checbox-switch label input,
+.teacher_employment .checkbox-inline.checbox-switch input {
+	display: none;
+}
+.teacher_employment .checkbox.checbox-switch label span,
+.teacher_employment .checkbox-inline.checbox-switch span {
+	width: 80px;
+	border-radius: 20px;
+	height: 30px;
+	border: 1px solid #c1c1c1;
+	background-color: rgb(255, 255, 255);
+	transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 7px;
+	margin-left: 7px;
+}
+.teacher_employment .checkbox.checbox-switch label span:before,
+.teacher_employment .checkbox-inline.checbox-switch span:before {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: 1px solid #c1c1c1;
+	background: rgb(255,255,255);
+	content: " ";
+	top: 2px;
+	position: relative;
+	left: 2px;
+	transition: all 0.3s ease;
+}
+.teacher_employment .checkbox.checbox-switch label > input:checked + span:before,
+.teacher_employment .checkbox-inline.checbox-switch > input:checked + span:before {
+	left: 53px;
+}
+.teacher_employment .checkbox.checbox-switch.switch-light label > input:checked + span,
+.teacher_employment .checkbox-inline.checbox-switch.switch-light > input:checked + span {
+	background-color: rgb(248,249,250);
+	border-color: rgb(248,249,250);
+	box-shadow: rgb(248,249,250) 0px 0px 0px 8px inset;
+	transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;
+}
+.lk_menu{
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e3e5e8;
+}
+.lk_menu li{
+    float: none;
+    display: inline-block;
+	margin-left: -5px;
+}
+.lk_menu > li > a{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+	color: #a8a8a8;
+    text-transform: uppercase;
+	margin-right: 0px;
+	border-radius: 0px;
+}
+.lk_menu > li > a:focus,
+.lk_menu > li > a:hover{
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
+.lk_menu > li.active > a, .lk_menu > li.active > a:focus, .lk_menu > li.active > a:hover {
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
+.data_coverage{
+	margin-top: 70px;
+}
+.data_coverage .edit_profile{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #fff;
+	background: #b93777;
+	text-transform: uppercase;
+	border-radius: 0px;
+	display: inline-flex;
+	padding: 7px 15px;
+	margin-right: 15px;
+}
+.data_coverage span{
+	font-family: 'Cuprum Italic';
+	color: #a8a8a8;
+	display: inline-flex;
+	font-size: 14px;
+	line-height: 14px;
+	vertical-align: middle;
+}
 /* Редактирование профиля */
 .user_edit{
     text-align: center;

@@ -53,20 +53,6 @@ header .main_menu li > a {
     padding-top: 20px;
     padding-bottom: 20px;
 }
-.header_bottom h2{
-    color: #fff;
-    text-align: center;
-    margin-top: 180px;
-    margin-bottom: 60px;
-}
-.header_bottom .list_information{
-    text-align: center;
-    margin-bottom: 0px;
-}
-.header_bottom .list_information li a{
-    color: #fff;
-    border-bottom: 1px dashed #fff;
-}
 .header_page{
     text-align: center;
 }
@@ -392,6 +378,82 @@ margin-bottom: 30px;
 	font-weight: normal;
 	font-style: normal;
 }
+/* Шапка */
+header .header_top_nav{
+	float: right;
+	margin-bottom: 0px;
+}
+header .header_top_nav li{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+header .header_top_nav li a{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #1d3369;
+	text-transform: uppercase;
+}
+header .header_top_nav .register_link a{
+	color: #b93777;
+}
+header .header_bottom{
+	background: url(../images/bg_header.png);
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+header .header_bottom h2{
+	font-family: 'Cuprum Regular';
+	font-size: 26px;
+	color: #cccccc;
+	text-align: center;
+	margin-top: 200px;
+	margin-bottom: 25px;
+}
+header .header_bottom .list_information {
+    text-align: center;
+    margin-bottom: 0px;
+}
+header .header_bottom .list_information li a {
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+    color: #f3f3f3;
+}
+header .header_bottom .navbar-default {
+	background-color: transparent;
+	border: 0px;
+	margin-bottom: 0px;
+}
+header .header_bottom .navbar-default .navbar-nav{
+	margin-top: 20px;
+}
+header .header_bottom .navbar-default li a{
+	font-family: 'Bebas Neue Regular';
+	font-size: 18px;
+	line-height: 40px;
+	color: #fff;
+	letter-spacing: 0.2em;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+header .header_bottom .navbar-default li a:focus,
+header .header_bottom .navbar-default li a:hover{
+	color: #cccccc;
+}
+header .header_bottom .navbar-default .nav .open > a, header .header_bottom .navbar-default .nav .open > a:focus, header .header_bottom .navbar-default .nav .open > a:hover {
+    background-color: transparent;
+    border: 0px;
+}
+header .header_bottom .navbar-default .dropdown-menu {
+	background-color: #4a464c;
+}
+header .header_bottom .navbar-default .dropdown-menu li a {
+    font-size: 18px;
+    line-height: 25px;
+}
+header .header_bottom .navbar-default .dropdown-menu li a:focus,
+header .header_bottom .navbar-default .dropdown-menu li a:hover{
+    background: transparent;
+}
 /* Заголовки блоков */
 .header_block{
 	font-family: 'Cuprum Regular';
@@ -443,19 +505,30 @@ margin-bottom: 30px;
 }
 /* Поиск */
 #search_form{
-    margin-top: 60px;
-    margin-bottom: 120px;
+    margin-top: 50px;
+    margin-bottom: 360px;
 }
 #search_form .form-group{
     margin-bottom: 0px;
 }
 #search_form .form-control{
 	font-family: 'Cuprum Regular';
-    font-size: 16px;
-	color: #5f5f5f;
+    font-size: 20px;
+	color: #fff;
 	border-radius: 0px;
-	border: 1px solid #c1c1c1;
+	border: 1px solid #aeacaf;
+	border-right: 0px;
 	height: auto;
+	padding: 15px 15px;
+	background: transparent;
+}
+#search_form .btn_search{
+	font-size: 33px;
+	color: #ffffff;
+	background: transparent;
+	border: 1px solid #aeacaf;
+	border-left: 0px;
+	border-radius: 0px;
 }
 #search_form ::-webkit-input-placeholder{/* webkit */
 	color:#5f5f5f; opacity:1;
@@ -474,7 +547,11 @@ margin-bottom: 30px;
     margin-bottom: 0px;
 }
 #search_form.no_home .form-control{
+	font-family: 'Cuprum Regular';
+    font-size: 16px;
 	color: #5f5f5f;
+	background: #fff;
+	padding: 6px 12px;
 }
 #search_form.no_home .btn_search{
 	font-family: 'Cuprum Regular';
@@ -877,6 +954,22 @@ margin-bottom: 30px;
 	color: #5f5f5f;
 	margin-top: 15px;
 	margin-bottom: 60px;
+}
+.teacher_lk .top_lk{
+	margin-bottom: 60px;
+}
+.course_lk{
+	margin-bottom: 60px;
+}
+.course_lk .btn_add_course{
+    font-family: 'Cuprum Regular';
+    font-size: 16px;
+    color: #fff;
+    background: #b93777;
+    text-transform: uppercase;
+    border-radius: 0px;
+    display: inline-block;
+	padding: 7px 15px;
 }
 /* Редактирование профиля */
 .user_edit{

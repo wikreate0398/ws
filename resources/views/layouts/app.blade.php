@@ -60,40 +60,126 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-                    <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav main_menu" style="margin-top: 5px;">
-                        <li><a href="/about/">О ПРОЕКТЕ</a></li>
-                        <li><a href="/courses/">КУРСЫ</a></li>
-                        <li><a href="/educational-institutions/">ВУЗЫ И ШКОЛЫ</a></li>
-                        <li><a href="/teachers/">ПРЕПОДАВАТЕЛИ</a></li>
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
-                        @if(Auth::check())
-                        <li><a href="{{ route('user_profile') }}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Профиль</a></li>
-                        <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Выйти</a></li> 
-                        @else  
-                        <li><a href="{{ route('login') }}""><i class="fa fa-sign-in" aria-hidden="true"></i> Войти</a></li>  
-                        <li><a href="{{ route('registration') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Регистрация</a></li>
-                        @endif 
-                    </ul>
-                </div>
-            </div>
-        </nav>  
-    </header> 
-
+	<header>
+		<div class="container">
+			<div class="header_top">
+				<div class="row">
+					<div class="col-lg-12">
+						<ul class="list-inline header_top_nav">
+							@if(Auth::check())
+							<li>
+								<a href="{{ route('logout') }}">Выйти</a>
+							</li>
+							@else 
+							<li class="register_link">
+								<a href="{{ route('registration') }}">Хочу обучать</a>
+							</li>
+							<li>
+								<a href="{{ route('login') }}">Войти</a>
+							</li>
+							@endif
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="header_bottom">
+			<nav class="navbar navbar-default">
+			  <div class="container">
+				<div class="navbar-header">
+				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+				  <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				  <ul class="nav navbar-nav">
+					<li><a href="/about/">О ПРОЕКТЕ</a></li>
+					<li><a href="/courses/">КУРСЫ</a></li>
+					<li><a href="/educational-institutions/">ВУЗЫ И ШКОЛЫ</a></li>
+					<li><a href="/teachers/">ПРЕПОДАВАТЕЛИ</a></li>
+				  </ul>
+				  @if(Auth::check())
+				  <ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><img src="http://via.placeholder.com/40x40"></a></li>
+					<li><a href="#"><img src="/images/icon_bookmark.png"></a></li>
+					<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/images/icon_profile.png"></a>
+					  <ul class="dropdown-menu">
+						<li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="{{ route('login') }}">Выйти</a></li>
+					  </ul>
+					</li>
+				  </ul>
+				  @endif
+				</div>
+			  </div>
+			</nav>
+			@if(request()->segment(1) == '')
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2">
+						<h2>
+							НАЙДИТЕ СВОЕ ПРИЗВАНИЕ В ПОЛНОМ КАТАЛОГЕ ВУЗОВ И КУРСОВ
+						</h2>
+                        <ul class="list-inline list_information">
+                            <li>
+                                <a href="/educational-institution/">
+                                    {{ $stats['institutions'] }} 
+                                    @if($stats['institutions'] == 1)
+                                        ВУЗ
+                                    @elseif($stats['institutions'] <= 4)
+                                        ВУЗА
+                                    @else
+                                        ВУЗОВ 
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    {{ $stats['courses'] }} 
+                                    @if($stats['courses'] == 1)
+                                        КУРС
+                                    @elseif($stats['courses'] <= 4)
+                                        КУРСА
+                                    @else
+                                        КУРСОВ 
+                                    @endif 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/teachers/">
+                                    {{ $stats['teachers'] }} 
+                                    @if($stats['teachers'] == 1)
+                                        ПРЕПОДАВАТЕЛь
+                                    @elseif($stats['teachers'] <= 4)
+                                        ПРЕПОДАВАТЕЛЯ
+                                    @else
+                                        ПРЕПОДАВАТЕЛЕЙ 
+                                    @endif  
+                                </a>
+                            </li>
+                        </ul>
+						<form class="home" id="search_form" action="/search/" data-url-autocomplete="/autocomplete">
+							<div class="input-group">
+								<input name="q" autocomplete="off" class="form-control" id="search__input" placeholder="">
+								<div class="loaded__search_result"></div>
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn_search"><i class="fa fa-search"></i></button>
+								</span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			@else
+			@endif
+		</div>
+	</header>
         @yield('content')
     <div class="container">
         <div class="banner_block">
@@ -110,26 +196,6 @@
             </div>
         </div>
     </div>
-    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav> -->
 
     <footer>
 		<div class="container">

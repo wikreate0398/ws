@@ -194,15 +194,14 @@
       <!-- BEGIN TOP NAVIGATION MENU -->
       <div class="top-menu"> 
          <ul class="nav navbar-nav pull-right"> 
-              
-            
+               
             
             @if(false)
 
              @php
                $countNewUsers = DB::table('users')->where('new', '1')->count();
             @endphp
-            
+
             <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                <i class="fa fa-users" aria-hidden="true"></i>

@@ -104,11 +104,11 @@
 				  </ul>
 				  @if(Auth::check())
 				  <ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><img src="http://via.placeholder.com/40x40"></a></li>
+					<li><a href="#"><img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}"></a></li>
 					<li><a href="#"><img src="/images/icon_bookmark.png"></a></li>
 					<li class="dropdown">
 					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}"></a>
+                        <img src="/images/icon_profile.png"></a>
 					  <ul class="dropdown-menu">
 						<li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
 						<li role="separator" class="divider"></li>

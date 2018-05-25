@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User; 
 
 class AjaxController extends Controller
 { 
@@ -82,5 +83,28 @@ class AjaxController extends Controller
         }
 
         return \App\Utils\JsonResponse::success(['message' => trans('admin.delete_true')]);
+    }
+
+    public function fastRegister(Request $request)
+    {
+        $input             = $request->all();
+        $fastRegisterClass = new \App\Utils\Users\FastRegistration; 
+        $fastRegisterClass->setUserType($input['user_type']);
+        $fastRegisterClass->setRequestData($input); 
+        if ($fastRegisterClass->validationData($input) !== true) 
+        {
+            return $fastRegisterClass->getError();
+        } 
+
+        $user = $fastRegisterClass->register();
+
+        User::where('id', $user['id'])->
+            update([ 
+                'activate'     => '1',
+                'confirm'      => '1', 
+                'confirm_date' => date('Y-m-d H:i:s'),
+        ]);
+
+        return \App\Utils\JsonResponse::success(['message' => 'Пользователь успешно добавлен!']);
     }
 }

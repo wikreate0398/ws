@@ -185,7 +185,7 @@ class ProfileController extends Controller
         $avatarImageName = '';
         if (!empty($avatarbase64)) 
         {
-            $avatarImageName = 'user-' . Auth::user()->id . '.png';
+            $avatarImageName = 'user-' . Auth::user()->id . '-' . md5(microtime()) . '.png';
             $avatarImagePath = public_path() . '/uploads/users/' . $avatarImageName;  
             uploadBase64($avatarbase64, $avatarImagePath); 
         }

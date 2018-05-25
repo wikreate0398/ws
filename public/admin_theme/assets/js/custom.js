@@ -10,6 +10,18 @@ $(document).ready(function(){
         }
     });
 
+    $("textarea[maxlength]").each(function(){
+        $(this).next('.maxlength__label').find('span').text(this.value.length);
+    });
+
+    $("textarea[maxlength]").on("propertychange input", function() {
+        if (this.value.length > this.maxlength) {
+            this.value = this.value.substring(0, this.maxlength);
+        }  
+
+        $("textarea[maxlength]").next('.maxlength__label').find('span').text(this.value.length);
+    });
+
     $( ".datepicker" ).datepicker({
         dateFormat: "dd-mm-yy",
         changeMonth: true,

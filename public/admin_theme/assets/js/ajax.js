@@ -82,25 +82,18 @@ function serializeForm(form, button, action, button_txt){
                 // }, 1000);
 
             } else {    
-                if (jsonResponse.redirect != '') { 
+                if (jsonResponse.redirect !== undefined) {   
                     window.location = jsonResponse.redirect; 
                 }
 
                 if (jsonResponse.reload == true) { 
                     window.location.reload(true);
                 } 
-                 
-                // $(form).find('#error-respond').hide();
 
-                // setTimeout(function() {
-                //     showSuccessMsg();
-                //     $('.success').find('h2').html(res.msg);
-                // }, 300);
-
-                // setTimeout(function() {
-                //     $('.success').fadeOut(300);
-                // }, 4000); 
-                // $(form)[0].reset(); 
+                if (jsonResponse.message !== undefined) {
+                    Ajax.notify('success', jsonResponse.message);
+                    $(form)[0].reset(); 
+                }  
             } 
         },
         complete: function() {
@@ -227,6 +220,7 @@ var Ajax = {
     },
 
     notify: function(status, message){
+        $('.modal, .modal-backdrop').fadeOut(100);
         $.notify({
          // options 
          // title: 'Bootstrap notify',

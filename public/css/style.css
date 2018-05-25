@@ -156,8 +156,8 @@ span.req{
     position: absolute;
     top: 0;
     right: 0;
-    min-width: 100%;
-    min-height: 100%;
+    width: 100%;
+    height: 100%;
     font-size: 100px;
     text-align: right;
     filter: alpha(opacity=0);
@@ -166,6 +166,48 @@ span.req{
     background: white;
     cursor: inherit;
     display: block;
+}
+
+.profile__img{
+    position: relative;
+    cursor: pointer;
+}
+
+.actions__upload_photo{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+    top: 0;
+    left: 0;
+    /*border-radius: 50%;*/
+    justify-content: center;
+    display: none;
+    align-items: center;
+}
+
+.actions__upload_photo .btn-file{
+    background-color: #b93777; 
+    display: inline-block;
+    color: #fff;
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+}
+
+.edit__profile__photo-icon{
+    color: #b93777;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    background-color: #fff; 
+}
+
+.profile__img:hover .actions__upload_photo{
+    display: flex;
 }
 
 .dashed__link{
@@ -185,7 +227,7 @@ span.req{
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 50%;
+    /*border-radius: 50%;*/
     margin-bottom: 20px;
     background-color: #fff;
 }
@@ -253,7 +295,7 @@ footer .footer_bottom ul{
 
 .cropper-view-box,
 .cropper-face {
-  border-radius: 50%;
+  /*border-radius: 50%;*/
 }
 
 .cropper__close{
@@ -2030,3 +2072,9 @@ select option:disabled {
     font-size: 12px;
     color: #a8a8a8;
 } 
+
+.alert-success{
+    background-color: #58b36c;
+    color: #fff;
+    font-family: 'Cuprum Regular';
+}

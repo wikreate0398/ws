@@ -83,6 +83,12 @@ Route::group(['middleware' => ['web_auth']], function(){
 	Route::post('user/forgot-password', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('send_reset_link'); 
 });
 
+Route::group(['prefix' => 'cron'], function() { 
+	Route::get('updateNewUsers', 'CtonJobController@updateNewUsers');   
+}); 
+
+
+
 Route::get('user/logout', function(){ 
 	Auth::guard('web')->logout(); 
 	return  redirect()->route('login');
@@ -167,6 +173,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('depth-sort', 'AjaxController@depthSort')->name('depth_sort');
 		Route::post('viewElement', 'AjaxController@viewElement')->name('viewElement'); 
 		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement');  
+		Route::post('fastRegister', 'AjaxController@fastRegister');  
 	}); 
 
 	Route::get('logout', 'LoginController@logout')->name('admin_logout'); 

@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-lg-10 col-lg-offset-1">
 		<ul class="breadcrumb">
-		  <li><a href="#">Главная</a></li>
-		  <li><a href="#">Личный кабинет</a></li>
+		  <li><a href="/">Главная</a></li>
+		  <li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
 		  <li class="active">Редактировать информацию</li>
 		</ul>
 		<h1 class="title_page">РЕДАКТИРОВАТЬ ПРОФИЛЬ</h1>
@@ -41,7 +41,7 @@
 				<label class="col-md-4 control-label">КОРОТКО  О ВАС <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<textarea class="form-control" maxlength="1200" name="about" required autofocus="">{{ $user->about }}</textarea>
+						<textarea class="form-control" maxlength="1200" name="about" required>{{ $user->about }}</textarea>
 						<div class="maxlength__label"><span>0</span> символов (1200 максимум)</div>
 					</div>
 				</div>
@@ -168,7 +168,7 @@
 				<div class="col-md-8">
 					<div class="form-group select_form">
 						<select class="form-control" name="grade_experience">
-						  <option value="0">Выбрать</option> 
+						  <option value="">Выбрать</option> 
 						  	@foreach($degree_experience as $item)
                            		<option {{ ($user['grade_experience'] == $item->id) ? 'selected' : '' }} value="{{$item->id}}">
                            			{{$item->name}}

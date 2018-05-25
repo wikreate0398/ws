@@ -109,53 +109,17 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        $data     = $request->all();
-        $userType = $data['user_type'];  
-        $rules = [
-            'email'                 => 'required|string|email|unique:users',
-            'name'                  => 'required', 
-            'phone'                 => 'required', 
-            'password'              => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required' 
-        ];
-
-        $validator = Validator::make($data, $rules, ['unique' => 'Пользователь уже Существует.']); 
-        $validator->setAttributeNames([
-            'password'         => 'Пароль',
-            'repeat_password'  => 'Повторите пароль',   
-            'phone'            => 'Телефон',
-            'name'             => 'Имя'
-        ]); 
-        if ($validator->fails()) 
+        $input             = $request->all();
+        $fastRegisterClass = new \App\Utils\Users\FastRegistration; 
+        $fastRegisterClass->setUserType($input['user_type']);
+        $fastRegisterClass->setRequestData($input); 
+        if ($fastRegisterClass->validationData($input) !== true) 
         {
-            return \App\Utils\JsonResponse::error(['messages' => $validator->errors()->toArray()]); 
-        }
-        
-        $confirm_hash = md5(microtime()); 
-        $id_user = User::create([ 
-            'name'         => $data['name'], 
-            'user_type'    => $userType,
-            'phone'        => $data['phone'],
-            'email'        => $data['email'],    
-            'confirm_hash' => $confirm_hash, 
-            'password'     => bcrypt($data['password']),
-        ])->id; 
-
-        if ($userType == 3) 
-        {
-            \App\Models\UsersUniversity::insert([
-                'id_user'   => $id_user, 
-                'full_name' => $data['name'],
-                
-            ]); 
-
-            User::where('id', $id_user)->
-            update([ 
-                'name' => '' 
-            ]); 
+            return $fastRegisterClass->getError();
         } 
 
-        $user = User::whereId($id_user)->first(); 
+        $user = $fastRegisterClass->register();
+
         $this->sendConfirmationEmail($user['email'], $user['confirm_hash']); 
         return \App\Utils\JsonResponse::success(['redirect' => route('finish_registration')]);
     }

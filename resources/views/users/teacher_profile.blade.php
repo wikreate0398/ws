@@ -7,24 +7,54 @@
 		<div class="top_lk">
 			<div class="row">
 				<div class="col-lg-3">
-					<img class="img-responsive" src="http://via.placeholder.com/400x400">
-				</div>
+
+					<form class="form-horizontal ajax__submit profile__image_form" method="POST" action="{{ route('update_image') }}">
+		    			{{ csrf_field() }}
+						<div class="profile__img" style="background-image: url(/public/uploads/users/{{ $user->avatar ? $user->avatar : $user->image }}{{'?v=' . time()}});">
+							<div class="actions__upload_photo">
+								<span class="btn-file">
+								    <i class="fa fa-file-image-o" aria-hidden="true"></i>
+								    <input type="file" name="image" onchange="profilePhoto(this)">
+								</span>
+
+								<input type="hidden" name="avatar" id="avatar">
+								<span style="display: none;" 
+								        onclick="$('.cropper__section, #overlay').fadeIn(150); " 
+								        class="edit__profile__photo-icon">
+								        	<i style="position: relative; top: 1px;left: 1px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+								</span> 
+
+							</div>
+						</div>
+						<div id="error-respond"></div>
+						 
+						 
+					</form> 
+				</div> 
 				<div class="col-lg-9">
 					<span class="teacher_type">ПРЕПОДАВАТЕЛЬ</span>
-					<h1>Гапонова Маргарита Поликарповна</h1>
+					<h1>
+						@php
+							$nameExplode = explode(' ', $user['name']);
+							echo $nameExplode[0] . '<br>'; unset($nameExplode[0]);
+							echo implode(' ', $nameExplode);
+						@endphp
+					</h1>
 					<div class="teacher_employment">
 						<label class="checkbox-inline checbox-switch switch-light">
-							<input type="checkbox" name="" />
+							<input type="checkbox" name="" {{ ($user->is_available==1) ? 'checked' : '' }} onchange="teacherStatus(this)">
 							Свободен
 							<span></span>
 							Занят
 						</label>
 					</div>
-					<div class="data_coverage">
-						<button class="btn edit_profile">Публиковать профиль</button>
-						<span>Для того, чтобы Вы появились в разделе репетиторов, </br>
-						вам нужно подробно заполнить свой профиль</span>
-					</div>
+					@if(Auth::user()->data_filled == 0)  
+						<div class="data_coverage">
+							<a href="{{ route('user_edit') }}" class="btn edit_profile">Публиковать профиль</a>
+							<span>Для того, чтобы Вы появились в разделе репетиторов, </br>
+							вам нужно подробно заполнить свой профиль</span>
+						</div>
+					@endif
 				</div>
 			</div>
 		</div>
@@ -32,20 +62,22 @@
 			<div class="col-lg-12">
 				@if(Auth::user()->data_filled == 1)
                 <ul class="nav lk_menu">
-                    <li class="{{ isActive(route('user_profile')) ? 'active' : '' }}">
-						<a href="{{ route('user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
+                    @if(Auth::user()->data_filled == 1)
+			      	<li class="{{ isActive(route('user_profile')) ? 'active' : '' }}">
+			      		<a href="{{ route('user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
+			      	</li>
+					<li class="{{ isActive(route('user_diplomas')) ? 'active' : '' }}">
+						<a href="{{ route('user_diplomas') }}">МОИ ДИПЛОМЫ</a>
 					</li>
-                    <li>
-						<a href="">МОИ ЗАЯВКИ</a>
-                    </li>
-                    <li>
-						<a href="">ПОДПИСКИ</a>
+					<li class="{{ isActive(route('user_subscriptions')) ? 'active' : '' }}">
+						<a href="{{ route('user_subscriptions') }}">ПОДПИСКИ</a>
 					</li>
-                    <li>
-						<a href="">УЧЕБНЫЕ ЗАВЕДЕНИЯ</a>
+					<li class="{{ isActive(route('user_reviews')) ? 'active' : '' }}">
+						<a href="{{ route('user_reviews') }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
 					</li>
-                    <li>
-						<a href="">ОТЗЫВЫ И КОММЕНТАРИИ</a>
+					@endif
+					<li class="{{ isActive(route('user_edit')) ? 'active' : '' }}">
+						<a href="{{ route('user_edit') }}">ЛИЧНЫЕ ДАННЫЕ</a>
 					</li>
                 </ul>
 				@endif
@@ -53,7 +85,8 @@
 		</div>
 	</div>
 	<!---->
- 
+ 	
+ 	<?php if (false): ?> 
 	<div style="background: rgba(188, 188, 188, 1); padding:30px 0;">
 		<div class="container">
 			<div class="row">
@@ -116,6 +149,7 @@
 	    </ul>
 	  </div>
 	</nav>
+	<?php endif ?>
 
 	<div class="container"> 
 		<div class="row">

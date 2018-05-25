@@ -204,7 +204,7 @@ jQuery(document).ready(function($) {
                     // }, 1000);
   
                 } else {    
-                    if (jsonResponse.redirect != '') {   
+                    if (jsonResponse.redirect !== undefined) {   
                         window.location = jsonResponse.redirect;
                          
                     }
@@ -643,9 +643,18 @@ function getRoundedCanvas(sourceCanvas) {
 
 function profilePhoto(fileName){
 
+    file = fileName.files[0];
+
     var reader = new FileReader(); 
 
     reader.readAsDataURL(fileName.files[0]);
+
+    var fileSize = parseInt(file["size"]) / 1000; 
+
+    if (fileSize > 2048) {
+        alert('Максимальный размер изображения 2МБ');
+        return;
+    }
 
     reader.onload = function (e) {
 
@@ -664,7 +673,7 @@ function profilePhoto(fileName){
         var croppable = false;
         var cropper = new Cropper(image, { 
           aspectRatio: 1,
-          viewMode: 1,
+          viewMode: 3,
           ready: function () { 
             croppable = true;
           }
@@ -679,18 +688,20 @@ function profilePhoto(fileName){
           if (!croppable) {
             return;
           }
+ 
+          cropper = cropper.getCroppedCanvas().toDataURL();
 
-          // Crop
-          croppedCanvas = cropper.getCroppedCanvas();
+          // // Crop
+          // croppedCanvas = cropper.getCroppedCanvas();
 
-          // Round
-          roundedCanvas = getRoundedCanvas(croppedCanvas);
+          // // Round
+          // roundedCanvas = getRoundedCanvas(croppedCanvas);
 
-          // Show
-          roundedImage     = document.createElement('img');
-          roundedImage.src = roundedCanvas.toDataURL();
-          $('input#avatar').val(roundedImage.src);
-          $('.profile__img').css('background-image', 'url('+roundedImage.src+')'); 
+          // // Show
+          // roundedImage     = document.createElement('img');
+          // roundedImage.src = roundedCanvas.toDataURL();
+          $('input#avatar').val(cropper);
+          $('.profile__img').css('background-image', 'url('+cropper+')'); 
           $('.save__cropped_image').show();
           $('form.profile__image_form').submit();
         };

@@ -74,6 +74,108 @@
 </div>
  
 <body class="page-header-fixed page-quick-sidebar-over-content">
+
+   <div class="modal fade bs-modal-lg" id="large" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+               <h4 class="modal-title">Быстрая регистрация</h4>
+            </div>
+            <div class="modal-body">
+               <form action="/admin/ajax/fastRegister" class="form-horizontal ajax__submit"> 
+            {{ csrf_field() }} 
+
+            <div class="row" style="padding-top:20px;">
+
+               <div class="col-md-12">
+                  <div class="form-group">
+                     <label class="control-label col-md-12">Тип</label>
+                     <div class="col-md-12 radio-list">
+                        <label class="radio-inline">
+                        <input type="radio" name="user_type" id="optionsRadios1" value="1" checked> Ученик </label>
+                        <label class="radio-inline">
+                        <input type="radio" name="user_type" id="optionsRadios2" value="2"> Учитель </label>
+                        <label class="radio-inline">
+                        <input type="radio" name="user_type" id="optionsRadios3" value="3"> Учебное Заведение </label>
+                     </div>
+                  </div>
+               </div>
+    
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">ФИО / Название учебного заведения <span class="req">*</span></label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="name" value=""
+                                   required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                        
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">E-mail <span class="req">*</span></label>
+                        <div class="col-md-12">
+                            <input type="email" class="form-control" name="email" value=""
+                                   required>
+                        </div>
+                    </div> 
+
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">Пароль <span class="req">*</span></label>
+                        <div class="col-md-12">
+                            <input type="password" class="form-control" name="password"
+                                   value="" required>
+                        </div>
+                    </div>
+ 
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">Номер телефона <span class="req">*</span>
+
+                        </label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="phone" value=""
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">Подтверждение пароля
+                            <span class="req">*</span>
+                        </label>
+                        <div class="col-md-12">
+                            <input type="password" class="form-control"
+                                   name="password_confirmation" value="" required>
+                        </div>
+                    </div>
+                    
+                </div>
+                 
+            </div>
+            <div class="form-group">
+                <div class="col-md-12" id="error-respond"></div>
+                <div class="col-md-6 ">
+                    <button type="submit" class="btn btn-primary">
+                        Создать
+                    </button>
+                </div>
+            </div>
+        </form>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn default" data-dismiss="modal">Закрыть</button>
+            </div>
+         </div>
+         <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+   </div>
+
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
    <!-- BEGIN HEADER INNER -->
@@ -92,6 +194,75 @@
       <!-- BEGIN TOP NAVIGATION MENU -->
       <div class="top-menu"> 
          <ul class="nav navbar-nav pull-right"> 
+              
+            
+            
+            @if(false)
+
+             @php
+               $countNewUsers = DB::table('users')->where('new', '1')->count();
+            @endphp
+            
+            <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+               <i class="fa fa-users" aria-hidden="true"></i>
+               <span class="badge badge-default">
+               {{ DB::table('users')->where('new', '1')->count() }} </span>
+               </a>
+               <ul class="dropdown-menu">
+                  @php
+                     $users =  DB::table('users')->where('new', '1')->where('user_type', '1')->count();
+                  @endphp 
+                  <li>
+                      <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                  @if($users > 0) 
+                     <li>
+                        <a href="javascript:;">
+                        <span class="time">{{ $users }}</span>
+                        <span class="details"> 
+                           Зарегистрированные ученики </span>
+                        </a>
+                     </li>   
+                  @endif
+
+                  @php
+                     $users = DB::table('users')->where('new', '1')->where('user_type', '2')->count();
+                  @endphp 
+                  @if($users > 0) 
+                     <li>
+                        <a href="javascript:;">
+                        <span class="time">{{ $users }}</span>
+                        <span class="details"> 
+                           Зарегистрированные учителя </span>
+                        </a>
+                     </li>  
+                  @endif
+
+                  @php
+                     $users = DB::table('users')->where('new', '1')->where('user_type', '3')->count();
+                  @endphp 
+                  @if($users > 0) 
+                     <li>
+                        <a href="javascript:;">
+                        <span class="time">{{ $users }}</span>
+                        <span class="details"> 
+                           Зарегистрированные учебные заведения </span>
+                        </a>
+                     </li>  
+                  @endif
+                   </ul>
+                  </li>
+               </ul>
+            </li>
+            @endif
+
+            <li> 
+               <a data-toggle="modal" href="#large" class="fast__order">
+                  <i class="fa fa-fighter-jet" aria-hidden="true"></i>
+                  Быстрая регистрация
+               </a>  
+            </li>
+
             <li class="dropdown dropdown-user">
                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                 

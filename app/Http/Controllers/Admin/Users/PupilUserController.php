@@ -46,8 +46,7 @@ class PupilUserController extends Controller
     public function showAddForm()
     {
         return view('admin.'.$this->folder.'.add', [
-            'method' => $this->method,
-            'cities' => Cities::orderBy('name', 'asc')->get(), 
+            'method' => $this->method, 
         ]);
     }
 

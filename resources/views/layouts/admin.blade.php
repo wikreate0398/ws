@@ -95,7 +95,7 @@
                         <label class="radio-inline">
                         <input type="radio" name="user_type" id="optionsRadios1" value="1" checked> Ученик </label>
                         <label class="radio-inline">
-                        <input type="radio" name="user_type" id="optionsRadios2" value="2"> Учитель </label>
+                        <input type="radio" name="user_type" id="optionsRadios2" value="2"> Преподаватели </label>
                         <label class="radio-inline">
                         <input type="radio" name="user_type" id="optionsRadios3" value="3"> Учебное Заведение </label>
                      </div>

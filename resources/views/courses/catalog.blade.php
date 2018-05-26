@@ -19,7 +19,7 @@
             <h1 class="title_page">ВСЕ КУРСЫ</h1>
         </div>
         <div class="col-lg-6 col-lg-offset-3">
-			<form class="no_home" id="search_form" action="{{ $baseUrl }}" method="Get" data-url-autocomplete="/courses/autocomplete" >
+			<form class="no_home courses__search_form" id="search_form" action="{{ $baseUrl }}" method="Get" data-url-autocomplete="/courses/autocomplete" >
 					<div class="input-group">
 						<input name="q" 
 							   autocomplete="off" 

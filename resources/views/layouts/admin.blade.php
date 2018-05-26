@@ -194,58 +194,73 @@
       <!-- BEGIN TOP NAVIGATION MENU -->
       <div class="top-menu"> 
          <ul class="nav navbar-nav pull-right"> 
-               
-            
-            @if(false)
 
-             @php
-               $countNewUsers = DB::table('users')->where('new', '1')->count();
+            @php
+              $date = new Carbon\Carbon;
+              $date->subDays(7); 
+              $countNewUsers = DB::table('users')->where('created_at', '>', $date->toDateTimeString())->count(); 
             @endphp
 
+            @if($countNewUsers > 0)  
             <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                <i class="fa fa-users" aria-hidden="true"></i>
                <span class="badge badge-default">
-               {{ DB::table('users')->where('new', '1')->count() }} </span>
+               {{ $countNewUsers }} </span>
                </a>
                <ul class="dropdown-menu">
+
+                <li class="external">
+                  <h3> За последние 7 дней на сайте зарегистрировались <span class="bold"> {{ $countNewUsers }} новых пользователей</span></h3>
+                </li>
+
                   @php
-                     $users =  DB::table('users')->where('new', '1')->where('user_type', '1')->count();
+                    $users =  DB::table('users')->where('created_at', '>', $date->toDateTimeString())->where('user_type', '1')->count();
                   @endphp 
                   <li>
                       <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
                   @if($users > 0) 
                      <li>
-                        <a href="javascript:;">
+                        <a href="javascript:;" style="cursor: default;">
                         <span class="time">{{ $users }}</span>
                         <span class="details"> 
-                           Зарегистрированные ученики </span>
+                          <span class="label label-sm label-icon label-success">
+                            <i class="fa fa-plus"></i>
+                          </span>
+                          Новые ученики 
+                        </span>
                         </a>
                      </li>   
                   @endif
 
                   @php
-                     $users = DB::table('users')->where('new', '1')->where('user_type', '2')->count();
+                     $users = DB::table('users')->where('created_at', '>', $date->toDateTimeString())->where('user_type', '2')->count();
                   @endphp 
                   @if($users > 0) 
                      <li>
-                        <a href="javascript:;">
+                        <a href="javascript:;" style="cursor: default;">
                         <span class="time">{{ $users }}</span>
-                        <span class="details"> 
-                           Зарегистрированные учителя </span>
+                        <span class="details">
+                        <span class="label label-sm label-icon label-success">
+                            <i class="fa fa-plus"></i>
+                          </span> 
+                          Новые учителя </span>
                         </a>
                      </li>  
                   @endif
 
                   @php
-                     $users = DB::table('users')->where('new', '1')->where('user_type', '3')->count();
+                     $users = DB::table('users')->where('created_at', '>', $date->toDateTimeString())->where('user_type', '3')->count();
                   @endphp 
                   @if($users > 0) 
                      <li>
-                        <a href="javascript:;">
+                        <a href="javascript:;" style="cursor: default;">
                         <span class="time">{{ $users }}</span>
                         <span class="details"> 
-                           Зарегистрированные учебные заведения </span>
+                          <span class="label label-sm label-icon label-success">
+                            <i class="fa fa-plus"></i>
+                          </span>
+                          Новые учебные заведения </span>
                         </a>
                      </li>  
                   @endif

@@ -17,7 +17,7 @@
                 <h1 class="title_page">ВСЕ ПРЕПОДАВАТЕЛИ</h1>
             </div>
             <div class="col-lg-6 col-lg-offset-3">
-				<form class="no_home" id="search_form" action="/teachers" method="Get" data-url-autocomplete="/teachers/autocomplete" >
+				<form class="no_home teacher__search_form" id="search_form" action="/teachers" method="Get" data-url-autocomplete="/teachers/autocomplete" >
 						<div class="input-group">
 							<input name="q" 
 								   autocomplete="off" 

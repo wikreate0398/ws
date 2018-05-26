@@ -5,8 +5,8 @@
 	<div class="row">
 		<div class="col-lg-10 col-lg-offset-1">
 			<ul class="breadcrumb">
-			  <li><a href="#">Главная</a></li>
-			  <li><a href="#">Каталог преподавателей</a></li>
+			  <li><a href="/">Главная</a></li>
+			  <li><a href="/teachers">Каталог преподавателей</a></li>
 			  <li class="active">Гапонова Маргариа Поликарповна</li>
 			</ul>
 		</div>

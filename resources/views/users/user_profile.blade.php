@@ -14,16 +14,9 @@
 						<div id="error-respond"></div>
 						<span class="btn btn-default btn-sm btn-file">
 						    Выбрать <input type="file" name="image" onchange="profilePhoto(this)">
-						</span>
-						<!-- <button type="submit" class="btn primary btn-sm">Сохранить</button>   -->
+						</span> 
 
-						<input type="hidden" name="avatar" id="avatar">
-						<button type="button" 
-						        style="display: none;" 
-						        onclick="$('.cropper__section, #overlay').fadeIn(150); " 
-						        class="btn primary btn-sm edit__profile__photo-icon">
-						        	<i style="position: relative; top: 1px;left: 1px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-						</button>
+						<input type="hidden" name="avatar" id="avatar"> 
 					</form>
 				</div>
 

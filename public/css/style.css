@@ -190,11 +190,12 @@ span.req{
     background-color: #b93777; 
     display: inline-block;
     color: #fff;
-    margin-right: 10px;
+   /* margin-right: 10px;*/
     width: 35px;
     height: 35px;
     text-align: center;
     line-height: 35px;
+    cursor: pointer;
 }
 
 .edit__profile__photo-icon{

@@ -18,11 +18,11 @@
 								</span>
 
 								<input type="hidden" name="avatar" id="avatar">
-								<span style="display: none;" 
+								<!-- <span style="display: none;" 
 								        onclick="$('.cropper__section, #overlay').fadeIn(150); " 
 								        class="edit__profile__photo-icon">
 								        	<i style="position: relative; top: 1px;left: 1px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-								</span> 
+								</span>  -->
 
 							</div>
 						</div>

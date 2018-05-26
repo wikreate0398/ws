@@ -643,24 +643,24 @@ function getRoundedCanvas(sourceCanvas) {
 
 function profilePhoto(fileName){
 
-    file = fileName.files[0];
+    var file = fileName.files[0];
 
     var reader = new FileReader(); 
 
-    reader.readAsDataURL(fileName.files[0]);
+    reader.readAsDataURL(file);
 
     var fileSize = parseInt(file["size"]) / 1000; 
 
     if (fileSize > 2048) {
         alert('Максимальный размер изображения 2МБ');
         return;
-    }
+    } 
 
     reader.onload = function (e) {
 
         $('.cropper__section, #overlay').fadeIn(150); 
 
-        $('.edit__profile__photo-icon').show();
+        // $('.edit__profile__photo-icon').show();
         $('.cropper__image_content').html('<img src="" id="image__crop">');
         var image = $('img#image__crop');
 
@@ -673,7 +673,7 @@ function profilePhoto(fileName){
         var croppable = false;
         var cropper = new Cropper(image, { 
           aspectRatio: 1,
-          viewMode: 3,
+          viewMode: 1,
           ready: function () { 
             croppable = true;
           }
@@ -699,7 +699,7 @@ function profilePhoto(fileName){
 
           // // Show
           // roundedImage     = document.createElement('img');
-          // roundedImage.src = roundedCanvas.toDataURL();
+          // cropper = roundedCanvas.toDataURL();
           $('input#avatar').val(cropper);
           $('.profile__img').css('background-image', 'url('+cropper+')'); 
           $('.save__cropped_image').show();

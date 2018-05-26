@@ -104,7 +104,11 @@
 				  </ul>
 				  @if(Auth::check())
 				  <ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}"></a></li>
+					<li>
+                        <a href="{{ route('user_profile') }}">
+                            <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
+                        </a>
+                    </li>
 					<li><a href="#"><img src="/images/icon_bookmark.png"></a></li>
 					<li class="dropdown">
 					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

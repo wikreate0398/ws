@@ -488,6 +488,7 @@ header .header_bottom .navbar-default .nav .open > a, header .header_bottom .nav
 }
 header .header_bottom .navbar-default .dropdown-menu {
 	background-color: #4a464c;
+    top: 45px;
 }
 header .header_bottom .navbar-default .dropdown-menu li a {
     font-size: 18px;

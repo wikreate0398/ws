@@ -207,7 +207,7 @@
 			<div class="row">
 				<div class="col-lg-3 col-md-3">
 					<div class="footer_logo">
-						<img class="img-responsive" src="images/footer_logo.png" alt="">
+						<img class="img-responsive" src="/images/footer_logo.png" alt="">
 					</div>
 					<ul class="list-inline nav-justified social_menu">
 						<li>

@@ -196,38 +196,20 @@ jQuery(document).ready(function($) {
                         }); 
                     }else{
                         message += '<p>' + jsonResponse.messages + '</p>'; 
-                    }
-
-                    $(form).find('#error-respond').fadeIn().html(message);
-                    // setTimeout(function() {
-                    //     $(form).find('#form-respond').fadeOut(700);
-                    // }, 1000);
-  
+                    } 
+                    $(form).find('#error-respond').fadeIn().html(message);  
                 } else {    
                     if (jsonResponse.redirect !== undefined) {   
-                        window.location = jsonResponse.redirect;
-                         
+                        window.location = jsonResponse.redirect; 
                     }
 
                     if (jsonResponse.reload == true) { 
                         window.location.reload(true);
-                    } 
-                     
-                    // $(form).find('#error-respond').hide();
-  
-                    // setTimeout(function() {
-                    //     showSuccessMsg();
-                    //     $('.success').find('h2').html(res.msg);
-                    // }, 300);
-
-                    // setTimeout(function() {
-                    //     $('.success').fadeOut(300);
-                    // }, 4000); 
-                    // $(form)[0].reset(); 
+                    }  
                 } 
             },
             complete: function() {
-                $(button).attr('disabled', false);
+                $(button).attr('disabled', false); 
                 $(button).css({
                     'padding-left': '0',
                     'padding-right': '0'
@@ -253,7 +235,9 @@ jQuery(document).ready(function($) {
             '<div></div>' +
             '<div></div>' +
             '</div>';
+
         $(button).html(loader);
+        $(button).attr('disabled', true); 
         $(button).width(button_width);
         $(button).height(button_height);
 

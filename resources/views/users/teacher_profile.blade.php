@@ -54,6 +54,10 @@
 							<span>Для того, чтобы Вы появились в разделе репетиторов, </br>
 							вам нужно подробно заполнить свой профиль</span>
 						</div>
+					@else
+						<div class="data_coverage">
+							<a href="{{ route('user_edit') }}" class="btn edit_profile">Личные данные</a>
+						</div>
 					@endif
 				</div>
 			</div>
@@ -76,9 +80,6 @@
 						<a href="{{ route('user_reviews') }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
 					</li>
 					@endif
-					<li class="{{ isActive(route('user_edit')) ? 'active' : '' }}">
-						<a href="{{ route('user_edit') }}">ЛИЧНЫЕ ДАННЫЕ</a>
-					</li>
                 </ul>
 				@endif
 			</div>

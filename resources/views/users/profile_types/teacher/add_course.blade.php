@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" role="tablist">
+<ul class="nav add_course" role="tablist">
     <li role="presentation" class="active">
     	<a href="#about" aria-controls="about" role="tab" data-toggle="tab">О курсе</a>
     </li>
@@ -8,8 +8,155 @@
     <li role="presentation">
     	<a href="#programm" aria-controls="programm" role="tab" data-toggle="tab">Программа курса</a>
     </li> 
+    <li role="presentation">
+    	<a href="#participants" aria-controls="participants" role="tab" data-toggle="tab">Участники курса</a>
+    </li> 
+    <li role="presentation">
+    	<a href="#certificate" aria-controls="certificate" role="tab" data-toggle="tab">Сертификат/диплом</a>
+    </li> 
 </ul>
-
+<div class="col-lg-8 col-lg-offset-2">
+	<div class="tab-content course_form">
+		<div role="tabpanel" class="tab-pane active" id="about">
+			<div class="col-md-12">
+				<h3 class="header_blok_course">Общая информация о курсе</h3>
+			</div>
+			<label class="col-md-5 control-label">НАЗВАНИЕ КУРСА <span class="req">*</span></label>
+			<div class="col-md-7">
+				<div class="form-group">
+					<input class="form-control" value="" name="" required type="text">
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<label class="col-md-5 control-label">КРАТКОЕ ОПИСАНИЕ КУРСА <span class="req">*</span>
+			<p>Опишите кратко Ваш курс</p>
+			</label>
+			<div class="col-md-7">
+				<div class="form-group">
+					<textarea class="form-control" maxlength="1200" name="" required></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<label class="col-md-5 control-label">ПОДРОБНОЕ ОПИСАНИЕ КУРСА <span class="req">*</span>
+			<p>Опишите подробно Ваш курс, для кого он предназначен, какие навыки развивает, какой уровень образования нужен, для прохождения курса?</p>
+			</label>
+			<div class="col-md-7">
+				<div class="form-group">
+					<textarea class="form-control" maxlength="1200" name="" required></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<label class="col-md-5 control-label">КУРАТОР КУРСА <span class="req">*</span>
+			<p>Если вы представитель ВУЗа, то здесь будет отображаться список созданных преподавателей</p>
+			</label>
+			<div class="col-md-7">
+				<div class="form-group">
+					<textarea class="form-control" maxlength="1200" name="" required></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<label class="col-md-5 control-label">КАТЕГОРИЯ И ПОДКАТЕГОРИЯ <span class="req">*</span>
+			<p>Укажите одну или несколько категорий, которые максимально охватывают вашу целевую аудиторию курса</p>
+			</label>
+			<div class="col-md-7">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group select_form">
+							<select class="form-control">
+							  <option>Категория</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group select_form">
+							<select class="form-control">
+							  <option>Подкатегория</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="col-md-12">
+				<h3 class="header_blok_course">Цена и скидки</h3>
+			</div>
+			<div class="col-md-5 form-group">
+				<div class="radio">
+				  <label>
+					<input type="radio" name="" id="" value=""> Бесплатный курс
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+					<input type="radio" name="" id="" value=""> Платный курс
+				  </label>
+				</div>
+			</div>
+			</label>
+			<div class="col-md-7">
+				<div class="form-group">
+					<input class="form-control" value="" name="" required type="text">
+				</div>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="settings">
+			<div class="col-md-12">
+				<h3 class="header_blok_course">Настройки курса</h3>
+			</div>
+			<label class="col-md-5 control-label">ЗАПИСЬ НА КУРС ОТКРЫТА ДО <span class="req">*</span>
+			</label>
+			<div class="col-md-7">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<input class="form-control" value="" name="" required type="text">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<button class="btn turn_on">Включить запись</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="col-md-12">
+				<h3 class="header_blok_course">Доступность на сайте</h3>
+			</div>
+			<div class="col-md-12 form-group">
+				<div class="radio">
+				  <label>
+					<input type="radio" name="" id="" value=""> Всем желающим
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+					<input type="radio" name="" id="" value=""> Только для зарегистрированных пользователей
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+					<input type="radio" name="" id="" value=""> Скрыть курс по окончанию набора
+				  </label>
+				</div>
+			</div>
+		
+		</div>
+		<div role="tabpanel" class="tab-pane" id="programm">
+		
+		</div>
+		<div role="tabpanel" class="tab-pane" id="participants">
+			<div class="col-md-12">
+				<h3 class="header_blok_course">Данная страница на стадии разработки</h3>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="certificate">
+			<div class="col-md-12">
+				<h3 class="header_blok_course">Данная страница на стадии разработки</h3>
+			</div>
+		</div>
+	</div>
+</div>
 <form class="form-horizontal ajax__submit" method="POST" action="{{ route('save_course') }}">
 	 {{ csrf_field() }}
 <div class="tab-content">

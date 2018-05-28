@@ -199,13 +199,13 @@ jQuery(document).ready(function($) {
                     } 
                     $(form).find('#error-respond').fadeIn().html(message);  
                 } else {    
-                    if (jsonResponse.redirect !== undefined) {   
-                        window.location = jsonResponse.redirect; 
-                    }
+                    // if (jsonResponse.redirect !== undefined) {   
+                    //     window.location = jsonResponse.redirect; 
+                    // }
 
-                    if (jsonResponse.reload == true) { 
-                        window.location.reload(true);
-                    }  
+                    // if (jsonResponse.reload == true) { 
+                    //     window.location.reload(true);
+                    // }  
                 } 
             },
             complete: function() {

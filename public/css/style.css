@@ -107,10 +107,23 @@ span.req{
 
 #error-respond{ 
   display: none;
-  text-transform: capitalize !important;  
-  line-height: 20px;
-  color: #cb0710;
-  font-size: 14px; 
+  /*text-transform: capitalize !important;  */
+  line-height: 20px;  
+  top:50px;
+  right:50px;
+  font-size:14px;
+  position:fixed;
+  background:#ea4646;
+  z-index:9999999999;
+  color:#fff;
+  padding:5px 15px;
+  border-radius:20px;
+  -webkit-box-shadow:0px 2px 2px rgba(0,0,0,.1);
+  box-shadow:0px 2px 2px rgba(0,0,0,.1); 
+}
+
+#error-respond p{
+    margin: 0;
 }
 
 .error__input{

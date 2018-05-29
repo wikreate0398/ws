@@ -58,14 +58,15 @@ function teacherFilter(){
 
     var specializations = '';
     if ($('input.specialization_input').length > 0) {
-    pluser='';  
+
+        pluser='';  
         $.each($('input.specialization_input'),function() {
-            if ($(this).is(':checked')) {
+            if ($(this).is(':checked')) { 
                 specializations+=pluser+$(this).val();
                 pluser=',';
             }
-        });
-    }
+        }); 
+    } 
 
     var subjects = '';
     if ($('input.teacher_subjects').length > 0) {
@@ -111,7 +112,7 @@ function teacherFilter(){
     if(page) flt+='&page=1';
 
     olink='/teachers';  
-    var redirect=olink+flt;  
+    var redirect=olink+flt;    
     window.location=redirect;
 }
 

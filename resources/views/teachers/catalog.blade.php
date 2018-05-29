@@ -297,8 +297,8 @@
                         @foreach($specializations as $specialization) 
                             <div class="checkbox">
 								<label>
-									<input value="{{ $specialization->id_specialization }}" 
-									       class="specialization_input"
+									<input value="{{ $specialization->id }}" 
+									       class="specialization_input" 
                                            {{ in_array($specialization->id, $specializationsArray) ? 'checked' : '' }}
                                            type="checkbox">
 									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
@@ -332,8 +332,8 @@
 	                    @foreach($lesson_filter_options as $lesson_option)  
 	                        <div class="checkbox">
 								<label>
-									<input value="{{ $lesson_option->id_lesson_option }}" 
-	                                       class="lesson_option_input"
+									<input value="{{ $lesson_option->id }}" 
+	                                       class="lesson_option_input" 
 	                                       {{ in_array($lesson_option->id, $lessonOptionsArray) ? 'checked' : '' }} 
 	                                       type="checkbox">
 									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>  

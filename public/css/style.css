@@ -1171,6 +1171,13 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	margin-top: 8px;
     text-transform: uppercase;
 }
+.user_form label p{
+	font-family: 'Cuprum Italic';
+    font-size: 13px;
+    color: #a8a8a8;
+    font-weight: 300;
+	text-transform: none;
+}
 .user_form label.checkbox-inline, .user_form label.checkbox-inline + .user_form label.checkbox-inline, .user_form label.radio-inline, .user_form label.radio-inline + .radio-inline {
     margin-top: 8px;
     margin-left: 0px;
@@ -1198,11 +1205,9 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	-ms-appearance:  none;
 	appearance:  none;
 }
-
 .user_form select option{ 
     font-size: 14px; 
 }
-
 .user_form select:focus,
 .user_form select:hover{
 	cursor: pointer;
@@ -1232,6 +1237,31 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
     right: 0px;
     top: 7px;
     font-size: 13px;
+}
+.user_form .list_checkbox{
+	margin-bottom: 0px;
+}
+.user_form .list_checkbox li label{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+    color: #a8a8a8;
+	margin-top: 0px;
+	text-transform: capitalize;
+}
+.user_form .list_checkbox li .checkbox{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.user_form .btn_save{
+	font-family: 'Cuprum Regular';
+	font-size: 16px;
+	color: #fff;
+	background: #b93777;
+	text-transform: uppercase;
+	border-radius: 0px;
+	margin-top: 5px;
+	padding: 6px 20px;
+	float: right;
 }
 /* Добавление курсов */
 .add_course{

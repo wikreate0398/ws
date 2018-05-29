@@ -1,3 +1,311 @@
+<div class="row">
+	<div class="col-lg-10 col-lg-offset-1">
+		<ul class="breadcrumb">
+		  <li><a href="/">Главная</a></li>
+		  <li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
+		  <li class="active">Редактировать информацию</li>
+		</ul>
+		<h1 class="title_page">РЕДАКТИРОВАТЬ ПРОФИЛЬ</h1>
+		<p class="title_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.</p>
+	</div>
+	<div class="col-lg-12">
+		<ul class="nav nav-tabs user_edit">
+			<li class="active">
+				<a data-toggle="tab" href="#profile">Профиль ВУЗА</a>
+			</li>
+			<li>
+				<a data-toggle="tab" href="#information">Общая информация</a>
+			</li>
+			<li>
+				<a data-toggle="tab" href="#certificate"> Сертификат/Диплом </a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-lg-8 col-lg-offset-2">
+		<div class="tab-content user_form">
+			<div id="profile" class="tab-pane fade in active">
+				<div class="col-md-12">
+					<h3 class="header_blok_user">Общий профиль</h3>
+				</div>
+				<label class="col-md-4 control-label">НАЗВАНИЕ ВУЗА <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<label class="col-md-4 control-label">КОРОТКО  О ВУЗе <span class="req">*</span>
+				<p>Кратко опишите преимущества вашего ВУЗа</p>
+				</label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<textarea class="form-control" maxlength="1200" name="" required></textarea>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<label class="col-md-4 control-label">ДАТА ОСНОВАНИЯ <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<label class="col-md-4 control-label">ГОРОД <span class="req">*</span>
+				<p>Укажите город, в котором распологается основной филиал Вашего ВУЗа</p>
+				</label>
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group select_form">
+								<select class="form-control">
+								  <option>Город</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group select_form">
+								<select class="form-control">
+								  <option>Район города</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">КОНТАКТНЫЕ ДАННЫЕ</h3>
+				</div>
+				<label class="col-md-4 control-label">АДРЕС ВУЗА<span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<label class="col-md-4 control-label">АДРЕС САЙТА<span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<label class="col-md-4 control-label">ТЕЛЕФОН<span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">РЕГИСТРАЦИОННЫЕ ДАННЫЕ</h3>
+				</div>
+				<label class="col-md-4 control-label">E-MAIL<span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<label class="col-md-4 control-label">ПАРОЛЬ<span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<label class="col-md-4 control-label">ПОВТОРИТЕ ПАРОЛЬ<span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+			</div>
+			<div id="information" class="tab-pane fade">
+				<div class="col-md-12">
+					<h3 class="header_blok_user">РЕГИСТРАЦИОННЫЕ ДАННЫЕ</h3>
+				</div>
+				<label class="col-md-4 control-label">ТИП ВУЗА<span class="req">*</span>
+				<p>Укажите, в каком городе вы расположены, и где преподаете</p>
+				</label>
+				<div class="col-md-8">
+					<div class="form-group select_form">
+						<select class="form-control">
+						  <option>Государвственный</option>
+						</select>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ОБУЧЕНИЯ<span class="req">*</span>
+				<p>Укажите, примерную стоимость обучения в год</p>
+				</label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<label class="col-md-4 control-label">КОЛИЧЕСТВО МЕСТ НА БЮДЖЕТНОЙ ОСНОВЕ<span class="req">*</span>
+				</label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">СРЕДНИЙ БАЛ ДЛЯ ПОСТУПЛЕНИЯ</h3>
+				</div>
+				<label class="col-md-4 control-label">БЮДЖЕТНАЯ ОСНОВА<span class="req">*</span>
+				<p>Укажите среднее количество баллов для поступления</p>
+				</label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<label class="col-md-4 control-label">ПЛАТНАЯ ОСНОВА<span class="req">*</span>
+				<p>Укажите среднее количество баллов для поступления</p>
+				</label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" value="" name="" required type="text">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">ВАША СПЕЦИАЛИЗАЦИЯ</h3>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<ul class="list-inline list_checkbox">	
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Информационные технологии
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Юриспруденция
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Экономика и финансы
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Управление персоналом
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Маркетинговые коммуникации
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Медицина
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Туризм и гостеприимство
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Журналистика
+								</label>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<h3 class="header_blok_user">НАЛИЧИЕ ИНФРАСТРУКТУРЫ И ВОЕННОЙ КАФЕДРЫ</h3>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<ul class="list-inline list_checkbox">	
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Военная кафедра
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Общежитие
+								</label>
+								</div>
+							</li>
+							<li>
+								<div class="checkbox">
+								<label>
+									<input value="" type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									Дистанционное обучение
+								</label>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="certificate" class="tab-pane fade">
+				Такой же блок как и на учителе
+			</div>
+			<div class="col-lg-12">
+				<button type="submit" class="btn btn_save">
+					Сохранить
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+
+
 <form class="form-horizontal ajax__submit" method="POST" action="{{ route('update_profile') }}">
     {{ csrf_field() }}
     <input type="hidden" name="user_type" value="3">

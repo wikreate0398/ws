@@ -94,7 +94,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-12" id="error-respond"></div>
+        <div id="error-respond"></div>
         <div class="col-md-6 ">
             <button type="submit" class="btn btn-primary">
                 Сохранить

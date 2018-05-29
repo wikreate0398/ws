@@ -314,7 +314,7 @@
 					 
 			</div>
 
-			<div class="col-md-12" id="error-respond"></div>
+			<div id="error-respond"></div>
 	        <div class="col-md-12 ">
 	            <button type="submit" class="btn btn_save" style="width: auto;">
 	                Сохранить

@@ -1277,6 +1277,17 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	padding: 6px 20px;
 	float: right;
 }
+
+.btn_save:hover{
+    color: #fff;
+    background-color: #a9326c;
+}
+
+.btn_save:focus, .btn_save:active {
+    border: none !important;
+    outline: none !important;
+}
+
 /* Добавление курсов */
 .add_course{
     text-align: center;

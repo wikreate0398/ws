@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+@section('content')  
+<div class="container no__home"> 
 <div class="row">
 	<div class="col-lg-10 col-lg-offset-1">
 		<ul class="breadcrumb">
@@ -144,19 +148,19 @@
 				<label class="col-md-4 control-label">СТАРЫЙ ПАРОЛЬ <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" name="old_password" value="" type="password">
+						<input class="form-control" autocomplete="off" name="old_password" value="" type="password">
 					</div>
 				</div>
 				<label class="col-md-4 control-label">ПАРОЛЬ <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" name="password" value="" type="password">
+						<input class="form-control" autocomplete="off" name="password" value="" type="password">
 					</div>
 				</div>
 				<label class="col-md-4 control-label">ПОВТОРИТЕ ПАРОЛЬ <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" name="password_confirmation" value="" type="password">
+						<input class="form-control" autocomplete="off" name="password_confirmation" value="" type="password">
 					</div>
 				</div>
 			</div>
@@ -309,18 +313,18 @@
 				</div>  
 					 
 			</div>
-		</div> 
-	</div>
-	<div class="col-lg-10 col-lg-offset-2">
-		<div class="form-group">
-	        <div class="col-md-12" id="error-respond"></div>
-	        <div class="col-md-6 ">
-	            <button type="submit" class="btn btn-primary btn-sm" style="width: auto;">
+
+			<div class="col-md-12" id="error-respond"></div>
+	        <div class="col-md-12 ">
+	            <button type="submit" class="btn btn_save" style="width: auto;">
 	                Сохранить
 	            </button>
 	        </div>
-	    </div>
+
+
+		</div> 
 	</div>
+	 
 	</form>
 </div>
 <div class="clearfix"></div>
@@ -371,3 +375,6 @@
     </div>
 </form>
 <?php endif ?>
+</div>
+
+@stop

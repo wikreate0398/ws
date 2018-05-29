@@ -1,3 +1,6 @@
+@extends('layouts.app')
+@section('content')  
+<div class="container no__home"> 
 <div class="row">
 	<div class="col-lg-10 col-lg-offset-1">
 		<ul class="breadcrumb">
@@ -645,3 +648,6 @@
         </div>
     </div>
 </form>
+</div> 
+
+@stop

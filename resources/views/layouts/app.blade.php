@@ -116,7 +116,7 @@
 					  <ul class="dropdown-menu">
 						<li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="{{ route('login') }}">Выйти</a></li>
+						<li><a href="{{ route('logout') }}">Выйти</a></li>
 					  </ul>
 					</li>
 				  </ul>

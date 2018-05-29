@@ -8,13 +8,15 @@ use Illuminate\Http\Request;
 use App\Models\Courses; 
 use App\Models\CourseSections; 
 use App\Models\SectionLectures; 
+use App\Models\CourseCategory;
 
 class Course extends Controller
 {
     private $niceNames = [ 
-        'id_category'   => 'Категория и подкатегория', 
+        'id_category'   => 'Категория', 
         'name'          => 'Название курса',
         'description'   => 'Краткое описание курса',
+        'text'          => 'Подробное описание курса',
         'pay'           => 'Тип (платный/бесплатный)', 
         'is_open_until' => 'Запись курса открыта до',
         'available'     => 'Доступность на сайте',
@@ -48,6 +50,46 @@ class Course extends Controller
      */
     public function __construct() {}
 
+    private function validateSectionsAndLectures($data)
+    {
+        $err = false;
+        foreach ($data['section'] as $section_field_name => $sections) 
+        {
+            foreach ($sections as $section_key => $section_value) 
+            { 
+                if (empty($section_value)) 
+                {
+                    $err = true;
+                } 
+
+                foreach ($data['lecture'] as $lecture_key => $lectures) 
+                { 
+                    if ($lecture_key == $section_key) 
+                    { 
+                        foreach ($lectures as $lecture_field_name => $lecture_values) 
+                        { 
+
+                            foreach ($lecture_values as $lecture_values_key => $lecture_values_value) 
+                            {
+                                if (empty($lecture_values_value)) 
+                                {
+                                    $err = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($err === true) 
+        {
+            return ['section', 'lecture'];
+        }
+
+        return true;
+    }
+
     public function validation(array $data)
     {         
 
@@ -59,31 +101,30 @@ class Course extends Controller
             $this->rules['price'] = 'required';
         }
 
+        $errors = []; 
+        if (CourseCategory::where('parent_id', $data['id_category'])->count() > 0 && empty($data['subcat_id'])) 
+        {
+            $errors['subcat_id'] = ['Укажите <strong>подкатегорию</strong> курса'];
+        }
+
         $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames);  
         if ($validator->fails()) 
         {
-            return $validator->errors()->toArray();
-        } 
-
-        $validateMultiArr = validateArray([
-            '0' => [
-                'array'    => $this->sections, 
-                'excepts'  => [], 
-                'fName'    => 'section', 
-                'required' => true
-            ],
-            // '1' => [
-            //     'array'   => $this->lectures, 
-            //     'excepts' => [], 
-            //     'fName'   => 'lecture'
-            // ] 
-        ]); 
-
-        if ($validateMultiArr['status'] == false) 
-        { 
-            return [$validateMultiArr['field'] => ['Заполните все обязательные поля в разделе <strong>Программа курса</strong>!']]; 
+            $errors = array_merge($errors, $validator->errors()->toArray());
         }
+
+        $validateSectionsAndLectures = $this->validateSectionsAndLectures($data);
+        if ($validateSectionsAndLectures !== true) 
+        { 
+            $errors[] = ['Заполните все обязательные поля в разделе <strong>Программа курса</strong>!'] ;
+            $errors['multifields'] = $validateSectionsAndLectures;
+        }
+        
+        if (!empty($errors)) 
+        {
+            return $errors;
+        } 
 
         if (!in_array($data['pay'], $this->payOptions) or !in_array($data['available'], $this->availableOptions)) 
         {
@@ -110,7 +151,7 @@ class Course extends Controller
     }
 
     public function edit(array $data, $id_course, $id_user)
-    {
+    { 
         Courses::where('id', $id_course)
         ->where('id_user', $id_user)
         ->update([ 

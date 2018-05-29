@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
             this.value = this.value.substring(0, this.maxlength);
         }  
 
-        $("textarea[maxlength]").next('.maxlength__label').find('span').text(this.value.length);
+        $(this).next('.maxlength__label').find('span').text(this.value.length);
     });
 
     $.fn.datepicker.languages['ru'] = {
@@ -191,8 +191,18 @@ jQuery(document).ready(function($) {
                             // })
 
                             $.each(value, function(k,v){
-                                message += '<p>'+v+'</p>';
-                            }); 
+                                if (key != 'multifields') { 
+                                    message += '<p>'+v+'</p>';
+                                }else{
+                                    var inputError = $(form).find('[name*="'+v+'"]');
+                                    $(inputError).filter(function(){
+                                        if ($(this).hasClass('required__input') == true && $(this).val() == '') 
+                                        { 
+                                            return 1;
+                                        }  
+                                    }).addClass("error__input");  
+                                }
+                            });
                         }); 
                     }else{
                         message += '<p>' + jsonResponse.messages + '</p>'; 
@@ -396,7 +406,7 @@ function addLecture(){
     var first_block = $('.course__sections .course__section.first_block').find('.lecture__sections .lecture__section.first_block');
     var cloneBlock = $(first_block).clone();
     $(cloneBlock).removeClass('first_block');
-    $(cloneBlock).removeClass('error__input');
+    $(cloneBlock).find('.error__input').removeClass('error__input');
      
     $(cloneBlock).append('<div class="close__item" onclick="deleteLectureBlock(this);">X</div>');
     $(cloneBlock).find('input').val('');
@@ -451,7 +461,7 @@ function addCourseSection()
     var cloneBlock = $(first_block).clone();
     $(cloneBlock).removeClass('first_block');
     //$(cloneBlock).find('.lecture__sections').find('.first_block').removeClass('first_block');
-    $(cloneBlock).removeClass('error__input');
+    $(cloneBlock).find('.error__input').removeClass('error__input');
      
     $(cloneBlock).append('<div class="close__item" onclick="deleteSectionBlock(this);">X</div>');
     $(cloneBlock).find('input').val('');
@@ -547,8 +557,15 @@ function loadCourseSubcats(select, subcat){
         if ( response == "" ) {
             $('#load__subcats').hide();
             $('#load__subcats').html('');
+
+            $('#course__cats').removeClass('col-md-6').addClass('col-md-12');
+            $('#load__subcats').removeClass('col-md-6').addClass('col-md-12');
         }else{
             $('#load__subcats').show();
+            
+
+            $('#course__cats').removeClass('col-md-12').addClass('col-md-6');
+            $('#load__subcats').removeClass('col-md-12').addClass('col-md-6');
         }
     });
 }

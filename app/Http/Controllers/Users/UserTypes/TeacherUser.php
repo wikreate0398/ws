@@ -52,7 +52,7 @@ class TeacherUser extends Controller implements UserTypesInterface
     public function showEditForm()
     {
         $user = Auth::user(); 
-        return view('users.teacher_profile', [ 
+        return view($this->viewPath . 'edit', [ 
             'regions'                 => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
             'grade_education'         => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
             'programs_type'           => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()), 
@@ -65,7 +65,8 @@ class TeacherUser extends Controller implements UserTypesInterface
             'teacher_specializations' => TeacherSpecializations::where('id_teacher', $user->id)->get(),  
             'teacher_lesson_options'  => TeacherLessonOptions::where('id_teacher', $user->id)->get(),
              
-            'include'                 => $this->viewPath . 'edit',
+            //'include'                 => $this->viewPath . 'edit',
+
             // 'scripts'                 => [
             //     'js/tinymce/tinymce.min.js'
             // ]
@@ -99,9 +100,8 @@ class TeacherUser extends Controller implements UserTypesInterface
             return $checkIfDataNoFilled;
         }
 
-        return view('users.teacher_profile', [ 
-            'user'               => Auth::user(), 
-            'include'            => $this->viewPath . 'subscriptions',
+        return view($this->viewPath . 'subscriptions', [ 
+            'user'               => Auth::user(),  
         ]); 
     }
 

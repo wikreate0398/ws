@@ -225,12 +225,13 @@ span.req{
     margin-right: auto;
     padding-top: 50%;
     padding-bottom: 50%;
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     /*border-radius: 50%;*/
     margin-bottom: 20px;
     background-color: #fff;
+    background-color: #ededed; 
 }
 footer{
     background-color: rgba(248,248,248,0.7);
@@ -1252,7 +1253,7 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
-.user_form .btn_save{
+.user_form .btn_save, .btn_save{
 	font-family: 'Cuprum Regular';
 	font-size: 16px;
 	color: #fff;
@@ -1339,6 +1340,11 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	border: 1px solid #c1c1c1;
     border-radius: 0px;
 }
+
+.course_form textarea.form-control{
+    max-width: 100%;
+}
+
 .course_form select{
 	
 	position: relative;

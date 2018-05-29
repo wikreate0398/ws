@@ -33,8 +33,28 @@ class UniversityUser extends Controller implements UserTypesInterface
 
 	function __construct() {} 
 
+    private function redirectIfDataNoFilled()
+    {
+        if (Auth::user()->user_type == 3 && Auth::user()->data_filled == 0) 
+        {
+            if (request()->ajax()) {
+                return response()->json(['error' => 'page not available'], 404);
+            }  
+            return redirect()->route('user_edit');
+        }
+
+        return true;
+    }
+
     public function showCourse()
     {
+
+        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
+        if ($checkIfDataNoFilled !== true) 
+        {
+            return $checkIfDataNoFilled;
+        } 
+
         $user    = Auth::user();
         $courses = Courses::with('sections')->where('id_user', $user->id)->get();
 
@@ -47,6 +67,13 @@ class UniversityUser extends Controller implements UserTypesInterface
 
     public function showCourseForm()
     {
+
+        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
+        if ($checkIfDataNoFilled !== true) 
+        {
+            return $checkIfDataNoFilled;
+        } 
+        
         return view('users.university_profile', [ 
             'user'       => Auth::user(), 
             'include'    => 'users.profile_types.teacher.add_course',
@@ -79,13 +106,12 @@ class UniversityUser extends Controller implements UserTypesInterface
             'user'               => User::with('university')->where('id', $id)->first(), 
             'inst_type'          => InstitutionTypes::orderBy('page_up','asc')->get(),
             'university'         => University::orderBy('page_up','asc')->get(),
-            'univ_form_attitude' => UniversityFormAttitude::orderBy('page_up','asc')->get(),
-            'include'            => $this->viewPath . 'edit',
+            'univ_form_attitude' => UniversityFormAttitude::orderBy('page_up','asc')->get() 
         ];
 
         $data['userUniversity'] = $data['user']['university'];
 
          //exit(print_arr($data['user']));
-        return view('users.university_profile', $data); 
+        return view($this->viewPath . 'edit', $data); 
     } 
 }

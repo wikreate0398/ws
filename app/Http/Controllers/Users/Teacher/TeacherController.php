@@ -45,7 +45,7 @@ class TeacherController extends ProfileController
             if (request()->ajax()) {
                 return response()->json(['error' => 'page not available'], 404);
             }  
-            return redirect()->route('user_edit');
+            return redirect()->route(userRoute('user_edit'));
         }
 
         return true;

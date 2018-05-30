@@ -6,7 +6,7 @@
          <div class="col-lg-10 col-lg-offset-1">
             <ul class="breadcrumb">
                <li><a href="/">Главная</a></li>
-               <li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
+               <li><a href="{{ route(userRoute('user_profile')) }}">Личный кабинет</a></li>
                <li class="active">Добавить курс</li>
             </ul>
             <h1 class="title_page">ДОБАВИТЬ КУРС</h1>
@@ -31,7 +31,7 @@
                <a href="#certificate" aria-controls="certificate" role="tab" data-toggle="tab">Сертификат/диплом</a>
             </li>
          </ul>
-         <form class="ajax__submit" method="POST" action="{{ route('save_course') }}">
+         <form class="ajax__submit" method="POST" action="{{ route(userRoute('save_course')) }}">
             {{ csrf_field() }}
             <div class="col-lg-8 col-lg-offset-2">
                <div class="tab-content course_form">

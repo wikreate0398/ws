@@ -22,7 +22,7 @@
 
 				<div class="col-md-10">
 					<h1 style="margin-top: 30px;">{{ $user->name }}</h1>
-					<a class="dashed__link" href="{{ route('user_edit') }}">Редактировать профиль</a><br><br>
+					<a class="dashed__link" href="{{ route(userRoute('user_edit')) }}">Редактировать профиль</a><br><br>
 					<button class="btn btn-default btn-sm" style="display: inline-block; width: auto; border-radius: 20px; cursor: default;">Студент</button>
 				</div> 
 			</div>
@@ -32,9 +32,10 @@
 	<nav class="navbar navbar-default">
 	  <div class="container"> 
 	    <ul class="nav navbar-nav">
-	      	<li class="{{ isActive(route('user_profile')) ? 'active' : '' }}">
-	      		<a href="{{ route('user_profile') }}">МОИ КУРСЫ (ОБУЧАЮСЬ)</a>
+	      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
+	      		<a href="{{ route(userRoute('user_profile')) }}">МОИ КУРСЫ (ОБУЧАЮСЬ)</a>
 	      	</li>
+	      	<?php if (false): ?> 
 			<li class="{{ isActive(route('user_bookmarks')) ? 'active' : '' }}">
 				<a href="{{ route('user_bookmarks') }}">ЗАКЛАДКИ</a>
 			</li>
@@ -44,8 +45,9 @@
 			<li class="{{ isActive(route('user_reviews')) ? 'active' : '' }}">
 				<a href="{{ route('user_reviews') }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
 			</li>
-			<li class="{{ isActive(route('user_edit')) ? 'active' : '' }}">
-				<a href="{{ route('user_edit') }}">ЛИЧНЫЕ ДАННЫЕ</a>
+			<?php endif ?>
+			<li class="{{ isActive(route(userRoute('user_edit'))) ? 'active' : '' }}">
+				<a href="{{ route(userRoute('user_edit')) }}">ЛИЧНЫЕ ДАННЫЕ</a>
 			</li>
 	    </ul>
 	  </div>

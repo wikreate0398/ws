@@ -89,9 +89,9 @@
 			<div class="teachers_adress">
 				<i class="fa fa-map-marker" aria-hidden="true"></i> {{ @$teacher->cityData->name }}, {{ @$teacher->address }}
 			</div>
-			@if(count($teacher->specializations))			
+			@if(count($teacher->teacherSpecializations))			
 			<ul class="list-inline teachers_specialization">
-				@foreach($teacher->specializations as $specialization)
+				@foreach($teacher->teacherSpecializations as $specialization)
 				<li>
 					{{ $specialization->name }}
 				</li>

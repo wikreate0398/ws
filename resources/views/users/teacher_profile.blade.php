@@ -17,12 +17,7 @@
 								    <input type="file" name="image" onchange="profilePhoto(this)">
 								</span>
 
-								<input type="hidden" name="avatar" id="avatar">
-								<!-- <span style="display: none;" 
-								        onclick="$('.cropper__section, #overlay').fadeIn(150); " 
-								        class="edit__profile__photo-icon">
-								        	<i style="position: relative; top: 1px;left: 1px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-								</span>  -->
+								<input type="hidden" name="avatar" id="avatar"> 
 
 							</div>
 						</div>
@@ -42,7 +37,7 @@
 					</h1>
 					<div class="teacher_employment">
 						<label class="checkbox-inline checbox-switch switch-light">
-							<input type="checkbox" name="" {{ ($user->is_available==1) ? 'checked' : '' }} onchange="teacherStatus(this)">
+							<input type="checkbox" name="" onchange="teacherStatus(this)" {{ ($user->is_available==1) ? 'checked' : '' }}>
 							Свободен
 							<span></span>
 							Занят
@@ -50,13 +45,13 @@
 					</div>
 					@if(Auth::user()->data_filled == 0)  
 						<div class="data_coverage">
-							<a href="{{ route('user_edit') }}" class="btn edit_profile">Публиковать профиль</a>
+							<a href="{{ route(userRoute('user_edit')) }}" class="btn edit_profile">Публиковать профиль</a>
 							<span>Для того, чтобы Вы появились в разделе репетиторов, </br>
 							вам нужно подробно заполнить свой профиль</span>
 						</div>
 					@else
 						<div class="data_coverage">
-							<a href="{{ route('user_edit') }}" class="btn edit_profile">Личные данные</a>
+							<a href="{{ route(userRoute('user_edit')) }}" class="btn edit_profile">Личные данные</a>
 						</div>
 					@endif
 				</div>
@@ -66,17 +61,17 @@
 			<div class="col-lg-12">
 				@if(Auth::user()->data_filled == 1)
                 <ul class="nav lk_menu"> 
-			      	<li class="{{ isActive(route('user_profile')) ? 'active' : '' }}">
-			      		<a href="{{ route('user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
+			      	<li class="{{ isActive(route(userRoute('user_edit'))) ? 'active' : '' }}">
+			      		<a href="{{ route(userRoute('user_edit')) }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
 			      	</li>
-					<li class="{{ isActive(route('user_diplomas')) ? 'active' : '' }}">
-						<a href="{{ route('user_diplomas') }}">МОИ ДИПЛОМЫ</a>
+					<li class="{{ isActive(route(userRoute('user_diplomas'))) ? 'active' : '' }}">
+						<a href="{{ route(userRoute('user_diplomas')) }}">МОИ ДИПЛОМЫ</a>
 					</li>
-					<li class="{{ isActive(route('user_subscriptions')) ? 'active' : '' }}">
-						<a href="{{ route('user_subscriptions') }}">ПОДПИСКИ</a>
+					<li class="{{ isActive(route(userRoute('user_subscriptions'))) ? 'active' : '' }}">
+						<a href="{{ route(userRoute('user_subscriptions')) }}">ПОДПИСКИ</a>
 					</li>
-					<li class="{{ isActive(route('user_reviews')) ? 'active' : '' }}">
-						<a href="{{ route('user_reviews') }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
+					<li class="{{ isActive(route(userRoute('user_reviews'))) ? 'active' : '' }}">
+						<a href="{{ route(userRoute('user_reviews')) }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
 					</li> 
                 </ul>
 				@endif
@@ -89,7 +84,7 @@
 			 
 			<div class="col-md-12">   
 				@if(Session::has('flash_message'))
-				    <div class="alert alert-success" style="margin-top: 20px;">
+				    <div class="alert alert-success">
 				    	<p>{{ Session::get('flash_message') }}</p>
 				    </div> 
 				@endif 

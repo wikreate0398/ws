@@ -6,7 +6,7 @@
 	<div class="col-lg-10 col-lg-offset-1">
 		<ul class="breadcrumb">
 		  <li><a href="/">Главная</a></li>
-		  <li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
+		  <li><a href="{{ route(userRoute('user_profile')) }}">Личный кабинет</a></li>
 		  <li class="active">Редактировать информацию</li>
 		</ul>
 		<h1 class="title_page">РЕДАКТИРОВАТЬ ПРОФИЛЬ</h1>
@@ -26,7 +26,7 @@
 		</ul>
 	</div> 
 
-	<form class="ajax__submit" method="POST" action="{{ route('update_profile') }}">
+	<form class="ajax__submit" method="POST" action="{{ route(userRoute('update_profile')) }}">
     {{ csrf_field() }}
     <input type="hidden" name="user_type" value="2">
 	<div class="col-lg-8 col-lg-offset-2" style="min-height: 300px;">
@@ -57,6 +57,7 @@
                            name="date_birth"
                            value="{{ !empty($user->date_birth) ? date('d.m.Y', strtotime($user->date_birth)) : '' }}" 
                            required 
+                           autocomplete="off"
                            placeholder="ДД.ММ.ГГГГ"> 
 					</div>
 				</div>
@@ -73,16 +74,25 @@
 				</div>
 				<label class="col-md-4 control-label">Расположение <span class="req">*</span></label> 
 				 
-				<div class="col-md-8 regions__area">
-					<div class="form-group select_form">
-						<select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
-						  	<option value="">Область</option>
-						  	@foreach($regions as $item)
-                           		<option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
-                           			{{$item['name']}}
-                           		</option>
-                        	@endforeach
-						</select>
+				<div class="col-md-8">
+					 
+
+					<div class="row">
+						<div class="col-md-6 regions__area">
+							<div class="form-group select_form">
+								<select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
+								  	<option value="">Область</option>
+								  	@foreach($regions as $item)
+		                           		<option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
+		                           			{{$item['name']}}
+		                           		</option>
+		                        	@endforeach
+								</select>
+							</div>
+						</div>
+
+						<div class="col-md-6 cities__area" style="display: none;"></div>
+
 					</div>
 				</div>
 
@@ -90,7 +100,7 @@
 	            	$(window).load(function(){ $('select#select__regions').change(); });
 	            </script> 
 
-				<div class="col-md-4 cities__area" style="display: none;"></div>
+				 
  
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Мое образование</h3>
@@ -102,7 +112,7 @@
 						@foreach($user->educations as $education) 
 							<div class="row multi__container education__container {{ ($i == 0) ? 'first_block' : '' }}">
 								@if($i > 0)
-				                    <a class="close__item delete__item" href="/user/deleteUserEducation/<?=$education['id']?>">X</a>
+				                    <a class="close__item delete__item" href="{{ route(userRoute('delete_education'), ['id' => $education->id]) }}">X</a> 
 				                @endif
 								@include('users.profile_types.teacher.partials.grade_education')
 							</div> 
@@ -188,13 +198,14 @@
 						       name="experience_from" 
 						       value="{{ !empty($user->experience_from) ? date('d.m.Y', strtotime($user->experience_from)) : '' }}" 
 						       required="" 
+						       autocomplete="off"
 						       type="text">
 					</div>
 				</div>
-				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА <span class="req">*</span></label>
+				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА (₽) <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
+						<input class="form-control number__field" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -327,54 +338,7 @@
 	 
 	</form>
 </div>
-<div class="clearfix"></div>
-
- 
-<?php if (false): ?> 
-<br><br>
-<h4>Сменить пароль</h4>
-<hr>
-<form action="{{ route('update_pass') }}" class="form-horizontal ajax__submit">
-    {{ csrf_field() }}
-    <div class="row">
-        <div class="col-md-12"> 
-            <div class="form-group">
-                <label class="col-md-12 control-label">Старый Пароль <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <input type="password" class="form-control" name="old_password"
-                           value="" required>
-                </div>
-            </div>
-              
-            <div class="form-group">
-                <label class="col-md-12 control-label">Пароль <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <input type="password" class="form-control" name="password"
-                           value="" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Подтверждение пароля
-                    <span class="req">*</span>
-                </label>
-                <div class="col-md-12">
-                    <input type="password" class="form-control" name="password_confirmation" value="" required>
-                </div>
-            </div>
-        </div> 
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12" id="error-respond"></div>
-        <div class="col-md-6 ">
-            <button type="submit" class="btn btn-primary">
-                Сохранить
-            </button>
-        </div>
-    </div>
-</form>
-<?php endif ?>
+<div class="clearfix"></div> 
 </div>
 
 @stop

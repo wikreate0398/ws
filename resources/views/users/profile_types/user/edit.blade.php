@@ -1,4 +1,4 @@
-<form class="form-horizontal ajax__submit" method="POST" action="{{ route('update_profile') }}">
+<form class="form-horizontal ajax__submit" method="POST" action="{{ route(userRoute('update_profile')) }}">
     {{ csrf_field() }}
 
     <input type="hidden" name="user_type" value="1">
@@ -29,16 +29,26 @@
             </div> -->
 
             <div class="form-group">
-                <label class="col-md-12 control-label">Город</label>
-                <div class="col-md-12">
-                    <select name="city"  class="form-control">
-                        <option value="">Выбрать</option>
-                        @foreach($cities as $item)
-                            <option {{ ($user['city'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
-                        @endforeach
-                    </select>
+                <div class="row">
+                    <div class="col-md-6 regions__area">
+                        <div class="form-group select_form">
+                            <select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
+                                <option value="">Область</option>
+                                @foreach($regions as $item)
+                                    <option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
+                                        {{$item['name']}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 cities__area" style="display: none;"></div>
                 </div>
             </div>
+            <script>
+                $(window).load(function(){ $('select#select__regions').change(); });
+            </script> 
 
             <div class="form-group">
                 <label class="col-md-12 control-label">E-mail <span class="req">*</span></label>
@@ -106,7 +116,7 @@
 <br><br>
 <h4>Сменить пароль</h4>
 <hr>
-<form action="{{ route('update_pass') }}" class="form-horizontal ajax__submit">
+<form action="{{ route(userRoute('update_pass')) }}" class="form-horizontal ajax__submit">
     {{ csrf_field() }}
     <div class="row">
         <div class="col-md-12"> 
@@ -117,7 +127,7 @@
                            value="" required>
                 </div>
             </div>
-              
+                    
             <div class="form-group">
                 <label class="col-md-12 control-label">Пароль <span class="req">*</span></label>
                 <div class="col-md-12">

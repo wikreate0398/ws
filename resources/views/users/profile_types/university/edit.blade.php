@@ -5,7 +5,7 @@
 	<div class="col-lg-10 col-lg-offset-1">
 		<ul class="breadcrumb">
 		  <li><a href="/">Главная</a></li>
-		  <li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
+		  <li><a href="{{ route(userRoute('user_profile')) }}">Личный кабинет</a></li>
 		  <li class="active">Редактировать информацию</li>
 		</ul>
 		<h1 class="title_page">РЕДАКТИРОВАТЬ ПРОФИЛЬ</h1>
@@ -24,6 +24,11 @@
 			</li>
 		</ul>
 	</div>
+
+	<form class="ajax__submit" method="POST" action="{{ route(userRoute('update_profile')) }}">
+    {{ csrf_field() }}
+    <input type="hidden" name="user_type" value="3">
+
 	<div class="col-lg-8 col-lg-offset-2">
 		<div class="tab-content user_form">
 			<div id="profile" class="tab-pane fade in active">
@@ -33,7 +38,7 @@
 				<label class="col-md-4 control-label">НАЗВАНИЕ ВУЗА <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" value="{{ $userUniversity['full_name'] }}" name="name" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -42,14 +47,15 @@
 				</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<textarea class="form-control" maxlength="1200" name="" required></textarea>
+						<textarea class="form-control" maxlength="800" name="description">{{ $user['about'] }}</textarea>
+						<div class="maxlength__label"><span>0</span> символов (800 максимум)</div>
 					</div>
 				</div>
 				<div class="clearfix"></div>
 				<label class="col-md-4 control-label">ДАТА ОСНОВАНИЯ <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control datepicker" autocomplete="off" name="year_of_foundation" value="{{ !empty($userUniversity->year_of_foundation) ? date('d.m.Y', strtotime($userUniversity->year_of_foundation)) : '' }}" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -58,22 +64,25 @@
 				</label>
 				<div class="col-md-8">
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12 regions__area">
 							<div class="form-group select_form">
-								<select class="form-control">
-								  <option>Город</option>
+								<select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
+								  	<option value="">Область</option>
+								  	@foreach($regions as $item)
+		                           		<option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
+		                           			{{$item['name']}}
+		                           		</option>
+		                        	@endforeach
 								</select>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group select_form">
-								<select class="form-control">
-								  <option>Район города</option>
-								</select>
-							</div>
-						</div>
+						<div class="cities__area col-md-6" style="display: none;"></div> 
 					</div>
-				</div>
+				</div> 
+				<script>
+	            	$(window).load(function(){ $('select#select__regions').change(); });
+	            </script> 
+
 				<div class="clearfix"></div>
 				<div class="col-md-12">
 					<h3 class="header_blok_user">КОНТАКТНЫЕ ДАННЫЕ</h3>
@@ -81,24 +90,24 @@
 				<label class="col-md-4 control-label">АДРЕС ВУЗА<span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" value="{{ $user['address'] }}" name="address" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				<label class="col-md-4 control-label">АДРЕС САЙТА<span class="req">*</span></label>
+				<label class="col-md-4 control-label">АДРЕС САЙТА<span class="req"></span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" value="{{ $user['site'] }}" name="site" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
 				<label class="col-md-4 control-label">ТЕЛЕФОН<span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" value="{{ $user['phone'] }}" name="phone" type="text">
 					</div>
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" value="{{ $user['phone2'] }}" name="phone2" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -108,19 +117,25 @@
 				<label class="col-md-4 control-label">E-MAIL<span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" value="{{ $user['email'] }}" autocomplete="off" name="email" type="text">
+					</div>
+				</div> 
+				<label class="col-md-4 control-label">СТАРЫЙ ПАРОЛЬ <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input class="form-control" autocomplete="off" name="old_password" value="" type="password">
 					</div>
 				</div>
 				<label class="col-md-4 control-label">ПАРОЛЬ<span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" autocomplete="off" name="password" type="password">
 					</div>
 				</div>
 				<label class="col-md-4 control-label">ПОВТОРИТЕ ПАРОЛЬ<span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" autocomplete="off" name="password_confirmation" type="password">
 					</div>
 				</div>
 			</div>
@@ -133,18 +148,20 @@
 				</label>
 				<div class="col-md-8">
 					<div class="form-group select_form">
-						<select class="form-control">
-						  <option>Государвственный</option>
-						</select>
+						<select name="status" class="form-control">
+	                        <option value="">Выбрать</option>
+	                        <option {{ ($userUniversity->status == '1') ? 'selected' : '' }} value="1">Государвственное</option>
+	                        <option {{ ($userUniversity->status == '2') ? 'selected' : '' }} value="2">Негосударвственное</option>
+	                    </select>
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ОБУЧЕНИЯ<span class="req">*</span>
+				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ОБУЧЕНИЯ (₽)<span class="req">*</span>
 				<p>Укажите, примерную стоимость обучения в год</p>
 				</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control number_field" value="{{ $userUniversity->price }}" name="price" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -152,7 +169,7 @@
 				</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control number_field" value="{{ $userUniversity->qty_budget }}" name="qty_budget" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -164,7 +181,7 @@
 				</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control number_field" value="{{ $userUniversity->budget_points_admission }}" name="budget_points_admission" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -173,7 +190,7 @@
 				</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="" name="" required type="text">
+						<input class="form-control" value="{{ $userUniversity->payable_points_admission }}" name="payable_points_admission" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -183,78 +200,22 @@
 				<div class="col-md-12">
 					<div class="form-group">
 						<ul class="list-inline list_checkbox">	
-							<li>
-								<div class="checkbox">
-								<label>
-									<input value="" type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									Информационные технологии
-								</label>
-								</div>
-							</li>
-							<li>
-								<div class="checkbox">
-								<label>
-									<input value="" type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									Юриспруденция
-								</label>
-								</div>
-							</li>
-							<li>
-								<div class="checkbox">
-								<label>
-									<input value="" type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									Экономика и финансы
-								</label>
-								</div>
-							</li>
-							<li>
-								<div class="checkbox">
-								<label>
-									<input value="" type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									Управление персоналом
-								</label>
-								</div>
-							</li>
-							<li>
-								<div class="checkbox">
-								<label>
-									<input value="" type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									Маркетинговые коммуникации
-								</label>
-								</div>
-							</li>
-							<li>
-								<div class="checkbox">
-								<label>
-									<input value="" type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									Медицина
-								</label>
-								</div>
-							</li>
-							<li>
-								<div class="checkbox">
-								<label>
-									<input value="" type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									Туризм и гостеприимство
-								</label>
-								</div>
-							</li>
-							<li>
-								<div class="checkbox">
-								<label>
-									<input value="" type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									Журналистика
-								</label>
-								</div>
-							</li>
+							@php
+								$university_specializations = array_map(function ($item) {
+								    return $item['id_specialization'];
+								}, $university_specializations->toArray());    
+							@endphp
+							@foreach($specializations as $specialization)
+								<li>
+									<div class="checkbox">
+									<label>
+										<input {{ in_array($specialization->id, $university_specializations) ? 'checked' : '' }} name="specializations[{{ $specialization->id }}]" type="checkbox">
+										<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+										{{ $specialization['name'] }}
+									</label>
+									</div>
+								</li> 
+                        	@endforeach
 						</ul>
 					</div>
 				</div>
@@ -267,7 +228,7 @@
 							<li>
 								<div class="checkbox">
 								<label>
-									<input value="" type="checkbox">
+									<input name="has_military_department" {{ ($userUniversity['has_military_department'] == '1') ? 'checked' : '' }} type="checkbox">
 									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
 									Военная кафедра
 								</label>
@@ -276,7 +237,7 @@
 							<li>
 								<div class="checkbox">
 								<label>
-									<input value="" type="checkbox">
+									<input name="has_hostel" {{ ($userUniversity['has_hostel'] == '1') ? 'checked' : '' }} type="checkbox">
 									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
 									Общежитие
 								</label>
@@ -285,7 +246,7 @@
 							<li>
 								<div class="checkbox">
 								<label>
-									<input value="" type="checkbox">
+									<input name="distance_learning" {{ ($userUniversity['distance_learning'] == '1') ? 'checked' : '' }} type="checkbox">
 									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
 									Дистанционное обучение
 								</label>
@@ -296,358 +257,44 @@
 				</div>
 			</div>
 			<div id="certificate" class="tab-pane fade">
-				Такой же блок как и на учителе
+				<div id="certificates__images" class="row uploaderContainter" style="margin-bottom: 40px;">
+ 
+            		@foreach($user->certificates as $certificate)
+						<div class='col-md-4 load-thumbnail'> 
+    		            	 
+    		            	<div class="uploadedImg" 
+    		            	     style="background-image: url(/public/uploads/users/certificates/{{ $certificate->image }})"></div>
+    		            	<div class='actions__upload_img'>
+    		            		<span onclick='deleteUploadImg(this, {{ $certificate->id }})' class="delete__upload_img"></span> 
+                            </div>
+        		     	</div>
+					@endforeach
+                	 
+					<div class="col-md-4 {{ !count($user->certificates) ? 'col-md-offset-4' : ''}}">
+						<div class="certificateLoadArea">
+							<input type="file" 
+						       name="diploms[]" 
+						       multiple 
+						       id="certificateInpuT" 
+						       onchange="multipleImages(this, '#certificates__images')">
+						     <span class="file__input_name"> Добавить или перетащить <br> сюда изображение</span>
+						</div>
+					</div>
+                	 
+				</div>  
 			</div>
 			<div class="col-lg-12">
+				<div id="error-respond"></div>
 				<button type="submit" class="btn btn_save">
 					Сохранить
 				</button>
 			</div>
 		</div>
 	</div>
+	</form>
 </div>
 <div class="clearfix"></div>
-
-
-<form class="form-horizontal ajax__submit" method="POST" action="{{ route('update_profile') }}">
-    {{ csrf_field() }}
-    <input type="hidden" name="user_type" value="3">
-       
-    <div class="row">
-        <div class="col-md-6"> 
-            <div class="form-group">
-                <label class="col-md-12 control-label">Тип <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <select name="institution_type" class="form-control">
-                        <option value="">Выбрать</option>
-                        @foreach($inst_type as $item)
-                            <option {{ ($userUniversity->institution_type == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>  
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="col-md-12 control-label">Статус <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <select name="status" class="form-control">
-                        <option value="">Выбрать</option>
-                        <option {{ ($userUniversity->status == '1') ? 'selected' : '' }} value="1">Государвственное</option>
-                        <option {{ ($userUniversity->status == '2') ? 'selected' : '' }} value="2">Негосударвственное</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="col-md-12 control-label">Полное название <span class="req">*</span>
-
-                </label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control" name="full_name" value="{{ $userUniversity['full_name'] }}" required>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="col-md-12 control-label">Краткое название <span class="req">*</span>
-
-                </label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control" name="short_name" value="{{ $userUniversity['short_name'] }}" required>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="col-md-12 control-label">Другие названия
-
-                </label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control" name="other_names" value="{{ $userUniversity['other_names'] }}">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-      <!--   <div class="panel-heading">
-            <h3 class="panel-title">ОБРАЗОВАНИЕ</h3>
-        </div> -->
-        <div class="panel-body">
-            <div class="row"> 
-                <div class="col-md-12">
-                    <div class="form-check">
-                        <input type="checkbox" {{ ($userUniversity['secondary_inst'] == '1') ? 'checked' : '' }} onclick="institutionCheck(this)" name="secondary_inst" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Отметьте, если это учебное заведение является факультетом, филиалом, отделением или иной аффилированной структурой в составе другого учебного заведения</label>
-                      </div> 
-                </div> 
-
-                <div class="parent_institution" style="{{ ($userUniversity['secondary_inst'] == '1') ? 'display: block' : 'display: none' }}">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-md-12 control-label">Родительское ВУЗ <span class="req">*</span></label>
-                            <div class="col-md-12">
-                                <select name="parent_institution" class="form-control">
-                                    <option value="">Выбрать</option>
-                                    @foreach($university as $item)
-                                        <option {{ ($userUniversity->parent_institution == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-md-12 control-label">Форма отношения <span class="req">*</span></label>
-                            <div class="col-md-12">
-                                <select name="form_attitude" class="form-control">
-                                    <option value="">Выбрать</option>
-                                    @foreach($univ_form_attitude as $item)
-                                        <option {{ ($userUniversity['form_attitude'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>          
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="col-md-12 control-label">Год основания <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control number_field" name="year_of_foundation" value="{{ $userUniversity['year_of_foundation'] }}" required>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-check">
-            <input type="checkbox" name="has_hostel" {{ ($userUniversity['has_hostel'] == '1') ? 'checked' : '' }} class="form-check-input" id="exampleCheck2">
-            <label class="form-check-label" for="exampleCheck2">Предоставляется общежитие</label>
-          </div> 
-
-          <div class="form-check">
-            <input type="checkbox" name="has_military_department" {{ ($userUniversity['has_military_department'] == '1') ? 'checked' : '' }} class="form-check-input" id="exampleCheck3">
-            <label class="form-check-label" for="exampleCheck3">Военная кафедра</label>
-          </div> 
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-7">
-            <div class="form-group">
-                <label class="col-md-4 control-label" style="white-space: nowrap;">Лицензия № <span class="req">*</span></label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="license_nr" value="{{ $userUniversity['license_nr'] }}" required>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="form-group">
-                <label class="col-md-3 control-label" style="white-space: nowrap;">От <span class="req">*</span></label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control datepicker" name="license_nr_from" 
-                    value="{{!empty($userUniversity->license_nr_from) ? date('d.m.Y', strtotime($userUniversity->license_nr_from)) : ''}}" placeholder="ДД.ММ.ГГГГ" required> 
-
-                </div>
-            </div> 
-        </div>
-
-        <div class="col-md-7">
-            <div class="form-group">
-                <label class="col-md-4 control-label" style="white-space: nowrap;">Аккредитация № <span class="req">*</span></label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="accreditation_nr" value="{{ $userUniversity['accreditation_nr'] }}" required>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="form-group">
-                <label class="col-md-3 control-label" style="white-space: nowrap;">От <span class="req">*</span></label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control datepicker" name="accreditation_nr_from"
-                     value="{{ !empty($userUniversity->accreditation_nr_from) ? date('d.m.Y', strtotime($userUniversity->accreditation_nr_from)) : '' }}" placeholder="ДД.ММ.ГГГГ" required>
-                      
-                </div>
-            </div> 
-        </div>
-
-        <div class="col-md-12">
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Краткое описание</label>
-                <div class="col-md-12">
-                    <textarea style="min-height: 150px;" class="form-control" name="description" placeholder="Не более 800 символов">{{ $userUniversity['description'] }}</textarea>
-                </div>
-            </div> 
-
-             
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6"> 
-            <div class="form-group">
-                <label class="col-md-12 control-label">Типы программ <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <select name="program_type"  class="form-control">
-                        <option value="">Выбрать</option>
-                        @foreach($programs_type as $item)
-                            @if(!empty($item['childs']))
-                                <optgroup label="{{$item['name']}}">
-                                    @foreach($item['childs'] as $child)
-                                        <option {{ ($userUniversity['program_type'] == $child['id']) ? 'selected' : '' }} value="{{$child['id']}}">{{$child['name']}}</option>
-                                    @endforeach
-                                </optgroup>
-                            @else
-                                <option {{ ($userUniversity['program_type'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Номер телефона <span class="req">*</span>
-
-                </label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control" name="phone" value="{{ $user['phone'] }}"
-                           required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Номер телефона 2
-                </label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control" name="phone2" value="{{ $user['phone2'] }}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Город</label>
-                <div class="col-md-12">
-                    <select name="city"  class="form-control">
-                        <option value="">Выбрать</option>
-                        @foreach($cities as $item)
-                            <option {{ ($user['city'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">E-mail <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <input type="email" class="form-control" name="email" value="{{ $user['email'] }}"
-                           required>
-                </div>
-            </div> 
-        </div>
-
-        <div class="col-md-6">
-
-            <div class="form-group">
-                <label for="ed_institution"
-                       class="col-md-12 control-label">Основные рубрики <span class="req">*</span>
-                </label>
-                <div class="col-md-12">
-                    <select name="id_category"  class="form-control">
-                        <option value="">Выбрать</option>
-                        @foreach($teach_activ_cat as $item)
-                            <option {{ ($userUniversity['id_category'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Факс  </label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control"
-                           name="fax" value="{{ $user['fax'] }}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Сайт  </label>
-                <div class="col-md-12">
-                    <input type="text" class="form-control"
-                           name="site" value="{{ $user['site'] }}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Фото </label>
-                <div class="col-md-12">
-                    <input type="file" name="image">
-                    @if($user['image'])
-                        <img src="/public/uploads/users/{{ $user['image'] }}" alt="" class="img-thumbnail" style="margin-top: 20px; max-width: 150px;">
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div id="error-respond"></div>
-        <div class="col-md-6 ">
-            <button type="submit" class="btn btn-primary">
-                Сохранить 
-            </button>
-        </div>
-    </div>
-</form>
-
-<br><br>
-<h4>Сменить пароль</h4>
-<hr>
-<form action="{{ route('update_pass') }}" class="form-horizontal ajax__submit">
-   {{ csrf_field() }}
-    <div class="row">
-        <div class="col-md-12"> 
-            <div class="form-group">
-                <label class="col-md-12 control-label">Старый Пароль <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <input type="password" class="form-control" name="old_password"
-                           value="" required>
-                </div>
-            </div>
-              
-            <div class="form-group">
-                <label class="col-md-12 control-label">Пароль <span class="req">*</span></label>
-                <div class="col-md-12">
-                    <input type="password" class="form-control" name="password"
-                           value="" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-12 control-label">Подтверждение пароля
-                    <span class="req">*</span>
-                </label>
-                <div class="col-md-12">
-                    <input type="password" class="form-control" name="password_confirmation" value="" required>
-                </div>
-            </div>
-        </div> 
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12" id="error-respond"></div>
-        <div class="col-md-6 ">
-            <button type="submit" class="btn btn-primary">
-                Сохранить
-            </button>
-        </div>
-    </div>
-</form>
+ 
 </div> 
 
 @stop

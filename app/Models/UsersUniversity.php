@@ -43,7 +43,7 @@ class UsersUniversity extends Model
     public function teachActivity()
     {
 		return $this->hasOne('App\Models\TeachActivityCategories', 'id', 'id_category');
-    }   
+    }    
 
     public static function getUniversities()
     {

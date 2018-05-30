@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users\UserTypes;
+namespace App\Http\Controllers\Users\Teacher;
 
 use App\Models\User;  
 use App\Models\TeacherSubjects;
@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\DB;
 /**
 * Регистрация обычного пользователя
 */
-class TeacherUser extends ProfileController 
+class TeacherController extends ProfileController 
 {
     private $viewPath = 'users.profile_types.teacher.';
 

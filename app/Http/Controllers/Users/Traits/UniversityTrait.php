@@ -5,44 +5,46 @@ namespace App\Http\Controllers\Users\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User; 
 use App\Models\UsersUniversity;
+use App\Models\UniversitySpecializations;
+use App\Models\TeacherCertificates;
+use Illuminate\Support\Facades\Hash;
 
 trait UniversityTrait
 {
 	private $niceNames = [
-        'password'           => 'Пароль',
-        'repeat_password'    => 'Повторите пароль',
-        'image'              => 'Фото',
-        'institution_type'   => 'Тип',
-        'status'             => 'Статус',
-        'program_type'       => 'Типы программ',
-        'id_category'        => 'Основные рубрики',
-        'parent_institution' => 'Родительское ВУЗ',
-        'form_attitude'      => 'Форма отношения',
-        'region'                => 'Область',
-        'city'                  => 'Город', 
+        'name'                     => 'Название вуза',
+        'description'              => 'Коротко о вузе',
+        'year_of_foundation'       => 'Дата основания',   
+        'region'                   => 'Область',
+        'address'                  => 'Адрес', 
+        'phone'                    => 'Телефон',
+        'email'                    => 'Имейл',
+        'city'                     => 'Город', 
+        'status'                   => 'Тип Вуза', 
+        'price'                    => 'Средняя стоимость обучения',
+        'qty_budget'               => 'Кол-во мест на бюджетной основе',
+        'budget_points_admission'  => 'Бюджетная основа',
+        'payable_points_admission' => 'Платная основа',
+        'password'                 => 'Пароль',
+        'repeat_password'          => 'Повторите пароль', 
+        'specializations'          => 'Ваша Специализация' 
     ];
 
     private $editRules = [ 
-        'phone'                 => 'required', 
-        'image'                 => 'file|mimes:jpeg,jpg,png',
-        'email'                 => 'required|string|email|unique:users',
-        'password'              => 'required|string|min:6|confirmed',
-        'password_confirmation' => 'required',
-        'institution_type'      => 'required|integer',
-        'status'                => 'required|integer|',
-        'full_name'             => 'required',
-        'short_name'            => 'required',
-        'description'           => 'required', 
-        'year_of_foundation'    => 'required',
-        'license_nr'            => 'required',
-        'license_nr_from'       => 'required',
-        'accreditation_nr'      => 'required',
-        'accreditation_nr_from' => 'required',
-        'program_type'          => 'required|integer|',
-        'id_category'           => 'required|integer|',
-        'description'           => 'max:800',
+        'name'                  => 'required', 
+        'description'           => 'required|max:800', 
+        'year_of_foundation'    => 'required', 
         'region'                => 'required',
         'city'                  => 'required',  
+        'address'               => 'required', 
+        'phone'                 => 'required',  
+        'email'                 => 'required|email',
+        'price'                 => 'required',
+        'qty_budget'            => 'required|integer|min:1',
+        'budget_points_admission'  => 'required|min:1',
+        'payable_points_admission' => 'required|min:1', 
+        'status'                   => 'required|integer',    
+        'specializations'          => 'required'
     ];
 
     private $addRules = [
@@ -93,17 +95,7 @@ trait UniversityTrait
     }
 
     public function edit(array $data, $id_user)
-    {  
-        foreach (['email', 'password', 'password_confirmation'] as $key => $value) 
-        { 
-            unset($this->editRules[$value]);
-        }  
-
-        if (!empty($data['secondary_inst'])) {
-            $this->editRules['parent_institution'] = 'required|integer';
-            $this->editRules['form_attitude']      = 'required|integer';
-        }
-
+    {   
         $validator = Validator::make($data, $this->editRules, ['unique' => 'Пользователь уже Существует.']); 
         $validator->setAttributeNames($this->niceNames);  
         if ($validator->fails()) 
@@ -117,59 +109,98 @@ trait UniversityTrait
             return 'Пользователь с таким имейлом уже существует!';  
         } 
 
-        User::where('id', $id_user)->update([   
-            'phone'      => $data['phone'],
-            'email'      => $data['email'], 
-            'city'       => $data['city'],
+        User::where('id', $id_user)->update([    
+            'about'      => $data['description'],
+            'address'    => $data['address'],
+            'city'       => $data['city'], 
             'region'     => $data['region'],
             'phone'      => $data['phone'],
-            'phone2'     => !empty($data['phone2']) ? $data['phone2'] : '',
-            'fax'        => !empty($data['fax']) ? $data['fax'] : '',
-            'site'       => !empty($data['site']) ? $data['site'] : '' 
-        ]); 
+            'phone2'     => !empty($data['phone2']) ? $data['phone2'] : '', 
+            'site'       => !empty($data['site']) ? $data['site'] : '',
+            'email'      => $data['email'],
+            'data_filled' => 1 
+        ]);  
 
-        if (request()->hasFile('image')) {
-            $fileName = $this->uploadImage();    
-            User::where('id', $id_user)->
-              update([ 
-                'image' => $fileName 
-            ]); 
+        UsersUniversity::where('id_user', $id_user)->update([   
+            'status'                   => $data['status'],
+            'full_name'                => $data['name'], 
+            'price'                    => toFloat($data['price']),
+            'qty_budget'               => $data['qty_budget'],
+            'budget_points_admission'  => $data['budget_points_admission'],
+            'payable_points_admission' => $data['payable_points_admission'],
+            'year_of_foundation'       => date('Y-m-d', strtotime($data['year_of_foundation'])), 
+            'has_hostel'               => !empty($data['has_hostel']) ? 1 : 0,
+            'has_military_department'  => !empty($data['has_military_department']) ? 1 : 0,
+            'distance_learning'        => !empty($data['distance_learning']) ? 1 : 0 
+        ]);
+
+        UniversitySpecializations::where('id_university', $id_user)->delete();
+        if (!empty($data['specializations'])) 
+        { 
+            $insert          = [];
+            foreach ($data['specializations'] as $id_specialization => $value) 
+            {
+                $insert[] = [
+                    'id_university'     => $id_user,
+                    'id_specialization' => $id_specialization
+                ];
+            }
+            UniversitySpecializations::insert($insert);
         }
 
-        UsersUniversity::where('id_user', $id_user)->update([  
-            'institution_type'        => $data['institution_type'],
-            'status'                  => $data['status'],
-            'full_name'               => $data['full_name'],
-            'short_name'              => $data['short_name'],
-            'other_names'             => ifNull($data['other_names']),
-            'secondary_inst'          => !empty($data['secondary_inst']) ? 1 : 0,
-            'parent_institution'      => !empty($data['secondary_inst']) ? ifNull($data['parent_institution']) : 0,
-            'form_attitude'           => !empty($data['secondary_inst']) ? ifNull($data['form_attitude']) : 0, 
-            'year_of_foundation'      => $data['year_of_foundation'],
-            'has_hostel'              => !empty($data['has_hostel']) ? 1 : 0,
-            'has_military_department' => !empty($data['has_military_department']) ? 1 : 0,
-            'license_nr'              => $data['license_nr'],
-            'license_nr_from'         => date('Y-m-d', strtotime($data['license_nr_from'])),  
-            'accreditation_nr'        => $data['accreditation_nr'],
-            'accreditation_nr_from'   => date('Y-m-d', strtotime($data['accreditation_nr_from'])),
-            'description'             => ifNull($data['description']),
-            'program_type'            => $data['program_type'],
-            'id_category'             => $data['id_category'],
-        ]);
+        if (!empty($data['certificates'])) 
+        {
+            $this->saveCertificates($data['certificates'], $id_user);
+        }
+
+        if (!empty($data['old_password'])) 
+        { 
+            $validator = Validator::make($data, [
+                'old_password'          => 'required',
+                'password'              => 'required|string|min:6|confirmed|',
+                'password_confirmation' => 'required',
+            ]);
+            $validator->setAttributeNames([
+                'password'         => 'Пароль',
+                'repeat_password'  => 'Повторите пароль',
+                'old_password'     => 'Старый Пароль'
+            ]);
+            $errors=false;
+            if ($validator->fails()) 
+            {
+                $errors = $validator->errors()->toArray(); 
+            } 
+
+            $obj_user = User::find($id_user);
+
+            if(Hash::check($data['old_password'], $obj_user->password) == false) {
+                $errors[]['password'] = 'Старый пароль не верный';
+            } 
+
+            if (!empty($errors)) 
+            {   
+                return $errors;
+            } 
+ 
+            $obj_user->password = Hash::make($data['password']);
+            $obj_user->save(); 
+        }
 
         return true;
     }
 
-    public function uploadImage()
+    public function saveCertificates($certificates, $id_user)
     {
-    	$fileName = '';
-    	if (request()->hasFile('image')) 
-    	{
-            $file     = request()->file('image');
-            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-            $file->move(public_path() . '/uploads/users/', $fileName);   
-             
-        }
-        return $fileName;
-    }
+        $insert = [];
+        foreach ($certificates as $key => $value) 
+        {
+            $fileName = md5(microtime()) . '.png';
+            uploadBase64($value, public_path() . "/uploads/users/certificates/$fileName");
+            $insert[] = [
+                'id_teacher' => $id_user,
+                'image'      => $fileName
+            ];
+        } 
+        TeacherCertificates::insert($insert);
+    } 
 }

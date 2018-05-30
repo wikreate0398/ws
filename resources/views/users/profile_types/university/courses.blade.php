@@ -1,41 +1,70 @@
 
-<a href="{{ route('add_course') }}" class="btn btn-info  " style="display: inline-block; width: auto; border-radius: 20px;">Добавить свой курс</a>
-<br><br>
-<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active">
-    	<a href="#not_active" aria-controls="not_active" role="tab" data-toggle="tab">НЕ АКТИВНЫЕ</a>
-    </li>
-
-    <li role="presentation" class="">
-    	<a href="#active" aria-controls="active" role="tab" data-toggle="tab">АКТИВНЫЕ</a>
-    </li>
-
-    <li role="presentation">
-    	<a href="#finish" aria-controls="finish" role="tab" data-toggle="tab">ЗАВЕРШЕННЫЕ</a>
-    </li> 
-</ul>
-
-<div class="tab-content"> 
-	<div role="tabpanel" class="tab-pane active" id="not_active" style="padding-top: 20px;">
-		@if(isset($courses)) 
-			@foreach($courses as $course)
-				<div class="col-md-3" style="border:1px solid #ededed; padding-bottom: 10px;">
+<div class="course_lk">
+	<div class="row">
+		@if(count($courses) > 0) 
+		@foreach($courses as $course)
+		<div class="col-lg-4">
+			<div class="external_card">
+				<div class="caption">
+					<ul class="list-inline card_tag">
+						<li class="tag_sticker">
+							<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+						</li>
+						<li class="bookmark_tag">
+							<span>
+							   <button class="btn btn-default">
+								   <i class="fa fa-heart-o"></i>
+							   </button>
+						   </span>
+						</li>
+					</ul>
 					<h3>{{ $course->name }}</h3>
-					<a href="/user/profile/course/{{ $course->id }}/edit">Редактировать</a> |
-					<a class="delete__item" href=" {{ route('delete_course', ['id' => $course->id]) }}">Удалить</a>
+					<h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
+					<ul class="list-unstyled card_info">
+						<li>
+							Стоимость <span> бесплатно </span>
+						</li>
+						<li>
+							Длительность <span> 1 месяц </span>
+						</li>
+						<li>
+							Рейтинг 
+							<span class="rating_star"> 
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o"></i> 
+							</span>
+						</li>
+					</ul>
+					<ul class="list-inline card_date_info">
+						<li class="left_date"><i class="fa fa-user"></i> 10</li>
+						<li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
+					</ul>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="more_card"><a href="{{ route(userRoute('edit_course'), ['id' => $course->id]) }}">Управлять курсом</a></div>
+						</div>
+						<div class="col-lg-6">
+							<div class="more_card delete__item"><a href="{{ route(userRoute('delete_course'), ['id' => $course->id]) }}">Удалить</a></div>
+						</div>
+					</div>
 				</div>
-			@endforeach 
-
-			@else
-			Пусто
+			</div>
+		</div>
+		@endforeach 
+		@else
+		<div class="col-lg-12">
+			<div class="no__data"> 
+				<h5>Вы не добавили ни одного курса</h5>
+			</div>
+		</div>
 		@endif
-	</div>
-
-	<div role="tabpanel" class="tab-pane" id="active" style="padding-top: 20px;">
-		Активные курсы
-	</div>
-
-	<div role="tabpanel" class="tab-pane" id="finish" style="padding-top: 20px;">
-		Завершенные курсы
+		<div class="col-lg-12">
+			<hr>
+			<a class="btn_add_course" href="{{ route(userRoute('add_course')) }}">Добавить курс</a>
+		</div>
 	</div>
 </div>
+ 

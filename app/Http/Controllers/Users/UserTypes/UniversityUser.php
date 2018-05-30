@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers\Users\UserTypes;
 
-use App\Models\User; 
-use App\Models\Cities;
+use App\Models\User;  
 use App\Models\UsersUniversity;
-use App\Models\UniversityFormAttitude; 
-use App\Models\InstitutionTypes;
+ 
 use App\Models\University; 
-use App\Models\ProgramsType;
-use App\Models\TeachActivityCategories;
+ 
+use App\Models\UniversitySpecializationsList;
+use App\Models\UniversitySpecializations;
 use App\Models\CourseCategory;
 use App\Models\Courses;
+use App\Models\Regions;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\UserMail;
-use App\Http\Controllers\Users\UserTypes\UserTypesInterface;
+use App\Mail\UserMail; 
+
+use App\Http\Controllers\ProfileController;
 
 /**
 * Регистрация обычного пользователя
 */
-class UniversityUser extends Controller implements UserTypesInterface
-{ 
-
+class UniversityUser extends ProfileController
+{
     private $viewPath = 'users.profile_types.university.';
 
 	use \App\Http\Controllers\Users\Traits\UniversityTrait;
@@ -47,8 +47,7 @@ class UniversityUser extends Controller implements UserTypesInterface
     }
 
     public function showCourse()
-    {
-
+    { 
         $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
         if ($checkIfDataNoFilled !== true) 
         {
@@ -64,6 +63,34 @@ class UniversityUser extends Controller implements UserTypesInterface
             'include' => $this->viewPath . 'courses',
         ]); 
     }
+
+    public function showNews()
+    {
+        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
+        if ($checkIfDataNoFilled !== true) 
+        {
+            return $checkIfDataNoFilled;
+        } 
+
+        exit('news');
+    }
+
+    public function showFaculties()
+    { 
+        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
+        if ($checkIfDataNoFilled !== true) 
+        {
+            return $checkIfDataNoFilled;
+        }  
+
+        return view('users.university_profile', [ 
+            'user'      => Auth::user(),  
+            'faculties' => [],
+            'include'   => $this->viewPath . 'faculties',
+        ]); 
+    } 
+
+    showFacultyForm
 
     public function showCourseForm()
     {
@@ -85,7 +112,7 @@ class UniversityUser extends Controller implements UserTypesInterface
     {
         $user    = Auth::user();
         $courses = Courses::with('sections')->where('id_user', $user->id)->orderBy('created_at', 'desc')->findOrFail($id_course); 
-
+        
         return view('users.university_profile', [ 
             'user'       => Auth::user(), 
             'include'    => 'users.profile_types.teacher.edit_course',
@@ -96,17 +123,14 @@ class UniversityUser extends Controller implements UserTypesInterface
 
     public function showEditForm()
     {  
-        $user = Auth::user();
-        $id   = $user->id;
+        $user = Auth::user(); 
 
         $data = [
-            'cities'             => Cities::orderBy('name', 'asc')->get(), 
-            'programs_type'      => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
-            'teach_activ_cat'    => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()), 
-            'user'               => User::with('university')->where('id', $id)->first(), 
-            'inst_type'          => InstitutionTypes::orderBy('page_up','asc')->get(),
-            'university'         => University::orderBy('page_up','asc')->get(),
-            'univ_form_attitude' => UniversityFormAttitude::orderBy('page_up','asc')->get() 
+            'regions'         => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),  
+            'specializations' => UniversitySpecializationsList::where('view', '1')->orderBy('page_up','asc')->orderBy('id','desc')->get(), 
+            'user'            => User::with('university')->where('id', $user->id)->first(),  
+            'university'      => University::orderBy('page_up','asc')->get(),
+            'university_specializations' => UniversitySpecializations::where('id_university', $user->id)->get(),   
         ];
 
         $data['userUniversity'] = $data['user']['university'];

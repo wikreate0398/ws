@@ -34,8 +34,13 @@ if (!function_exists('print_arr')) {
     {
         echo "<pre>" . print_r($array, true) . "</pre>";
     }
-}
+} 
 
+function userRoute($route)
+{
+    $define = Auth::user()->userType->define;
+    return $define . '_' . $route;
+}
 
 function sortValue($arr){
     if (empty($arr)) {

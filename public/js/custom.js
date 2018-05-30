@@ -207,7 +207,11 @@ jQuery(document).ready(function($) {
                     }else{
                         message += '<p>' + jsonResponse.messages + '</p>'; 
                     } 
-                    $(form).find('#error-respond').fadeIn().html(message);  
+                    $(form).find('#error-respond').fadeIn().html(message + '<span onclick="$(this).closest(\'#error-respond\').fadeOut()" class="close__error_respond"></span>');  
+
+                    setTimeout(function(){
+                        $(form).find('#error-respond').fadeOut();  
+                    },10000);
                 } else {    
                     if (jsonResponse.redirect !== undefined) {   
                         window.location = jsonResponse.redirect; 
@@ -496,7 +500,7 @@ function deleteSectionBlock(item, id){
 
     if (id > 0) {
         $.ajax({
-            url: '/user/profile/deleteCourseSection',
+            url: '/user/actions/deleteCourseSection',
             type: 'POST', 
             data: {id_section: id, _token: CSRF_TOKEN}, 
             cache: false, 
@@ -527,7 +531,7 @@ function deleteLectureBlock(item, id){
 
     if (id > 0) {
         $.ajax({
-            url: '/user/profile/deleteCourseSectionLecture',
+            url: '/user/actions/deleteCourseSectionLecture',
             type: 'POST', 
             data: {id_lecture: id, _token: CSRF_TOKEN}, 
             cache: false, 
@@ -553,7 +557,7 @@ function deleteLectureBlock(item, id){
 function loadCourseSubcats(select, subcat){  
  
     var cacheStr = String((new Date()).getTime()).replace(/\D/gi, '');
-    $( "#load__subcats").load( "/user/profile/loadCourseSubcats?rnd=" + cacheStr,{'id': $(select).val(), 'id_subcat': subcat, '_token': CSRF_TOKEN}, function( response, status, xhr ) { 
+    $( "#load__subcats").load( "/user/actions/loadCourseSubcats?rnd=" + cacheStr,{'id': $(select).val(), 'id_subcat': subcat, '_token': CSRF_TOKEN}, function( response, status, xhr ) { 
         if ( response == "" ) {
             $('#load__subcats').hide();
             $('#load__subcats').html('');
@@ -573,15 +577,15 @@ function loadCourseSubcats(select, subcat){
 function loadRegionCities(select, city){
     var val      = $(select).val(); 
     var cacheStr = String((new Date()).getTime()).replace(/\D/gi, '');
-    $( ".cities__area").load("/user/profile/loadRegionCities?rnd=" + cacheStr,
+    $( ".cities__area").load("/user/actions/loadRegionCities?rnd=" + cacheStr,
                              {'id': $(select).val(), 'id_city': city, '_token': CSRF_TOKEN}, 
                              function( response, status, xhr ) { 
         if ( response == "" ) {
             $('.cities__area').hide();
-            $('.regions__area').removeClass('col-md-4').addClass('col-md-8');
+            $('.regions__area').removeClass('col-md-6').addClass('col-md-12');
         }else{
             $('.cities__area').show(); 
-            $('.regions__area').removeClass('col-md-8').addClass('col-md-4');
+            $('.regions__area').removeClass('col-md-12').addClass('col-md-6');
         }
         initSelect2();
     }); 
@@ -610,7 +614,7 @@ function teacherStatus(input){
     var status = $(input).prop('checked');
 
     $.ajax({
-        url: '/user/profile/changeStatus',
+        url: '/user/actions/changeStatus',
         type: 'POST', 
         data: {status:status, _token: CSRF_TOKEN}, 
         dataType: 'json',
@@ -758,7 +762,7 @@ function deleteUploadImg(item, id){
       
     if (id) {
         $.ajax({
-            url: '/user/deleteCertificate',
+            url: '/user/actions/deleteCertificate',
             type: 'POST', 
             data: {'id':id, _token: CSRF_TOKEN}, 
             dataType: 'json',

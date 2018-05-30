@@ -47,36 +47,82 @@ Route::get('search', 'PagesController@search');
 
 Route::group(['middleware' => ['web_auth']], function(){  
 
-	Route::get('user/profile/course', 'ProfileController@showCourse')->name('user_profile');
+	Route::group(['prefix' => 'user'], function() { 
+		Route::group(['prefix' => 'university-profile', 'namespace' => 'Users\University'], function() { 
+			$controller = 'UniversityController';
+			$userDefine = 'university'; 
+		 	Route::get('news', "$controller@showNews")->name("{$userDefine}_user_news"); 
+		 	Route::get('edit', "$controller@showEditForm")->name("{$userDefine}_user_edit");
+		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
+		 	  
+		 	Route::group(['prefix' => 'faculties'], function() use($controller,$userDefine) {
+		 		Route::get('/', "$controller@showFaculties")->name("{$userDefine}_user_faculties");
+			 	Route::get('add', "$controller@showFacultyForm")->name("{$userDefine}_add_faculty");  
+				Route::get('{id_course}/edit', "$controller@editFacultyForm")->name("{$userDefine}_edit_faculty");
+				Route::get('{id}/delete', "$controller@deleteFaculty")->name("{$userDefine}_delete_faculty"); 
+				Route::post('save', "$controller@saveFaculty")->name("{$userDefine}_save_faculty"); 
+				Route::post('{id}/edit', "$controller@editFaculty")->name("{$userDefine}_update_faculty");  
+			}); 
 
-	Route::get('user/profile/course/{id_course}/edit', 'ProfileController@editCourseForm');
+		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
+		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile");
+			 	Route::get('add', "$controller@showCourseForm")->name("{$userDefine}_add_course");  
+				Route::get('{id_course}/edit', "$controller@editCourseForm")->name("{$userDefine}_edit_course");
+				Route::get('{id}/delete', "$controller@deleteCourse")->name("{$userDefine}_delete_course"); 
+				Route::post('save', "$controller@saveCourse")->name("{$userDefine}_save_course"); 
+				Route::post('{id}/edit', "$controller@editCourse")->name("{$userDefine}_update_course");  
+			}); 
+		}); 
 
-	Route::get('user/profile/reviews', 'ProfileController@showReviews')->name('user_reviews');
-	Route::get('user/profile/subscriptions', 'ProfileController@showSubscriptions')->name('user_subscriptions'); 
-	Route::get('user/profile/bookmarks', 'ProfileController@showBookmarks')->name('user_bookmarks'); 
-	Route::get('user/profile/diplomas', 'ProfileController@showDiploms')->name('user_diplomas'); 
+		Route::group(['prefix' => 'teacher-profile', 'namespace' => 'Users\Teacher'], function() { 
+			$controller = 'TeacherController';
+			$userDefine = 'teacher';
+		 	 
+		 	Route::get('edit', "$controller@showEditForm")->name("{$userDefine}_user_edit");
+		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
 
-	Route::get('user/profile/course/add', 'ProfileController@showCourseForm')->name('add_course'); 
-	Route::post('user/profile/course/save', 'ProfileController@saveCourse')->name('save_course'); 
-	Route::post('user/profile/course/{id}/edit', 'ProfileController@editCourse')->name('edit_course'); 
-	Route::get('user/profile/course/{id}/delete', 'ProfileController@deleteCourse')->name('delete_course');  
-	 
-	Route::post('user/profile/loadCourseSubcats', 'ProfileController@loadCourseSubcats');  
-	Route::post('user/profile/deleteCourseSection', 'ProfileController@deleteCourseSection');   
-	Route::post('user/profile/deleteCourseSectionLecture', 'ProfileController@deleteCourseSectionLecture'); 
-	Route::post('user/profile/changeStatus', 'ProfileController@changeStatus');   
+	 		Route::get('reviews', "{$controller}@showReviews")->name("{$userDefine}_user_reviews");
+			Route::get('subscriptions', "{$controller}@showSubscriptions")->name("{$userDefine}_user_subscriptions"); 
+			Route::get('bookmarks', "{$controller}@showBookmarks")->name("{$userDefine}_user_bookmarks"); 
+			Route::get('diplomas', "{$controller}@showDiploms")->name("{$userDefine}_user_diplomas");
+			Route::get('deleteUserEducation/{id}', "{$controller}@deleteUserEducation")->name("{$userDefine}_delete_education");
 
-	Route::get('user/profile/edit', 'ProfileController@showEditForm')->name('user_edit');	 
+		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
+		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
+			 	Route::get('add', "$controller@showCourseForm")->name("{$userDefine}_add_course");  
+				Route::get('{id_course}/edit', "$controller@editCourseForm")->name("{$userDefine}_edit_course");
+				Route::get('{id}/delete', "$controller@deleteCourse")->name("{$userDefine}_delete_course"); 
+				Route::post('save', "$controller@saveCourse")->name("{$userDefine}_save_course"); 
+				Route::post('{id}/edit', "$controller@editCourse")->name("{$userDefine}_update_course");  
+			}); 
+		});  
 
-	Route::post('user/updatePass', 'ProfileController@updatePassword')->name('update_pass'); 
-	Route::post('user/update-profile', 'ProfileController@editProfile')->name('update_profile'); 
-	Route::post('user/update-image', 'ProfileController@updateImage')->name('update_image');
-	Route::post('user/profile/loadRegionCities', 'ProfileController@loadRegionCities');  
+		Route::group(['prefix' => 'pupil-profile', 'namespace' => 'Users\Pupil'], function() { 
+			$controller = 'PupilController';
+			$userDefine = 'pupil'; 
+		 	Route::get('edit', "$controller@showEditForm")->name("{$userDefine}_user_edit");
+		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
+		 	Route::post('updatePass', "$controller@@updatePassword")->name("{$userDefine}_update_pass"); 
 
-	Route::get('user/deleteUserEducation/{id}', 'ProfileController@deleteUserEducation'); 
-	Route::get('user/deleteUserActivities/{id}', 'ProfileController@deleteUserActivities'); 
-	Route::get('user/deleteUserExperience/{id}', 'ProfileController@deleteUserExperience');
-	Route::post('user/deleteCertificate', 'ProfileController@deleteCertificate'); 
+		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
+		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
+			}); 
+		}); 
+
+		Route::group(['prefix' => 'actions'], function() {
+		 	Route::post('update-image', 'ProfileController@updateImage')->name('update_image');
+			Route::post('loadRegionCities', 'ProfileController@loadRegionCities');  
+			Route::post('deleteCertificate', 'ProfileController@deleteCertificate');
+			Route::post('loadCourseSubcats', 'ProfileController@loadCourseSubcats');
+			Route::post('deleteCourseSectionLecture', 'ProfileController@deleteCourseSectionLecture'); 
+			Route::post('deleteCourseSection', 'ProfileController@deleteCourseSection');  
+			Route::post('changeStatus', 'ProfileController@changeStatus');  
+		}); 
+	}); 
+ 
+   
+	// Route::post('user/updatePass', 'ProfileController@updatePassword')->name('update_pass'); 
+	// Route::post('user/update-profile', 'ProfileController@editProfile')->name('update_profile');  
 	 
 
 	Route::get('user/forgot-password', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('forgot_password');

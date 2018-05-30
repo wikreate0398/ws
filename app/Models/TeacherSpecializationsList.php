@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SpecializationsList extends Model
+class TeacherSpecializationsList extends Model
 {
-    protected $table = 'specializations_list';
+    protected $table = 'teacher_specializations_list';
 
     public $timestamps = false;
 

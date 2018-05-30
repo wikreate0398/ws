@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Cities', 'id', 'city');
     }
 
+    public function userType()
+    {
+        return $this->hasOne('App\Models\UserTypes', 'id', 'user_type');
+    }
+
     public function teacherBoockmarks()
     {
         return $this->hasOne('App\Models\TeacherBoockmarks', 'id_user', 'id_teacher'); 
@@ -126,7 +131,7 @@ class User extends Authenticatable
         if (isset($request['specializations'])) 
         {
             $specializationsId = explode(',', $request['specializations']);
-            $user->whereHas('specializations', function ($query) use ($specializationsId) {
+            $user->whereHas('teacherSpecializations', function ($query) use ($specializationsId) {
                 $query->whereIn('id_specialization', $specializationsId);
             });
         }
@@ -154,9 +159,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\SubjectsList', 'teacher_subjects', 'id_teacher', 'id_subject')->orderBy('page_up', 'asc')->orderBy('id', 'desc');
     }
 
-    public function specializations()
+    public function teacherSpecializations()
     {
-        return $this->belongsToMany('App\Models\SpecializationsList', 'teacher_specializations', 'id_teacher', 'id_specialization');
+        return $this->belongsToMany('App\Models\TeacherSpecializationsList', 'teacher_specializations', 'id_teacher', 'id_specialization');
     }
 
     public function educations()

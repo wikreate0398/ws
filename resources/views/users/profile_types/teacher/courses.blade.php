@@ -44,10 +44,10 @@
 					</ul>
 					<div class="row">
 						<div class="col-lg-6">
-							<div class="more_card"><a href="/user/profile/course/{{ $course->id }}/edit">Управлять курсом</a></div>
+							<div class="more_card"><a href="{{ route(userRoute('edit_course'), ['id' => $course->id]) }}">Управлять курсом</a></div>
 						</div>
 						<div class="col-lg-6">
-							<div class="more_card delete__item"><a href="{{ route('delete_course', ['id' => $course->id]) }}">Удалить</a></div>
+							<div class="more_card delete__item"><a href="{{ route(userRoute('delete_course'), ['id' => $course->id]) }}">Удалить</a></div>
 						</div>
 					</div>
 				</div>
@@ -56,12 +56,14 @@
 		@endforeach 
 		@else
 		<div class="col-lg-12">
-			<h5>Вы не добавили ни одного курса</h5>
+			<div class="no__data"> 
+				<h5>Вы не добавили ни одного курса</h5>
+			</div>
 		</div>
 		@endif
 		<div class="col-lg-12">
 			<hr>
-			<a class="btn_add_course" href="{{ route('add_course') }}">Добавить курс</a>
+			<a class="btn_add_course" href="{{ route(userRoute('add_course')) }}">Добавить курс</a>
 		</div>
 	</div>
 </div>

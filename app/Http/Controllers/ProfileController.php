@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Users\UserService;
+use App\Http\Controllers\Users\Teacher\Course;
 
 class ProfileController extends Controller
 { 
@@ -25,36 +26,11 @@ class ProfileController extends Controller
      *
      * @return void
      */
-    public function __construct() {}  
- 
-    public function showCourse()
-    {   
-        return UserService::init(Auth::user()->user_type)->showCourse();  
-    } 
-
-    public function showEditForm()
-    { 
-        return UserService::init(Auth::user()->user_type)->showEditForm(); 
-    }
-
-    public function showSubscriptions()
-    {
-        return UserService::init(Auth::user()->user_type)->showSubscriptions();  
-    }
-
-    public function showReviews()
-    {
-        return UserService::init(Auth::user()->user_type)->showReviews();  
-    }
-
-    public function showBookmarks()
-    {
-        return UserService::init(Auth::user()->user_type)->showBookmarks();  
-    }
+    public function __construct() {}   
 
     public function editProfile(Request $request)
-    {
-        $edit = UserService::init(Auth::user()->user_type)->edit($request->all(), Auth::user()->id);   
+    { 
+        $edit = $this->edit($request->all(), Auth::user()->id);   
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
@@ -66,27 +42,10 @@ class ProfileController extends Controller
     {
         $id = $request->input('id');
         \App\Models\TeacherCertificates::whereId($id)->where('id_teacher', Auth::user()->id)->delete();
-    }
-
-    public function showDiploms()
-    {
-        return UserService::init(Auth::user()->user_type)->showDiploms();  
     } 
 
-    public function showCourseForm()
+    public function saveCourse(Request $request, Course $course)
     {
-        return UserService::init(Auth::user()->user_type)->showCourseForm();  
-    }
-
-    public function editCourseForm($id_course)
-    {
-        return UserService::init(Auth::user()->user_type)->editCourseForm($id_course);
-    }
-
-    public function saveCourse(Request $request)
-    {
-        $course = new \App\Http\Controllers\Users\Course;
-
         $validate = $course->validation($request->all());
         if ($validate !== true) 
         {
@@ -100,13 +59,11 @@ class ProfileController extends Controller
             $course->saveSections($idCourse);
         }
 
-        return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], 'Курс успешно добавлен!');
+        return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('user_profile'))], 'Курс успешно добавлен!');
     } 
 
-    public function editCourse($idCourse, Request $request)
-    {
-        $course = new \App\Http\Controllers\Users\Course;
-
+    public function editCourse($idCourse, Request $request, Course $course)
+    { 
         if (!$course->hasAccessCourse($idCourse, Auth::user()->id)) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
@@ -124,7 +81,7 @@ class ProfileController extends Controller
         {
             $course->saveSections($idCourse);
         }
-        return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], 'Курс успешно изменен!');
+        return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('user_profile'))], 'Курс успешно изменен!');
     }
 
     public function deleteCourseSection(Request $request)
@@ -159,7 +116,7 @@ class ProfileController extends Controller
         {
             $course->delete($id_course); 
         }
-        return redirect()->route('user_profile');
+        return redirect()->route(userRoute('user_profile'));
     }
 
     public function updateImage(Request $request)
@@ -179,7 +136,9 @@ class ProfileController extends Controller
             return \App\Utils\JsonResponse::error(['messages' => $validator->errors()->toArray()]); 
         } 
 
-        $fileName = UserService::init(Auth::user()->user_type)->uploadImage();  
+        $file     = request()->file('image');
+        $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+        $file->move(public_path() . '/uploads/users/', $fileName);  
 
         $avatarbase64    = $request->input('avatar');
         $avatarImageName = '';
@@ -291,17 +250,5 @@ class ProfileController extends Controller
     { 
         \App\Models\UsersEducations::where('id', $id)->where('id_user', Auth::user()->id)->delete();
         return redirect()->back()->with('flash_message', 'Образование успешно удалено');
-    } 
-
-    public function deleteUserActivities($id)
-    { 
-        \App\Models\UsersTeachingActivities::where('id', $id)->where('id_user', Auth::user()->id)->delete();
-        return redirect()->back()->with('flash_message', 'Преподовательская деятельность успешно удалена');
-    } 
-
-    public function deleteUserExperience($id)
-    { 
-        \App\Models\UsersWorkExperience::where('id', $id)->where('id_user', Auth::user()->id)->delete();
-        return redirect()->back()->with('flash_message', 'Трудовая деятельность успешно удалена');
-    } 
+    }  
 }

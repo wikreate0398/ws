@@ -52,9 +52,7 @@ trait TeacherTrait
         'address'               => 'required',
         'grade_experience'      => 'required',
         'image'                 => 'image|mimes:jpeg,jpg,png',
-        'email'                 => 'required|string|email|unique:users',
-        'password'              => 'required|string|min:6|confirmed',
-        'password_confirmation' => 'required',
+        'email'                 => 'required|email', 
         'teacher_subjects'      => 'required',
         'specializations'       => 'required',
         'lesson_options'        => 'required',
@@ -182,12 +180,7 @@ trait TeacherTrait
     public function edit(array $data, $id_user)
     {  
  
-        $this->_id_user = $id_user; 
-        
-        foreach (['email', 'password', 'password_confirmation'] as $key => $value) 
-        { 
-            unset($this->editRules[$value]);
-        }   
+        $this->_id_user = $id_user;  
 
         $errors = $this->validateEdit($data); 
  
@@ -219,15 +212,7 @@ trait TeacherTrait
             'price_hour'      => toFloat($data['price_hour']),
             'lesson_place'    => $data['lesson_place'],
             'data_filled'     => '1'
-        ]);  
-
-        if (request()->hasFile('image')) { 
-            $fileName = $this->uploadImage();   
-            User::where('id', $id_user)->
-              update([ 
-                'image' => $fileName 
-            ]); 
-        } 
+        ]);   
 
         TeacherSubjects::where('id_teacher', $id_user)->delete();
         if (!empty($data['teacher_subjects'])) 
@@ -327,18 +312,5 @@ trait TeacherTrait
             ];
         } 
         TeacherCertificates::insert($insert);
-    }
-
-    public function uploadImage()
-    {
-        $fileName = '';
-        if (request()->hasFile('image')) 
-        {
-            $file     = request()->file('image');
-            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-            $file->move(public_path() . '/uploads/users/', $fileName);   
-             
-        }
-        return $fileName;
-    }
+    } 
 }

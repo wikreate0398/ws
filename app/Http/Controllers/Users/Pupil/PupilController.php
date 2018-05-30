@@ -1,6 +1,6 @@
 <?php
  
-namespace App\Http\Controllers\Users\UserTypes;
+namespace App\Http\Controllers\Users\Pupil;
 
 use App\Models\User; 
 use App\Models\Regions;
@@ -17,7 +17,7 @@ use App\Http\Controllers\ProfileController;
 /**
 * Регистрация обычного пользователя
 */
-class PupilUser extends ProfileController  
+class PupilController extends ProfileController  
 {
     private $viewPath = 'users.profile_types.user.'; 
  

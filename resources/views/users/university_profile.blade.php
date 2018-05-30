@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
-@section('content') 
-
+@section('content')
 
 <div class="no__home" style="margin-top: 50px;">
 	<div class="container teacher_lk">
@@ -25,8 +24,6 @@
 							</div>
 						</div>
 						<div id="error-respond"></div>
-						 
-						 
 					</form> 
 				</div> 
 				<div class="col-lg-9">
@@ -35,13 +32,13 @@
 					 
 					@if(Auth::user()->data_filled == 0)  
 						<div class="data_coverage">
-							<a href="{{ route('user_edit') }}" class="btn edit_profile">Публиковать профиль</a>
+							<a href="{{ route(userRoute('user_edit')) }}" class="btn edit_profile">Публиковать профиль</a>
 							<span>Для того, чтобы Вы появились в разделе репетиторов, </br>
 							вам нужно подробно заполнить свой профиль</span>
 						</div>
 					@else
 						<div class="data_coverage">
-							<a href="{{ route('user_edit') }}" class="btn edit_profile">Личные данные</a>
+							<a href="{{ route(userRoute('user_edit')) }}" class="btn edit_profile">Личные данные</a>
 						</div>
 					@endif
 				</div>
@@ -52,8 +49,16 @@
 				@if(Auth::user()->data_filled == 1)
                 <ul class="nav lk_menu">
                     @if(Auth::user()->data_filled == 1)
-			      	<li class="{{ isActive(route('user_profile')) ? 'active' : '' }}">
-			      		<a href="{{ route('user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
+			      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
+			      		<a href="{{ route('university_user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
+			      	</li> 
+
+			      	<li class="{{ isActive(route(userRoute('user_faculties'))) ? 'active' : '' }}">
+			      		<a href="{{ route('university_user_faculties') }}">Факультеты</a>
+			      	</li> 
+
+			      	<li class="{{ isActive(route(userRoute('user_news'))) ? 'active' : '' }}">
+			      		<a href="{{ route(userRoute('user_news')) }}">Новости</a>
 			      	</li> 
 					@endif
                 </ul>
@@ -67,7 +72,7 @@
 			 
 			<div class="col-md-12">   
 				@if(Session::has('flash_message'))
-				    <div class="alert alert-success" style="margin-top: 20px;">
+				    <div class="alert alert-success">
 				    	<p>{{ Session::get('flash_message') }}</p>
 				    </div> 
 				@endif 

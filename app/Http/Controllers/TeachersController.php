@@ -13,7 +13,7 @@ use App\Models\SubjectsList;
 use App\Models\TeacherSpecializations;
 use App\Models\TeacherLessonOptions;
 use App\Models\TeacherCertificates;
-use App\Models\SpecializationsList;
+use App\Models\TeacherSpecializationsList;
 use App\Models\LessonOptionsList;
 use App\Models\UsersEducations;
 use App\Models\TeacherBoockmarks;
@@ -47,7 +47,7 @@ class TeachersController extends Controller
                                         })->orderBy('page_up', 'asc')
                                           ->orderBy('id', 'desc')->get(),
 
-            'specializations'        => SpecializationsList::whereHas('users', function($query){
+            'specializations'        => TeacherSpecializationsList::whereHas('users', function($query){
                                             return User::allowTeacherUser($query);
                                         })->get(),
 
@@ -74,7 +74,7 @@ class TeachersController extends Controller
     { 
         $data = [
             'teacher'                 => \App\Models\User::with(['cityData', 
-                                                                 'specializations', 
+                                                                 'teacherSpecializations', 
                                                                  'certificates', 
                                                                  'lesson_options', 
                                                                  'educations', 

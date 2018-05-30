@@ -61,7 +61,7 @@ class LoginController extends Controller
                                'confirm'  => 1], $remember) == true) 
             { 
                  
-                return \App\Utils\JsonResponse::success(['redirect' => route('user_profile')], trans('auth.success_login'));
+                return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('user_profile'))], trans('auth.success_login'));
             }
             else 
             { 

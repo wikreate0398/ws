@@ -113,17 +113,32 @@ span.req{
   right:50px;
   font-size:14px;
   position:fixed;
-  background:#ea4646;
+  background:#f97f7f;
   z-index:9999999999;
   color:#fff;
-  padding:5px 15px;
+  padding:5px 25px 5px 15px;
   border-radius:20px;
   -webkit-box-shadow:0px 2px 2px rgba(0,0,0,.1);
-  box-shadow:0px 2px 2px rgba(0,0,0,.1); 
+  box-shadow:0px 2px 2px rgba(0,0,0,.1);  
 }
 
 #error-respond p{
     margin: 0;
+}
+
+.close__error_respond{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-image: url('../public/images/delete_img.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+
 }
 
 .error__input{
@@ -531,6 +546,7 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	text-align: center;
 	margin-top: 35px;
 	margin-bottom: 35px;
+    text-transform: uppercase;
 }
 .title_desc{
 	font-family: 'Cuprum Regular';
@@ -2252,4 +2268,31 @@ select option:disabled {
     background-color: #58b36c;
     color: #fff;
     font-family: 'Cuprum Regular';
+}
+
+.pagination>li>a, .pagination>li>span{
+    color: #b83976;
+}
+
+.pagination>li:last-child>a, .pagination>li:last-child>span, .pagination>li:first-child>a, .pagination>li:first-child>span{
+    border-radius: none;
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+    background-color: #b83976;
+    border-color: #b83976;
+}
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover{
+    color: #b83976;
+}
+
+.no__data{ 
+    font-family: 'Cuprum Regular';
+    background-color: #f3f3f3;
+    padding: 10px;
+}
+
+.no__data h5{
+    font-size: 16px;
 }

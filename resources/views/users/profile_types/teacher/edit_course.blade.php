@@ -8,7 +8,7 @@
          <div class="col-lg-10 col-lg-offset-1">
             <ul class="breadcrumb">
                <li><a href="/">Главная</a></li>
-               <li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
+               <li><a href="{{ route(userRoute('user_profile')) }}">Личный кабинет</a></li>
                <li class="active">Редактировать курс</li>
             </ul>
             <h1 class="title_page">РЕДАКТИРОВАТЬ КУРС</h1>
@@ -33,7 +33,7 @@
                <a href="#certificate" aria-controls="certificate" role="tab" data-toggle="tab">Сертификат/диплом</a>
             </li>
          </ul>
-         <form class="ajax__submit" method="POST" action="{{ route('edit_course', ['id' => $course->id]) }}">
+         <form class="ajax__submit" method="POST" action="{{ route(userRoute('update_course'), ['id' => $course->id]) }}">
             {{ csrf_field() }}
             <div class="col-lg-8 col-lg-offset-2">
                <div class="tab-content course_form">
@@ -269,7 +269,7 @@
                   <div class="col-md-12">
                      <div id="error-respond"></div>
                      <button type="submit" class="btn btn_save" style="display: inline-block; width: auto;">
-                     Добавить 
+                     Сохранить 
                      </button>
                   </div>
                </div>

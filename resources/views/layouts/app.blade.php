@@ -105,7 +105,7 @@
 				  @if(Auth::check())
 				  <ul class="nav navbar-nav navbar-right">
 					<li>
-                        <a href="{{ route('user_profile') }}">
+                        <a href="{{ route(userRoute('user_profile')) }}">
                             <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
                         </a>
                     </li>
@@ -114,7 +114,7 @@
 					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <img src="/images/icon_profile.png"></a>
 					  <ul class="dropdown-menu">
-						<li><a href="{{ route('user_profile') }}">Личный кабинет</a></li>
+						<li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="{{ route('logout') }}">Выйти</a></li>
 					  </ul>
@@ -268,7 +268,7 @@
 								<h3>ЛИЧНЫЙ КАБИНЕТ</h3>
 								<ul class="list-unstyled"> 
 									@if(Auth::check())
-									<li><a href="{{ route('user_profile') }}">Профиль</a></li> 
+									<li><a href="{{ route(userRoute('user_profile')) }}">Профиль</a></li> 
 									@else  
 									<li><a href="{{ route('login') }}">Войти</a></li>
 									<li><a href="{{ route('registration') }}">Регистрация</a></li>
@@ -358,7 +358,7 @@
                             <h3>ЛИЧНЫЙ КАБИНЕТ</h3>
                             <ul class="list-unstyled"> 
                                 @if(Auth::check())
-                                <li><a href="{{ route('user_profile') }}">Профиль</a></li> 
+                                <li><a href="">Профиль</a></li> 
                                 @else  
                                 <li><a href="{{ route('login') }}">Войти</a></li>
                                 <li><a href="{{ route('registration') }}">Регистрация</a></li>

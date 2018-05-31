@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users\University;
+namespace App\Utils\Users\University;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -11,7 +11,7 @@ use App\Models\UniversityFacultiesSubjects;
 class Faculties 
 {
     private $niceNames = [  
-        'name'              => 'Название курса',
+        'name'              => 'Название факультета',
         'duration_learning' => 'Длительность обучения',
         'average_nr_points' => 'Среднее кол-во баллов',
         'qty_budget'        => 'Кол-во бюджетных мест',
@@ -29,6 +29,8 @@ class Faculties
         'price'             => 'required',
         'teacher_subjects'  => 'required',
     ];  
+
+    public $formLearningOptipons = ['full_time_learning', 'non_public_learning', 'distance_learning'];
 
     /**
      * Create a new controller instance.
@@ -70,7 +72,7 @@ class Faculties
 
         foreach ($data['type'] as $field => $value) 
         {
-            if (in_array($field, ['full_time_learning', 'non_public_learning', 'distance_learning'])) 
+            if (in_array($field, $this->formLearningOptipons)) 
             {
                 $createArray[$field] = 1;
             } 
@@ -104,11 +106,10 @@ class Faculties
             'duration_learning' => $data['duration_learning'],
             'average_nr_points' => $data['average_nr_points'],
             'qty_budget'        => $data['qty_budget'], 
-            'price'             => $data['price'],
-            'id_university'     => $id_university
+            'price'             => $data['price'] 
         ];
         
-        foreach (['full_time_learning', 'non_public_learning', 'distance_learning'] as $key => $value) 
+        foreach ($this->formLearningOptipons as $key => $value) 
         {
             if (!empty($data['type'][$value])) 
             {
@@ -129,21 +130,10 @@ class Faculties
     public function hasAccessFaculty($id_faculty, $id_university)
     {
         return UniversityFaculties::where('id', $id_faculty)->where('id_university', $id_university)->count();
-    }
- 
-    public function deleteSection($id_section)
-    {
-        CourseSections::whereId($id_section)->delete();
-        SectionLectures::where('id_section', $id_section)->delete();
-    }
-
-    public function deleteLecture($id_lecture)
-    { 
-        SectionLectures::whereId($id_lecture)->delete();
     } 
 
-    public function delete($id_course)
+    public function delete($id_faculty)
     {
-        UniversityFaculties::whereId($id_course)->delete();
+        UniversityFaculties::whereId($id_faculty)->delete();
     } 
 }

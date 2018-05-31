@@ -54,7 +54,7 @@
 			      	</li> 
 
 			      	<li class="{{ isActive(route(userRoute('user_faculties'))) ? 'active' : '' }}">
-			      		<a href="{{ route('university_user_faculties') }}">Факультеты</a>
+			      		<a href="{{ route(userRoute('user_faculties')) }}">Факультеты</a>
 			      	</li> 
 
 			      	<li class="{{ isActive(route(userRoute('user_news'))) ? 'active' : '' }}">

@@ -61,8 +61,8 @@
 			<div class="col-lg-12">
 				@if(Auth::user()->data_filled == 1)
                 <ul class="nav lk_menu"> 
-			      	<li class="{{ isActive(route(userRoute('user_edit'))) ? 'active' : '' }}">
-			      		<a href="{{ route(userRoute('user_edit')) }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
+			      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
+			      		<a href="{{ route(userRoute('user_profile')) }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
 			      	</li>
 					<li class="{{ isActive(route(userRoute('user_diplomas'))) ? 'active' : '' }}">
 						<a href="{{ route(userRoute('user_diplomas')) }}">МОИ ДИПЛОМЫ</a>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users\Teacher;
+namespace App\Utils\Users\University;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -10,7 +10,7 @@ use App\Models\CourseSections;
 use App\Models\SectionLectures; 
 use App\Models\CourseCategory;
 
-class Course extends Controller
+class Course
 {
     private $niceNames = [ 
         'id_category'   => 'Категория', 
@@ -146,12 +146,12 @@ class Course extends Controller
             'pay'           => intval($data['pay']),
             'is_open_until' => date('Y-m-d', strtotime($data['is_open_until'])),
             'available'     => intval($data['available']),
-            'price'         => !empty($data['price']) ? priceString($data['price']) : ''
+            'price'         => !empty($data['price']) ? toFloat($data['price']) : ''
         ])->id; 
     }
 
     public function edit(array $data, $id_course, $id_user)
-    { 
+    {  
         Courses::where('id', $id_course)
         ->where('id_user', $id_user)
         ->update([ 
@@ -163,7 +163,7 @@ class Course extends Controller
             'pay'           => intval($data['pay']),
             'is_open_until' => date('Y-m-d', strtotime($data['is_open_until'])),
             'available'     => intval($data['available']),
-            'price'         => !empty($data['price']) ? priceString($data['price']) : ''
+            'price'         => !empty($data['price']) ? toFloat($data['price']) : ''
         ]); 
     }
 
@@ -221,9 +221,10 @@ class Course extends Controller
         SectionLectures::whereId($id_lecture)->delete();
     } 
 
-    public function delete($id_course)
+    public function delete($id_course, $id_user)
     {
         Courses::whereId($id_course)->delete();
+        $this->deleteSectionsAndLectures($id_course, $id_user);
     }
 
     public function deleteSectionsAndLectures($id_course, $id_user)
@@ -232,8 +233,8 @@ class Course extends Controller
         foreach (CourseSections::where('id_course', $id_course)->get() as $section) 
         {
             $sectionsIds[] = $section->id;
-        } 
+        }  
         CourseSections::where('id_course', $id_course)->delete();
-        SectionLectures::whereIn('id_section', $sectionsIds)->delete();
+        SectionLectures::whereIn('id_section', $sectionsIds)->delete(); 
     }
 }

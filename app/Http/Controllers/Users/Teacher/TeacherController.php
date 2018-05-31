@@ -32,13 +32,13 @@ use Illuminate\Support\Facades\DB;
 */
 class TeacherController extends ProfileController 
 {
-    private $viewPath = 'users.profile_types.teacher.';
+    public $viewPath = 'users.profile_types.teacher.';
 
     use \App\Http\Controllers\Users\Traits\TeacherTrait;
 
 	function __construct() {} 
 
-    private function redirectIfDataNoFilled()
+    public function redirectIfDataNoFilled()
     {
         if (Auth::user()->user_type == 2 && Auth::user()->data_filled == 0) 
         {
@@ -73,25 +73,7 @@ class TeacherController extends ProfileController
             //     'js/tinymce/tinymce.min.js'
             // ]
         ]); 
-    }   
-
-    public function showCourse()
-    { 
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        } 
-
-        $user    = Auth::user();
-        $courses = Courses::with('sections')->where('id_user', $user->id)->get();
-
-        return view('users.teacher_profile', [ 
-            'user'               => $user, 
-            'courses'            => $courses,
-            'include'            => $this->viewPath . 'courses',
-        ]); 
-    }
+    }    
 
     public function showSubscriptions()
     {
@@ -135,40 +117,5 @@ class TeacherController extends ProfileController
             'user'               => Auth::user(), 
             'include'            => $this->viewPath . 'diplomas',
         ]); 
-    }  
-
-    public function showCourseForm()
-    {
-
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        }
-
-        return view('users.teacher_profile', [ 
-            'user'       => Auth::user(), 
-            'include'    => $this->viewPath . 'add_course',
-            'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
-        ]); 
-    } 
-
-    public function editCourseForm($id_course)
-    {
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        }
-
-        $user    = Auth::user();
-        $courses = Courses::with('sections')->where('id_user', $user->id)->orderBy('created_at', 'desc')->findOrFail($id_course); 
-
-        return view('users.teacher_profile', [ 
-            'user'       => Auth::user(), 
-            'include'    => $this->viewPath . 'edit_course',
-            'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
-            'course'     => $courses
-        ]); 
-    }  
+    }   
 }

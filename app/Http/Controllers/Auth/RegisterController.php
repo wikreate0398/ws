@@ -60,52 +60,9 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm()
-    {
-        $cities          =  Cities::orderBy('name', 'asc')->get();
-        $grade_education = map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray());
-        $programs_type   = map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray());
-        $teach_activ_cat = map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray());
-        $work_experience_direction = WorkExperienceDirection::orderBy('page_up','asc')->get();
-        $inst_type       = InstitutionTypes::orderBy('page_up','asc')->get();
-        $university      = University::orderBy('page_up','asc')->get();
-        $univ_form_attitude = UniversityFormAttitude::orderBy('page_up','asc')->get();
-   
-        return view('auth.register', compact('cities', 
-                                             'grade_education', 
-                                             'programs_type', 
-                                             'teach_activ_cat', 
-                                             'work_experience_direction', 
-                                             'inst_type', 
-                                             'university', 
-                                             'univ_form_attitude')
-                    ); 
-    }
-
-    // public function register(Request $request)
-    // { 
-    //     $this->userType = $request->input('user_type');  
-
-    //     $errors = UserService::init($this->userType)->validation($request->all());
-
-    //     if ($errors !== true) 
-    //     {
-    //         return \App\Utils\JsonResponse::error(['messages' => $errors]);
-    //     } 
-
-    //     $createUser = UserService::init($this->userType)->register($request->all()); 
-
-    //     if ($createUser !== true) 
-    //     {
-    //         return \App\Utils\JsonResponse::error(['messages' => $createUser]);
-    //     } 
-
-    //     if ($createUser) 
-    //     { 
-    //         $user = User::whereId($createUser)->first(); 
-    //         $this->sendConfirmationEmail($user['email'], $user['confirm_hash']); 
-    //         return \App\Utils\JsonResponse::success(['redirect' => route('finish_registration')]); 
-    //     }  
-    // } 
+    { 
+        return view('auth.register'); 
+    } 
 
     public function register(Request $request)
     {

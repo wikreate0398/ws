@@ -155,7 +155,7 @@
                   <div class="col-md-12">
                      <div id="error-respond"></div>
                      <button type="submit" class="btn btn_save" style="display: inline-block; width: auto;">
-                     Добавить 
+                     Редактировать 
                      </button>
                   </div>
                </div>

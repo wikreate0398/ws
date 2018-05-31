@@ -51,20 +51,32 @@ Route::group(['middleware' => ['web_auth']], function(){
 		Route::group(['prefix' => 'university-profile', 'namespace' => 'Users\University'], function() { 
 			$controller = 'UniversityController';
 			$userDefine = 'university'; 
-		 	Route::get('news', "$controller@showNews")->name("{$userDefine}_user_news"); 
+		 	 
 		 	Route::get('edit', "$controller@showEditForm")->name("{$userDefine}_user_edit");
 		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
 		 	  
-		 	Route::group(['prefix' => 'faculties'], function() use($controller,$userDefine) {
+		 	Route::group(['prefix' => 'faculties'], function() use($userDefine) {
+		 		$controller = 'FacultiesController';
 		 		Route::get('/', "$controller@showFaculties")->name("{$userDefine}_user_faculties");
 			 	Route::get('add', "$controller@showFacultyForm")->name("{$userDefine}_add_faculty");  
-				Route::get('{id_course}/edit', "$controller@editFacultyForm")->name("{$userDefine}_edit_faculty");
+				Route::get('{id}/edit', "$controller@editFacultyForm")->name("{$userDefine}_edit_faculty");
 				Route::get('{id}/delete', "$controller@deleteFaculty")->name("{$userDefine}_delete_faculty"); 
 				Route::post('save', "$controller@saveFaculty")->name("{$userDefine}_save_faculty"); 
 				Route::post('{id}/edit', "$controller@editFaculty")->name("{$userDefine}_update_faculty");  
 			}); 
 
-		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
+			Route::group(['prefix' => 'news'], function() use($userDefine) {
+				$controller = 'NewsController';
+		 		Route::get('/', "$controller@showNews")->name("{$userDefine}_user_news");
+			 	Route::get('add', "$controller@showNewsForm")->name("{$userDefine}_add_news");  
+				Route::get('{id}/edit', "$controller@editNewsForm")->name("{$userDefine}_edit_news");
+				Route::get('{id}/delete', "$controller@deleteNews")->name("{$userDefine}_delete_news"); 
+				Route::post('save', "$controller@saveNews")->name("{$userDefine}_save_news"); 
+				Route::post('{id}/edit', "$controller@editNews")->name("{$userDefine}_update_news");  
+			}); 
+
+		 	Route::group(['prefix' => 'course'], function() use($userDefine) {
+		 		$controller = 'CourseController'; 
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile");
 			 	Route::get('add', "$controller@showCourseForm")->name("{$userDefine}_add_course");  
 				Route::get('{id_course}/edit', "$controller@editCourseForm")->name("{$userDefine}_edit_course");
@@ -87,7 +99,8 @@ Route::group(['middleware' => ['web_auth']], function(){
 			Route::get('diplomas', "{$controller}@showDiploms")->name("{$userDefine}_user_diplomas");
 			Route::get('deleteUserEducation/{id}', "{$controller}@deleteUserEducation")->name("{$userDefine}_delete_education");
 
-		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
+		 	Route::group(['prefix' => 'course'], function() use($userDefine) {
+		 		$controller = 'CourseController'; 
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
 			 	Route::get('add', "$controller@showCourseForm")->name("{$userDefine}_add_course");  
 				Route::get('{id_course}/edit', "$controller@editCourseForm")->name("{$userDefine}_edit_course");

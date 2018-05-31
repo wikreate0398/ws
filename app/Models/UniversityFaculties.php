@@ -26,4 +26,29 @@ class UniversityFaculties extends Model
     {
         return $this->belongsToMany('App\Models\SubjectsList', 'university_faculties_subjects', 'id_faculty', 'id_subject')->orderBy('page_up', 'asc')->orderBy('id', 'desc');
     }
+
+    public static function getProfileFaculties($universityId, $request = false, $formLearningOptipons)
+    {
+        $faculties = (new UniversityFaculties)->newQuery();   
+
+        if (!empty($request['searchByName'])) 
+        {
+            $faculties->where('name', 'like', '%'.$request['searchByName'].'%');
+        }
+
+        if (!empty($request['type']) && in_array($request['type'], $formLearningOptipons)) 
+        { 
+            $faculties->where($request['type'], '1');
+        }
+
+        if (!empty($request['duration_learning'])) 
+        { 
+            $faculties->where('duration_learning', $request['duration_learning']);
+        }
+
+        $query = $faculties->where('id_university', $universityId)
+                           ->orderBy('created_at', 'desc')
+                           ->get();
+        return $query;
+    }
 }

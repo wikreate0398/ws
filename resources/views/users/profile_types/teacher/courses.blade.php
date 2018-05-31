@@ -1,7 +1,7 @@
 
 <div class="course_lk">
 	<div class="row">
-		@if(isset($courses)) 
+		@if(count($courses)) 
 		@foreach($courses as $course)
 		<div class="col-lg-4">
 			<div class="external_card">

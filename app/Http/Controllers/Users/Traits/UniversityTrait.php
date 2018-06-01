@@ -134,14 +134,16 @@ trait UniversityTrait
             'distance_learning'        => !empty($data['distance_learning']) ? 1 : 0 
         ]);
 
-        UniversitySpecializations::where('id_university', $id_user)->delete();
+        $id_university = UsersUniversity::where('id_user', $id_user)->first()->id;
+  
+        UniversitySpecializations::where('id_university', $id_university)->delete();
         if (!empty($data['specializations'])) 
         { 
             $insert          = [];
             foreach ($data['specializations'] as $id_specialization => $value) 
             {
                 $insert[] = [
-                    'id_university'     => $id_user,
+                    'id_university'     => $id_university,
                     'id_specialization' => $id_specialization
                 ];
             }

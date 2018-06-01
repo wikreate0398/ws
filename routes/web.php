@@ -30,8 +30,9 @@ Route::get('contacts', 'PagesController@contacts');
 Route::get('under-construction', 'PagesController@underConstruction');
 Route::get('terms-of-use', 'PagesController@termsOfUse');
  
-Route::get('educational-institutions', 'InstitutionController@index'); 
-Route::get('institution/{id}', 'InstitutionController@view');
+Route::get('universities', 'UniversityController@index'); 
+Route::get('university/{id}', 'UniversityController@view');
+Route::get('universities/autocomplete', 'UniversityController@autocomplete');
 
 Route::get('teachers', 'TeachersController@index');
 Route::get('teacher/{id}', 'TeachersController@show');

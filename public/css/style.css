@@ -1428,19 +1428,30 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
     margin-bottom: 30px;
     margin-top: 30px;
 }
-.filter_top .available_list li a{
+.filter_top .available_list li a, .filter_top .status_list li a{
 	font-family: 'Cuprum Regular';
     font-size: 16px;
     color: #a8a8a8;
 	text-transform: uppercase;
 }
+
+.filter_top .status_list li a{
+    font-size: 14px;
+}
+
+.filter_top .sorting_list.univ__sorting_list li a{
+    font-size: 14px;
+}
+
 .filter_top .available_list li a:focus,
-.filter_top .available_list li a:hover{
+.filter_top .available_list li a:hover,
+.filter_top .status_list li a:focus,
+.filter_top .status_list li a:hover{
     color: #b93777;
 	font-weight: 300;
 	text-decoration: none;
 }
-.filter_top .available_list .active a{
+.filter_top .available_list .active a, .filter_top .status_list .active a{
     color: #b93777;
 	font-weight: 300;
 	text-decoration: none;
@@ -1477,6 +1488,13 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	font-weight: 300;
 	text-decoration: none;
 }
+
+input#amount{
+    border:0; 
+    color:#333; 
+    font-size: 12px;
+}
+
 .filter_top .sorting_list .active a{
     color: #b93777;
 	font-weight: 300;
@@ -1668,9 +1686,19 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	color: #b93777;
 	font-weight: 300;
 }
+
+.filter__ttl{
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 11px; 
+    margin-bottom: 15px;
+}
+
 /* Чекбоксы */
 .checkbox label{
 	padding-left: 0px;
+    justify-content: flex-start;
+    display: flex;
 }
 .checkbox label:after{
     content: '';
@@ -2295,4 +2323,8 @@ select option:disabled {
 
 .no__data h5{
     font-size: 16px;
+}
+
+.price__input{
+    text-align: left !important;
 }

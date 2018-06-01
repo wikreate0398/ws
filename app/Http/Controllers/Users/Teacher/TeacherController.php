@@ -36,20 +36,10 @@ class TeacherController extends ProfileController
 
     use \App\Http\Controllers\Users\Traits\TeacherTrait;
 
-	function __construct() {} 
-
-    public function redirectIfDataNoFilled()
+	function __construct() 
     {
-        if (Auth::user()->user_type == 2 && Auth::user()->data_filled == 0) 
-        {
-            if (request()->ajax()) {
-                return response()->json(['error' => 'page not available'], 404);
-            }  
-            return redirect()->route(userRoute('user_edit'));
-        }
-
-        return true;
-    }
+        $this->middleware('data_filled', ['only' => ['showSubscriptions', 'showReviews', 'showDiploms']]);
+    }  
 
     public function showEditForm()
     {
@@ -76,28 +66,14 @@ class TeacherController extends ProfileController
     }    
 
     public function showSubscriptions()
-    {
-
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        }
-
+    {   
         return view($this->viewPath . 'subscriptions', [ 
             'user'               => Auth::user(),  
         ]); 
     }
 
     public function showReviews()
-    {
-
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        }
-
+    {  
         return view('users.teacher_profile', [ 
             'user'               => Auth::user(), 
             'include'            => $this->viewPath . 'reviews',
@@ -105,14 +81,7 @@ class TeacherController extends ProfileController
     } 
 
     public function showDiploms()
-    {
-
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        }
-
+    {    
         return view('users.teacher_profile', [ 
             'user'               => Auth::user(), 
             'include'            => $this->viewPath . 'diplomas',

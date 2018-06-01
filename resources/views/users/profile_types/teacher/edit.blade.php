@@ -205,7 +205,7 @@
 				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА (₽) <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control number__field" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
+						<input class="form-control number__field price__input" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
 					</div>
 				</div>
 				<div class="col-md-12">

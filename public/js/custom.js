@@ -5,6 +5,11 @@ jQuery(document).ready(function($) {
     //   auto_focus: 'element1'
     // });
 
+     
+
+     
+    InputMask(); 
+
     $("textarea[maxlength]").each(function(){
         $(this).next('.maxlength__label').find('span').text(this.value.length);
     });
@@ -229,6 +234,7 @@ jQuery(document).ready(function($) {
                     'padding-right': '0'
                 });
                 $(button).text(button_txt);
+                InputMask();
             }
         });
     }
@@ -834,3 +840,14 @@ function deleteTeacherSubject(id){
         $('select.teacher_subjects_select option:first').attr('selected',true);
     }
 }
+
+function InputMask(){
+    $('.price__input').inputmask("decimal",{
+        alias: 'numeric',
+        radixPoint:".", 
+        groupSeparator: " ", 
+        digits: 2,
+        autoGroup: true,
+        allowMinus: false  
+    });
+} 

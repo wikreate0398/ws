@@ -38,12 +38,14 @@
 	<div class="row">
 		@if(count($faculties) > 0) 
 		@foreach($faculties as $faculty)
-		<div class="col-md-4" style="background-color: #ededed; padding: 15px; margin: 0 7.5px 15px 7.5px;">
-			<h4>
-				<a href="" style="font-weight: bold; color: #333; text-decoration: none; font-size: 16px;">{{ $faculty->name }}</a>
-			</h4>
-			<a href="{{ route(userRoute('edit_faculty'), ['id' => $faculty->id]) }}">Редактировать</a> &nbsp;
-			<a class="delete__item" href="{{ route(userRoute('delete_faculty'), ['id' => $faculty->id]) }}">Удалить</a>
+		<div class="col-md-4">
+			<div style="background-color: #ededed; padding: 15px;">  
+				<h4>
+					<a href="" style="font-weight: bold; color: #333; text-decoration: none; font-size: 16px;">{{ $faculty->name }}</a>
+				</h4>
+				<a href="{{ route(userRoute('edit_faculty'), ['id' => $faculty->id]) }}">Редактировать</a> &nbsp;
+				<a class="delete__item" href="{{ route(userRoute('delete_faculty'), ['id' => $faculty->id]) }}">Удалить</a>
+			</div>
 		</div>
 		@endforeach 
 		@else

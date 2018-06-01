@@ -23,17 +23,12 @@ class CourseController extends UniversityController
      */
     public function __construct() 
     {
+        $this->middleware('data_filled');
         $this->_course = new Course;
     } 
 
     public function showCourse()
-    { 
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        } 
-
+    {   
         $user    = Auth::user();
         $courses = Courses::with('sections')->where('id_user', $user->id)->get();
 
@@ -45,13 +40,7 @@ class CourseController extends UniversityController
     }
 
     public function showCourseForm()
-    {
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        } 
-        
+    { 
         return view('users.university_profile', [ 
             'user'       => Auth::user(), 
             'include'    => 'users.profile_types.teacher.add_course',

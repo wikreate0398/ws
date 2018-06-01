@@ -16,6 +16,6 @@ class UniversitySpecializationsList extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'university_specializations', 'id_specialization', 'id_teacher');
+        return $this->belongsToMany('App\Models\UsersUniversity', 'university_specializations', 'id_specialization', 'id_university');
     }
 }

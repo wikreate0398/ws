@@ -60,7 +60,7 @@
                      <label class="col-md-5 control-label">СТОИМОСТЬ ОБУЧЕНИЯ в ГОД (₽) <span class="req">*</span></label>
                      <div class="col-md-7">
                         <div class="form-group">
-                           <input class="form-control number_field" value="{{ $faculty->price }}" name="price" type="text">
+                           <input class="form-control number_field price__input" value="{{ $faculty->price }}" name="price" type="text">
                         </div>
                      </div>
                      <div class="clearfix"></div>

@@ -565,10 +565,10 @@
                         @foreach($university as $item)
                             <div class="item"> 
                                 <?php $img = !empty($item['user']['image']) ? '/public/uploads/users/' . $item['user']['image'] : noImg()  ?>
-                                <a href="/institution/{{ $item['id'] }}/">
+                                <a href="/university/{{ $item['id'] }}/">
 									<img class="img-responsive" src="{{ $img }}">
 								</a> 
-                                <h3><a href="/institution/{{ $item['id'] }}">{{ $item['full_name'] }}</a></h3>
+                                <h3><a href="/university/{{ $item['id'] }}">{{ $item['full_name'] }}</a></h3>
                                 <ul class="list-unstyled">
                                     <li>10 КУРСОВ</li>
                                     <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
@@ -579,7 +579,7 @@
                 @endif
 
                 <div class="link_more">
-                    <a href="/educational-institution/">Все вузы</a>
+                    <a href="/universities/">Все вузы</a>
                 </div>
 				
                 <div class="banner_block">

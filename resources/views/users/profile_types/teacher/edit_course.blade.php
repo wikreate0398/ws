@@ -120,7 +120,7 @@
                      </div>
                      <div class="col-md-7">
                         <div class="form-group">
-                           <input type="text" class="form-control price__course" autocomplete="off" name="price" value="{{ $course->price }}" placeholder="Стоимость, руб *" {{ ($course->pay == 1) ? 'disabled' : '' }}>
+                           <input type="text" class="form-control price__course price__input" autocomplete="off" name="price" value="{{ $course->price }}" placeholder="Стоимость, руб *" {{ ($course->pay == 1) ? 'disabled' : '' }}>
                         </div>
                      </div>
                   </div>

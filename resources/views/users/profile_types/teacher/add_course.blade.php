@@ -115,7 +115,7 @@
                      </div>
                      <div class="col-md-7">
                         <div class="form-group">
-                           <input type="text" class="form-control price__course" autocomplete="off" name="price" value="" placeholder="Стоимость, руб *" disabled>
+                           <input type="text" class="form-control price__course price__input" autocomplete="off" name="price" value="" placeholder="Стоимость, руб *" disabled>
                         </div>
                      </div>
                   </div>

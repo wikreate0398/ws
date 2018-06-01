@@ -45,7 +45,10 @@
     <script src="{{ asset('js/jquery-ui.min.js') . '?v=' . time() }}"></script>
     <script src="{{ asset('js/switcher.js') }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script> 
-    
+
+    <!-- Price Input Mask -->
+    <script type="text/javascript" src="{{ asset('js/input_mask.js') }}"></script>
+
     <!-- Cropper --> 
     <script src="{{ asset('js/cropperjs/dist/cropper.js') }}"></script>
     
@@ -99,7 +102,7 @@
 				  <ul class="nav navbar-nav">
 					<li><a href="/about/">О ПРОЕКТЕ</a></li>
 					<li><a href="/courses/">КУРСЫ</a></li>
-					<li><a href="/educational-institutions/">ВУЗЫ И ШКОЛЫ</a></li>
+					<li><a href="/universities/">ВУЗЫ И ШКОЛЫ</a></li>
 					<li><a href="/teachers/">ПРЕПОДАВАТЕЛИ</a></li>
 				  </ul>
 				  @if(Auth::check())
@@ -132,8 +135,9 @@
 							НАЙДИТЕ СВОЕ ПРИЗВАНИЕ В ПОЛНОМ КАТАЛОГЕ ВУЗОВ И КУРСОВ
 						</h2>
                         <ul class="list-inline list_information">
+                            @if($stats['institutions'] > 0)
                             <li>
-                                <a href="/educational-institution/">
+                                <a href="/universities/">
                                     {{ $stats['institutions'] }} 
                                     @if($stats['institutions'] == 1)
                                         ВУЗ
@@ -144,6 +148,9 @@
                                     @endif
                                 </a>
                             </li>
+                            @endif
+
+                            @if($stats['courses'] > 0)
                             <li>
                                 <a href="">
                                     {{ $stats['courses'] }} 
@@ -156,6 +163,9 @@
                                     @endif 
                                 </a>
                             </li>
+                            @endif 
+
+                            @if($stats['teachers'] > 0)
                             <li>
                                 <a href="/teachers/">
                                     {{ $stats['teachers'] }} 
@@ -168,6 +178,7 @@
                                     @endif  
                                 </a>
                             </li>
+                            @endif 
                         </ul>
 						<form class="home" id="search_form" action="/search/" data-url-autocomplete="/autocomplete">
 							<div class="input-group">
@@ -403,10 +414,7 @@
             </div> 
 
             <div class="col-md-12">
-                <button id="crop__btn"  type="button" class="btn btn-default">Сохранить</button>
-                <!-- <button style="display: none;" 
-                        class="btn primary btn-sm save__cropped_image"
-                        onclick="$('form.profile__image_form').submit();">Сохранить</button> -->  
+                <button id="crop__btn"  type="button" class="btn btn-default">Сохранить</button> 
                 <div id="result"></div>
             </div> 
         </div> 

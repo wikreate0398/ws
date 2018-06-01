@@ -26,13 +26,7 @@ class NewsController extends UniversityController
     } 
 
     public function showNews()
-    {
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        } 
-
+    { 
         $news = UniversityNews::getProfileNews(Auth::user()->university->id, request()->all());
 
         return view('users.university_profile', [ 
@@ -43,13 +37,7 @@ class NewsController extends UniversityController
     }
 
     public function showNewsForm()
-    { 
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        } 
-        
+    {  
         return view('users.university_profile', [ 
             'user'          => Auth::user(), 
             'include'       => $this->viewPath . '.news.add' 

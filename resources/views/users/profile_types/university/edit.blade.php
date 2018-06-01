@@ -161,7 +161,7 @@
 				</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control number_field" value="{{ $userUniversity->price }}" name="price" type="text">
+						<input class="form-control number_field price__input" value="{{ $userUniversity->price }}" name="price" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>

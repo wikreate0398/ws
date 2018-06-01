@@ -24,13 +24,15 @@
 	<div class="row">
 		@if(count($news) > 0) 
 		@foreach($news as $item)
-		<div class="col-md-4" style="background-color: #ededed; padding: 15px; margin: 0 7.5px 15px 7.5px;">
-			<h4>
-				<a href="" style="font-weight: bold; color: #333; text-decoration: none; font-size: 16px;">{{ $item->name }}</a>
-			</h4>
-			<span style="display: block; color: #757575; font-size: 13px;">{{ date('d.m.Y', strtotime($item['created_at'])) }}</span>
-			<a href="{{ route(userRoute('edit_news'), ['id' => $item->id]) }}">Редактировать</a> &nbsp;
-			<a class="delete__item" href="{{ route(userRoute('delete_news'), ['id' => $item->id]) }}">Удалить</a>
+		<div class="col-md-4">
+			<div style="background-color: #ededed; padding: 15px;">
+				<h4>
+					<a href="" style="font-weight: bold; color: #333; text-decoration: none; font-size: 16px;">{{ $item->name }}</a>
+				</h4>
+				<span style="display: block; color: #757575; font-size: 13px;">{{ date('d.m.Y', strtotime($item['created_at'])) }}</span>
+				<a href="{{ route(userRoute('edit_news'), ['id' => $item->id]) }}">Редактировать</a> &nbsp;
+				<a class="delete__item" href="{{ route(userRoute('delete_news'), ['id' => $item->id]) }}">Удалить</a>
+			</div>
 		</div>
 		@endforeach 
 		@else

@@ -27,13 +27,7 @@ class FacultiesController extends UniversityController
     } 
 
     public function showFaculties()
-    { 
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        }  
-
+    {  
         $faculties = UniversityFaculties::getProfileFaculties(Auth::user()->university->id, request()->all(), $this->_faculties->formLearningOptipons); 
 
         return view('users.university_profile', [ 
@@ -49,13 +43,7 @@ class FacultiesController extends UniversityController
     }  
 
     public function showFacultyForm()
-    { 
-        $checkIfDataNoFilled = $this->redirectIfDataNoFilled();
-        if ($checkIfDataNoFilled !== true) 
-        {
-            return $checkIfDataNoFilled;
-        } 
-        
+    {   
         return view('users.university_profile', [ 
             'user'          => Auth::user(), 
             'include'       => $this->viewPath . '.faculties.add',

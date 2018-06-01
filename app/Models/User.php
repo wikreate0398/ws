@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\UsersUniversity', 'id_user', 'id');
     }
 
+    public function courses()
+    {
+        return $this->hasMany('App\Models\Courses', 'id_user', 'id')->orderBy('created_at', 'desc');
+    }
+
     public static function allowTeacherUser(Builder $query)
     {
         return $query->where('user_type', '2')
@@ -79,7 +84,8 @@ class User extends Authenticatable
     {
         return $query->where('user_type', '3')
                      ->where('activate', '1')
-                     ->where('confirm', '1');
+                     ->where('confirm', '1')
+                     ->where('data_filled','1');
     }     
 
     public static function getTeachers($request = false)
@@ -110,15 +116,7 @@ class User extends Authenticatable
         if (isset($request['max_price'])) 
         {
             $user->where('price_hour', '<=', toFloat($request['max_price']));
-        }
-
-        if (isset($request['subject'])) 
-        {
-            $subject = $request['subject'];
-            $user->whereHas('subjects', function ($query) use ($subject) {
-                $query->where('name', urldecode($subject));
-            });
-        }
+        } 
 
         if (isset($request['subjects'])) 
         {

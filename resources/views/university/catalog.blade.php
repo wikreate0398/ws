@@ -180,14 +180,13 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach  
                 </div>
+                {{ $universities->appends(request()->input())->links() }}
                   
             </div>
             <div class="col-lg-3">
-            <div class="filter_block">
-                 
-                
+            <div class="filter_block">                 
                 @if(count($filter['specializationList']))
                     <div class="specializations_teacher">
                         <h4 class="filter__ttl">СПЕЦИАЛИЗАЦИЯ</h4>

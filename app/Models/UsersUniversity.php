@@ -73,7 +73,10 @@ class UsersUniversity extends Model
                                 return User::allowUniversityUser($query);
                             })->orderBy('id_user', 'asc');
 
-        return $university->get(); 
+        return $university->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
+                                      ['*'], 
+                                      'page', 
+                                      !empty($request['page']) ? $request['page'] : 1);
     }
 
     public function specializations()

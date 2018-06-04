@@ -46,7 +46,7 @@ class Courses extends Model
     {
         $courses = (new Courses)->newQuery();
 
-        if (isset($input['q'])) 
+        if (!empty($input['q'])) 
         {
             $courses->where('name', 'like', '%'.$input['q'].'%');
         }
@@ -64,9 +64,7 @@ class Courses extends Model
         }
 
         $courses->whereHas('user', function($query){
-            $query->where(function($query){
-                return User::allowTeacherUser($query);
-            });
+            return User::allowUser($query);
         });
 
         return $courses->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 

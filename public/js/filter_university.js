@@ -86,7 +86,7 @@ function universityFilter(){
 
     flt='?flt=1'; 
     if(search__input) flt+='&q='+search__input;
-    if(university_status) flt+='&university_status='+university_status; 
+    if(university_status) flt+='&status='+university_status; 
     if(has_military_department) flt+='&has_military_department='+has_military_department;
     if(has_hostel) flt+='&has_hostel='+has_hostel;
     if(distance_learning) flt+='&distance_learning='+distance_learning;

@@ -151,7 +151,7 @@
 						<select name="status" class="form-control">
 	                        <option value="">Выбрать</option>
 	                        <option {{ ($userUniversity->status == '1') ? 'selected' : '' }} value="1">Государвственное</option>
-	                        <option {{ ($userUniversity->status == '2') ? 'selected' : '' }} value="2">Негосударвственное</option>
+	                        <option {{ ($userUniversity->status == '2') ? 'selected' : '' }} value="2">Коммерческий</option>
 	                    </select>
 					</div>
 				</div>

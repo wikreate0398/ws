@@ -38,7 +38,7 @@ class UniversityController extends Controller
             'filter' => [
                 'specializationList' => UniversitySpecializationsList::whereHas('users', function($query){ 
                                             return $query->whereHas('user', function($query){
-                                                return User::allowUniversityUser($query);
+                                                return User::allowUser($query);
                                             });
                                         })->orderBy('page_up', 'asc')
                                           ->orderBy('id', 'desc')->get(),
@@ -58,16 +58,20 @@ class UniversityController extends Controller
     {
         $university = UsersUniversity::with([
             'user', 
+            'news' => function($query){
+                return $query->where('view','1');
+            }
         ])->whereHas('user', function($query){
-            return User::allowUniversityUser($query);
+            return User::allowUser($query);
         })->where('id', $id)->get()->first();
         
         if (empty($university)) abort('404'); 
 
         $data = [
-            'data' => $university 
+            'university' => $university 
         ];  
 
+// exit(print_arr($data['university']->toArray()));
         return view('university.show', $data);
     }
 
@@ -75,7 +79,7 @@ class UniversityController extends Controller
     {
         $query      = urldecode($request->input('search'));  
         $searchData = UsersUniversity::whereHas('user', function($query){
-                                            return User::allowUniversityUser($query);
+                                            return User::allowUser($query);
                                         })
                                         ->where('full_name', 'like', "%$query%")
                                         ->orderBy('id_user', 'asc')->get();

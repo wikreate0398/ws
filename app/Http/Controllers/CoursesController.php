@@ -41,12 +41,12 @@ class CoursesController extends Controller
         $data = [
             'courses'      => Courses::getCatalog($cat, $request->all()),
             'totalCourses' => Courses::whereHas('user', function($query){
-                                        return User::allowTeacherUser($query);
+                                        return User::allowUser($query);
                                     })->count(),
 
             'categories'   => CourseCategory::with(['courses' => function($query){
                                     $query->whereHas('user', function($query){
-                                        return User::allowTeacherUser($query);
+                                        return User::allowUser($query);
                                     });
                               }])->has('courses', '>=', '1')->get(),
             'baseUrl'      => $baseUrl,
@@ -62,7 +62,7 @@ class CoursesController extends Controller
     { 
         $data = [
           'course' => Courses::with('sections')->where('id', $id)->whereHas('user', function($query){
-                          return User::allowTeacherUser($query);
+                          return User::allowUser($query);
                       })->findOrFail($id) 
         ];   
 
@@ -73,7 +73,7 @@ class CoursesController extends Controller
     { 
         $query      = urldecode($request->input('search'));  
         $searchData = Courses::whereHas('user', function($query){
-            return User::allowTeacherUser($query);
+            return User::allowUser($query);
         })->where('name', 'like', "%$query%")->orderBy('created_at', 'desc')->get();
 
         if (empty($searchData)) die();

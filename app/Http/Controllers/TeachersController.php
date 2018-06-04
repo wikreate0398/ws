@@ -43,17 +43,17 @@ class TeachersController extends Controller
         $data = [
             'teachers'               => User::getTeachers($request),
             'subjects'               => SubjectsList::whereHas('users', function($query){
-                                            return User::allowTeacherUser($query);
+                                            return User::allowUser($query);
                                         })->orderBy('page_up', 'asc')
                                           ->orderBy('id', 'desc')->get(),
 
             'specializations'        => TeacherSpecializationsList::whereHas('users', function($query){
-                                            return User::allowTeacherUser($query);
+                                            return User::allowUser($query);
                                         })->get(),
 
             'minMaxPrice'            => User::getTeachersMinMaxPrice(),
             'lesson_filter_options'  => LessonOptionsList::whereHas('users', function($query){
-                                                            return User::allowTeacherUser($query);
+                                                            return User::allowUser($query);
                                                         })->orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')->get(), 
 
@@ -80,7 +80,7 @@ class TeachersController extends Controller
                                                                  'educations', 
                                                                  'subjects'])
                                                            ->where(function($query){
-                                                                return User::allowTeacherUser($query);
+                                                                return User::allowUser($query);
                                                            }) 
                                                            ->findOrFail($id),  
             'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
@@ -115,7 +115,7 @@ class TeachersController extends Controller
     {
         $query      = urldecode($request->input('search'));  
         $searchData = User::where('user_type', 2)->where(function($query){
-                                return User::allowTeacherUser($query);
+                                return User::allowUser($query);
                             })
                             ->where('name', 'like', "%$query%")
                             ->orderBy('created_at', 'desc')->get();

@@ -81,63 +81,14 @@
                                    value="{{ @request()->input('page') ? request()->input('page') : '1' }}">
                         </div>
                     </div>
-                </div>
-
-                <style>
-                    .university__img img{
-                        width: 100%;
-                    }
-
-                    .university__item{
-                        border:1px solid #ededed;
-                        padding: 15px;
-                        font-family: 'Cuprum Regular';
-                    }
-
-                    .university__item h3{
-                        text-transform: uppercase;
-                        font-weight: bold;
-                        font-size: 14px;
-                        text-align: center;
-                    }
-
-                    .university__item table{
-                        width: 100%;
-                        font-size: 13px;  
-                    }
-
-                    .university__item table tr td:first-child{
-                        color: #9a9a9a;
-                    }
-
-                    .university__item table tr td:last-child{
-                        text-align: right;
-                    }
-
-                    .univ__footer{
-                        justify-content: space-between;
-                        display: flex;
-                        width: 100%;
-                        align-items: center;
-                    }
-
-                    .univ__footer .univ__price strong{
-                        font-size: 18px;
-                        color: #333;
-                    }
-
-                    .univ__footer .univ__price{
-                        font-size: 12px;
-                        color: #9a9a9a;
-                    }
-                </style>
+                </div> 
 
                 <div class="row">
                     @foreach($universities as $university)
                         <div class="col-md-4">
                             <div class="university__item">
                                 <div class="university__img">
-                                    <a href="">
+                                    <a href="/university/{{ $university->id }}/">
                                         <img class="img-responsive" src="{{ imageThumb(@$university->user->avatar, 'uploads/users', 400, 300, 'universities') }}">
                                     </a>
                                 </div>
@@ -321,4 +272,53 @@
 
         @endif
     </div>
+
+    <style>
+        .university__img img{
+            width: 100%;
+        }
+
+        .university__item{
+            border:1px solid #ededed;
+            padding: 15px;
+            font-family: 'Cuprum Regular';
+        }
+
+        .university__item h3{
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .university__item table{
+            width: 100%;
+            font-size: 13px;  
+        }
+
+        .university__item table tr td:first-child{
+            color: #9a9a9a;
+        }
+
+        .university__item table tr td:last-child{
+            text-align: right;
+        }
+
+        .univ__footer{
+            justify-content: space-between;
+            display: flex;
+            width: 100%;
+            align-items: center;
+        }
+
+        .univ__footer .univ__price strong{
+            font-size: 18px;
+            color: #333;
+        }
+
+        .univ__footer .univ__price{
+            font-size: 12px;
+            color: #9a9a9a;
+        }
+    </style>
 @stop

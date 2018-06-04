@@ -32,12 +32,12 @@ class PagesController extends Controller
         $data = [
             'university' => UsersUniversity::getUniversities(),
             'teachers'   => User::where('user_type', 2)->where(function($query){
-                                    return User::allowTeacherUser($query);
+                                    return User::allowUser($query);
                                 })->orderBy('created_at', 'desc')->get(),
             'stats'      => [
                 'institutions' => User::where('user_type', 3)->count(),
                 'teachers'     => User::where('user_type', 2)->where(function($query){
-                                    return User::allowTeacherUser($query);
+                                    return User::allowUser($query);
                                 })->count(),
                 'courses'      => Courses::count(),
             ]
@@ -115,7 +115,7 @@ class PagesController extends Controller
         }
 
         $getTeachers = User::where('user_type', 2)->where(function($query){
-                                    return User::allowTeacherUser($query);
+                                    return User::allowUser($query);
                                 })->where('name', 'like', "%$query%")
                                 ->orderBy('created_at', 'desc')
                                 ->get(); 
@@ -126,7 +126,7 @@ class PagesController extends Controller
 
         $getUniversity = UsersUniversity::where('full_name', 'like', "%$query%")
                                         ->whereHas('user', function($query){
-                                            return User::allowUniversityUser($query);
+                                            return User::allowUser($query);
                                         })
                                         ->orderBy('created_at', 'desc')
                                         ->get();  

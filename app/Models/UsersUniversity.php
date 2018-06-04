@@ -51,6 +51,11 @@ class UsersUniversity extends Model
             $university->where('distance_learning', $request['distance_learning']);
         }
 
+        if (isset($request['status']) && in_array($request['status'], ['1','2'])) 
+        { 
+            $university->where('status', $request['status']);
+        } 
+
         if (isset($request['min_price'])) 
         {
             $university->where('price', '>=', toFloat($request['min_price']));
@@ -70,7 +75,7 @@ class UsersUniversity extends Model
         }
 
         $university->with('user')->whereHas('user', function($query){
-                                return User::allowUniversityUser($query);
+                                return User::allowUser($query);
                             })->orderBy('id_user', 'asc');
 
         return $university->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 

@@ -30,25 +30,52 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($cat = false, Request $request)
-    { 
-
+    public function index($cat = false, $subcat = false, Request $request)
+    {  
         $baseUrl = '/courses';
         if (!empty($cat)) {
             $baseUrl .= "/cat/$cat";
         }
 
-        $data = [
-            'courses'      => Courses::getCatalog($cat, $request->all()),
-            'totalCourses' => Courses::whereHas('user', function($query){
-                                        return User::allowUser($query);
-                                    })->count(),
+        $currentCat = CourseCategory::where('url', $cat)->first();
 
-            'categories'   => CourseCategory::with(['courses' => function($query){
+        $categories = [];
+        $subcatFlag = false;
+        if (!empty($cat)) 
+        {  
+            if ($currentCat->parent_id!='0') 
+            {
+                $id     = $currentCat->parent_id;
+                $subcat = $currentCat->url;
+                $subcatFlag = true;
+            }
+            else
+            {
+                $id = $currentCat->id;
+                $subcatFlag = true;
+            } 
+            $categories =  CourseCategory::with(['coursesSubcat' => function($query){ 
+                            $query->whereHas('user', function($query){
+                                return User::allowUser($query);
+                            });
+                        }])->has('coursesSubcat', '>=', '1')->where('parent_id', $id)->get();  
+        }
+        else
+        {
+            $categories = CourseCategory::with(['courses' => function($query){
                                     $query->whereHas('user', function($query){
                                         return User::allowUser($query);
                                     });
-                              }])->has('courses', '>=', '1')->get(),
+                              }])->has('courses', '>=', '1')->get();
+        } 
+         
+        $data = [
+            'courses'      => Courses::getCatalog($cat, $subcat, $request->all()),
+            'totalCourses' => Courses::whereHas('user', function($query){
+                                        return User::allowUser($query);
+                                    })->count(),
+            'subcatFlag'   => $subcatFlag,
+            'categories'   => $categories,
             'baseUrl'      => $baseUrl,
             'scripts' => [
                 'js/filter_courses.js'

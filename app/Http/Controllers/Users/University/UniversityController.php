@@ -3,38 +3,33 @@
 namespace App\Http\Controllers\Users\University;
 
 use App\Models\User;  
-use App\Models\UsersUniversity;
- 
-use App\Models\University; 
- 
+use App\Models\UsersUniversity; 
+use App\Models\University;  
 use App\Models\UniversitySpecializationsList;
-use App\Models\UniversitySpecializations;
- 
-use App\Models\Regions;
- 
+use App\Models\UniversitySpecializations; 
+use App\Models\Regions; 
 use App\Models\UniversityFaculties;  
-use App\Models\UniversityNews;   
-
+use App\Models\UniversityNews;    
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\UserMail; 
+use App\Mail\UserMail;
+use App\Http\Controllers\Users\ProfileController;
+use App\Http\Controllers\Users\University\Faculties; 
+use App\Utils\Users\University\User as UniversityUser;
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Users\University\Faculties;
-
-/**
-* Регистрация обычного пользователя
-*/
 class UniversityController extends ProfileController
 {
-    public $viewPath = 'users.profile_types.university.';
+    public $viewPath = 'users.profile_types.university.'; 
 
-	use \App\Http\Controllers\Users\Traits\UniversityTrait;
+    protected $_user;
 
-	function __construct() {}  
+	function __construct() 
+    {
+        $this->_user = new UniversityUser;
+    }  
  
     public function showEditForm()
     {  

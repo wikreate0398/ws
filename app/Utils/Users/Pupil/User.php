@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Users\Traits;
+namespace App\Utils\Users\Pupil;
 
 use Illuminate\Support\Facades\Validator;
-use App\Models\User; 
+use App\Models\User as ModelUser; 
 
-trait PupilTrait
+class User
 {
 	private $niceNames = [
 		'password'         => 'Пароль',
@@ -52,7 +52,7 @@ trait PupilTrait
 	public function create(array $data)
 	{
 		$confirm_hash = md5(microtime()); 
-        return User::create([ 
+        return ModelUser::create([ 
             'name'         => $data['name'], 
             'user_type'    => 1,
             'phone'        => $data['phone'],
@@ -75,13 +75,13 @@ trait PupilTrait
             return $validate;
         }
 
-        $checkEmail = User::whereEmail($data['email'])->where('id', '!=', $id_user)->get();
+        $checkEmail = ModelUser::whereEmail($data['email'])->where('id', '!=', $id_user)->get();
         if (count($checkEmail) > 0) 
         {
             return 'Пользователь с таким имейлом уже существует!'; 
         } 
 
-        User::where('id', $id_user)->
+        ModelUser::where('id', $id_user)->
           	update([ 
                 'name'         => $data['name'],  
                 'date_birth'   => date('Y-m-d', strtotime($data['date_birth'])), 
@@ -100,7 +100,7 @@ trait PupilTrait
             $image = $this->uploadImage();
             if (!empty($image)) 
             {
-            	User::where('id', $id_user)->
+            	ModelUser::where('id', $id_user)->
 	              update([ 
 	                'image' => $image 
 	            ]); 
@@ -116,8 +116,7 @@ trait PupilTrait
     	{
             $file     = request()->file('image');
             $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-            $file->move(public_path() . '/uploads/users/', $fileName);   
-             
+            $file->move(public_path() . '/uploads/users/', $fileName);
         }
         return $fileName;
     }

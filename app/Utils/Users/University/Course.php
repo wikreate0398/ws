@@ -18,24 +18,30 @@ class Course
         'description'   => 'Краткое описание курса',
         'text'          => 'Подробное описание курса',
         'pay'           => 'Тип (платный/бесплатный)', 
-        'is_open_until' => 'Запись курса открыта до',
+        'is_open_from'  => 'Запись курса открыта с',
+        'is_open_to'    => 'Запись курса открыта до',
+        'type'          => 'Тип',
         'available'     => 'Доступность на сайте',
         'price'         => 'Стоимость'
     ];
 
     private $rules = [
-        'name'                  => 'required',
-        'description'           => 'required|max:200',
-        'text'                  => 'max:2000',  
-        'id_category'           => 'required',
-        'pay'                   => 'required', 
-        'is_open_until'         => 'required',
-        'available'             => 'required',  
+        'name'         => 'required',
+        'description'  => 'required|max:200',
+        'text'         => 'max:2000',  
+        'id_category'  => 'required',
+        'pay'          => 'required', 
+        'is_open_from' => 'required',
+        'is_open_to'   => 'required',
+        'type'         => 'required',
+        'available'    => 'required',  
     ]; 
 
     private $payOptions = ['1','2'];
 
     private $availableOptions = ['1','2', '3'];
+
+    private $types = ['1','2', '3'];
 
     public $sections = [];
 
@@ -131,6 +137,11 @@ class Course
             return 'Ошибка на сервере';
         }
 
+        if (!in_array($data['type'], $this->types)) 
+        {
+            return 'Ошибка на сервере';
+        }
+
         return true;
     }
 
@@ -144,7 +155,9 @@ class Course
             'description'   => $data['description'],
             'text'          => $data['text'],
             'pay'           => intval($data['pay']),
-            'is_open_until' => date('Y-m-d', strtotime($data['is_open_until'])),
+            'type'          => intval($data['type']),
+            'is_open_to'    => date('Y-m-d', strtotime($data['is_open_to'])),
+            'is_open_from'  => date('Y-m-d', strtotime($data['is_open_from'])),
             'available'     => intval($data['available']),
             'price'         => !empty($data['price']) ? toFloat($data['price']) : ''
         ])->id; 
@@ -161,7 +174,9 @@ class Course
             'description'   => $data['description'],
             'text'          => $data['text'],
             'pay'           => intval($data['pay']),
-            'is_open_until' => date('Y-m-d', strtotime($data['is_open_until'])),
+            'type'          => intval($data['type']),
+            'is_open_to'    => date('Y-m-d', strtotime($data['is_open_to'])),
+            'is_open_from'  => date('Y-m-d', strtotime($data['is_open_from'])),
             'available'     => intval($data['available']),
             'price'         => !empty($data['price']) ? toFloat($data['price']) : ''
         ]); 

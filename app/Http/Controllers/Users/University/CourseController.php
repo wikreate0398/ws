@@ -35,7 +35,7 @@ class CourseController extends UniversityController
         return view('users.university_profile', [ 
             'user'    => Auth::user(), 
             'courses' => $courses,
-            'include' => $this->viewPath . 'courses',
+            'include' => $this->viewPath . 'courses.list',
         ]); 
     }
 
@@ -43,7 +43,7 @@ class CourseController extends UniversityController
     { 
         return view('users.university_profile', [ 
             'user'       => Auth::user(), 
-            'include'    => 'users.profile_types.teacher.add_course',
+            'include'    => 'users.profile_types.teacher.courses.add',
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
         ]); 
     } 
@@ -55,7 +55,7 @@ class CourseController extends UniversityController
          
         return view('users.university_profile', [ 
             'user'       => Auth::user(), 
-            'include'    => 'users.profile_types.teacher.edit_course',
+            'include'    => 'users.profile_types.teacher.courses.edit',
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
             'course'     => $courses
         ]); 

@@ -23,4 +23,9 @@ class CourseCategory extends Model
     {
         return $this->hasMany('App\Models\Courses', 'id_category', 'id');
     }
+
+    public function coursesSubcat()
+    {
+        return $this->hasMany('App\Models\Courses', 'id_subcat', 'id');
+    }
 }

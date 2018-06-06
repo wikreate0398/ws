@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Users\Traits;
+namespace App\Utils\Users\Teacher;
 
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\User; 
+use App\Models\User as ModelUser; 
 use App\Models\UsersEducations;
 use App\Models\UsersTeachingActivities;
 use App\Models\UsersWorkExperience;
@@ -16,7 +16,7 @@ use App\Models\TeacherCertificates;
 
 use Illuminate\Support\Facades\Hash;
 
-trait TeacherTrait
+class User
 {
 	private $niceNames = [
         'password'           => 'Пароль',
@@ -98,7 +98,7 @@ trait TeacherTrait
 
         $confirm_hash = md5(microtime());
  
-        $createUser = User::create([ 
+        $createUser = ModelUser::create([ 
             'name'         => $data['name'], 
             'user_type'    => 2,
             'phone'        => $data['phone'],
@@ -189,13 +189,13 @@ trait TeacherTrait
             return $errors; 
         }      
 
-        $checkEmail = User::whereEmail($data['email'])->where('id', '!=', $id_user)->get();
+        $checkEmail = ModelUser::whereEmail($data['email'])->where('id', '!=', $id_user)->get();
         if (count($checkEmail) > 0) 
         {
             return 'Пользователь с таким имейлом уже существует!'; 
         } 
   
-        User::where('id', $id_user)
+        ModelUser::where('id', $id_user)
             ->update([ 
             'name'       => $data['name'], 
             'date_birth' => date('Y-m-d', strtotime($data['date_birth'])), 
@@ -281,7 +281,7 @@ trait TeacherTrait
                 $errors = $validator->errors()->toArray(); 
             } 
 
-            $obj_user = User::find($id_user);
+            $obj_user = ModelUser::find($id_user);
 
             if(Hash::check($data['old_password'], $obj_user->password) == false) {
                 $errors[]['password'] = 'Старый пароль не верный';

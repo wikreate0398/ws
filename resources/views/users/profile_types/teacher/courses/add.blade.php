@@ -122,24 +122,47 @@
                   <div role="tabpanel" class="tab-pane" id="settings">
                      <div class="col-md-12">
                         <h3 class="header_blok_course">Настройки курса</h3>
+                     </div> 
+ 
+                     <label class="col-md-5 control-label">
+                        УКАЖИТЕ ТИП <span class="req">*</span>
+                        <p>от типа зависит разовое или постоянно действуещее событие</p>
+                     </label>
+                     <div class="col-md-7">
+                        <div class="row">
+                           <div class="col-md-12" id="course__cats">
+                              <div class="form-group select_form">
+                                 <select name="type"  class="form-control">
+                                    <option value="">Выбрать</option>
+                                    <option value="1">Курс</option>
+                                    <option value="2">Семинар</option>
+                                    <option value="3">Вебинар</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="col-md-12" id="load__subcats"></div>
+                        </div>
                      </div>
-                     <label class="col-md-5 control-label">ЗАПИСЬ НА КУРС ОТКРЫТА ДО <span class="req">*</span>
+                     <div class="clearfix"></div>
+
+                     <label class="col-md-5 control-label">УКАЖИТЕ ИНТЕРВАЛ ДОСТУПНОСТИ ЗАПИСИ <span class="req">*</span>
                      </label>
                      <div class="col-md-7">
                         <div class="row">
                            <div class="col-md-6">
                               <div class="form-group">
-                                 <input class="form-control datepicker" autocomplete="off" name="is_open_until" value="" placeholder="" type="text">
+                                 <input class="form-control course_datepicker" autocomplete="off" name="is_open_from" value="" placeholder="от" type="text">
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-group">
-                                 <button class="btn turn_on">Включить запись</button>
+                                 <input class="form-control course_datepicker" autocomplete="off" name="is_open_to" value="" placeholder="до" type="text">
                               </div>
                            </div>
                         </div>
                      </div>
                      <div class="clearfix"></div>
+
                      <div class="col-md-12">
                         <h3 class="header_blok_course">Доступность на сайте</h3>
                      </div>

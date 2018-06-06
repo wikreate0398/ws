@@ -9,15 +9,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Models\Cities;
-use App\Models\GradeEducation;
-use App\Models\ProgramsType;
-use App\Models\TeachActivityCategories;
-use App\Models\WorkExperienceDirection;
-use App\Models\InstitutionTypes;
-use App\Models\University; 
-use App\Models\UniversityFormAttitude;  
-use App\Http\Controllers\Users\UserService;
 
 class RegisterController extends Controller
 {
@@ -39,15 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
-    public $userType = 1;
-
-    private $education = [];
-
-    private $work_experience = [];
-
-    private $teach_activity = []; 
+    protected $redirectTo = '/home'; 
 
     /**
      * Create a new controller instance.
@@ -83,7 +66,8 @@ class RegisterController extends Controller
   
     public function sendConfirmationEmail($email, $hash)
     {   
-        if (request()->server('SERVER_NAME') != 'ws.loc') { 
+        if (request()->server('SERVER_NAME') != 'ws.loc') 
+        { 
             Mail::to($email)->send(new UserMail($hash)); 
         }
         request()->session()->put('reg', 'На вашу почту было отравленно письмо с ссылкой для подтверждения регистрации.');  
@@ -111,9 +95,5 @@ class RegisterController extends Controller
         }
 
         return view('auth.confirmation', compact('user')); 
-    }
-
-    public function test_mail(){
-        Mail::to('fleancu.daniel@gmail.com')->send(new UserMail('asdsd'));
-    }
+    } 
 }

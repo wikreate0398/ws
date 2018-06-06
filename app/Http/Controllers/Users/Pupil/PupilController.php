@@ -12,20 +12,18 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\UserMail;
 use App\Http\Controllers\Users\UserTypes\UserTypesInterface;
-use App\Http\Controllers\ProfileController;
-
-/**
-* Регистрация обычного пользователя
-*/
+use App\Http\Controllers\Users\ProfileController;
+use App\Utils\Users\Pupil\User as PupilUser;
+ 
 class PupilController extends ProfileController  
 {
-    private $viewPath = 'users.profile_types.user.'; 
- 
-    use \App\Http\Controllers\Users\Traits\PupilTrait;
+    private $viewPath = 'users.profile_types.user.';  
 
-	function __construct() {} 
- 
- 
+	function __construct() 
+    {
+        $this->_user = new PupilUser;
+    }
+    
     public function showCourse()
     { 
         return view('users.user_profile', [ 

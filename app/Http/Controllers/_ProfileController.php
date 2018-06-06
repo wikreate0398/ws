@@ -30,7 +30,7 @@ class ProfileController extends Controller
 
     public function editProfile(Request $request)
     { 
-        $edit = $this->edit($request->all(), Auth::user()->id);   
+        $edit = $this->_user->edit($request->all(), Auth::user()->id);   
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  

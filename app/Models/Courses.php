@@ -17,7 +17,9 @@ class Courses extends Model
         'description',
         'text',
         'pay',
-        'is_open_until',
+        'is_open_from',
+        'is_open_to',
+        'type',
         'available',
         'price'
     ];
@@ -42,7 +44,7 @@ class Courses extends Model
         return $this->hasOne('App\Models\User', 'id', 'id_user');
     }  
 
-    public static function getCatalog($cat=false, $input=false)
+    public static function getCatalog($cat=false, $subcat = false, $input=false)
     {
         $courses = (new Courses)->newQuery();
 
@@ -56,8 +58,14 @@ class Courses extends Model
             $courses->where('pay', $input['pay']);
         }
 
-        if (!empty($cat)) 
+        if (!empty($subcat)) 
         {
+            $courses->whereHas('subCategory', function($query) use($cat){
+                $query->where('url', $cat);
+            });
+        }
+        elseif (!empty($cat)) 
+        { 
             $courses->whereHas('category', function($query) use($cat){
                 $query->where('url', $cat);
             });

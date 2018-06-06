@@ -168,7 +168,13 @@
 					<li class="{{ (request()->segment(3) == $category['url']) ? 'active' : '' }}">
 						<a href="/courses/cat/{{ $category['url'] }}">
 							{{ $category['name'] }} 
-							<span class="badge badge-default">{{ count($category->courses) }}</span>
+							<span class="badge badge-default">
+								@if($subcatFlag == false)
+									{{ count($category->courses) }}
+								@else
+									{{ count($category->coursesSubcat) }}
+								@endif
+							</span>
 						</a>
 					</li>
 				@endforeach

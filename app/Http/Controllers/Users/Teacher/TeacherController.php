@@ -23,22 +23,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\UserMail;
-use App\Http\Controllers\ProfileController;
-
 use Illuminate\Support\Facades\DB;
-/**
-* Регистрация обычного пользователя
-*/
+use App\Mail\UserMail;
+use App\Http\Controllers\Users\ProfileController;
+use App\Utils\Users\Teacher\User as TeacherUser;
+
 class TeacherController extends ProfileController 
 {
-    public $viewPath = 'users.profile_types.teacher.';
+    public $viewPath = 'users.profile_types.teacher.'; 
 
-    use \App\Http\Controllers\Users\Traits\TeacherTrait;
+    protected $_user;
 
 	function __construct() 
     {
         $this->middleware('data_filled', ['only' => ['showSubscriptions', 'showReviews', 'showDiploms']]);
+        $this->_user = new TeacherUser;
     }  
 
     public function showEditForm()

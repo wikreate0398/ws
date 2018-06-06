@@ -128,23 +128,56 @@
                      <div class="col-md-12">
                         <h3 class="header_blok_course">Настройки курса</h3>
                      </div>
-                     <label class="col-md-5 control-label">ЗАПИСЬ НА КУРС ОТКРЫТА ДО <span class="req">*</span>
+                     
+                     <label class="col-md-5 control-label">
+                        УКАЖИТЕ ТИП <span class="req">*</span>
+                        <p>от типа зависит разовое или постоянно действуещее событие</p>
+                     </label>
+                     <div class="col-md-7">
+                        <div class="row">
+                           <div class="col-md-12" id="course__cats">
+                              <div class="form-group select_form">
+                                 <select name="type" class="form-control">
+                                    <option value="">Выбрать</option>
+                                    <option {{ ($course->type == '1') ? 'selected' : '' }} value="1">Курс</option>
+                                    <option {{ ($course->type == '2') ? 'selected' : '' }} value="2">Семинар</option>
+                                    <option {{ ($course->type == '3') ? 'selected' : '' }} value="3">Вебинар</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="col-md-12" id="load__subcats"></div>
+                        </div>
+                     </div>
+                     <div class="clearfix"></div>
+
+                     <label class="col-md-5 control-label">УКАЖИТЕ ИНТЕРВАЛ ДОСТУПНОСТИ ЗАПИСИ <span class="req">*</span>
                      </label>
                      <div class="col-md-7">
                         <div class="row">
                            <div class="col-md-6">
                               <div class="form-group">
-                                 <input class="form-control datepicker" autocomplete="off" name="is_open_until" value="{{ date('d.m.Y', strtotime($course->is_open_until)) }}" placeholder="" type="text">
+                                 <input class="form-control datepicker" 
+                                        autocomplete="off" 
+                                        name="is_open_from" 
+                                        value="{{ !empty($course->is_open_from) ? date('d.m.Y', strtotime($course->is_open_from)) : '' }}" 
+                                        placeholder="от" 
+                                        type="text">
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-group">
-                                 <button class="btn turn_on">Включить запись</button>
+                                 <input class="form-control datepicker" 
+                                        autocomplete="off" 
+                                        name="is_open_to" 
+                                        value="{{ !empty($course->is_open_to) ? date('d.m.Y', strtotime($course->is_open_to)) : '' }}" 
+                                        placeholder="до" 
+                                        type="text">
                               </div>
                            </div>
                         </div>
                      </div>
                      <div class="clearfix"></div>
+
                      <div class="col-md-12">
                         <h3 class="header_blok_course">Доступность на сайте</h3>
                      </div>

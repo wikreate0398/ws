@@ -123,7 +123,7 @@ Route::group(['middleware' => ['web_auth']], function(){
 			}); 
 		}); 
 
-		Route::group(['prefix' => 'actions'], function() {
+		Route::group(['prefix' => 'actions', 'namespace' => 'Users'], function() {
 		 	Route::post('update-image', 'ProfileController@updateImage')->name('update_image');
 			Route::post('loadRegionCities', 'ProfileController@loadRegionCities');  
 			Route::post('deleteCertificate', 'ProfileController@deleteCertificate');
@@ -133,12 +133,10 @@ Route::group(['middleware' => ['web_auth']], function(){
 			Route::post('changeStatus', 'ProfileController@changeStatus');  
 		}); 
 	}); 
- 
-   
+  
 	// Route::post('user/updatePass', 'ProfileController@updatePassword')->name('update_pass'); 
 	// Route::post('user/update-profile', 'ProfileController@editProfile')->name('update_profile');  
-	 
-
+	  
 	Route::get('user/forgot-password', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('forgot_password');
 	Route::post('user/forgot-password', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('send_reset_link'); 
 });

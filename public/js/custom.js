@@ -4,9 +4,7 @@ jQuery(document).ready(function($) {
     //   selector: 'textarea',  // change this value according to your HTML
     //   auto_focus: 'element1'
     // });
-
-     
-
+ 
      
     InputMask(); 
 
@@ -105,9 +103,14 @@ jQuery(document).ready(function($) {
         changeMonth: true,
         language: 'ru',
         changeYear: true,
-        autoHide: true 
-        //yearRange: '1945:'+(new Date).getFullYear()-18
+        autoHide: true  
     });
+
+    $( ".course_datepicker" ).datepicker({
+        format: "dd.mm.yyyy", 
+        language: 'ru',  
+        minDate: '0' 
+    });  
 
     $('.delete__item').click(function(e){
         if (!confirm('Вы действительно хотите удалить?')) {

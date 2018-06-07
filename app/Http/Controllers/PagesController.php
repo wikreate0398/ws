@@ -35,7 +35,9 @@ class PagesController extends Controller
                                     return User::allowUser($query);
                                 })->orderBy('created_at', 'desc')->get(),
             'stats'      => [
-                'institutions' => User::where('user_type', 3)->count(),
+                'institutions' => User::where('user_type', 3)->where(function($query){
+                                    return User::allowUser($query);
+                                })->count(),
                 'teachers'     => User::where('user_type', 2)->where(function($query){
                                     return User::allowUser($query);
                                 })->count(),

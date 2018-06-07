@@ -13,29 +13,36 @@ use App\Models\GradeEducation;
 
 use App\Models\TeacherSubjects;
 use App\Models\TeacherSpecializations;
+use App\Models\TeacherSpecializationsList;
 use App\Models\TeacherLessonOptions;
 use App\Models\TeacherCertificates;
 use App\Models\SubjectsList;
 
 use Illuminate\Support\Facades\DB;
+
+use App\Utils\Users\Teacher\User as TeacherUser;
+use App\Http\Controllers\Admin\Users\SiteUser;
  
-class TeacherUserController extends Controller
+class TeacherUserController extends SiteUser
 {
 
     private $method = 'admin/users/teachers'; 
 
     private $folder = 'users.teacher';
 
-    private $redirectRoute = 'admin_user_teacher';
+    private $redirectRoute = 'admin_user_teacher'; 
 
-    use \App\Http\Controllers\Users\Traits\TeacherTrait;
+    protected $_user;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() {}
+    public function __construct() 
+    {
+        $this->_user = new TeacherUser;
+    }
 
     /**
      * Show the application dashboard.
@@ -91,7 +98,7 @@ class TeacherUserController extends Controller
 
     public function updateUser($id, Request $request)
     {
-        $edit = $this->edit($request->all(), $id);   
+        $edit = $this->_user->edit($request->all(), $id);   
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
@@ -139,11 +146,10 @@ class TeacherUserController extends Controller
             'user'                    => $user,
             'regions'                 => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
             'grade_education'         => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
-            'programs_type'           => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()), 
-             
+            'programs_type'           => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),  
             'degree_experience'       => DB::table('degree_experience')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
 
-            'specializations_list'    => DB::table('specializations_list')->where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
+            'specializations_list'    => TeacherSpecializationsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
             'lesson_options_list'     => DB::table('lesson_options_list')->where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
             'subjects_list'           => SubjectsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(), 
             'teacher_specializations' => TeacherSpecializations::where('id_teacher', $user->id)->get(),  

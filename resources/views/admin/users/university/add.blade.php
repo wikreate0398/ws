@@ -3,7 +3,7 @@
 @section('content') 
 <div class="row">
 	<div class="col-md-12">
-		<form action="/admin/ajax/fastRegister" class="form-horizontal ajax__submit"> 
+		<form action="/admin/user/fastRegister" class="form-horizontal ajax__submit" data-redirect="{{ route('admin_user_university') }}"> 
             {{ csrf_field() }} 
             
             <input type="hidden" name="user_type" value="3">

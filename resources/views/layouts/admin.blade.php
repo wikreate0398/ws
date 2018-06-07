@@ -15,7 +15,7 @@
 <meta content="" name="author"/>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<!--  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>  -->
+ <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/> 
 <link href="/admin_theme/theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="/admin_theme/theme/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
 <link href="/admin_theme/theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -83,7 +83,7 @@
                <h4 class="modal-title">Быстрая регистрация</h4>
             </div>
             <div class="modal-body">
-               <form action="/admin/ajax/fastRegister" class="form-horizontal ajax__submit"> 
+               <form action="/admin/user/fastRegister" class="form-horizontal ajax__submit"> 
             {{ csrf_field() }} 
 
             <div class="row" style="padding-top:20px;">

@@ -8,24 +8,29 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Regions;
+use App\Utils\Users\Pupil\User as PupilUser;
+use App\Http\Controllers\Admin\Users\SiteUser;
  
-class PupilUserController extends Controller
+class PupilUserController extends SiteUser
 {
 
     private $method = 'admin/users/pupil'; 
 
     private $folder = 'users.user';
 
-    private $redirectRoute = 'admin_user_pupil'; 
+    private $redirectRoute = 'admin_user_pupil';  
 
-    use \App\Http\Controllers\Users\Traits\PupilTrait;
+    protected $_user;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() {}
+    public function __construct() 
+    {
+        $this->_user = new PupilUser;
+    }
 
     /**
      * Show the application dashboard.
@@ -57,31 +62,31 @@ class PupilUserController extends Controller
         return $validator;
     }
 
-    public function createUser(Request $request)
-    {
+    // public function createUser(Request $request)
+    // {
  
-        $data     = $request->all();  
-        $validate = $this->validation($data, $this->addRules);
-        if ($validate !== true) 
-        {  
-            return \App\Utils\JsonResponse::error(['messages' => $validate]); 
-        } 
+    //     $data     = $request->all();  
+    //     $validate = $this->validation($data, $this->addRules);
+    //     if ($validate !== true) 
+    //     {  
+    //         return \App\Utils\JsonResponse::error(['messages' => $validate]); 
+    //     } 
 
-        $create = $this->create($data);
+    //     $create = $this->_user->create($data);
 
-        User::where('id', $create)->
-            update([ 
-                'activate'     => '1',
-                'confirm'      => '1', 
-                'confirm_date' => date('Y-m-d H:i:s'),
-        ]);
+    //     User::where('id', $create)->
+    //         update([ 
+    //             'activate'     => '1',
+    //             'confirm'      => '1', 
+    //             'confirm_date' => date('Y-m-d H:i:s'),
+    //     ]);
 
-        return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
-    }
+    //     return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
+    // }
 
     public function updateUser($id, Request $request)
     {
-        $edit = $this->edit($request->all(), $id);   
+        $edit = $this->_user->edit($request->all(), $id);   
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  

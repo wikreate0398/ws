@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User; 
 use App\Models\Regions;
-use App\Models\UsersUniversity;
-use App\Models\UniversityFormAttitude; 
-use App\Models\InstitutionTypes;
-use App\Models\University; 
-use App\Models\ProgramsType;
-use App\Models\TeachActivityCategories;
- 
-class UniversityUserController extends Controller
+use App\Models\UsersUniversity; 
+use App\Models\University;  
+use App\Models\UniversitySpecializationsList;
+use App\Models\UniversitySpecializations; 
+
+use App\Utils\Users\University\User as UniversityUser;
+use App\Http\Controllers\Admin\Users\SiteUser;
+
+class UniversityUserController extends SiteUser
 {
 
     private $method = 'admin/users/university'; 
@@ -23,15 +24,18 @@ class UniversityUserController extends Controller
     private $folder = 'users.university';
 
     private $redirectRoute = 'admin_user_university'; 
-
-    use \App\Http\Controllers\Users\Traits\UniversityTrait;
+ 
+    protected $_user;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() {}
+    public function __construct() 
+    {
+        $this->_user = new UniversityUser;
+    }
 
     /**
      * Show the application dashboard.
@@ -72,7 +76,7 @@ class UniversityUserController extends Controller
             return \App\Utils\JsonResponse::error(['messages' => $validate]); 
         } 
 
-        $create = $this->create($data);
+        $create = $this->_user->create($data);
  
         User::where('id', $create)->
             update([ 
@@ -86,7 +90,7 @@ class UniversityUserController extends Controller
 
     public function updateUser($id, Request $request)
     {
-        $edit = $this->edit($request->all(), $id);   
+        $edit = $this->_user->edit($request->all(), $id);   
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
@@ -121,17 +125,19 @@ class UniversityUserController extends Controller
 
     public function showeditForm($id)
     { 
+        $user = User::where('id', $id)->first(); 
+
         $data = [
             'method'             => $this->method, 
-            'user'               => User::with('university')->where('id', $id)->first(), 
-            'regions'            => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
-            'programs_type'      => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()),
-            'teach_activ_cat'    => map_tree(TeachActivityCategories::orderBy('page_up','asc')->get()->toArray()),  
-            'inst_type'          => InstitutionTypes::orderBy('page_up','asc')->get(),
-            'university'         => University::orderBy('page_up','asc')->get(),
-            'univ_form_attitude' => UniversityFormAttitude::orderBy('page_up','asc')->get(),
+            'user'               => $user, 
+            'regions'         => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),  
+            'specializations' => UniversitySpecializationsList::where('view', '1')->orderBy('page_up','asc')->orderBy('id','desc')->get(), 
+            'user'            => User::with('university')->where('id', $user->id)->first(),  
+            'university'      => University::orderBy('page_up','asc')->get(),
+            'university_specializations' => UniversitySpecializations::where('id_university', $user->university->id)->get(), 
         ];
-        $data['userUniversity'] = $data['user']['university'];
+        $data['userUniversity'] = $user['university'];
+        
         return view('admin.'.$this->folder.'.edit', $data);
     }  
 }

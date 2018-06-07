@@ -32,7 +32,8 @@ class UserProfileController extends Controller
     { 
         $programs_type        = DB::table('programs_type')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
         $degree_experience    = DB::table('degree_experience')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
-        $specializations_list = DB::table('specializations_list')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
+        $teacher_specializations_list = DB::table('teacher_specializations_list')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
+        $university_specializations_list = DB::table('university_specializations_list')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
         $subjects             = DB::table('subjects')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
         $lesson_options_list  = DB::table('lesson_options_list')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
         $data = [
@@ -41,7 +42,8 @@ class UserProfileController extends Controller
             'method'               => $this->method,
             'programs_type'        => collect($programs_type)->map(function($x){ return (array) $x; })->toArray(),
             'degree_experience'    => collect($degree_experience)->map(function($x){ return (array) $x; })->toArray(),
-            'specializations_list' => collect($specializations_list)->map(function($x){ return (array) $x; })->toArray(),
+            'teacher_specializations_list' => collect($teacher_specializations_list)->map(function($x){ return (array) $x; })->toArray(),
+            'university_specializations_list' => collect($university_specializations_list)->map(function($x){ return (array) $x; })->toArray(),
             'subjects'             => collect($subjects)->map(function($x){ return (array) $x; })->toArray(), 
             'lesson_options_list'  => collect($lesson_options_list)->map(function($x){ return (array) $x; })->toArray(), 
         ];    

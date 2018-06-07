@@ -227,11 +227,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('{id}/update', 'UniversityUserController@updateUser');
 	});	 
 
+	Route::group(['prefix' => 'user', 'namespace' => 'Users',], function() { 
+		Route::post('fastRegister', 'SiteUser@fastRegister');  
+	});
+
 	Route::group(['prefix' => 'ajax'], function() {  
 		Route::post('depth-sort', 'AjaxController@depthSort')->name('depth_sort');
 		Route::post('viewElement', 'AjaxController@viewElement')->name('viewElement'); 
-		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement');  
-		Route::post('fastRegister', 'AjaxController@fastRegister');  
+		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement');   
 	}); 
 
 	Route::get('logout', 'LoginController@logout')->name('admin_logout'); 

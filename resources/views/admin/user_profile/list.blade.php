@@ -121,7 +121,7 @@
 						</div>
 					</div> 
 
-					<div class="dd nestable" data-depth="1" data-table="specializations_list" data-action="{{ route('depth_sort') }}">
+					<div class="dd nestable" data-depth="1" data-table="teacher_specializations_list" data-action="{{ route('depth_sort') }}">
 			        	<ol class="dd-list">   
 		               		@catList(map_tree($degree_experience), $method, 'degree_experience') 
 			        	</ol>
@@ -133,7 +133,7 @@
 			<div class="panel-heading">
 				<h4 class="panel-title">
 				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_2_3">
-				Специализации </a>
+				Специализации учителя </a>
 				</h4>
 			</div>
 			<div id="collapse_2_3" class="panel-collapse collapse">
@@ -155,7 +155,7 @@
 
 								{{ csrf_field() }}
 
-								<input type="hidden" name="tbname" value="specializations_list">
+								<input type="hidden" name="tbname" value="teacher_specializations_list">
 
 								<div class="form-body" style="padding-top: 20px;">  
 									@include('admin.utils.input', ['label' => 'Название', 'name' => 'data[name]'])  
@@ -169,14 +169,64 @@
 						</div>
 					</div> 
 
-					<div class="dd nestable" data-depth="1" data-table="specializations_list" data-action="{{ route('depth_sort') }}">
+					<div class="dd nestable" data-depth="1" data-table="teacher_specializations_list" data-action="{{ route('depth_sort') }}">
 			        	<ol class="dd-list">   
-		               		@catList(map_tree($specializations_list), $method, 'specializations_list') 
+		               		@catList(map_tree($teacher_specializations_list), $method, 'teacher_specializations_list') 
 			        	</ol>
 			      	</div> 
 				</div>
 			</div>
 		</div>
+
+		<div class="panel panel-default" id="university_specializations_list">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_2_33">
+				Специализации учебного заведения </a>
+				</h4>
+			</div>
+			<div id="collapse_2_33" class="panel-collapse collapse">
+				<div class="panel-body">
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption" 
+							     style="cursor: pointer;" onclick="$(this).closest('.portlet-title').find('.tools .toggle__form').click();">
+							 	Добавить
+							</div>
+							<div class="tools">
+								<a href="javascript:;" class="toggle__form expand">
+								</a> 
+							</div>
+						</div>
+
+						<div class="portlet-body form" style="display: none;"> 
+							<form action="/{{ $method }}/create" class="ajax__submit form-horizontal">  
+
+								{{ csrf_field() }}
+
+								<input type="hidden" name="tbname" value="university_specializations_list">
+
+								<div class="form-body" style="padding-top: 20px;">  
+									@include('admin.utils.input', ['label' => 'Название', 'name' => 'data[name]'])  
+								</div>
+								<div class="form-actions">
+									<div class="btn-set pull-left"> 
+										<button type="submit" class="btn green">Сохранить</button> 
+									</div> 
+								</div>
+							</form> 
+						</div>
+					</div> 
+
+					<div class="dd nestable" data-depth="1" data-table="university_specializations_list" data-action="{{ route('depth_sort') }}">
+			        	<ol class="dd-list">   
+		               		@catList(map_tree($university_specializations_list), $method, 'university_specializations_list') 
+			        	</ol>
+			      	</div> 
+				</div>
+			</div>
+		</div>
+
 		<div class="panel panel-default" id="subjects">
 			<div class="panel-heading">
 				<h4 class="panel-title">

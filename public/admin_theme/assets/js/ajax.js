@@ -81,19 +81,23 @@ function serializeForm(form, button, action, button_txt){
                 //     $(form).find('#form-respond').fadeOut(700);
                 // }, 1000);
 
-            } else {    
-                if (jsonResponse.redirect !== undefined) {   
-                    window.location = jsonResponse.redirect; 
-                }
+            } else {   
+                if ($(form).attr('data-redirect')) {
+                    window.location = $(form).attr('data-redirect'); 
+                } else{
+                    if (jsonResponse.redirect !== undefined) {   
+                        window.location = jsonResponse.redirect; 
+                    }
 
-                if (jsonResponse.reload == true) { 
-                    window.location.reload(true);
+                    if (jsonResponse.reload == true) { 
+                        window.location.reload(true);
+                    } 
+
+                    if (jsonResponse.message !== undefined) {
+                        Ajax.notify('success', jsonResponse.message);
+                        $(form)[0].reset(); 
+                    }  
                 } 
-
-                if (jsonResponse.message !== undefined) {
-                    Ajax.notify('success', jsonResponse.message);
-                    $(form)[0].reset(); 
-                }  
             } 
         },
         complete: function() {

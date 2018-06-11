@@ -60,8 +60,18 @@ class LoginController extends Controller
                                'activate' => 1,
                                'confirm'  => 1], $remember) == true) 
             { 
-                 
-                return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('user_profile'))], trans('auth.success_login'));
+
+                $msg = false;
+                if (empty($request->input('redirectUri'))) 
+                {
+                    $redirectUri = route(userRoute('user_profile'));
+                    $msg         = trans('auth.success_login');
+                }
+                else
+                {
+                    $redirectUri = $request->input('redirectUri');
+                } 
+                return \App\Utils\JsonResponse::success(['redirect' => $redirectUri], $msg);
             }
             else 
             { 

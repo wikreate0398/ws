@@ -89,7 +89,20 @@
 							<a href="/teacher/{{ $teacher['id'] }}/">
 								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
 							</a>
-							<button type="button" class="btn submit_application">Оставить заявку</button>
+							@php
+								$hasRequest = ($teachersRequests->setIdTeacher($teacher->id)
+                                                                ->setIdUser(@Auth::user()->id)
+                                                                ->setUserType(@Auth::user()->user_type)
+                                                                ->canMakeRequest() === true) ? false : true; 
+							@endphp
+							<button @if($hasRequest==true)
+										disabled
+									@endif
+									type="button" 
+							        class="btn submit_application"
+							        onclick="teacherRequest(this, {{ $teacher->id }}, '{{ Auth::check() }}', '{{ @$hasRequest }}')">
+							    Оставить заявку
+							</button>
 							<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
 						</div>
 						<div class="col-md-9">

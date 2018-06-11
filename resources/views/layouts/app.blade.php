@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Проект</title>
-    
+
     <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
 
     <!-- Bootstrap -->
@@ -52,14 +52,17 @@
     <!-- Cropper --> 
     <script src="{{ asset('js/cropperjs/dist/cropper.js') }}"></script>
     
-    <!-- Datepicker -->
+    <!-- Datepicker -->  
     <script src="{{ asset('js/datepicker/datepicker.js') }}"></script> 
- 
+    <script src="{{ asset('js/datepicker/datepicker_ru.js') }}"></script>
+    
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'); 
+        var loginLink = '{{ route('login') }}';
+        var currentUrl = '{{ Request::getRequestUri() }}';
     </script>
 
-    <script src="{{ asset('js/custom.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('js/custom.js') . '?v=' . time() }}"></script>  
 </head>
 
 <body>

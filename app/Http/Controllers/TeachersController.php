@@ -8,8 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubjectsList;
-
+use App\Models\SubjectsList; 
 use App\Models\TeacherSpecializations;
 use App\Models\TeacherLessonOptions;
 use App\Models\TeacherCertificates;
@@ -17,20 +16,27 @@ use App\Models\TeacherSpecializationsList;
 use App\Models\LessonOptionsList;
 use App\Models\UsersEducations;
 use App\Models\TeacherBoockmarks;
-
+use App\Models\TeacherRequest;
+use App\Models\UsersUniversity;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; 
+
+use App\Utils\Users\Requests\TeacherRequest as TeacherRequestClass;
+use App\Utils\Users\Requests\RequestInterface;
 
 class TeachersController extends Controller
 {
+    protected $_teacher_request;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct() 
     {
+      $this->_teacher_request = TeacherRequestClass::getInstance();
     }
 
     /**
@@ -42,6 +48,7 @@ class TeachersController extends Controller
     { 
         $data = [
             'teachers'               => User::getTeachers($request),
+            'teachersRequests'       => $this->_teacher_request,
             'subjects'               => SubjectsList::whereHas('users', function($query){
                                             return User::allowUser($query);
                                         })->orderBy('page_up', 'asc')
@@ -61,7 +68,8 @@ class TeachersController extends Controller
                                                           ->orderBy('id', 'desc')
                                                           ->get(),
             'scripts' => [
-                'js/filter_teachers.js'
+                'js/filter_teachers.js',
+                'js/teachers.js'
             ]
         ];  
 
@@ -69,26 +77,33 @@ class TeachersController extends Controller
 
         return view('teachers.catalog', $data);
     } 
-
+ 
     public function show($id)
     { 
+        $teacher = User::with(['cityData', 
+                               'teacherSpecializations', 
+                               'certificates', 
+                               'lesson_options', 
+                               'educations', 
+                               'subjects'])
+                         ->where(function($query){
+                              return User::allowUser($query);
+                         }) 
+                         ->findOrFail($id); 
         $data = [
-            'teacher'                 => \App\Models\User::with(['cityData', 
-                                                                 'teacherSpecializations', 
-                                                                 'certificates', 
-                                                                 'lesson_options', 
-                                                                 'educations', 
-                                                                 'subjects'])
-                                                           ->where(function($query){
-                                                                return User::allowUser($query);
-                                                           }) 
-                                                           ->findOrFail($id),  
-            'lesson_options'          => LessonOptionsList::orderBy('page_up', 'asc')
+            'teacher'        => $teacher,  
+            'hasRequest'     => ($this->_teacher_request->setIdTeacher($id)
+                                                        ->setIdUser(@Auth::user()->id)
+                                                        ->setUserType(@Auth::user()->user_type)
+                                                        ->canMakeRequest() === true) ? false : true, 
+            'lesson_options' => LessonOptionsList::orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')
                                                           ->get(),
-
-            'universities' => \App\Models\UsersUniversity::getUniversities(), 
-            'boockmark'    => TeacherBoockmarks::where([['id_user', @Auth::user()->id], ['id_teacher', $id]])->first()
+            'universities' => UsersUniversity::getUniversities(), 
+            'boockmark'    => TeacherBoockmarks::where([['id_user', @Auth::user()->id], ['id_teacher', $id]])->first(),
+            'scripts' => [
+              'js/teachers.js'
+            ]
         ];     
 
         return view('teachers.show', $data);
@@ -113,27 +128,46 @@ class TeachersController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $query      = urldecode($request->input('search'));  
-        $searchData = User::where('user_type', 2)->where(function($query){
-                                return User::allowUser($query);
-                            })
-                            ->where('name', 'like', "%$query%")
-                            ->orderBy('created_at', 'desc')->get();
+      $query      = urldecode($request->input('search'));  
+      $searchData = User::where('user_type', 2)->where(function($query){
+                              return User::allowUser($query);
+                          })
+                          ->where('name', 'like', "%$query%")
+                          ->orderBy('created_at', 'desc')->get();
 
-        if (empty($searchData)) die();
-        
-        $content    = '';
-        if (@count($searchData)) 
-        {
-            foreach ($searchData as $teacher) 
-            {
-                $content .= '<a href="/teacher/'.$teacher['id'].'/"> 
-                                <i class="fa fa-angle-right" aria-hidden="true"></i>' . $teacher['name'] .  '
-                            </a>';
-            }
-            $content .= '</div>';
-        } 
+      if (empty($searchData)) die();
+      
+      $content    = '';
+      if (@count($searchData)) 
+      {
+          foreach ($searchData as $teacher) 
+          {
+              $content .= '<a href="/teacher/'.$teacher['id'].'/"> 
+                              <i class="fa fa-angle-right" aria-hidden="true"></i>' . $teacher['name'] .  '
+                          </a>';
+          }
+          $content .= '</div>';
+      } 
 
-        return \App\Utils\JsonResponse::success(['content' => $content]);
+      return \App\Utils\JsonResponse::success(['content' => $content]);
     }
+
+    public function makeRequest($id)
+    {  
+      $canMakeRequestStatus = $this->_teacher_request->setIdTeacher($id)
+                                                     ->setIdUser(@Auth::user()->id)
+                                                     ->setUserType(@Auth::user()->user_type)
+                                                     ->canMakeRequest();
+      if ($canMakeRequestStatus === true) 
+      {
+        $this->_teacher_request->makeRequest(); 
+        $this->_teacher_request->sendNotification();
+      }
+      else
+      {  
+        return redirect('teacher/' . $id)->with('teacherMsg.error', $canMakeRequestStatus);
+      }
+
+      return redirect('teacher/' . $id)->with('teacherMsg.success', 'Вы успешно оставили свою заявку этому учителю'); 
+    } 
 }

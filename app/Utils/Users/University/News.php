@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Utils\Users\University;
-
-use App\Http\Controllers\Controller;
+ 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\UniversityNews;      

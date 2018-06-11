@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Courses extends Model
 { 
-
 	protected $table = 'courses';
 
 	protected $fillable = [
@@ -19,6 +19,10 @@ class Courses extends Model
         'pay',
         'is_open_from',
         'is_open_to',
+        'date_from',
+        'date_to',
+        'hide_after_end',
+        'max_nr_people',
         'type',
         'available',
         'price'
@@ -42,7 +46,17 @@ class Courses extends Model
     public function user()
     {
         return $this->hasOne('App\Models\User', 'id', 'id_user');
-    }  
+    }   
+
+    public function certificates()
+    {
+        return $this->hasMany('App\Models\CoursesCertificates', 'id_course', 'id')->orderBy('id', 'asc');
+    }
+
+    public function userRequests()
+    {
+        return $this->belongsToMany('App\Models\User', 'course_request', 'id_course', 'id_user');
+    }
 
     public static function getCatalog($cat=false, $subcat = false, $input=false)
     {
@@ -75,9 +89,39 @@ class Courses extends Model
             return User::allowUser($query);
         });
 
+        if (Auth::check() != true) 
+        {
+            $courses->where('available', '!=', '2');
+        }
+
         return $courses->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
                                       ['*'], 
                                       'page', 
                                       !empty($input['page']) ? $input['page'] : 1);
+    }
+
+    public static function countTotal()
+    {   
+        $authCheck = Auth::check();
+        return Courses::whereHas('user', function($query){
+            return User::allowUser($query);
+        })->where(function($query) use($authCheck){
+            if ($authCheck != true) 
+            { 
+                $query->where('available', '!=', '2');
+            }
+        })->count();
+    }
+
+    public static function getOneCourse($id, $authCheck = false)
+    {
+        return Courses::with('sections')->where('id', $id)->whereHas('user', function($query){
+          return User::allowUser($query);
+        })->where(function($query) use($authCheck){
+            if ($authCheck != true) 
+            { 
+                $query->where('available', '!=', '2');
+            }
+        })->findOrFail($id);
     }
 }

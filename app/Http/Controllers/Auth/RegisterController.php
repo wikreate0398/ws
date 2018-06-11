@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Auth;
  
 use App\Models\User; 
 use App\Mail\UserMail; 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator; 
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -66,10 +66,7 @@ class RegisterController extends Controller
   
     public function sendConfirmationEmail($email, $hash)
     {   
-        if (request()->server('SERVER_NAME') != 'ws.loc') 
-        { 
-            Mail::to($email)->send(new UserMail($hash)); 
-        }
+        Mail::to($email)->send(new UserMail($hash));
         request()->session()->put('reg', 'На вашу почту было отравленно письмо с ссылкой для подтверждения регистрации.');  
     }
 

@@ -150,31 +150,40 @@
                      </div>
                      <div class="clearfix"></div>
 
-                     <label class="col-md-5 control-label">УКАЖИТЕ ИНТЕРВАЛ ДОСТУПНОСТИ ЗАПИСИ <span class="req">*</span>
+                     <label class="col-md-5 control-label">УКАЖИТЕ Длительность Курса <span class="req">*</span>
                      </label>
                      <div class="col-md-7">
                         <div class="row">
                            <div class="col-md-6">
                               <div class="form-group">
-                                 <input class="form-control datepicker" 
+                                 <input class="form-control course_date_from datepicker__input" 
                                         autocomplete="off" 
-                                        name="is_open_from" 
-                                        value="{{ !empty($course->is_open_from) ? date('d.m.Y', strtotime($course->is_open_from)) : '' }}" 
+                                        name="date_from" 
+                                        value="{{ !empty($course->date_from) ? date('d.m.Y', strtotime($course->date_from)) : '' }}" 
                                         placeholder="от" 
                                         type="text">
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-group">
-                                 <input class="form-control datepicker" 
+                                 <input class="form-control course_date_to datepicker__input" 
                                         autocomplete="off" 
-                                        name="is_open_to" 
-                                        value="{{ !empty($course->is_open_to) ? date('d.m.Y', strtotime($course->is_open_to)) : '' }}" 
+                                        name="date_to" 
+                                        value="{{ !empty($course->date_to) ? date('d.m.Y', strtotime($course->date_to)) : '' }}" 
                                         placeholder="до" 
                                         type="text">
                               </div>
                            </div>
                         </div>
+                     </div>
+                     <div class="clearfix"></div>
+
+                     <label class="col-md-5 control-label">УКАЖИТЕ кол-во людей 
+                     </label>
+                     <div class="col-md-7">
+                        <div class="form-group">
+                           <input class="form-control number_field" autocomplete="off" name="max_nr_people" value="{{ $course->max_nr_people }}" type="text">
+                        </div> 
                      </div>
                      <div class="clearfix"></div>
 
@@ -192,11 +201,49 @@
                            <input type="radio" {{ ($course->available == 2) ? 'checked' : '' }} name="available" value="2"> Только для зарегистрированных пользователей
                            </label>
                         </div>
-                        <div class="radio">
-                           <label>
-                           <input type="radio" {{ ($course->available == 3) ? 'checked' : '' }} name="available" value="1"> Скрыть курс по окончанию набора
-                           </label>
+
+                        <div class="list_checkbox"> 
+                           <div class="checkbox"> 
+                              <label> 
+                                 <input type="checkbox" name="hide_after_end" onchange="showCourseDuration(this)" {{ $course->hide_after_end ? 'checked' : '' }} name="hide_after_end">
+                                 <span class="jackdaw">
+                                    <i class="jackdaw-icon fa fa-check"></i>
+                                 </span>
+                                 Скрыть курс по окончанию набора
+                              </label> 
+                           </div>
                         </div>
+
+                        <div class="course__duration row" style="{{ !$course->hide_after_end ? 'display: none;' : '' }} ">
+                           <label class="col-md-5 control-label">УКАЖИТЕ ИНТЕРВАЛ ДОСТУПНОСТИ ЗАПИСИ 
+                              <span class="req">*</span>
+                           </label>
+                           <div class="col-md-7">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <input class="form-control course_is_open is_open_from datepicker__input" 
+                                              autocomplete="off" 
+                                              name="is_open_from" 
+                                              value="{{ !empty($course->is_open_from) ? date('d.m.Y', strtotime($course->is_open_from)) : '' }}" 
+                                              placeholder="от" 
+                                              type="text">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <input class="form-control course_is_open is_open_to datepicker__input" 
+                                              autocomplete="off" 
+                                              name="is_open_to" 
+                                              value="{{ !empty($course->is_open_to) ? date('d.m.Y', strtotime($course->is_open_to)) : '' }}" 
+                                              placeholder="до" 
+                                              type="text">
+                                    </div>
+                                 </div>
+                              </div>
+                           </div> 
+                        </div> 
+
                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="programm">
@@ -289,12 +336,172 @@
                   </div>
                   <div role="tabpanel" class="tab-pane" id="participants">
                      <div class="col-md-12">
-                        <h3 class="header_blok_course">Данная страница на стадии разработки</h3>
+                        <div class="row" style="margin-bottom: 40px;">
+                           @if(count($course->userRequests) > 0)
+                              @foreach($course->userRequests as $user)
+                                 <div class="col-md-12 userRequest">
+                                    <div class="row">
+                                       <div class="col-md-9 request__info_inner">
+                                          <div class="row">
+                                             <div class="col-md-4 request__user_name_img">
+                                                <div class="profile__img" 
+                                                     style="background-image: url(/public/uploads/users/{{ $user->avatar ? $user->avatar : $user->image }}{{'?v=' . time()}});">
+                                                </div>
+                                                <strong>
+                                                   {{ $user['name'] }}
+                                                </strong>
+                                             </div>
+                                             <div class="col-md-4 request__user_info">
+                                                <div>
+                                                   <strong>ТЕЛЕФОН</strong>
+                                                   <a class="request__phone" href="tel:{{ $user['phone'] }}">{{ $user['phone'] }}</a>
+                                                </div>
+                                                <br> 
+                                                <div>
+                                                   <strong>E-MAIL</strong>
+                                                   <a class="request__email" href="mailto:{{ $user['email'] }}">{{ $user['email'] }}</a>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-4">
+                                                
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 request__actions">
+                                          <div class="request__top">
+                                             <button type="button" class="request_btn conf">Принять</button>
+                                             <button type="button" class="request_btn decline">Отказать</button>
+                                          </div>
+
+                                          <button type="button" class="request_btn test_course">ПРОБНОЕ ЗАНЯТИЕ</button>
+                                       </div> 
+                                    </div>
+                                 </div>
+                              @endforeach
+                              <style>
+
+                                 .request_btn{
+                                    width: 100%; 
+                                    color: #fff;
+                                    text-transform: uppercase;
+                                    border-radius: 20px;
+                                    padding:5px 0;
+                                    border:none;
+                                    outline: none;
+                                    font-size: 13px;
+                                    margin-bottom: 10px;
+                                 }
+
+                                 .request_btn.conf{
+                                    background-color: rgba(153, 153, 204, 1);
+                                 }
+
+                                 .request_btn.decline{
+                                    background-color: #fff;
+                                    color: #333;
+                                 }
+ 
+                                 .test_course{
+                                    background-color: rgba(153, 204, 255, 1);
+                                    color: #333;
+                                    width: 85%;
+                                    position: absolute;
+                                    bottom: 0px;
+                                 }
+                                 
+                                 .userRequest > .row, .request__info_inner > .row{
+                                    justify-content: space-between;
+                                    align-items: stretch;
+                                    display: flex;
+                                 }
+
+                                 .request__user_info{
+                                    border-right: 1px solid #98cdfe;
+                                 }
+
+                                 .request__user_info strong{
+                                    font-size: 11px;
+                                    display: block;
+                                 }
+
+                                 .request__phone{
+                                    font-size: 16px;
+                                    font-weight: bold;
+                                    text-decoration: none;
+                                    color: #333;
+                                 }
+
+                                 .request__email{
+                                    font-size: 13px;
+                                 }
+
+                                 .request__info_inner{
+                                    -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.349019607843137);
+                                     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.349019607843137); 
+                                     padding: 15px;
+                                     z-index: 99;
+                                 }
+
+                                 .request__actions{
+                                    position: relative;
+                                    background-color: rgba(215, 215, 215, 1);
+                                    -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.349019607843137);
+                                    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.349019607843137);
+                                    padding: 15px;
+                                 }
+
+                                 .request__user_name_img{
+                                    text-align: center;
+                                    border-right: 1px solid #98cdfe;
+                                 }
+
+                                 .request__user_name_img .profile__img{
+                                    padding-top: 0;
+                                    width: 100px;
+                                    height: 100px; 
+                                 }
+
+                                 .request__user_name_img strong{
+                                    font-size: 16px;
+                                 }
+                              </style>
+                           @else
+                              <div class="col-md-12">
+                                 <div class="no__data"> 
+                                    <h5>Нет участников курса</h5>
+                                 </div>
+                              </div>
+                           @endif
+                        </div>
                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="certificate">
                      <div class="col-md-12">
-                        <h3 class="header_blok_course">Данная страница на стадии разработки</h3>
+                        <div id="certificates__images" class="row uploaderContainter" style="margin-bottom: 40px;">
+ 
+                              @foreach($course->certificates as $certificate)
+                              <div class='col-md-4 load-thumbnail'> 
+                                     
+                                    <div class="uploadedImg" 
+                                         style="background-image: url(/public/uploads/courses/certificates/{{ $certificate->image }})"></div>
+                                    <div class='actions__upload_img'>
+                                       <span onclick='deleteCourseUploadImg(this, {{ $certificate->id }})' class="delete__upload_img"></span> 
+                                        </div>
+                              </div>
+                           @endforeach
+                               
+                           <div class="col-md-4 {{ !count($course->certificates) ? 'col-md-offset-4' : ''}}">
+                              <div class="certificateLoadArea">
+                                 <input type="file" 
+                                     name="diploms[]" 
+                                     multiple 
+                                     id="certificateInpuT" 
+                                     onchange="multipleImages(this, '#certificates__images')">
+                                   <span class="file__input_name"> Добавить или перетащить <br> сюда изображение</span>
+                              </div>
+                           </div>
+                               
+                        </div> 
                      </div>
                   </div>
                </div>

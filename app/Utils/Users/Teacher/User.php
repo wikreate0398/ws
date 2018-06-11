@@ -12,7 +12,7 @@ use App\Models\UsersWorkExperience;
 use App\Models\TeacherSubjects;
 use App\Models\TeacherSpecializations;
 use App\Models\TeacherLessonOptions;
-use App\Models\TeacherCertificates;
+use App\Models\UsersCertificates;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -307,10 +307,10 @@ class User
             $fileName = md5(microtime()) . '.png';
             uploadBase64($value, public_path() . "/uploads/users/certificates/$fileName");
             $insert[] = [
-                'id_teacher' => $id_user,
+                'id_user' => $id_user,
                 'image'      => $fileName
             ];
         } 
-        TeacherCertificates::insert($insert);
+        UsersCertificates::insert($insert);
     } 
 }

@@ -184,10 +184,10 @@
                            type="text">
                      </div>
                   </div>
-                  <label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА <span class="req">*</span></label>
+                  <label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА (₽)<span class="req">*</span></label>
                   <div class="col-md-8">
                      <div class="form-group">
-                        <input class="form-control" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
+                        <input class="form-control rp" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
                      </div>
                   </div>
                   <div class="col-md-12">

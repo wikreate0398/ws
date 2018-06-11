@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User as ModelUser; 
 use App\Models\UsersUniversity;
 use App\Models\UniversitySpecializations;
-use App\Models\TeacherCertificates;
+use App\Models\UsersCertificates;
 use Illuminate\Support\Facades\Hash;
 
 class User 
@@ -199,10 +199,10 @@ class User
             $fileName = md5(microtime()) . '.png';
             uploadBase64($value, public_path() . "/uploads/users/certificates/$fileName");
             $insert[] = [
-                'id_teacher' => $id_user,
+                'id_user' => $id_user,
                 'image'      => $fileName
             ];
         } 
-        TeacherCertificates::insert($insert);
+        UsersCertificates::insert($insert);
     } 
 }

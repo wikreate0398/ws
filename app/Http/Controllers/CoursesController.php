@@ -11,18 +11,26 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Courses;
 use App\Models\CourseCategory;
+use App\Models\CourseRequest;
+use App\Utils\Users\Requests\CourseRequest as CourseRequestClass;
+use App\Utils\Users\Requests\RequestInterface;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+ 
 class CoursesController extends Controller
-{
+{ 
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct() {}
+
+    private function courseRequestInstance($id)
     {
+        return new CourseRequestClass($id, @Auth::user()->id);
     }
 
     /**
@@ -38,6 +46,7 @@ class CoursesController extends Controller
         }
 
         $currentCat = CourseCategory::where('url', $cat)->first();
+        $authCheck = Auth::check();
 
         $categories = [];
         $subcatFlag = false;
@@ -62,18 +71,20 @@ class CoursesController extends Controller
         }
         else
         {
-            $categories = CourseCategory::with(['courses' => function($query){
+            $categories = CourseCategory::with(['courses' => function($query) use($authCheck){
                                     $query->whereHas('user', function($query){
                                         return User::allowUser($query);
                                     });
+                                    if ($authCheck != true) 
+                                    { 
+                                        $query->where('available', '!=', '2');
+                                    }
                               }])->has('courses', '>=', '1')->get();
         } 
          
         $data = [
             'courses'      => Courses::getCatalog($cat, $subcat, $request->all()),
-            'totalCourses' => Courses::whereHas('user', function($query){
-                                        return User::allowUser($query);
-                                    })->count(),
+            'totalCourses' => Courses::countTotal(),
             'subcatFlag'   => $subcatFlag,
             'categories'   => $categories,
             'baseUrl'      => $baseUrl,
@@ -86,13 +97,15 @@ class CoursesController extends Controller
     } 
 
     public function show($id)
-    { 
+    {    
+        $course = Courses::getOneCourse($id, Auth::check());
         $data = [
-          'course' => Courses::with('sections')->where('id', $id)->whereHas('user', function($query){
-                          return User::allowUser($query);
-                      })->findOrFail($id) 
-        ];   
-
+            'course'         => $course,
+            'hasRequest'     => ($this->courseRequestInstance($id)->canMakeRequest() === true) ? false : true, 
+            'scripts'        => [
+                'js/courses.js'
+            ]
+        ]; 
         return view('courses.show', $data);
     } 
 
@@ -105,7 +118,7 @@ class CoursesController extends Controller
 
         if (empty($searchData)) die();
          
-        $content    = '';
+        $content    = ''; 
         if (@count($searchData)) 
         {
             foreach ($searchData as $teacher) 
@@ -118,5 +131,21 @@ class CoursesController extends Controller
         } 
 
         return \App\Utils\JsonResponse::success(['content' => $content]);
+    }
+
+    public function makeRequest($id)
+    { 
+        $courseRequest        = $this->courseRequestInstance($id);  
+        $canMakeRequestStatus = $courseRequest->canMakeRequest();
+        if ($canMakeRequestStatus === true) 
+        {
+            $courseRequest->makeRequest(); 
+            $courseRequest->sendNotification();
+        }
+        else
+        {  
+            return redirect('course/' . $id)->with('courseMsg.error', $canMakeRequestStatus);
+        } 
+        return redirect('course/' . $id)->with('courseMsg.success', 'Вы успешно записаны на этот курс'); 
     }
 }

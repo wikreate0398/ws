@@ -7,7 +7,7 @@ use App\Models\User as ModelUser;
 
 class User
 {
-	private $niceNames = [
+	public $niceNames = [
 		'password'         => 'Пароль',
         'repeat_password'  => 'Повторите пароль',
         'image'            => 'Фото',
@@ -19,7 +19,7 @@ class User
         'city'             => 'Город', 
 	];
 
-	private $addRules = [
+	public $addRules = [
         'email'                 => 'required|string|email|unique:users',
         'name'                  => 'required', 
         'phone'                 => 'required', 
@@ -27,7 +27,7 @@ class User
         'password_confirmation' => 'required'
 	];
 
-    private $editRules = [
+    public $editRules = [
         'email'                 => 'required|string|email|unique:users',
         'name'                  => 'required', 
         'phone'                 => 'required', 
@@ -67,19 +67,19 @@ class User
         foreach (['email', 'password', 'password_confirmation'] as $key => $value) 
         { 
             unset($this->editRules[$value]);
-        }  
+        }   
 
         $validate = $this->validation($data, $this->editRules);
-        if ($validate != true) 
+        if ($validate !== true) 
         {
             return $validate;
-        }
+        } 
 
         $checkEmail = ModelUser::whereEmail($data['email'])->where('id', '!=', $id_user)->get();
         if (count($checkEmail) > 0) 
         {
             return 'Пользователь с таким имейлом уже существует!'; 
-        } 
+        }  
 
         ModelUser::where('id', $id_user)->
           	update([ 

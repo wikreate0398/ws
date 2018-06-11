@@ -2365,6 +2365,7 @@ select option:disabled {
     -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.349019607843137);
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.349019607843137);
     position: relative;
+    margin-bottom: 30px;
 }
 
 .course_card .course_heart{
@@ -2432,4 +2433,14 @@ select option:disabled {
 
 .course_card .footer__course_card i{
     font-size: 18px;
+}
+
+.alert-danger{ 
+    color: #ffffff;
+    font-family: 'Cuprum Regular';
+    background-color: #e06a6a;
+}
+
+.submit_application:disabled{
+    background-color: #ccc !important;
 }

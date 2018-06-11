@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Utils\Users\University;
-
-use App\Http\Controllers\Controller;
+namespace App\Utils\Users;
+ 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Courses; 
 use App\Models\CourseSections; 
 use App\Models\SectionLectures; 
 use App\Models\CourseCategory;
-
+use App\Models\CoursesCertificates;
+ 
 class Course
 {
     private $niceNames = [ 
@@ -18,11 +18,13 @@ class Course
         'description'   => 'Краткое описание курса',
         'text'          => 'Подробное описание курса',
         'pay'           => 'Тип (платный/бесплатный)', 
-        'is_open_from'  => 'Запись курса открыта с',
+        'date_from'     => 'Длительность курса от',
+        'date_to'       => 'Длительность курса до',
+        'is_open_from'  => 'Запись курса открыта от',
         'is_open_to'    => 'Запись курса открыта до',
         'type'          => 'Тип',
         'available'     => 'Доступность на сайте',
-        'price'         => 'Стоимость'
+        'price'         => 'Стоимость' 
     ];
 
     private $rules = [
@@ -31,15 +33,15 @@ class Course
         'text'         => 'max:2000',  
         'id_category'  => 'required',
         'pay'          => 'required', 
-        'is_open_from' => 'required',
-        'is_open_to'   => 'required',
+        'date_from'    => 'required',
+        'date_to'      => 'required',
         'type'         => 'required',
         'available'    => 'required',  
     ]; 
 
     private $payOptions = ['1','2'];
 
-    private $availableOptions = ['1','2', '3'];
+    private $availableOptions = ['1','2'];
 
     private $types = ['1','2', '3'];
 
@@ -54,7 +56,10 @@ class Course
      *
      * @return void
      */
-    public function __construct() {}
+    public function __construct() 
+    {
+
+    }
 
     private function validateSectionsAndLectures($data)
     {
@@ -107,6 +112,12 @@ class Course
             $this->rules['price'] = 'required';
         }
 
+        if (!empty($data['hide_after_end'])) 
+        {
+            $this->rules['is_open_from'] = 'required';
+            $this->rules['is_open_to'] = 'required';
+        }
+
         $errors = []; 
         if (CourseCategory::where('parent_id', $data['id_category'])->count() > 0 && empty($data['subcat_id'])) 
         {
@@ -146,8 +157,8 @@ class Course
     }
 
     public function save(array $data, $id_user)
-    {
-        return Courses::create([ 
+    { 
+        $id_course = Courses::create([ 
             'id_user'       => $id_user,
             'id_category'   => intval($data['id_category']),
             'id_subcat'     => !empty($data['subcat_id']) ? $data['subcat_id'] : 0,
@@ -156,12 +167,23 @@ class Course
             'text'          => $data['text'],
             'pay'           => intval($data['pay']),
             'type'          => intval($data['type']),
-            'is_open_to'    => date('Y-m-d', strtotime($data['is_open_to'])),
-            'is_open_from'  => date('Y-m-d', strtotime($data['is_open_from'])),
-            'available'     => intval($data['available']),
-            'price'         => !empty($data['price']) ? toFloat($data['price']) : ''
+            'is_open_to'    => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_to'])) : null,
+            'is_open_from'  => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_from'])) : null,
+            'max_nr_people'  => intval($data['max_nr_people']),
+            'date_to'        => date('Y-m-d', strtotime($data['date_to'])),
+            'date_from'      => date('Y-m-d', strtotime($data['date_from'])),
+            'hide_after_end' => !empty($data['hide_after_end']) ? 1 : 0,
+            'available'      => intval($data['available']),
+            'price'          => !empty($data['price']) ? toFloat($data['price']) : ''
         ])->id; 
-    }
+
+        if (!empty($data['certificates'])) 
+        {
+            $this->saveCertificates($data['certificates'], $id_course);
+        }
+
+        return $id_course;
+    } 
 
     public function edit(array $data, $id_course, $id_user)
     {  
@@ -175,11 +197,20 @@ class Course
             'text'          => $data['text'],
             'pay'           => intval($data['pay']),
             'type'          => intval($data['type']),
-            'is_open_to'    => date('Y-m-d', strtotime($data['is_open_to'])),
-            'is_open_from'  => date('Y-m-d', strtotime($data['is_open_from'])),
+            'is_open_to'    => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_to'])) : null,
+            'is_open_from'  => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_from'])) : null,
+            'max_nr_people'  => intval($data['max_nr_people']),
+            'date_to'        => date('Y-m-d', strtotime($data['date_to'])),
+            'date_from'      => date('Y-m-d', strtotime($data['date_from'])),
+            'hide_after_end' => !empty($data['hide_after_end']) ? 1 : 0,
             'available'     => intval($data['available']),
             'price'         => !empty($data['price']) ? toFloat($data['price']) : ''
         ]); 
+
+        if (!empty($data['certificates'])) 
+        {
+            $this->saveCertificates($data['certificates'], $id_course);
+        }
     }
 
     public function saveSections($courseId)
@@ -207,9 +238,33 @@ class Course
         return true;
     }
 
+    public function saveCertificates($certificates, $id_course)
+    {
+        $insert = [];
+        foreach ($certificates as $key => $value) 
+        {
+            $fileName = md5(microtime()) . '.png';
+            uploadBase64($value, public_path() . "/uploads/courses/certificates/$fileName");
+            $insert[] = [
+                'id_course' => $id_course,
+                'image'     => $fileName
+            ];
+        } 
+        CoursesCertificates::insert($insert);
+    } 
+
     public function hasAccessCourse($id_course, $id_user)
     {
         return Courses::where('id', $id_course)->where('id_user', $id_user)->count();
+    }
+
+    public function hasAccessCertificate($id_certificate, $id_user)
+    { 
+        $certificate = CoursesCertificates::whereId($id_certificate)->first(); 
+        if (!empty($certificate->course->id) && $this->hasAccessCourse($certificate->course->id, $id_user)) 
+        {
+            return true;
+        } 
     }
 
     public function hasAccessSection($id_section, $id_user)

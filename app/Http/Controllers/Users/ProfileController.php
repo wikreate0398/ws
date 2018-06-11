@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash; 
-use App\Http\Controllers\Users\Teacher\Course;
+use App\Utils\Users\Course;
 
 class ProfileController extends Controller
 { 
@@ -40,9 +40,18 @@ class ProfileController extends Controller
     public function deleteCertificate(Request $request)
     {
         $id = $request->input('id');
-        \App\Models\TeacherCertificates::whereId($id)->where('id_teacher', Auth::user()->id)->delete();
+        \App\Models\UsersCertificates::whereId($id)->where('id_user', Auth::user()->id)->delete();
     }  
 
+    public function deleteCourseCertificate(Request $request, Course $course)
+    {
+        $id = $request->input('id');
+        if ($course->hasAccessCertificate($id, Auth::user()->id)) 
+        {
+            \App\Models\CoursesCertificates::whereId($id)->delete();
+        }
+    }   
+    
     public function updateImage(Request $request)
     {
         if ($request->hasFile('image') == false) 

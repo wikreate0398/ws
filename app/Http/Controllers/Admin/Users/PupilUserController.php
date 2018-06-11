@@ -62,28 +62,6 @@ class PupilUserController extends SiteUser
         return $validator;
     }
 
-    // public function createUser(Request $request)
-    // {
- 
-    //     $data     = $request->all();  
-    //     $validate = $this->validation($data, $this->addRules);
-    //     if ($validate !== true) 
-    //     {  
-    //         return \App\Utils\JsonResponse::error(['messages' => $validate]); 
-    //     } 
-
-    //     $create = $this->_user->create($data);
-
-    //     User::where('id', $create)->
-    //         update([ 
-    //             'activate'     => '1',
-    //             'confirm'      => '1', 
-    //             'confirm_date' => date('Y-m-d H:i:s'),
-    //     ]);
-
-    //     return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
-    // }
-
     public function updateUser($id, Request $request)
     {
         $edit = $this->_user->edit($request->all(), $id);   
@@ -100,7 +78,7 @@ class PupilUserController extends SiteUser
             'password'              => 'required|string|min:6|confirmed|',
             'password_confirmation' => 'required',
         ]);
-        $validator->setAttributeNames($this->niceNames);
+        $validator->setAttributeNames($this->_user->niceNames);
   
         if ($validator->fails()) 
         {

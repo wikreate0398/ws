@@ -149,6 +149,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\SubjectsList', 'teacher_subjects', 'id_teacher', 'id_subject')->orderBy('page_up', 'asc')->orderBy('id', 'desc');
     }
 
+    public function teacherRequests()
+    {
+        return $this->belongsToMany('App\Models\User', 'teacher_request', 'id_teacher', 'id_user');
+    }
+
     public function teacherSpecializations()
     {
         return $this->belongsToMany('App\Models\TeacherSpecializationsList', 'teacher_specializations', 'id_teacher', 'id_specialization');
@@ -166,7 +171,7 @@ class User extends Authenticatable
 
     public function certificates()
     {
-        return $this->hasMany('App\Models\TeacherCertificates', 'id_teacher', 'id')->orderBy('id', 'asc');
+        return $this->hasMany('App\Models\UsersCertificates', 'id_user', 'id')->orderBy('id', 'asc');
     }
 
     public static function getTeachersMinMaxPrice()

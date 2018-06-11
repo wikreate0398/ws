@@ -24,9 +24,9 @@
             <li role="presentation">
                <a href="#programm" aria-controls="programm" role="tab" data-toggle="tab">Программа курса</a>
             </li>
-            <li role="presentation">
+            <!-- <li role="presentation">
                <a href="#participants" aria-controls="participants" role="tab" data-toggle="tab">Участники курса</a>
-            </li>
+            </li> -->
             <li role="presentation">
                <a href="#certificate" aria-controls="certificate" role="tab" data-toggle="tab">Сертификат/диплом</a>
             </li>
@@ -145,24 +145,33 @@
                      </div>
                      <div class="clearfix"></div>
 
-                     <label class="col-md-5 control-label">УКАЖИТЕ ИНТЕРВАЛ ДОСТУПНОСТИ ЗАПИСИ <span class="req">*</span>
+                     <label class="col-md-5 control-label">УКАЖИТЕ Длительность Курса <span class="req">*</span>
                      </label>
                      <div class="col-md-7">
                         <div class="row">
                            <div class="col-md-6">
                               <div class="form-group">
-                                 <input class="form-control course_datepicker" autocomplete="off" name="is_open_from" value="" placeholder="от" type="text">
+                                 <input class="form-control course_date_from datepicker__input" autocomplete="off" name="date_from" value="" placeholder="от" type="text">
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-group">
-                                 <input class="form-control course_datepicker" autocomplete="off" name="is_open_to" value="" placeholder="до" type="text">
+                                 <input class="form-control course_date_to datepicker__input" autocomplete="off" name="date_to" value="" placeholder="до" type="text">
                               </div>
                            </div>
                         </div>
                      </div>
                      <div class="clearfix"></div>
 
+                     <label class="col-md-5 control-label">УКАЖИТЕ кол-во людей 
+                     </label>
+                     <div class="col-md-7">
+                        <div class="form-group">
+                           <input class="form-control number_field" autocomplete="off" name="max_nr_people" value="" type="text">
+                        </div> 
+                     </div>
+                     <div class="clearfix"></div>
+ 
                      <div class="col-md-12">
                         <h3 class="header_blok_course">Доступность на сайте</h3>
                      </div>
@@ -177,13 +186,40 @@
                            <input type="radio" name="available" value="2"> Только для зарегистрированных пользователей
                            </label>
                         </div>
-                        <div class="radio">
-                           <label>
-                           <input type="radio" name="available" value="1"> Скрыть курс по окончанию набора
-                           </label>
+                        <div class="list_checkbox"> 
+                           <div class="checkbox">
+                              <label> 
+                                 <input type="checkbox" onchange="showCourseDuration(this)" name="hide_after_end">
+                                 <span class="jackdaw">
+                                    <i class="jackdaw-icon fa fa-check"></i>
+                                 </span>
+                                 Скрыть курс по окончанию набора
+                              </label>
+                           </div>
                         </div>
+                        
+                        <div class="course__duration row" style="display: none;">
+                           <label class="col-md-5 control-label">УКАЖИТЕ ИНТЕРВАЛ ДОСТУПНОСТИ ЗАПИСИ 
+                              <span class="req">*</span>
+                           </label>
+                           <div class="col-md-7">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <input class="form-control datepicker__input course_is_open is_open_from" autocomplete="off" name="is_open_from" value="" placeholder="от" type="text">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <input class="form-control datepicker__input course_is_open is_open_to" autocomplete="off" name="is_open_to" value="" placeholder="до" type="text">
+                                    </div>
+                                 </div>
+                              </div>
+                           </div> 
+                        </div> 
                      </div>
                   </div>
+                   
                   <div role="tabpanel" class="tab-pane" id="programm">
                      <div class="course__sections">
                         <div class="panel panel-default course__section first_block">
@@ -248,7 +284,18 @@
                   </div>
                   <div role="tabpanel" class="tab-pane" id="certificate">
                      <div class="col-md-12">
-                        <h3 class="header_blok_course">Данная страница на стадии разработки</h3>
+                        <div id="certificates__images" class="row uploaderContainter" style="margin-bottom: 40px;"> 
+                           <div class="col-md-4 {{ !count($user->certificates) ? 'col-md-offset-4' : ''}}">
+                              <div class="certificateLoadArea">
+                                 <input type="file" 
+                                     name="diploms[]" 
+                                     multiple 
+                                     id="certificateInpuT" 
+                                     onchange="multipleImages(this, '#certificates__images')">
+                                   <span class="file__input_name"> Добавить или перетащить <br> сюда изображение</span>
+                              </div>
+                           </div> 
+                        </div>  
                      </div>
                   </div>
                </div>

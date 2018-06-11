@@ -228,6 +228,14 @@ function adminMenu()
                     'link' => '/admin/course/category/',
                     'view' => true,
                     'edit' => 'Редактировать' 
+                ],
+
+                'teacher-course' => [
+                    'name' => 'Категории', 
+                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                    'link' => '/admin/course/teacher-course/',
+                    'view' => true,
+                    'edit' => 'Редактировать' 
                 ] 
             ]
         ], 

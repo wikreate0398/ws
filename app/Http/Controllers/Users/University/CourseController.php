@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\CourseCategory;
 use App\Models\Courses;  
-use App\Utils\Users\University\Course;
+use App\Utils\Users\Course;
 
 class CourseController extends UniversityController
 {
@@ -45,19 +45,24 @@ class CourseController extends UniversityController
             'user'       => Auth::user(), 
             'include'    => 'users.profile_types.teacher.courses.add',
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
+            'scripts' => [
+                'js/courses.js'
+            ]
         ]); 
     } 
 
     public function editCourseForm($id_course)
     {
         $user    = Auth::user();
-        $courses = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
-         
+        $course = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course);  
         return view('users.university_profile', [ 
             'user'       => Auth::user(), 
             'include'    => 'users.profile_types.teacher.courses.edit',
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
-            'course'     => $courses
+            'course'     => $course,
+            'scripts' => [
+                'js/courses.js'
+            ]
         ]); 
     } 
 

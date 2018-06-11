@@ -4,6 +4,13 @@
 <div class="container no__home">
 	<div class="row">
 		<div class="col-md-12">
+ 
+			@if(count(Session::get('courseMsg')))
+			    <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
+			    	<p>{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}</p>
+			    </div> 
+			@endif 
+
 			<h1>{{ $course->name }}</h1>
 			<ul class="icons__info">
 				<li>
@@ -43,6 +50,19 @@
 					<i class="fa fa-star" aria-hidden="true"></i>
 				</li> 
 			</ul>
+
+			@php
+				
+			@endphp
+			<button type="button" 
+					@if($hasRequest==true)
+						disabled
+					@endif
+			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ $hasRequest }}')" 
+			        class="btn course_request_btn">
+			    ЗАПИСАТЬСЯ НА КУРС
+			</button> 
+		 
 
 			<div class="about__course">
 				<h2>О КУРСЕ</h2>
@@ -140,6 +160,19 @@
 		background-color: #b93777;
 		outline: none;
 		border: none;
+	}
+
+	.course_request_btn{
+		border: none;
+		background-color: #b93777;
+		color: #fff;
+		text-transform: uppercase;
+		padding: 5px 15px;
+		border-radius: 20px;
+	}
+
+	.course_request_btn:disabled{
+		background-color: #ccc;
 	}
 </style>
 

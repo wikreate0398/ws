@@ -3,6 +3,7 @@
 @section('content')
 <div class="container no__home teacher_page">
 	<div class="row">
+ 
 		<div class="col-lg-10 col-lg-offset-1">
 			<ul class="breadcrumb">
 			  <li><a href="/">Главная</a></li>
@@ -12,10 +13,23 @@
 		</div>
 		<div class="col-lg-3"> 
 			<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
-			<button type="button" class="btn submit_application">Оставить заявку</button>
+			<button @if($hasRequest==true)
+						disabled
+					@endif
+			        type="button" 
+			        class="btn submit_application"
+			        onclick="teacherRequest(this, {{ $teacher->id }}, '{{ Auth::check() }}', '{{ @$hasRequest }}')">
+			    Оставить заявку
+			</button>
 			<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
 		</div>
 		<div class="col-lg-9">
+			@if(count(Session::get('teacherMsg')))
+			    <div class="alert alert-{{ Session::get('teacherMsg.success') ? 'success' : 'danger' }}">
+			    	<p>{{ Session::get('teacherMsg.success') ? Session::get('teacherMsg.success') : Session::get('teacherMsg.error') }}</p>
+			    </div> 
+			@endif 
+
 			<div class="teachers_name">
 				<ul class="list-inline teachers_label pull-left">
 					@if(@Auth::check())

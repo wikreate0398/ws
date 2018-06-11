@@ -36,12 +36,14 @@ Route::get('universities/autocomplete', 'UniversityController@autocomplete');
 
 Route::get('teachers', 'TeachersController@index');
 Route::get('teacher/{id}', 'TeachersController@show');
+Route::get('teacher/{id}/makeRequest', 'TeachersController@makeRequest');
 Route::get('teachers/autocomplete', 'TeachersController@autocomplete');
 Route::post('teachers/setBoockmark', 'TeachersController@setBoockmark');
 
 Route::get('courses', 'CoursesController@index'); 
 Route::get('courses/cat/{cat}', 'CoursesController@index');
 Route::get('course/{id}', 'CoursesController@show');
+Route::get('course/{id}/makeRequest', 'CoursesController@makeRequest');
 Route::get('courses/autocomplete', 'CoursesController@autocomplete');
 
 Route::get('search', 'PagesController@search');  
@@ -94,11 +96,13 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::get('edit', "$controller@showEditForm")->name("{$userDefine}_user_edit");
 		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
 
-	 		Route::get('reviews', "{$controller}@showReviews")->name("{$userDefine}_user_reviews");
+	 		Route::get('reviews', "{$controller}@showReviews")->name("{$userDefine}_user_reviews"); 
 			Route::get('subscriptions', "{$controller}@showSubscriptions")->name("{$userDefine}_user_subscriptions"); 
 			Route::get('bookmarks', "{$controller}@showBookmarks")->name("{$userDefine}_user_bookmarks"); 
 			Route::get('diplomas', "{$controller}@showDiploms")->name("{$userDefine}_user_diplomas");
 			Route::get('deleteUserEducation/{id}', "{$controller}@deleteUserEducation")->name("{$userDefine}_delete_education");
+
+			Route::get('requests', "TeacherRequestsController@index")->name("{$userDefine}_user_requests");
 
 		 	Route::group(['prefix' => 'course'], function() use($userDefine) {
 		 		$controller = 'CourseController'; 
@@ -127,6 +131,7 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::post('update-image', 'ProfileController@updateImage')->name('update_image');
 			Route::post('loadRegionCities', 'ProfileController@loadRegionCities');  
 			Route::post('deleteCertificate', 'ProfileController@deleteCertificate');
+			Route::post('deleteCourseCertificate', 'ProfileController@deleteCourseCertificate');
 			Route::post('loadCourseSubcats', 'ProfileController@loadCourseSubcats');
 			Route::post('deleteCourseSectionLecture', 'ProfileController@deleteCourseSectionLecture'); 
 			Route::post('deleteCourseSection', 'ProfileController@deleteCourseSection');  
@@ -175,12 +180,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('{id}/{table}/update', 'UserProfileController@update'); 
 	});  
 
-	Route::group(['prefix' => 'course/category'], function() { 
-		Route::get('/', 'CourseController@show')->name('admin_course_category');    
-		Route::get('{id}/edit', 'CourseController@showeditForm'); 
-		Route::get('add', 'CourseController@showAddForm');
-		Route::post('create', 'CourseController@create'); 
-		Route::post('{id}/update', 'CourseController@update'); 
+	Route::group(['prefix' => 'course/category', 'namespace' => 'Courses'], function() { 
+		Route::get('/', 'CourseCategoryController@show')->name('admin_course_category');    
+		Route::get('{id}/edit', 'CourseCategoryController@showeditForm'); 
+		Route::get('add', 'CourseCategoryController@showAddForm');
+		Route::post('create', 'CourseCategoryController@create'); 
+		Route::post('{id}/update', 'CourseCategoryController@update'); 
+	});
+
+	Route::group(['prefix' => 'course/teacher-course', 'namespace' => 'Courses'], function() { 
+		Route::get('/', 'TeacherCourseController@show')->name('admin_teacher_course');    
+		Route::get('{id}/edit', 'TeacherCourseController@showeditForm'); 
+		Route::get('add', 'TeacherCourseController@showAddForm');
+		Route::post('create', 'TeacherCourseController@create'); 
+		Route::post('{id}/update', 'TeacherCourseController@update'); 
 	});
 
 	Route::group(['prefix' => 'location'], function() { 

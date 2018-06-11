@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TeacherCertificates extends Model
+class UsersCertificates extends Model
 {
-    protected $table = 'teacher_certificates';
+    protected $table = 'users_certificates';
 
     public $timestamps = false;
 
 	protected $fillable = [ 
-        'id_teacher',
+        'id_user',
         'image'
-    ];
+    ]; 
 }

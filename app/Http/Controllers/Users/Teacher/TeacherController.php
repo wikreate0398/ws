@@ -58,9 +58,10 @@ class TeacherController extends ProfileController
              
             //'include'                 => $this->viewPath . 'edit',
 
-            // 'scripts'                 => [
-            //     'js/tinymce/tinymce.min.js'
-            // ]
+            'scripts'                 => [
+                // 'js/tinymce/tinymce.min.js',
+                'js/teachers.js'
+            ] 
         ]); 
     }    
 

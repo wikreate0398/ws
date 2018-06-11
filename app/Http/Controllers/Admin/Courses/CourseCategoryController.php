@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Courses;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CourseCategory;
 
  
-class CourseController extends Controller
+class CourseCategoryController extends Controller
 {
 
     private $method = 'admin/course/category'; 

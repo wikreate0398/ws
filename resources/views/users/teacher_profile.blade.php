@@ -21,9 +21,7 @@
 
 							</div>
 						</div>
-						<div id="error-respond"></div>
-						 
-						 
+						<div id="error-respond"></div> 
 					</form> 
 				</div> 
 				<div class="col-lg-9">
@@ -64,6 +62,9 @@
 			      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
 			      		<a href="{{ route(userRoute('user_profile')) }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
 			      	</li>
+			      	<li class="{{ isActive(route(userRoute('user_requests'))) ? 'active' : '' }}">
+						<a href="{{ route(userRoute('user_requests')) }}">МОИ ЗАЯВКИ</a>
+					</li>
 					<li class="{{ isActive(route(userRoute('user_diplomas'))) ? 'active' : '' }}">
 						<a href="{{ route(userRoute('user_diplomas')) }}">МОИ ДИПЛОМЫ</a>
 					</li>

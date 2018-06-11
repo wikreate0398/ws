@@ -22,7 +22,7 @@ class TeacherRequest implements RequestInterface
     public $user_type   = null;
 
     private $teacherData = [];
-     
+    
     /**
      * Create a new controller instance.
      *

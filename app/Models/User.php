@@ -136,7 +136,7 @@ class User extends Authenticatable
 
         $user->where(function($query){
             return User::allowUser($query);
-        });
+        })->where('user_type',2);
 
         return $user->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
                                       ['*'], 
@@ -180,12 +180,14 @@ class User extends Authenticatable
                         return User::allowUser($query);
                     })
                     ->where('price_hour', '>', '0')
+                    ->where('user_type',2)
                     ->min('price_hour');
 
         $max = self::where(function($query){
                         return User::allowUser($query);
                     })
                    ->where('price_hour', '>', '0')
+                   ->where('user_type',2)
                    ->max('price_hour');
 
         return compact('min', 'max');

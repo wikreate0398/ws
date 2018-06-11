@@ -93,11 +93,11 @@
 	            	<div class="course_card">
 	            		<i class="fa fa-heart-o course_heart" aria-hidden="true"></i>
 	            		<div class="body__course_card">
-	            			<div class="cat-name">
-	            				@if(!empty($course->subCategory))
-									{{ $course->subCategory->name }}
-								@else
-									{{ $course->category->name }}
+	            			<div class="cat-name"> 
+	            				@if(!empty(@$course->subCategory->name)) 
+									{{ @$course->subCategory->name }}
+								@else 
+									{{ @$course->category->name }}
 	            				@endif 
 	            			</div>
 		            		<h2>

@@ -88,7 +88,7 @@ class TeachersController extends Controller
                                'subjects'])
                          ->where(function($query){
                               return User::allowUser($query);
-                         }) 
+                         })->where('user_type',2)
                          ->findOrFail($id); 
         $data = [
             'teacher'        => $teacher,  

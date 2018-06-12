@@ -25,7 +25,7 @@
 	                <br> 
 	                <div>
 	                   <strong>ДАТА ПОДАЧИ ЗАЯВКИ</strong>
-	                   <p>{{ date('d.m.Y', strtotime($userRequest['created_at'])) }}</p>
+	                   <p>{{ date('d.m.Y H:i:s', strtotime($userRequest['created_at'])) }}</p>
 	                </div>
 				</div>
 			</div>

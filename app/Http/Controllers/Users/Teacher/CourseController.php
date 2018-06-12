@@ -105,29 +105,7 @@ class CourseController extends TeacherController
             $this->_course->saveSections($idCourse);
         }
         return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('user_profile'))], 'Курс успешно изменен!');
-    }
-
-    public function deleteCourseSection(Request $request)
-    { 
-        $id_section = intval($request->input('id_section')); 
-
-        if ($this->_course->hasAccessSection($id_section, Auth::user()->id)) 
-        {
-            $this->_course->deleteSection($id_section);
-            return \App\Utils\JsonResponse::success();
-        } 
-    }
-
-    public function deleteCourseSectionLecture(Request $request)
-    { 
-        $id_lecture = intval($request->input('id_lecture')); 
-
-        if ($this->_course->hasAccessLecture($id_lecture, Auth::user()->id)) 
-        {
-            $this->_course->deleteLecture($id_lecture);
-            return \App\Utils\JsonResponse::success(); 
-        } 
-    }
+    } 
 
     public function deleteCourse($id_course)
     {  

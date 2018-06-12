@@ -67,14 +67,16 @@ class CoursesController extends Controller
                             $query->whereHas('user', function($query){
                                 return User::allowUser($query);
                             });
+
                         }])->has('coursesSubcat', '>=', '1')->where('parent_id', $id)->get();  
         }
         else
         {
             $categories = CourseCategory::whereHas('courses', function($query) use($authCheck){
+                                    $query->where('isHide', 0); 
                                     $query->whereHas('user', function($query){
                                         return User::allowUser($query);
-                                    })->where('isHide', 0);
+                                    });
                                     if ($authCheck != true) 
                                     { 
                                         $query->where('available', '!=', '2');
@@ -82,8 +84,7 @@ class CoursesController extends Controller
                               })->has('courses', '>=', '1')->get();
         } 
 
-        $courses = Courses::getCatalog($cat, $subcat, $request->all());
-        //exit(print_arr($courses->toArray()));
+        $courses = Courses::getCatalog($cat, $subcat, $request->all()); 
         $data = [
             'courses'      => $courses,
             'totalCourses' => Courses::countTotal(),

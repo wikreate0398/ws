@@ -25,7 +25,8 @@ class Courses extends Model
         'max_nr_people',
         'type',
         'available',
-        'price'
+        'price',
+        'isHide'
     ];
 
     public function category()

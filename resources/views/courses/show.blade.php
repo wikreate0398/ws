@@ -13,19 +13,44 @@
 
 			<h1>{{ $course->name }}</h1>
 			<ul class="icons__info">
-				<li>
-					<i class="fa fa-calendar" aria-hidden="true"></i>
-					&nbsp;20.10.2018
-				</li>
+
+				@if($course->max_nr_people > count($course->userRequests) 
+				    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
+					<li>
+						<i class="fa fa-calendar"></i> 
+						&nbsp; {{ date('d.m.Y', strtotime($course->is_open_to)) }}
+					</li>
+				@else
+					<li> 
+						<i class="fa fa-calendar"></i> 
+						&nbsp;Набор закончен
+					</li>
+				@endif  
+
 				<li>
 					<i class="fa fa-user" aria-hidden="true"></i>
-					&nbsp;1
+					&nbsp;{{ count($course->userRequests) }}
 				</li>
 				<li>
-					1 месяц
+					@php 
+	                    $diff = dateDiff($course->date_from, $course->date_to);
+					@endphp
+					@if($diff->m)
+						{{ $diff->m }} {{ monthCase($diff->m) }}
+					@endif 
+
+					@if($diff->d) 
+    					@if($diff->m)
+							и
+    					@endif 
+						{{ $diff->d }}  
+						@php 
+							echo dayCase($diff->d);
+						@endphp  
+					@endif 
 				</li>
-				<li>
-					8 лекций
+				<li class="courseSections">
+				
 				</li>
 			</ul>
 
@@ -113,6 +138,11 @@
 		</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function(){
+		$('li.courseSections').text('{{ $lectureNum }} {{ lectionCase($lectureNum) }}');
+	});
+</script>
 
 <style>
 

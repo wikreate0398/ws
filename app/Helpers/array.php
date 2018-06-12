@@ -29,6 +29,53 @@ if (!function_exists('map_tree')) {
     }
 }
 
+function dayCase($ndata)
+{
+    if( $ndata == '1'){  
+        return "день"; 
+    } elseif( substr($ndata, -1) == '2'){  
+        return "дня";  
+    } elseif( substr($ndata, -1) == '3'){  
+        return "дня";  
+    } elseif( substr($ndata, -1) == '4'){  
+        return "дня";  
+    } else {  
+        return "дней";  
+    } 
+}
+
+function monthCase($month)
+{
+    if ($month == 1) {
+        return 'месяц';
+    } elseif ($month <= 4) {
+        return 'месяца';
+    } else{
+        return 'месяцев';
+    }
+}
+
+function lectionCase($lection)
+{
+    if( $lection == '1'){  
+        return "лекция"; 
+    } elseif( substr($lection, -1) == '2'){  
+        return "лекции";  
+    } elseif( substr($lection, -1) == '3'){  
+        return "лекции";  
+    } elseif( substr($lection, -1) == '4'){  
+        return "лекции";  
+    } else {  
+        return "лекций";  
+    } 
+}
+
+function dateDiff($date1, $date2)
+{
+    $d1 = new DateTime($date1);
+    $d2 = new DateTime($date2); 
+    return $d2->diff($d1);
+} 
 function dateToTimestamp($date)
 {
     return strtotime($date . '00:00:00');

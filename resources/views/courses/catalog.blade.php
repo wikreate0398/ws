@@ -119,7 +119,24 @@
 
 		            			<tr> 
 		            				<td>ДЛИТЕЛЬНОСТЬ</td> 
-		            				<td>1 МЕСЯЦ</td>
+		            				<td style="text-transform: uppercase;">
+		            					@php 
+						                    $diff = dateDiff($course->date_from, $course->date_to);
+		            					@endphp
+		            					@if($diff->m)
+											{{ $diff->m }} {{ monthCase($diff->m) }}
+		            					@endif 
+
+		            					@if($diff->d) 
+			            					@if($diff->m)
+												и
+			            					@endif 
+											{{ $diff->d }}  
+											@php 
+												echo dayCase($diff->d);
+											@endphp  
+		            					@endif 
+		            				</td>
 		            			</tr>
 
 		            			<tr> 
@@ -137,13 +154,19 @@
 	            		<div class="footer__course_card">
 	            			<div class="pers__num">
 	            				<i class="fa fa-user" aria-hidden="true"></i>
-	            				<span>10</span>
+	            				<span>{{ count($course->userRequests) }}</span>
 	            			</div>
 	            			<div class="set__going">
 	            				<i class="fa fa-calendar" aria-hidden="true"></i>
-            					<div class="set__going_date">
-            						<span> ИДЕТ НАБОР ДО </span> 
-            						<strong>20.10.2018</strong> 
+            					<div class="set__going_date"> 
+            						@if($course->max_nr_people > count($course->userRequests) 
+									    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d'))) 
+										<span> ИДЕТ НАБОР ДО </span> 
+            							<strong>{{ date('d.m.Y', strtotime($course->is_open_to)) }}</strong> 
+
+									@else 
+										<span> Набор закончен </span> 
+									@endif  
             					</div> 
 	            			</div>
 	            		</div>

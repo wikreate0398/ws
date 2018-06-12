@@ -21,8 +21,7 @@ function teacherBookmark(item, id){
 
 function teacherRequest(button, id_teacher, auth, hasRequest)
 {
-    if (hasRequest == true) {
-        alert('Вы уже оставляли заявку для этого учителя');
+    if (hasRequest == true && auth == true) { 
         return;
     }
     if (auth != true) 

@@ -43,7 +43,7 @@ $(document).ready(function(){
 
 function courseRequest(button, id_course, auth, canMakeRequest)
 {
-	if (canMakeRequest == false) { 
+	if (canMakeRequest == false && auth == true) { 
 		return;
 	}
 	if (auth != true) 

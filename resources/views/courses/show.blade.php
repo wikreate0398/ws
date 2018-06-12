@@ -88,7 +88,7 @@
 				
 			@endphp
 			<button type="button" 
-					@if($canMakeRequest==false)
+					@if($canMakeRequest==false && Auth::check() == true)
 						disabled
 					@endif
 			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ $canMakeRequest }}')" 

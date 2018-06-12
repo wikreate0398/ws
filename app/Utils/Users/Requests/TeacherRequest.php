@@ -59,7 +59,7 @@ class TeacherRequest implements RequestInterface
  
     public function getTeacher()
     {
-        if (empty($this->teacherData))  
+        if (empty($this->teacherData) or @$this->teacherData->id != $this->id_teacher)  
         { 
             $this->teacherData = User::where(function($query){
                 return User::allowUser($query);
@@ -75,17 +75,18 @@ class TeacherRequest implements RequestInterface
             if ($this->ifSelfUser() == true) 
             {
                 return 'Вы не можете оставить заявку';
-            }
-
+            } 
+ 
             if ($this->ifHasRequest() == true) 
             {
+
                 return 'Вы уже оставляли заявку для этого учителя';
             }
 
             return true;
         }
 
-        return 'Ошибка';
+        return 'Оставлять заявку могу только авторизированные ученики';
     }
 
     public function ifSelfUser()

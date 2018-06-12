@@ -95,7 +95,7 @@
                                                                 ->setUserType(@Auth::user()->user_type)
                                                                 ->canMakeRequest() === true) ? false : true; 
 							@endphp
-							<button @if($hasRequest==true)
+							<button @if($hasRequest==true && Auth::check() == true)
 										disabled
 									@endif
 									type="button" 

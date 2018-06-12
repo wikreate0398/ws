@@ -115,7 +115,7 @@ class CourseController extends UniversityController
             $this->_course->deleteSection($id_section);
             return \App\Utils\JsonResponse::success();
         } 
-    }
+    } 
 
     public function deleteCourseSectionLecture(Request $request)
     { 

@@ -133,8 +133,8 @@ Route::group(['middleware' => ['web_auth']], function(){
 			Route::post('deleteCertificate', 'ProfileController@deleteCertificate');
 			Route::post('deleteCourseCertificate', 'ProfileController@deleteCourseCertificate');
 			Route::post('loadCourseSubcats', 'ProfileController@loadCourseSubcats');
-			Route::post('deleteCourseSectionLecture', 'ProfileController@deleteCourseSectionLecture'); 
-			Route::post('deleteCourseSection', 'ProfileController@deleteCourseSection');  
+			Route::post('deleteCourseSectionLecture', 'CourseController@deleteCourseSectionLecture'); 
+			Route::post('deleteCourseSection', 'CourseController@deleteCourseSection');  
 			Route::post('changeStatus', 'ProfileController@changeStatus');  
 		}); 
 	}); 

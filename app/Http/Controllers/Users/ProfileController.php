@@ -25,7 +25,10 @@ class ProfileController extends Controller
      *
      * @return void
      */
-    public function __construct() {}   
+    public function __construct() 
+    {
+
+    }   
 
     public function editProfile(Request $request)
     { 
@@ -52,24 +55,24 @@ class ProfileController extends Controller
         }
     }
 
-    public function deleteCourseSection(Request $request)
+    public function deleteCourseSection(Request $request, Course $course)
     { 
         $id_section = intval($request->input('id_section')); 
 
-        if ($this->_course->hasAccessSection($id_section, Auth::user()->id)) 
+        if ($course->hasAccessSection($id_section, Auth::user()->id)) 
         {
-            $this->_course->deleteSection($id_section);
+            $course->deleteSection($id_section);
             return \App\Utils\JsonResponse::success();
         } 
     }
 
-    public function deleteCourseSectionLecture(Request $request)
+    public function deleteCourseSectionLecture(Request $request, Course $course)
     { 
         $id_lecture = intval($request->input('id_lecture')); 
 
-        if ($this->_course->hasAccessLecture($id_lecture, Auth::user()->id)) 
+        if ($course->hasAccessLecture($id_lecture, Auth::user()->id)) 
         {
-            $this->_course->deleteLecture($id_lecture);
+            $course->deleteLecture($id_lecture);
             return \App\Utils\JsonResponse::success(); 
         } 
     }   

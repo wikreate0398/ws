@@ -103,7 +103,7 @@ class Course
     
     public function ifCourseHide($id)
     {
-        $course       = Courses::getOneCourse($id); 
+        $course       = Courses::whereId($id)->first(); 
         $today        = dateToTimestamp(date('Y-m-d')); 
         $is_open_from = dateToTimestamp($course->is_open_from);
         $is_open_to   = dateToTimestamp($course->is_open_to);
@@ -118,7 +118,6 @@ class Course
 
     public function validation(array $data)
     {         
-
         $this->sections  = sortValue(request()->input('section'));
         $this->lectures  = request()->input('lecture'); //sortValue(request()->input('lecture')); 
  

@@ -85,7 +85,7 @@ class CourseController extends UniversityController
     } 
 
     public function editCourse($idCourse, Request $request)
-    { 
+    {
         if (!$this->_course->hasAccessCourse($idCourse, Auth::user()->id)) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);

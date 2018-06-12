@@ -100,6 +100,21 @@ class Course
 
         return true;
     }
+    
+    public function ifCourseHide($id)
+    {
+        $course       = Courses::getOneCourse($id); 
+        $today        = dateToTimestamp(date('Y-m-d')); 
+        $is_open_from = dateToTimestamp($course->is_open_from);
+        $is_open_to   = dateToTimestamp($course->is_open_to);
+
+        if ($course->hide_after_end == '1' && $today > $is_open_to) 
+        {
+            return true;
+        } 
+
+        return false;
+    }
 
     public function validation(array $data)
     {         
@@ -187,25 +202,34 @@ class Course
 
     public function edit(array $data, $id_course, $id_user)
     {  
-        Courses::where('id', $id_course)
-        ->where('id_user', $id_user)
-        ->update([ 
-            'id_category'   => intval($data['id_category']),
-            'id_subcat'     => !empty($data['subcat_id']) ? $data['subcat_id'] : 0,
-            'name'          => $data['name'],
-            'description'   => $data['description'],
-            'text'          => $data['text'],
-            'pay'           => intval($data['pay']),
-            'type'          => intval($data['type']),
-            'is_open_to'    => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_to'])) : null,
-            'is_open_from'  => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_from'])) : null,
+
+        $dataUpdate = [ 
+            'id_category'    => intval($data['id_category']),
+            'id_subcat'      => !empty($data['subcat_id']) ? $data['subcat_id'] : 0,
+            'name'           => $data['name'],
+            'description'    => $data['description'],
+            'text'           => $data['text'],
+            'pay'            => intval($data['pay']),
+            'type'           => intval($data['type']),
+            'is_open_to'     => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_to'])) : null,
+            'is_open_from'   => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_from'])) : null,
             'max_nr_people'  => intval($data['max_nr_people']),
             'date_to'        => date('Y-m-d', strtotime($data['date_to'])),
             'date_from'      => date('Y-m-d', strtotime($data['date_from'])),
             'hide_after_end' => !empty($data['hide_after_end']) ? 1 : 0,
-            'available'     => intval($data['available']),
-            'price'         => !empty($data['price']) ? toFloat($data['price']) : ''
-        ]); 
+            'available'      => intval($data['available']),
+            'price'          => !empty($data['price']) ? toFloat($data['price']) : '',
+            'isHide'         => 0
+        ];
+
+        if ($this->ifCourseHide($id_course) == true) 
+        {
+            $dataUpdate['isHide'] = 1;
+        }
+
+        Courses::where('id', $id_course)
+        ->where('id_user', $id_user)
+        ->update($dataUpdate); 
 
         if (!empty($data['certificates'])) 
         {

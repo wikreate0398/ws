@@ -147,7 +147,7 @@ Route::group(['middleware' => ['web_auth']], function(){
 });
 
 Route::group(['prefix' => 'cron'], function() { 
-	Route::get('updateNewUsers', 'CtonJobController@updateNewUsers');   
+	Route::get('checkIfCourseIsActive', 'CronJobController@checkIfCourseIsActive');   
 }); 
 
 

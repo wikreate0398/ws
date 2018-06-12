@@ -74,7 +74,7 @@ class CoursesController extends Controller
             $categories = CourseCategory::whereHas('courses', function($query) use($authCheck){
                                     $query->whereHas('user', function($query){
                                         return User::allowUser($query);
-                                    });
+                                    })->where('isHide', 0);
                                     if ($authCheck != true) 
                                     { 
                                         $query->where('available', '!=', '2');
@@ -83,7 +83,7 @@ class CoursesController extends Controller
         } 
 
         $courses = Courses::getCatalog($cat, $subcat, $request->all());
-       // exit(print_arr($categories->toArray()));
+        //exit(print_arr($courses->toArray()));
         $data = [
             'courses'      => $courses,
             'totalCourses' => Courses::countTotal(),
@@ -142,7 +142,7 @@ class CoursesController extends Controller
         if ($canMakeRequestStatus === true) 
         {
             $courseRequest->makeRequest(); 
-            $courseRequest->sendNotification();
+            //$courseRequest->sendNotification();
         }
         else
         {  

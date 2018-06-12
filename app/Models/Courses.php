@@ -92,7 +92,9 @@ class Courses extends Model
         if (Auth::check() != true) 
         {
             $courses->where('available', '!=', '2');
-        }
+        } 
+
+        $courses->where('isHide', 0);
 
         return $courses->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
                                       ['*'], 
@@ -110,7 +112,7 @@ class Courses extends Model
             { 
                 $query->where('available', '!=', '2');
             }
-        })->count();
+        })->where('isHide', 0)->count();
     }
 
     public static function getOneCourse($id, $authCheck = false)
@@ -122,6 +124,6 @@ class Courses extends Model
             { 
                 $query->where('available', '!=', '2');
             }
-        })->findOrFail($id);
+        })->where('isHide', 0)->findOrFail($id);
     }
 }

@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-12">
  
-			@if(count(Session::get('courseMsg')))
+			@if(@count(Session::get('courseMsg')))
 			    <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
 			    	<p>{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}</p>
 			    </div> 

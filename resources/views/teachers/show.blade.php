@@ -24,7 +24,7 @@
 			<span class="price_hour">От {{ $teacher->price_hour }} р/час</span>
 		</div>
 		<div class="col-lg-9">
-			@if(count(Session::get('teacherMsg')))
+			@if(@count(Session::get('teacherMsg')))
 			    <div class="alert alert-{{ Session::get('teacherMsg.success') ? 'success' : 'danger' }}">
 			    	<p>{{ Session::get('teacherMsg.success') ? Session::get('teacherMsg.success') : Session::get('teacherMsg.error') }}</p>
 			    </div> 

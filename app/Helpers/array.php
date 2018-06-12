@@ -29,6 +29,11 @@ if (!function_exists('map_tree')) {
     }
 }
 
+function dateToTimestamp($date)
+{
+    return strtotime($date . '00:00:00');
+}
+
 if (!function_exists('print_arr')) {
     function print_arr($array)
     {

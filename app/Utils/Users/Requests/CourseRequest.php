@@ -50,13 +50,30 @@ class CourseRequest implements RequestInterface
             if ($this->ifHasRequest() == true) 
             {
                 return 'Вы уже записаны на этот курс';
+            } 
+
+            if (!empty($this->getCourse()->max_nr_people) && $this->getCourse()->max_nr_people == count($this->getCourse()->userRequests)) 
+            {
+                return 'Запись на курс ограничена';
+            }
+            
+            $today        = dateToTimestamp(date('Y-m-d')); 
+            $is_open_from = dateToTimestamp($this->getCourse()->is_open_from);
+            $is_open_to   = dateToTimestamp($this->getCourse()->is_open_to);
+
+            if (!empty($this->getCourse()->hide_after_end))
+            { 
+                if ($today < $is_open_from or $today > $is_open_to) 
+                { 
+                    return 'Курс не доступен для записи';
+                } 
             }
 
             return true;
         }
 
         return 'Ошибка';
-    }
+    } 
 
     public function ifSelfCourse()
     {

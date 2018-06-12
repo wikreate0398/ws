@@ -30,6 +30,7 @@ class TeacherRequestMail extends Mailable
      */
     public function build()
     { 
+        //return;
         return $this->from('info@brainincorporated.com')
                     ->view('emails.default')
                     ->with([ 

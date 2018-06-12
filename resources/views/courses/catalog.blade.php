@@ -156,25 +156,29 @@
 	            				<i class="fa fa-user" aria-hidden="true"></i>
 	            				<span>{{ count($course->userRequests) }}</span>
 	            			</div>
-	            			<div class="set__going"> 
-            					<div class="set__going_date"> 
-            						  
-									@if($course->hide_after_end == 1)
-										@if($course->max_nr_people > count($course->userRequests) 
-									    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
-									    <i class="fa fa-calendar" aria-hidden="true"></i>
+	            			<div class="set__going">   
+	            				@php $flag=true; @endphp
+								@if($course->hide_after_end == 1)
+									@if($course->max_nr_people > count($course->userRequests) 
+								    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
+								    <i class="fa fa-calendar" aria-hidden="true"></i>
+								    <div class="set__going_date">  
 										<span> ИДЕТ НАБОР ДО </span> 
             							<strong>{{ date('d.m.Y', strtotime($course->is_open_to)) }}</strong> 
-										@else
-											<i class="fa fa-calendar" aria-hidden="true"></i>
-											<span> Набор закончен </span> 
-										@endif
-									@elseif($course->max_nr_people == count($course->userRequests))
-										<i class="fa fa-calendar" aria-hidden="true"></i>
-										<span> Набор закончен </span> 
-									@endif 
+        							</div>
+									@else 
+										@php $flag=false; @endphp 
+									@endif
+								@elseif($course->max_nr_people == count($course->userRequests)) 
+									@php $flag=false; @endphp 
+								@endif 
 
-            					</div> 
+								@if($flag==false)
+									<i class="fa fa-calendar" aria-hidden="true"></i>
+								    <div class="set__going_date">  
+										<span> Набор закончен </span> 
+									</div>
+								@endif
 	            			</div>
 	            		</div>
 	            	</div>

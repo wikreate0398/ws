@@ -29,19 +29,20 @@ if (!function_exists('map_tree')) {
     }
 }
 
-function dayCase($ndata)
+
+function format_by_count($count, $form1, $form2, $form3)
 {
-    if( $ndata == '1'){  
-        return "день"; 
-    } elseif( substr($ndata, -1) == '2'){  
-        return "дня";  
-    } elseif( substr($ndata, -1) == '3'){  
-        return "дня";  
-    } elseif( substr($ndata, -1) == '4'){  
-        return "дня";  
-    } else {  
-        return "дней";  
-    } 
+    $count = abs($count) % 100;
+    $lcount = $count % 10;
+    if ($count >= 11 && $count <= 19) return($form3);
+    if ($lcount >= 2 && $lcount <= 4) return($form2);
+    if ($lcount == 1) return($form1);
+    return $form3;
+}
+
+function dayCase($ndata)
+{  
+    return format_by_count($ndata, 'день', 'дня', 'дней');
 }
 
 function monthCase($month)

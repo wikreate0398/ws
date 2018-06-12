@@ -34,6 +34,10 @@
 </div>
 <style> 
 
+	.request__info_inner{
+		margin-bottom: 15px;
+	}
+
 	.request__info_inner > .rows {
         -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.349019607843137);
          box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.349019607843137); 

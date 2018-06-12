@@ -408,6 +408,10 @@
                                     position: absolute;
                                     bottom: 0px;
                                  }
+
+                                 .userRequest{
+                                    margin-bottom: 15px;
+                                 }
                                  
                                  .userRequest > .row, .request__info_inner > .row{
                                     justify-content: space-between;

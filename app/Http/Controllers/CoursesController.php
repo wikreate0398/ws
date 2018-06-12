@@ -100,11 +100,11 @@ class CoursesController extends Controller
     } 
 
     public function show($id)
-    {    
+    {     
         $course = Courses::getOneCourse($id, Auth::check());
         $data = [
             'course'         => $course,
-            'hasRequest'     => ($this->courseRequestInstance($id)->canMakeRequest() === true) ? false : true, 
+            'canMakeRequest' => ($this->courseRequestInstance($id)->canMakeRequest() === true) ? true : false, 
             'scripts'        => [
                 'js/courses.js'
             ]

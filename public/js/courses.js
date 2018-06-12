@@ -41,10 +41,9 @@ $(document).ready(function(){
     course_date_to.trigger('pick.datepicker');  
 });
 
-function courseRequest(button, id_course, auth, hasRequest)
+function courseRequest(button, id_course, auth, canMakeRequest)
 {
-	if (hasRequest == true) {
-		alert('Вы уже записаны на этот курс');
+	if (canMakeRequest == false) { 
 		return;
 	}
 	if (auth != true) 

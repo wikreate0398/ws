@@ -12,19 +12,24 @@
 			@endif 
 
 			<h1>{{ $course->name }}</h1>
-			<ul class="icons__info">
-
-				@if($course->max_nr_people > count($course->userRequests) 
-				    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
-					<li>
-						<i class="fa fa-calendar"></i> 
-						&nbsp; {{ date('d.m.Y', strtotime($course->is_open_to)) }}
-					</li>
-				@else
-					<li> 
-						<i class="fa fa-calendar"></i> 
-						&nbsp;Набор закончен
-					</li>
+			<ul class="icons__info"> 
+				@if($canMakeRequest == true)
+					@if($course->hide_after_end == 1)
+						@if($course->max_nr_people > count($course->userRequests) 
+					    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
+							<li><i class="fa fa-calendar"></i> &nbsp;
+								Идет набор до {{ date('d.m.Y', strtotime($course->is_open_to)) }}
+							</li> 
+						@else
+							<li> 
+								<i class="fa fa-calendar"></i>  Набор закончен
+							</li>
+						@endif
+					@elseif($course->max_nr_people == count($course->userRequests))
+						<li> 
+							<i class="fa fa-calendar"></i>  Набор закончен
+						</li>
+					@endif
 				@endif  
 
 				<li>
@@ -80,10 +85,10 @@
 				
 			@endphp
 			<button type="button" 
-					@if($hasRequest==true)
+					@if($canMakeRequest==false)
 						disabled
 					@endif
-			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ $hasRequest }}')" 
+			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ $canMakeRequest }}')" 
 			        class="btn course_request_btn">
 			    ЗАПИСАТЬСЯ НА КУРС
 			</button> 

@@ -283,13 +283,13 @@ function adminMenu()
                     'edit' => 'Редактировать' 
                 ],
 
-                'teacher-course' => [
-                    'name' => 'Категории', 
-                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
-                    'link' => '/admin/course/teacher-course/',
-                    'view' => true,
-                    'edit' => 'Редактировать' 
-                ] 
+                // 'teacher-course' => [
+                //     'name' => 'Категории', 
+                //     'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                //     'link' => '/admin/course/teacher-course/',
+                //     'view' => true,
+                //     'edit' => 'Редактировать' 
+                // ] 
             ]
         ], 
 

@@ -52,13 +52,20 @@
 				</li>
 			</ul>
 			<ul class="list-inline card_date_info">
-				<li class="left_date"><i class="fa fa-user"></i> {{ count($course->userRequests) }}</li> 
-				@if($course->max_nr_people > count($course->userRequests) 
+				<li class="left_date"><i class="fa fa-user"></i> {{ count($course->userRequests) }}</li>
+				
+				@if($course->hide_after_end == 1)
+					@if($course->max_nr_people > count($course->userRequests) 
 				    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
-					<li class="right_date"><i class="fa fa-calendar"></i> 
-						Идет набор до {{ date('d.m.Y', strtotime($course->is_open_to)) }}
-					</li>
-				@else
+						<li class="right_date"><i class="fa fa-calendar"></i> 
+							Идет набор до {{ date('d.m.Y', strtotime($course->is_open_to)) }}
+						</li> 
+					@else
+						<li class="right_date"> 
+							Набор закончен
+						</li>
+					@endif
+				@elseif($course->max_nr_people == count($course->userRequests))
 					<li class="right_date"> 
 						Набор закончен
 					</li>

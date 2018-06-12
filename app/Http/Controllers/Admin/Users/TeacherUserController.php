@@ -32,7 +32,7 @@ class TeacherUserController extends SiteUser
 
     private $redirectRoute = 'admin_user_teacher'; 
 
-    protected $_user;
+    public $_user;
 
     /**
      * Create a new controller instance.
@@ -111,32 +111,7 @@ class TeacherUserController extends SiteUser
         $id         = $request->input('id');
         $id_teacher = $request->input('id_user');
         \App\Models\TeacherCertificates::whereId($id)->where('id_teacher', $id_teacher)->delete();
-    }
-
-    public function updatePassword($id)
-    { 
-        $validator = Validator::make(request()->all(), [ 
-            'password'              => 'required|string|min:6|confirmed|',
-            'password_confirmation' => 'required',
-        ]);
-        $validator->setAttributeNames($this->niceNames);
-  
-        if ($validator->fails()) 
-        {
-            $errors = $validator->errors()->toArray(); 
-        }  
-  
-        if (!empty($errors)) 
-        {
-            return \App\Utils\JsonResponse::error(['messages' => $errors]);
-        }
-
-        $obj_user           = User::find($id);
-        $obj_user->password = Hash::make(request()->input('password'));
-        $obj_user->save(); 
-
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Пароль успешно изменен!');  
-    }
+    } 
  
     public function showeditForm($id)
     { 

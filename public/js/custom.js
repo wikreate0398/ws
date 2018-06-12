@@ -573,23 +573,7 @@ function deleteUploadImg(item, id){
         });
     }
 }   
-
-/* Teacher Subjects */
-
-function teacherSubject(select){
-    var value = $(select).val();
-    if (value <= 0) return;
-    var name  = $(select).find('option[value="'+value+'"]').text(); 
-    $(select).find('option[value="'+value+'"]').attr('disabled',true);
-    var input = '<input type="hidden" id="teacher_subjects_input_'+value+'" value="'+value+'" name="teacher_subjects[]">';
-    $('.selected__teacher_inputs').append(input);
-    var tagLabel = '<span data-id="'+value+'" id="teacher_subjects_'+value+'">'+
-                   '<div class="subject_tag">'+name+'</div>'+
-                   '<div class="delete__subject" onclick="deleteTeacherSubject('+value+');"><i class="fa fa-times" aria-hidden="true"></i></div></span>';
-    $('.selected__teacher_subjects').append(tagLabel);
-    $('.selected__teacher_subjects').show();
-}
-
+  
 function InputMask(){
     $('.price__input').inputmask("decimal",{
         alias: 'numeric',

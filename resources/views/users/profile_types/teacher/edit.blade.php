@@ -230,6 +230,8 @@
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Ваша предметная область</h3>
 				</div>
+
+				<?php if (false): ?> 
 				<label class="col-md-4 control-label">ПРЕДМЕТЫ <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group"> 
@@ -271,6 +273,201 @@
 						</div> 
 					</div>
 				</div>  
+				<?php endif ?> 
+
+				<label class="col-md-4 control-label">Направления <span class="req">*</span></label>
+				<div class="col-md-8">
+					<div class="form-group teacher_direction_inner"> 
+						<select name="" class="form-control" onchange="teacherDirections(this)">
+							<option value="0">Выбрать</option>
+							@php
+								$teacherDirectionId = $user->direction->pluck('id')->toArray(); 
+							@endphp
+							@foreach($categories as $direction) 
+								@php
+									$disabled = '';
+									if(in_array($direction['id'], $teacherDirectionId)){
+										$disabled = 'disabled';
+									}
+								@endphp
+								<option {{ $disabled }} value="{{ $direction['id'] }}">{{ $direction['name'] }}</option>
+							@endforeach
+						</select>  
+
+						<div class="selected__teacher_labels" style="{{ !count($user->direction) ? 'display: none;' : ''  }}">
+							@if(count($user->direction))
+								@foreach($user->direction as $direction)
+									<span id="teacher_label_{{ $direction->id }}" 
+										  data-id="{{ $direction->id }}">
+										<div class="subject_tag"> 
+											{{ $direction->name }} 
+										</div>
+										<div onclick="deleteTeacherDirection({{ $direction->id }}, '.teacher_direction_inner');" 
+											 class="delete__subject">
+											<i class="fa fa-times" aria-hidden="true"></i>
+										</div>
+									</span>
+								@endforeach
+							@endif
+						</div>
+						<div class="selected__teacher_inputs">
+							@if(count($user->direction))
+								@foreach($user->direction as $direction)
+									<input type="hidden" id="teacher_subjects_input_{{ $direction->id }}" value="{{ $direction->id }}" name="teacher_directions[]">
+								@endforeach
+							@endif
+						</div> 
+					</div>
+				</div>  
+				
+				<div class="subjects__form-group" style="{{ !count($user->subjects) ? 'display: none;' : ''  }}"> 
+					<label class="col-md-4 control-label">Предметы <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group teacher_subjects_inner"> 
+							<select name="" class="form-control select2" onchange="teacherSubjects(this)" style="width: 100%;"> 
+								<option value="0">Выбрать</option> 
+								@if(count($user->direction))
+									@php
+										$teacherSubjectsId = $user->subjects->pluck('id')->toArray(); 
+									@endphp
+
+									@foreach($user->direction as $direction)
+										@if(!empty($categories[$direction['id']]['childs']))
+											@foreach($categories[$direction['id']]['childs'] as $subject) 
+												@php
+													$disabled = '';
+													if(in_array($subject['id'], $teacherSubjectsId)){
+														$disabled = 'disabled';
+													}
+												@endphp 
+												<option {{ $disabled }} data-parent="{{ $direction['id'] }}" 
+												        value="{{ $subject['id'] }}">{{ $subject['name'] }}</option>
+											@endforeach
+										@endif 
+									@endforeach
+								@endif
+							</select>  
+
+							<div class="selected__teacher_labels" style=" {{ !count($user->subjects) ? 'display: none;' : ''  }}">
+								@if(count($user->subjects))
+									@foreach($user->subjects as $subject)
+										<span id="teacher_label_{{ $subject->id }}" 
+											  data-parent="{{ $subject->pivot->id_direction }}" 
+											  data-id="{{ $subject->id }}">
+											<div class="subject_tag"> 
+												{{ $subject->name }} 
+											</div>
+											<div onclick="deleteTeacherSubject({{ $subject->id }}, 'teacher_subjects_inner');" 
+												 class="delete__subject">
+												<i class="fa fa-times" aria-hidden="true"></i>
+											</div>
+										</span>
+									@endforeach
+								@endif
+							</div>
+							<div class="selected__teacher_inputs">
+								@if(count($user->subjects)) 
+									@foreach($user->subjects as $subject)
+										<input type="hidden" 
+										       data-parent="{{ $subject->pivot->id_direction }}" 
+										       id="teacher_subjects_input_{{ $subject->id }}" 
+										       value="{{ $subject->id }}" 
+										       name="teacher_subjects[{{ $subject->pivot->id_direction }}][]">
+									@endforeach
+								@endif
+							</div> 
+						</div>
+					</div>  
+				</div>
+
+				<script> 
+
+					var categories = JSON.parse("<?=prepareArrayForJson($categories)?>");
+
+					function teacherDirections(select){
+					    var value = $(select).val();
+					    if (value <= 0) return; 
+
+					    var name  = $(select).find('option[value="'+value+'"]').text(); 
+					    var parent = '.teacher_direction_inner';
+					    $(select).find('option[value="'+value+'"]').attr('disabled',true);
+					    var input = '<input type="hidden" id="teacher_subjects_input_'+value+'" value="'+value+'" name="teacher_directions[]">';
+					    $(parent).find('.selected__teacher_inputs').append(input);
+					    var tagLabel = '<span data-id="'+value+'" id="teacher_label_'+value+'">'+
+					                   '<div class="subject_tag">'+name+'</div>'+
+					                   '<div class="delete__subject" onclick="deleteTeacherDirection('+value+', \''+parent+'\');"><i class="fa fa-times" aria-hidden="true"></i></div></span>';
+					    $(parent).find('.selected__teacher_labels').append(tagLabel);
+					    $(parent).find('.selected__teacher_labels').show();
+ 
+					    if(categories[value]['childs']){
+					    	$('.subjects__form-group').show();
+					    	var select = $('.teacher_subjects_inner select');
+					    	$.each(categories[value]['childs'], function(key, item){
+					    		$(select).append('<option data-parent="' + value + '" value="' + item['id'] + '">' + item['name'] + '</option>');
+					    	});
+					    	initSelect2();
+					    }
+					}
+
+					function teacherSubjects(select){
+						var value = $(select).val();
+					    if (value <= 0) return; 
+
+					    var name  = $(select).find('option[value="'+value+'"]').text(); 
+					    var parent_id = $(select).find('option[value="'+value+'"]').attr('data-parent'); 
+					    
+					    var parent = '.teacher_subjects_inner';
+					    $(select).find('option[value="'+value+'"]').attr('disabled',true);
+					    var input = '<input type="hidden" data-parent="'+parent_id+'" id="teacher_subjects_input_'+value+'" value="'+value+'" name="teacher_subjects['+parent_id+'][]">';
+					    $(parent).find('.selected__teacher_inputs').append(input);
+					    var tagLabel = '<span data-id="'+value+'" data-parent="'+parent_id+'" id="teacher_label_'+value+'">'+
+					                   '<div class="subject_tag">'+name+'</div>'+
+					                   '<div class="delete__subject" onclick="deleteTeacherSubject('+value+', \''+parent+'\');"><i class="fa fa-times" aria-hidden="true"></i></div></span>';
+					    $(parent).find('.selected__teacher_labels').append(tagLabel);
+					    $(parent).find('.selected__teacher_labels').show();
+					}
+
+					function deleteTeacherDirection(id, parent){
+					    var span = $('span#teacher_label_' + id);
+					    var name = $(span).find('.subject_tag').text(); 
+					    var id = $(span).attr('data-id'); 
+					    $(parent).find('select option[value="'+id+'"]').attr('disabled',false);
+					    $('input#teacher_subjects_input_' + id).remove();
+					    $('span#teacher_label_' + id).remove();
+
+					    if ($(parent).find('.selected__teacher_labels span').length <= 0) {
+					        $(parent).find('.selected__teacher_labels').hide(); 
+					        $(parent).find('select option[selected="selected"]').each(
+					            function() {
+					                $(this).removeAttr('selected');
+					            }
+					        ); 
+					        $(parent).find('select option:first').attr('selected',true);
+					        $('.subjects__form-group').hide();
+					    } 
+					   	$('.teacher_subjects_inner').find('[data-parent="'+id+'"]').remove(); 
+					}
+
+					function deleteTeacherSubject(id, parent){
+					    var span = $('span#teacher_label_' + id);
+					    var name = $(span).find('.subject_tag').text(); 
+					    var id = $(span).attr('data-id'); 
+					    $(parent).find('select option[value="'+id+'"]').attr('disabled',false);
+					    $('input#teacher_subjects_input_' + id).remove();
+					    $('span#teacher_label_' + id).remove();
+
+					    if ($(parent).find('.selected__teacher_labels span').length <= 0) {
+					        $(parent).find('.selected__teacher_labels').hide(); 
+					        $(parent).find('select option[selected="selected"]').each(
+					            function() {
+					                $(this).removeAttr('selected');
+					            }
+					        ); 
+					        $(parent).find('select option:first').attr('selected',true); 
+					    }  
+					}
+ 
+				</script>
 
 				<div class="col-md-12">
 					<h3 class="header_blok_user">Варианты проведения занятий</h3>

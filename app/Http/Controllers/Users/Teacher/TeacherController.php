@@ -42,8 +42,10 @@ class TeacherController extends ProfileController
 
     public function showEditForm()
     {
-        $user = Auth::user(); 
-        return view($this->viewPath . 'edit', [ 
+        $user       = Auth::user(); 
+        $categories = map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray());
+
+        $data = [ 
             'regions'                 => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
             'grade_education'         => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
             'programs_type'           => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()), 
@@ -55,14 +57,17 @@ class TeacherController extends ProfileController
             'subjects_list'           => SubjectsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(), 
             'teacher_specializations' => TeacherSpecializations::where('id_teacher', $user->id)->get(),  
             'teacher_lesson_options'  => TeacherLessonOptions::where('id_teacher', $user->id)->get(),
+            'categories'              => $categories,
              
             //'include'                 => $this->viewPath . 'edit',
 
             'scripts'                 => [
                 // 'js/tinymce/tinymce.min.js',
                 'js/teachers.js'
-            ] 
-        ]); 
+            ]
+        ];
+        //exit(print_arr($data['user']->subjects));
+        return view($this->viewPath . 'edit', $data); 
     }    
 
     public function showSubscriptions()

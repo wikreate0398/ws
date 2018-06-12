@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class User 
 {
-	private $niceNames = [
+	public $niceNames = [
         'name'                     => 'Название вуза',
         'description'              => 'Коротко о вузе',
         'year_of_foundation'       => 'Дата основания',   

@@ -137,12 +137,9 @@
                         <input class="form-control" name="email" value="{{ $user->email }}" required type="text">
                      </div>
                   </div>
-                  <label class="col-md-4 control-label">СТАРЫЙ ПАРОЛЬ <span class="req">*</span></label>
-                  <div class="col-md-8">
-                     <div class="form-group">
-                        <input class="form-control" name="old_password" value="" type="password">
-                     </div>
-                  </div>
+
+                  <?php if (false): ?> 
+                  <input class="form-control" name="old_password" value="" type="password">
                   <label class="col-md-4 control-label">ПАРОЛЬ <span class="req">*</span></label>
                   <div class="col-md-8">
                      <div class="form-group">
@@ -155,6 +152,8 @@
                         <input class="form-control" name="password_confirmation" value="" type="password">
                      </div>
                   </div>
+                  <?php endif ?>
+
                </div>
                <div id="panel2" class="tab-pane fade">
                   <div class="col-md-12">
@@ -309,6 +308,44 @@
             </div>
          </div>
       </form>
+
+      <br><br>
+            <h4>Сменить пароль</h4>
+            <hr>
+            <form action="/{{ $method }}/{{ $user['id'] }}/updatePassword" class="form-horizontal ajax__submit">
+                {{ csrf_field() }}
+                <div class="row">
+                    <div class="col-md-12"> 
+                          
+                        <div class="form-group">
+                            <label class="col-md-12 control-label">Пароль <span class="req">*</span></label>
+                            <div class="col-md-12">
+                                <input type="password" class="form-control" name="password"
+                                       value="" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-12 control-label">Подтверждение пароля
+                                <span class="req">*</span>
+                            </label>
+                            <div class="col-md-12">
+                                <input type="password" class="form-control" name="password_confirmation" value="" required>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12" id="error-respond"></div>
+                    <div class="col-md-6 ">
+                        <button type="submit" class="btn btn-primary">
+                            Сохранить
+                        </button>
+                    </div>
+                </div>
+            </form>
+
    </div>
 </div>
 <style>

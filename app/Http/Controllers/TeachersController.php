@@ -19,6 +19,8 @@ use App\Models\TeacherBoockmarks;
 use App\Models\TeacherRequest;
 use App\Models\UsersUniversity;
 use App\Models\User;
+use App\Models\CourseCategory;
+ 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 
@@ -49,7 +51,7 @@ class TeachersController extends Controller
         $data = [
             'teachers'               => User::getTeachers($request),
             'teachersRequests'       => $this->_teacher_request,
-            'subjects'               => SubjectsList::whereHas('users', function($query){
+            'subjects'               => CourseCategory::whereHas('usersSubjects', function($query){
                                             return User::allowUser($query);
                                         })->orderBy('page_up', 'asc')
                                           ->orderBy('id', 'desc')->get(),
@@ -73,7 +75,7 @@ class TeachersController extends Controller
             ]
         ];  
 
-        //exit(print_arr($data['lesson_filter_options']->toArray()));
+        //exit(print_arr($data['subjects']->toArray()));
 
         return view('teachers.catalog', $data);
     } 

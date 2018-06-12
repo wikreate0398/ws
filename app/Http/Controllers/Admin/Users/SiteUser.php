@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Users;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Utils\Users\FastRegistration;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class SiteUser extends Controller
@@ -36,4 +38,29 @@ class SiteUser extends Controller
 
         return \App\Utils\JsonResponse::success(['message' => 'Пользователь успешно добавлен!']);
     }
+
+    public function updatePassword($id)
+    { 
+        $validator = Validator::make(request()->all(), [ 
+            'password'              => 'required|string|min:6|confirmed|',
+            'password_confirmation' => 'required',
+        ]);
+        $validator->setAttributeNames($this->_user->niceNames);
+  
+        if ($validator->fails()) 
+        {
+            $errors = $validator->errors()->toArray(); 
+        }  
+  
+        if (!empty($errors)) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $errors]);
+        }
+
+        $obj_user           = User::find($id);
+        $obj_user->password = Hash::make(request()->input('password'));
+        $obj_user->save(); 
+
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Пароль успешно изменен!');  
+    } 
 }

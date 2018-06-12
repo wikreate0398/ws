@@ -25,7 +25,7 @@ class UniversityUserController extends SiteUser
 
     private $redirectRoute = 'admin_user_university'; 
  
-    protected $_user;
+    public $_user;
 
     /**
      * Create a new controller instance.
@@ -35,7 +35,7 @@ class UniversityUserController extends SiteUser
     public function __construct() 
     {
         $this->_user = new UniversityUser;
-    }
+    } 
 
     /**
      * Show the application dashboard.
@@ -96,32 +96,7 @@ class UniversityUserController extends SiteUser
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
         } 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
-    }
-
-    public function updatePassword($id)
-    { 
-        $validator = Validator::make(request()->all(), [ 
-            'password'              => 'required|string|min:6|confirmed|',
-            'password_confirmation' => 'required',
-        ]);
-        $validator->setAttributeNames($this->niceNames);
-  
-        if ($validator->fails()) 
-        {
-            $errors = $validator->errors()->toArray(); 
-        }  
-  
-        if (!empty($errors)) 
-        {
-            return \App\Utils\JsonResponse::error(['messages' => $errors]);
-        }
-
-        $obj_user           = User::find($id);
-        $obj_user->password = Hash::make(request()->input('password'));
-        $obj_user->save(); 
-
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Пароль успешно изменен!');  
-    } 
+    }  
 
     public function showeditForm($id)
     { 

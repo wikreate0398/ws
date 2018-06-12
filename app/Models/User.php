@@ -144,9 +144,16 @@ class User extends Authenticatable
                                       !empty($request['page']) ? $request['page'] : 1);
     }
 
+    public function direction()
+    {
+        return $this->belongsToMany('App\Models\CourseCategory', 'teacher_subjects', 'id_teacher', 'id_direction')
+                    ->orderBy('page_up', 'asc')->orderBy('id', 'desc')->groupBy('id');
+    }
+
     public function subjects()
     {
-        return $this->belongsToMany('App\Models\SubjectsList', 'teacher_subjects', 'id_teacher', 'id_subject')->orderBy('page_up', 'asc')->orderBy('id', 'desc');
+        return $this->belongsToMany('App\Models\CourseCategory', 'teacher_subjects', 'id_teacher', 'id_subject')
+                    ->orderBy('page_up', 'asc')->orderBy('id', 'desc')->withPivot('id_direction');
     }
 
     public function teacherRequests()

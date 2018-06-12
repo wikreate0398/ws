@@ -29,6 +29,12 @@ if (!function_exists('map_tree')) {
     }
 }
 
+function prepareArrayForJson($array)
+{
+    $escapers = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
+    $replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
+    return str_replace($escapers, $replacements, json_encode($array));
+}
 
 function format_by_count($count, $form1, $form2, $form3)
 {

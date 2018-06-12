@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Hash;
 
 class User
 {
-	private $niceNames = [
+	public $niceNames = [
         'password'           => 'Пароль',
         'repeat_password'    => 'Повторите пароль',
         'image'              => 'Фото',
@@ -30,7 +30,8 @@ class User
         'form_attitude'      => 'Форма отношения',
         'sex'                => 'Пол',
         'address'            => 'Адрес',
-        'teacher_subjects'   => 'Предметы',
+        'teacher_subjects'   => 'Направления и Предметы',
+        // 'teacher_directions' => 'Направления',
         'specializations'    => 'Специализация',
         'lesson_options'     => 'проведения занятий',
         'region'             => 'Область',
@@ -44,19 +45,20 @@ class User
     private $editRules = [
         'name'                  => 'required|max:80|min:5', 
         'about'                 => 'required|min:200|max:1200', 
-        'date_birth'            => 'required',
-        'phone'                 => 'required',
-        'sex'                   => 'required',
-        'region'                => 'required',
+        'date_birth'            => 'required', 
+        'phone'                 => 'required', 
+        'sex'                   => 'required', 
+        'region'                => 'required', 
         'city'                  => 'required', 
-        'address'               => 'required',
-        'grade_experience'      => 'required',
-        'image'                 => 'image|mimes:jpeg,jpg,png',
+        'address'               => 'required', 
+        'grade_experience'      => 'required', 
+        'image'                 => 'image|mimes:jpeg,jpg,png', 
         'email'                 => 'required|email', 
-        'teacher_subjects'      => 'required',
-        'specializations'       => 'required',
-        'lesson_options'        => 'required',
-        'region'                => 'required',
+        'teacher_subjects'      => 'required', 
+        // 'teacher_directions'    => 'required', 
+        'specializations'       => 'required', 
+        'lesson_options'        => 'required', 
+        'region'                => 'required', 
         'city'                  => 'required', 
     ]; 
 
@@ -71,7 +73,8 @@ class User
     private $customMessage = [
         'unique'                   => 'Пользователь уже Существует.',
         'specializations.required' => 'Укажите вашу Специализацию',
-        'lesson_options.required'  => 'Укажите варианты проведения занятий'
+        'lesson_options.required'  => 'Укажите варианты проведения занятий',
+        'teacher_subjects.required' => 'Укажите Направления и предметы'
     ];
 
     private $education = []; 
@@ -92,11 +95,8 @@ class User
 
     public function create(array $data)
     {
-        $this->education       = sortValue(request()->input('education'));
-        $this->teach_activity  = sortValue(request()->input('teach_activity')); 
-        $this->work_experience = sortValue(request()->input('work_experience'));
-
-        $confirm_hash = md5(microtime());
+        $this->education = sortValue(request()->input('education'));  
+        $confirm_hash    = md5(microtime());
  
         $createUser = ModelUser::create([ 
             'name'         => $data['name'], 
@@ -212,18 +212,25 @@ class User
             'price_hour'      => toFloat($data['price_hour']),
             'lesson_place'    => $data['lesson_place'],
             'data_filled'     => '1'
-        ]);   
+        ]);    
 
         TeacherSubjects::where('id_teacher', $id_user)->delete();
         if (!empty($data['teacher_subjects'])) 
         { 
-            foreach ($data['teacher_subjects'] as $key => $id_subject) 
+            foreach ($data['teacher_subjects'] as $id_direction => $subjects) 
             {
-                $insert[] = [
-                    'id_teacher' => $id_user,
-                    'id_subject' => $id_subject
-                ];
+                 
+                foreach ($subjects as $key => $id_subject) { 
+                    $insert[] = [
+                        'id_teacher'   => $id_user,
+                        'id_direction' => $id_direction,
+                        'id_subject'   => $id_subject
+                    ];
+                } 
             }
+ 
+                // print_arr($insert);
+                // exit();
             TeacherSubjects::insert($insert);
         }
 

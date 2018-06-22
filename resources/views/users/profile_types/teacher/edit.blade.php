@@ -28,8 +28,7 @@
 
 	<form class="ajax__submit" method="POST" action="{{ route(userRoute('update_profile')) }}">
     {{ csrf_field() }}
-    <?php if (false): ?>
-    	 
+
     <input type="hidden" name="user_type" value="2">
 	<div class="col-lg-8 col-lg-offset-2" style="min-height: 300px;">
 		<div class="tab-content user_form">
@@ -420,8 +419,7 @@
 					</label>
 					<div class="col-md-8">
 						<div class="form-group">
-							<textarea class="form-control" name="lesson_place" autofocus="">{{ $user->lesson_place }}</textarea>
-
+							<textarea class="form-control" name="lesson_place">{{ $user->lesson_place }}</textarea> 
 						</div>
 					</div>
 				</div>
@@ -469,16 +467,7 @@
 
 		</div> 
 	</div>
-	 <?php endif ?>
-
-	 <div class="row">
-				<div id="error-respond"></div>
-		        <div class="col-md-12 ">
-		            <button type="submit" class="btn btn_save" style="width: auto;">
-		                Сохранить
-		            </button>
-		        </div>
-			</div>
+	 
 	</form>
 </div>
 <div class="clearfix"></div> 

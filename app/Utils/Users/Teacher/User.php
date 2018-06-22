@@ -46,11 +46,9 @@ class User
         'grade_experience'      => 'required',  
         'experience_from'       => 'required',
         'price_hour'            => 'required',
-        'teacher_subjects'      => 'required', 
-        // 'teacher_directions'    => 'required', 
+        'teacher_subjects'      => 'required',  
         'specializations'       => 'required', 
-        'lesson_options'        => 'required',  
-        'image'                 => 'image|mimes:jpeg,jpg,png|max:2000', 
+        'lesson_options'        => 'required',   
     ]; 
 
     private $addRules = [
@@ -65,8 +63,7 @@ class User
         'unique'                   => 'Пользователь уже Существует.',
         'specializations.required' => 'Укажите вашу Специализацию',
         'lesson_options.required'  => 'Укажите варианты проведения занятий',
-        'teacher_subjects.required' => 'Укажите Направления и предметы',
-        'image.size'                => 'Максимальный размер фото 2мб'
+        'teacher_subjects.required' => 'Укажите Направления и предметы' 
     ];
 
     private $education = []; 
@@ -170,8 +167,7 @@ class User
     }
 
     public function edit(array $data, $id_user)
-    {  
- 
+    {    
         $this->_id_user = $id_user;  
 
         $errors = $this->validateEdit($data); 

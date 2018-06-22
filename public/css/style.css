@@ -470,14 +470,14 @@ header .header_top_nav .register_link a{
 	color: #b93777;
 }
 header .header_bottom{
-	background: url(../images/bg_header.png);
+	background: url(../images/header_bg1.jpg);
 	padding-top: 40px;
 	padding-bottom: 40px;
 }
 header .header_bottom h2{
 	font-family: 'Cuprum Regular';
 	font-size: 26px;
-	color: #cccccc;
+	color: #000000;
 	text-align: center;
 	margin-top: 200px;
 	margin-bottom: 25px;
@@ -489,7 +489,7 @@ header .header_bottom .list_information {
 header .header_bottom .list_information li a {
 	font-family: 'Cuprum Regular';
 	font-size: 16px;
-    color: #f3f3f3;
+    color: #000000;
 }
 header .header_bottom .navbar-default {
 	background-color: transparent;
@@ -498,19 +498,30 @@ header .header_bottom .navbar-default {
 }
 header .header_bottom .navbar-default .navbar-nav{
 	margin-top: 20px;
+    float: none;
+    text-align: center;
+}
+header .header_bottom .navbar-default li{
+    display: inline-block;
+    float: none;
 }
 header .header_bottom .navbar-default li a{
 	font-family: 'Bebas Neue Regular';
 	font-size: 18px;
 	line-height: 40px;
-	color: #fff;
+	color: #000000;
 	letter-spacing: 0.2em;
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
+
+header .header_bottom .dropdown-menu li a{
+    color: #fff;
+}
+ 
 header .header_bottom .navbar-default li a:focus,
 header .header_bottom .navbar-default li a:hover{
-	color: #cccccc;
+	color: #b93777;
 }
 header .header_bottom .navbar-default .nav .open > a, header .header_bottom .navbar-default .nav .open > a:focus, header .header_bottom .navbar-default .nav .open > a:hover {
     background-color: transparent;
@@ -528,6 +539,9 @@ header .header_bottom .navbar-default .dropdown-menu li a:focus,
 header .header_bottom .navbar-default .dropdown-menu li a:hover{
     background: transparent;
 }
+ 
+
+
 /* Заголовки блоков */
 .header_block{
 	font-family: 'Cuprum Regular';
@@ -586,13 +600,22 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 #search_form .form-group{
     margin-bottom: 0px;
 }
+
+
+form#search_form .input-group{
+    background-color: rgba(185,55,119,.92);
+    border: 1px solid rgba(255,255,255,.4);
+    box-shadow: 4px 0px 10px rgba(0,0,0,.23); 
+}
+
 #search_form .form-control{
 	font-family: 'Cuprum Regular';
     font-size: 20px;
 	color: #fff;
 	border-radius: 0px;
-	border: 1px solid #aeacaf;
-	border-right: 0px;
+	/*border: 1px solid #aeacaf;*/
+	/*border-right: 0px;*/
+    border: none;
 	height: auto;
 	padding: 15px 15px;
 	background: transparent;
@@ -601,9 +624,10 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	font-size: 33px;
 	color: #ffffff;
 	background: transparent;
-	border: 1px solid #aeacaf;
+    border: none;
+	/*border: 1px solid #aeacaf;
 	border-left: 0px;
-	border-radius: 0px;
+	border-radius: 0px;*/
 }
 #search_form ::-webkit-input-placeholder{/* webkit */
 	color:#5f5f5f; opacity:1;
@@ -634,7 +658,8 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 	color: #fff;
     background: #b93777;
 	border-radius: 0px;
-}
+} 
+
 /* Кнопка подробнее на сайте */
 .link_more{
 	text-align: center;

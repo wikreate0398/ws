@@ -92,41 +92,52 @@
 		<div class="header_bottom">
 			<nav class="navbar navbar-default">
 			  <div class="container">
-				<div class="navbar-header">
-				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				  </button>
-				  <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				  <ul class="nav navbar-nav">
-					<li><a href="/about/">О ПРОЕКТЕ</a></li>
-					<li><a href="/courses/">КУРСЫ</a></li>
-					<li><a href="/universities/">ВУЗЫ И ШКОЛЫ</a></li>
-					<li><a href="/teachers/">ПРЕПОДАВАТЕЛИ</a></li>
-				  </ul>
-				  @if(Auth::check())
-				  <ul class="nav navbar-nav navbar-right">
-					<li>
-                        <a href="{{ route(userRoute('user_profile')) }}">
-                            <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
-                        </a>
-                    </li>
-					<li><a href="#"><img src="/images/icon_bookmark.png"></a></li>
-					<li class="dropdown">
-					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="/images/icon_profile.png"></a>
-					  <ul class="dropdown-menu">
-						<li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
-						<!-- <li role="separator" class="divider"></li>  -->
-					  </ul>
-					</li>
-				  </ul>
-				  @endif
-				</div>
+				<div class="row">
+                    <div class="col-md-2">
+                        <div class="navbar-header">
+                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                          <a class="navbar-brand" href="/"><img src="/images/logo2.png" alt=""></a>
+                        </div>
+                    </div>   
+
+                    <div class="col-md-7" style="text-align: center;">
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                          <ul class="nav navbar-nav">
+                            <li><a href="/about/">О ПРОЕКТЕ</a></li>
+                            <li><a href="/courses/">КУРСЫ</a></li>
+                            <li><a href="/universities/">ВУЗЫ И ШКОЛЫ</a></li>
+                            <li><a href="/teachers/">ПРЕПОДАВАТЕЛИ</a></li>
+                          </ul> 
+                        </div>
+                    </div>  
+
+                    <div class="col-md-3">
+                        @if(Auth::check())
+                          <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="{{ route(userRoute('user_profile')) }}">
+                                    <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
+                                </a>
+                            </li>
+                            <li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="/images/icon_profile2.png"></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
+                                <!-- <li role="separator" class="divider"></li>  -->
+                              </ul>
+                            </li>
+                          </ul>
+                        @endif
+                    </div>       
+                </div>
+				 
 			  </div>
 			</nav>
 			@if(request()->segment(1) == '')

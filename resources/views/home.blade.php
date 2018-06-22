@@ -6,13 +6,15 @@
             <div class="col-lg-12">
                 <h2 class="header_block">ПОПУЛЯРНЫЕ КУРСЫ</h2>
                 <ul class="nav nav-tabs popular_courses">
+                    @php $i=0; @endphp
                     @foreach($courseCategories as $category)
-                        <li class="active">
+                        <li class="{{ ($i==0) ? 'active' : '' }}">
                             <a data-toggle="tab" href="#course_category_{{ $category->id }}">
                                 {{ $category->name }} {{ count($category->courses) }}
                             </a>
-                        </li> 
+                        </li> @php $i++ @endphp
                     @endforeach 
+                     
                 </ul>
             </div>
             <div class="col-lg-12">

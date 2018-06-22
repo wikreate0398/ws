@@ -4,19 +4,22 @@ namespace App\Utils\Users\Pupil;
 
 use Illuminate\Support\Facades\Validator;
 use App\Models\User as ModelUser; 
+use Illuminate\Support\Facades\Hash;
 
 class User
 {
-	public $niceNames = [
-		'password'         => 'Пароль',
-        'repeat_password'  => 'Повторите пароль',
-        'image'            => 'Фото',
-        'old_password'     => 'Старый Пароль',
-        'phone'            => 'Телефон',
+	public $niceNames = [ 
         'name'             => 'Имя',
+        'sex'              => 'Пол', 
         'date_birth'       => 'День рождения',
+        'address'          => 'Адрес',
+        'phone'            => 'Телефон',          
         'region'           => 'Область',
         'city'             => 'Город', 
+        'email'            => 'E-mail',
+        'password'         => 'Пароль',
+        'repeat_password'  => 'Повторите пароль', 
+        'old_password'     => 'Старый Пароль'
 	];
 
 	public $addRules = [
@@ -27,15 +30,15 @@ class User
         'password_confirmation' => 'required'
 	];
 
-    public $editRules = [
-        'email'                 => 'required|string|email|unique:users',
-        'name'                  => 'required', 
-        'phone'                 => 'required', 
-        'password'              => 'required|string|min:6|confirmed',
-        'password_confirmation' => 'required',
-        'date_birth'            => 'required',
-        'region'                => 'required',
-        'city'                  => 'required'
+    public $editRules = [ 
+        'name'       => 'required', 
+        'date_birth' => 'required',
+        'sex'        => 'required', 
+        'region'     => 'required',
+        'city'       => 'required',
+        'phone'      => 'required', 
+        'address'    => 'required', 
+        'email'      => 'required|string|email|unique:users'
     ];
 
 	public function validation(array $data, $rules)
@@ -86,26 +89,48 @@ class User
                 'name'         => $data['name'],  
                 'date_birth'   => date('Y-m-d', strtotime($data['date_birth'])), 
                 'phone'        => $data['phone'],
+                'address'      => $data['address'],
                 'email'        => $data['email'], 
                 'city'         => $data['city'],
                 'region'       => $data['region'],
-                'phone'        => $data['phone'],
-                'phone2'       => !empty($data['phone2']) ? $data['phone2'] : '',
-                'fax'          => !empty($data['fax']) ? $data['fax'] : '',
-                'site'         => !empty($data['site']) ? $data['site'] : '' 
+                'phone'        => $data['phone'], 
+                'sex'          => $data['sex'],
       	]); 
 
-        if (request()->hasFile('image')) 
+        if (!empty($data['old_password'])) 
         {
-            $image = $this->uploadImage();
-            if (!empty($image)) 
+ 
+            $validator = Validator::make($data, [
+                'old_password'          => 'required',
+                'password'              => 'required|string|min:6|confirmed|',
+                'password_confirmation' => 'required',
+            ]);
+            $validator->setAttributeNames([
+                'password'         => 'Пароль',
+                'repeat_password'  => 'Повторите пароль',
+                'old_password'     => 'Старый Пароль'
+            ]);
+            $errors=false;
+            if ($validator->fails()) 
             {
-            	ModelUser::where('id', $id_user)->
-	              update([ 
-	                'image' => $image 
-	            ]); 
-            }
-        }
+                $errors = $validator->errors()->toArray(); 
+            } 
+
+            $obj_user = ModelUser::find($id_user);
+
+            if(Hash::check($data['old_password'], $obj_user->password) == false) {
+                $errors[]['password'] = 'Старый пароль не верный';
+            } 
+
+            if (!empty($errors)) 
+            {   
+                return $errors;
+            } 
+ 
+            $obj_user->password = Hash::make($data['password']);
+            $obj_user->save(); 
+        } 
+         
         return true; 
     } 
 

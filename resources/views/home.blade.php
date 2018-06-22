@@ -6,536 +6,116 @@
             <div class="col-lg-12">
                 <h2 class="header_block">ПОПУЛЯРНЫЕ КУРСЫ</h2>
                 <ul class="nav nav-tabs popular_courses">
-                    <li class="active"><a data-toggle="tab" href="#panel1">ВСЕ КУРСЫ 450</a></li>
-                    <li><a data-toggle="tab" href="#panel2">IT-КУРСЫ 5</a></li>
-                    <li><a data-toggle="tab" href="#panel1">ПРОФЕССИОНАЛЬНЫЙ РОСТ 10</a></li>
-                    <li><a data-toggle="tab" href="#panel2">БИЗНЕС И ФИНАНСЫ 40</a></li>
-                    <li><a data-toggle="tab" href="#panel1">WEB-ДИЗАЙН 10</a></li>
+                    @foreach($courseCategories as $category)
+                        <li class="active">
+                            <a data-toggle="tab" href="#course_category_{{ $category->id }}">
+                                {{ $category->name }} {{ count($category->courses) }}
+                            </a>
+                        </li> 
+                    @endforeach 
                 </ul>
             </div>
-            <div class="tab-content">
-                <div id="panel1" class="tab-pane fade in active">
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
+            <div class="col-lg-12">
+                <div class="tab-content">
+                    @php $i=0; @endphp
+                    @foreach($courseCategories as $category) 
+                    <div id="course_category_{{ $category->id }}" class="tab-pane fade in {{ ($i==0) ? 'active' : '' }}"> 
+                        @foreach($category->courses as $course)  
+                        <div class="col-lg-4">
+                            <div class="external_card">
+                                <div class="caption">
+                                    <ul class="list-inline card_tag">
+                                        <li class="tag_sticker">
+                                            <span>{{ @$category->name }}</span>
+                                        </li>
+                                        <li class="bookmark_tag">
+                                            <span>
+                                               <button class="btn btn-default">
+                                                   <i class="fa fa-heart-o"></i>
+                                               </button>
+                                           </span>
+                                        </li>
+                                    </ul>
+                                    <h3>{{ $course->name }}</h3>
+                                   <!--  <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4> -->
+                                    <ul class="list-unstyled card_info">
+                                        <li>
+                                            Стоимость 
+                                            <span> 
+                                                @if($course->pay == 1)
+                                                    бесплатно
+                                                @else
+                                                    ₽{{ $course->price }}
+                                                @endif 
+                                            </span>
+                                        </li>
+                                        <li>
+                                            Длительность 
+                                            <span>
+                                                @php 
+                                                    $diff = dateDiff($course->date_from, $course->date_to);
+                                                @endphp
+                                                @if($diff->m)
+                                                    {{ $diff->m }} {{ monthCase($diff->m) }}
+                                                @endif 
+
+                                                @if($diff->d) 
+                                                    @if($diff->m)
+                                                        и
+                                                    @endif 
+                                                    {{ $diff->d }}  
+                                                    @php 
+                                                        echo dayCase($diff->d);
+                                                    @endphp  
+                                                @endif 
+                                            </span>
+                                        </li>
+                                        <li>
+                                            Рейтинг 
+                                            <span class="rating_star"> 
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i> 
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-inline card_date_info">
+                                        <li class="left_date"><i class="fa fa-user"></i> {{ $course->user_requests_count }}</li>
+                                        @php $flag=true; @endphp
+                                        @if($course->hide_after_end == 1)
+                                            @if($course->max_nr_people > count($course->userRequests) 
+                                            && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
+                                                <li class="right_date"><i class="fa fa-calendar"></i> 
+                                                    Идет набор до {{ date('d.m.Y', strtotime($course->is_open_to)) }}
+                                                </li> 
+                                            @else
+                                                @php $flag=false; @endphp 
+                                            @endif
+                                        @elseif($course->max_nr_people == count($course->userRequests))
+                                            @php $flag=false; @endphp 
+                                        @endif 
+
+                                        @if($flag==false)
+                                            <li class="right_date"> 
+                                                Набор закончен
+                                            </li>
+                                        @endif
+                                    </ul>
+                                    <div class="more_card"><a href="/course/{{ $course->id }}">Подробнее</a></div>
+                                </div>
                             </div>
                         </div>
+                        @endforeach  
                     </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-half-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-half-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-half-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
+                    @php $i++ @endphp
+                    @endforeach    
                 </div>
-                <div id="panel2" class="tab-pane fade">
-					<div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-half-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-half-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="external_card">
-                            <div class="caption">
-                                <ul class="list-inline card_tag">
-                                    <li class="tag_sticker">
-										<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
-									</li>
-                                    <li class="bookmark_tag">
-                                        <span>
-                                           <button class="btn btn-default">
-                                               <i class="fa fa-heart-o"></i>
-                                           </button>
-                                       </span>
-									</li>
-                                </ul>
-                                <h3>ТАЙМ-МЕНЕДЖМЕНТ И СТРУКТУРА ОРГАНИЗАЦИИ</h3>
-                                <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4>
-                                <ul class="list-unstyled card_info">
-                                    <li>
-                                        Стоимость <span> бесплатно </span>
-                                    </li>
-                                    <li>
-                                        Длительность <span> 1 месяц </span>
-                                    </li>
-                                    <li>
-                                        Рейтинг 
-										<span class="rating_star"> 
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-half-o"></i> 
-										</span>
-                                    </li>
-                                </ul>
-								<ul class="list-inline card_date_info">
-                                    <li class="left_date"><i class="fa fa-user"></i> 10</li>
-                                    <li class="right_date"><i class="fa fa-calendar"></i> Идет набор до 20.10.2018</li>
-                                </ul>
-								<div class="more_card"><a href="#">Подробнее</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div class="col-lg-12">
                 <div class="link_more">
-                    <a href="">Все курсы</a>
+                    <a href="/courses">Все курсы</a>
                 </div>
             </div>
             <div class="col-lg-12">

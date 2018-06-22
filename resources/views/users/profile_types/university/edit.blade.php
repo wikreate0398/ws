@@ -55,7 +55,7 @@
 				<label class="col-md-4 control-label">ДАТА ОСНОВАНИЯ <span class="req">*</span></label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control datepicker" autocomplete="off" name="year_of_foundation" value="{{ !empty($userUniversity->year_of_foundation) ? date('d.m.Y', strtotime($userUniversity->year_of_foundation)) : '' }}" type="text">
+						<input class="form-control datepicker_birthdate" autocomplete="off" name="year_of_foundation" value="{{ !empty($userUniversity->year_of_foundation) ? date('d.m.Y', strtotime($userUniversity->year_of_foundation)) : '' }}" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>

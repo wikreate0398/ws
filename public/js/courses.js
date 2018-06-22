@@ -263,3 +263,11 @@ function addCourseSection()
 
     attrLectureInputName();
 }
+
+function activeFinishCourse(btn){
+    var showId=$(btn).data('show');
+    $('.course_card').closest('.col-md-4').hide(); 
+    $(showId).fadeIn(100);
+    $('.toggle__course').removeClass('active');
+    $(btn).addClass('active'); 
+}

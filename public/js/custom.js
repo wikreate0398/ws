@@ -94,6 +94,15 @@ jQuery(document).ready(function($) {
         autoHide: true  
     }); 
 
+    $( ".datepicker_birthdate" ).datepicker({
+        format: "dd.mm.yyyy",
+        changeMonth: true,
+        language: 'ru',
+        changeYear: true,
+        autoHide: true,
+        startView:2
+    });  
+
     $('.delete__item').click(function(e){
         if (!confirm('Вы действительно хотите удалить?')) {
             e.preventDefault();

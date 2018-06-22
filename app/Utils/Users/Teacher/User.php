@@ -17,49 +17,40 @@ use App\Models\UsersCertificates;
 use Illuminate\Support\Facades\Hash;
 
 class User
-{
-	public $niceNames = [
-        'password'           => 'Пароль',
-        'repeat_password'    => 'Повторите пароль',
-        'image'              => 'Фото',
-        'institution_type'   => 'Тип',
-        'status'             => 'Статус',
-        'program_type'       => 'Типы программ',
-        'id_category'        => 'Основные рубрики',
-        'parent_institution' => 'Родительское ВУЗ',
-        'form_attitude'      => 'Форма отношения',
-        'sex'                => 'Пол',
-        'address'            => 'Адрес',
-        'teacher_subjects'   => 'Направления и Предметы',
-        // 'teacher_directions' => 'Направления',
-        'specializations'    => 'Специализация',
-        'lesson_options'     => 'проведения занятий',
-        'region'             => 'Область',
-        'city'               => 'Город', 
-        'grade_experience'   => 'Степень вашего опыта',
-        'name'               => 'Имя',
-        'region'             => 'Область',
-        'city'               => 'Город', 
-    ];
+{ 
+    private $niceNames = [
+        'name'                  => 'Имя', 
+        'about'                 => 'Коротко о вас', 
+        'date_birth'            => 'Дата рождения',  
+        'sex'                   => 'Ваш пол', 
+        'region'                => 'Область', 
+        'city'                  => 'Город', 
+        'address'               => 'Адрес', 
+        'phone'                 => 'Телефон',  
+        'email'                 => 'E-mail', 
+        'grade_experience'      => 'Степень вашего опыта',  
+        'experience_from'       => 'Опыт работы учителя',
+        'price_hour'            => 'Средняя стоимость часа' 
+    ]; 
 
     private $editRules = [
         'name'                  => 'required|max:80|min:5', 
         'about'                 => 'required|min:200|max:1200', 
-        'date_birth'            => 'required', 
-        'phone'                 => 'required', 
+        'date_birth'            => 'required',  
         'sex'                   => 'required', 
         'region'                => 'required', 
         'city'                  => 'required', 
         'address'               => 'required', 
-        'grade_experience'      => 'required', 
-        'image'                 => 'image|mimes:jpeg,jpg,png', 
+        'phone'                 => 'required',  
         'email'                 => 'required|email', 
+        'grade_experience'      => 'required',  
+        'experience_from'       => 'required',
+        'price_hour'            => 'required',
         'teacher_subjects'      => 'required', 
         // 'teacher_directions'    => 'required', 
         'specializations'       => 'required', 
-        'lesson_options'        => 'required', 
-        'region'                => 'required', 
-        'city'                  => 'required', 
+        'lesson_options'        => 'required',  
+        'image'                 => 'image|mimes:jpeg,jpg,png|max:2000', 
     ]; 
 
     private $addRules = [
@@ -74,7 +65,8 @@ class User
         'unique'                   => 'Пользователь уже Существует.',
         'specializations.required' => 'Укажите вашу Специализацию',
         'lesson_options.required'  => 'Укажите варианты проведения занятий',
-        'teacher_subjects.required' => 'Укажите Направления и предметы'
+        'teacher_subjects.required' => 'Укажите Направления и предметы',
+        'image.size'                => 'Максимальный размер фото 2мб'
     ];
 
     private $education = []; 

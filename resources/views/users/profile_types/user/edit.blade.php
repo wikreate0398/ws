@@ -29,9 +29,9 @@
             </div> -->
 
             <div class="form-group">
-                <div class="row">
+                 
                     <div class="col-md-6 regions__area">
-                        <div class="form-group select_form">
+                        <div class="  select_form">
                             <select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
                                 <option value="">Область</option>
                                 @foreach($regions as $item)
@@ -44,7 +44,11 @@
                     </div>
 
                     <div class="col-md-6 cities__area" style="display: none;"></div>
-                </div>
+                    <style>
+                        .cities__area > .form-group{
+                            margin-right: 0;
+                        }
+                    </style>
             </div>
             <script>
                 $(window).load(function(){ $('select#select__regions').change(); });
@@ -65,7 +69,7 @@
                 </label>
                 <div class="col-md-12">
                     <input type="text" 
-                           class="form-control datepicker" 
+                           class="form-control datepicker_birthdate" 
                            name="date_birth"
                            value="{{ !empty($user->date_birth) ? date('d.m.Y', strtotime($user->date_birth)) : '' }}" 
                            required 

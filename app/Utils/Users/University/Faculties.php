@@ -40,8 +40,7 @@ class Faculties
 
     public function validation(array $data)
     {           
-        $errors = []; 
-         
+        $errors = [];  
         $validator = Validator::make($data, $this->rules); 
         $validator->setAttributeNames($this->niceNames);  
         if ($validator->fails()) 

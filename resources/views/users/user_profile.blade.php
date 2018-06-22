@@ -1,64 +1,61 @@
 @extends('layouts.app')
 
-@section('content') 
+@section('content')  
 
-<div class="no__home" style="margin-top: 66px;"> 
-	<div style="background:rgba(153, 204, 255, 1); padding:30px 0;">
-		<div class="container">
+<div class="no__home" style="margin-top: 50px;">
+	<div class="container teacher_lk">
+		<div class="top_lk">
 			<div class="row">
-				<div class="col-md-2" style="text-align: center;"> 
+				<div class="col-lg-3">
+
 					<form class="form-horizontal ajax__submit profile__image_form" method="POST" action="{{ route('update_image') }}">
 		    			{{ csrf_field() }}
-						<div class="profile__img" 
-						     style="background-image: url(/public/uploads/users/{{ $user->avatar ? $user->avatar : $user->image }});"></div>
-						<div id="error-respond"></div>
-						<span class="btn btn-default btn-sm btn-file">
-						    Выбрать <input type="file" name="image" onchange="profilePhoto(this)">
-						</span> 
+						<div class="profile__img" style="background-image: url(/public/uploads/users/{{ $user->avatar ? $user->avatar : $user->image }}{{'?v=' . time()}});">
+							<div class="actions__upload_photo">
+								<span class="btn-file">
+								    <i class="fa fa-file-image-o" aria-hidden="true"></i>
+								    <input type="file" name="image" onchange="profilePhoto(this)">
+								</span>
 
-						<input type="hidden" name="avatar" id="avatar"> 
-					</form>
-				</div>
+								<input type="hidden" name="avatar" id="avatar"> 
 
-				<div class="col-md-10">
-					<h1 style="margin-top: 30px;">{{ $user->name }}</h1>
-					<a class="dashed__link" href="{{ route(userRoute('user_edit')) }}">Редактировать профиль</a><br><br>
-					<button class="btn btn-default btn-sm" style="display: inline-block; width: auto; border-radius: 20px; cursor: default;">Студент</button>
+							</div>
+						</div>
+						<div id="error-respond"></div> 
+					</form> 
 				</div> 
+				<div class="col-lg-9">
+					<span class="teacher_type">Ученик</span>
+					<h1>
+						@php
+							$nameExplode = explode(' ', $user['name']);
+							echo $nameExplode[0] . '<br>'; unset($nameExplode[0]);
+							echo implode(' ', $nameExplode);
+						@endphp
+					</h1>
+					 
+					<div class="data_coverage">
+						<a href="{{ route(userRoute('user_edit')) }}" class="btn edit_profile">Личные данные</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12"> 
+                <ul class="nav lk_menu"> 
+			      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
+			      		<a href="{{ route(userRoute('user_profile')) }}">МОИ КУРСЫ (ОБУЧАЮСЬ)</a>
+			      	</li> 
+                </ul> 
 			</div>
 		</div>
 	</div> 
 
-	<nav class="navbar navbar-default">
-	  <div class="container"> 
-	    <ul class="nav navbar-nav">
-	      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
-	      		<a href="{{ route(userRoute('user_profile')) }}">МОИ КУРСЫ (ОБУЧАЮСЬ)</a>
-	      	</li>
-	      	<?php if (false): ?> 
-			<li class="{{ isActive(route('user_bookmarks')) ? 'active' : '' }}">
-				<a href="{{ route('user_bookmarks') }}">ЗАКЛАДКИ</a>
-			</li>
-			<li class="{{ isActive(route('user_subscriptions')) ? 'active' : '' }}">
-				<a href="{{ route('user_subscriptions') }}">ПОДПИСКИ</a>
-			</li>
-			<li class="{{ isActive(route('user_reviews')) ? 'active' : '' }}">
-				<a href="{{ route('user_reviews') }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
-			</li>
-			<?php endif ?>
-			<li class="{{ isActive(route(userRoute('user_edit'))) ? 'active' : '' }}">
-				<a href="{{ route(userRoute('user_edit')) }}">ЛИЧНЫЕ ДАННЫЕ</a>
-			</li>
-	    </ul>
-	  </div>
-	</nav>
-
 	<div class="container"> 
 		<div class="row">
-			 
 			<div class="col-md-12">   
 				@if(Session::has('flash_message'))
-				    <div class="alert alert-success" style="margin-top: 20px;">
+				    <div class="alert alert-success">
 				    	<p>{{ Session::get('flash_message') }}</p>
 				    </div> 
 				@endif 
@@ -70,4 +67,5 @@
 		</div>
 	</div>
 </div>  
+ 
 @stop

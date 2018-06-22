@@ -121,8 +121,7 @@
                         <img src="/images/icon_profile.png"></a>
 					  <ul class="dropdown-menu">
 						<li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="{{ route('logout') }}">Выйти</a></li>
+						<!-- <li role="separator" class="divider"></li>  -->
 					  </ul>
 					</li>
 				  </ul>

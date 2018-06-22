@@ -11,6 +11,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UsersUniversity;
 use App\Models\Courses;
+use App\Models\CourseCategory;
+
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -41,9 +43,12 @@ class PagesController extends Controller
                 'teachers'     => User::where('user_type', 2)->where(function($query){
                                     return User::allowUser($query);
                                 })->count(),
-                'courses'      => Courses::count(),
-            ]
-        ]; 
+                'courses'      => Courses::published()->count() 
+            ], 
+            'courseCategories' => CourseCategory::with(['courses' => function($query){ 
+                                    $query->published()->withCount('userRequests');
+                                }])->has('courses', '>=', '1')->get()
+        ];  
 
         return view('home', $data);
     }

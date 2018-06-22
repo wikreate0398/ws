@@ -79,7 +79,7 @@ header .main_menu li > a {
 }
 
 span.req{
-    color: red !i;
+    color: red !important;
 } 
 
 .close__item{
@@ -199,6 +199,7 @@ span.req{
 .profile__img{
     position: relative;
     cursor: pointer;
+    background-size: cover;
 }
 
 .actions__upload_photo{
@@ -2440,4 +2441,8 @@ select option:disabled {
 
 .submit_application:disabled{
     background-color: #ccc !important;
+}
+
+.is_finished{
+    display: none;
 }

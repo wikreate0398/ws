@@ -32,295 +32,302 @@
 	<div class="col-lg-8 col-lg-offset-2" style="min-height: 300px;">
 		<div class="tab-content user_form">
 			<div id="panel1" class="tab-pane fade in active">
-				<div class="col-md-12">
-					<h3 class="header_blok_user">Общий профиль</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="header_blok_user">Общий профиль</h3>
+					</div>
 				</div>
 				
-				<label class="col-md-4 control-label">ВАШЕ ФИО <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control" value="{{ $user->name }}" name="name" required type="text">
-					</div>
-				</div>
-				<label class="col-md-4 control-label">КОРОТКО  О ВАС <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<textarea class="form-control" maxlength="1200" name="about" required>{{ $user->about }}</textarea>
-						<div class="maxlength__label"><span>0</span> символов (1200 максимум)</div>
-					</div>
-				</div>
-				<label class="col-md-4 control-label">ДАТА РОЖДЕНИЯ <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group"> 
-						<input type="text" 
-                           class="form-control datepicker ll-skin-melon" 
-                           name="date_birth"
-                           value="{{ !empty($user->date_birth) ? date('d.m.Y', strtotime($user->date_birth)) : '' }}" 
-                           required 
-                           autocomplete="off"
-                           placeholder="ДД.ММ.ГГГГ"> 
-					</div>
-				</div>
-				<label class="col-md-4 control-label">ВАШ ПОЛ <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<label class="radio-inline">
-						  <input type="radio" required name="sex" {{ ($user->sex=='female') ? 'checked' : '' }} id="inlineRadio1" value="female"> Женский
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="sex" {{ ($user->sex=='male') ? 'checked' : '' }} id="inlineRadio2" value="male"> Мужской
-						</label>
-					</div>
-				</div>
-				<label class="col-md-4 control-label">Расположение <span class="req">*</span></label> 
-				 
-				<div class="col-md-8">
-					 
-
-					<div class="row">
-						<div class="col-md-6 regions__area">
-							<div class="form-group select_form">
-								<select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
-								  	<option value="">Область</option>
-								  	@foreach($regions as $item)
-		                           		<option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
-		                           			{{$item['name']}}
-		                           		</option>
-		                        	@endforeach
-								</select>
-							</div>
+				<div class="row">
+					<label class="col-md-4 control-label">ВАШЕ ФИО <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control" value="{{ $user->name }}" name="name" type="text">
 						</div>
+					</div>
+				</div>
 
-						<div class="col-md-6 cities__area" style="display: none;"></div>
+				<div class="row">
+					<label class="col-md-4 control-label">КОРОТКО  О ВАС <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<textarea class="form-control" maxlength="1200" name="about">{{ $user->about }}</textarea>
+							<div class="maxlength__label"><span>0</span> символов (1200 максимум)</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4 control-label">ДАТА РОЖДЕНИЯ <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group"> 
+							<input type="text" 
+	                           class="form-control datepicker_birthdate ll-skin-melon" 
+	                           name="date_birth"
+	                           value="{{ !empty($user->date_birth) ? date('d.m.Y', strtotime($user->date_birth)) : '' }}"  
+	                           autocomplete="off"
+	                           placeholder="ДД.ММ.ГГГГ"> 
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4 control-label">ВАШ ПОЛ <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<label class="radio-inline">
+							  <input type="radio" name="sex" {{ ($user->sex=='female') ? 'checked' : '' }} id="inlineRadio1" value="female"> Женский
+							</label>
+							<label class="radio-inline">
+							  <input type="radio" name="sex" {{ ($user->sex=='male') ? 'checked' : '' }} id="inlineRadio2" value="male"> Мужской
+							</label>
+						</div>
+					</div>
+				</div>
 
+				<div class="row">
+					<label class="col-md-4 control-label">Расположение <span class="req">*</span></label>  
+					<div class="col-md-8"> 
+						<div class="row">
+							<div class="col-md-6 regions__area">
+								<div class="form-group select_form">
+									<select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
+									  	<option value="">Область</option>
+									  	@foreach($regions as $item)
+			                           		<option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
+			                           			{{$item['name']}}
+			                           		</option>
+			                        	@endforeach
+									</select>
+								</div>
+							</div> 
+							<div class="col-md-6 cities__area" style="display: none;"></div> 
+						</div>
 					</div>
 				</div>
 
 				<script>
 	            	$(window).load(function(){ $('select#select__regions').change(); });
-	            </script> 
-
-				 
+	            </script>
  
-				<div class="col-md-12">
-					<h3 class="header_blok_user">Мое образование</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="header_blok_user">Мое образование</h3>
+					</div>
 				</div>
-				<label class="col-md-4 control-label">ГДЕ ВЫ УЧИЛИСЬ?</label>
-				<div class="col-md-8">
-					@if(count($user->educations))
-						<?php $i=0; ?>
-						@foreach($user->educations as $education) 
-							<div class="row multi__container education__container {{ ($i == 0) ? 'first_block' : '' }}">
-								@if($i > 0)
-				                    <a class="close__item delete__item" href="{{ route(userRoute('delete_education'), ['id' => $education->id]) }}">X</a> 
-				                @endif
-								@include('users.profile_types.teacher.partials.grade_education')
+
+				<div class="row">
+					<label class="col-md-4 control-label">ГДЕ ВЫ УЧИЛИСЬ?</label>
+					<div class="col-md-8">
+						@if(count($user->educations))
+							<?php $i=0; ?>
+							@foreach($user->educations as $education) 
+								<div class="row multi__container education__container {{ ($i == 0) ? 'first_block' : '' }}">
+									@if($i > 0)
+					                    <a class="close__item delete__item" href="{{ route(userRoute('delete_education'), ['id' => $education->id]) }}">X</a> 
+					                @endif
+									@include('users.profile_types.teacher.partials.grade_education')
+								</div> 
+								<?php $i++ ?>
+							@endforeach
+						@else
+							<div class="row multi__container education__container first_block">
+								@include('users.profile_types.teacher.partials.grade_education')		
 							</div> 
-							<?php $i++ ?>
-						@endforeach
-					@else
-						<div class="row multi__container education__container first_block">
-							@include('users.profile_types.teacher.partials.grade_education')		
-						</div> 
-					@endif  
+						@endif  
 
-					<button class="btn btn-sm btn-dafault add__more" 
-					        onclick="addBlock('education__container');" 
-					        type="button">
-					    + Добавить еще
-					</button> 
+						<button class="btn btn-sm btn-dafault add__more" 
+						        onclick="addBlock('education__container');" 
+						        type="button">
+						    + Добавить еще
+						</button> 
+					</div>
 				</div>
 
-				<div class="col-md-12">
-					<h3 class="header_blok_user">Контактные данные</h3>
-				</div>
-				<label class="col-md-4 control-label">АДРЕС <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control" name="address" value="{{ $user->address }}" required type="text">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="header_blok_user">Контактные данные</h3>
 					</div>
 				</div>
-				<label class="col-md-4 control-label">ТЕЛЕФОН <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control" name="phone" value="{{ $user->phone }}" required type="text">
+				<div class="row">
+					<label class="col-md-4 control-label">АДРЕС <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control" name="address" value="{{ $user->address }}" type="text">
+						</div>
 					</div>
 				</div>
-				<div class="col-md-12">
-					<h3 class="header_blok_user">Регистрационные данные</h3>
-				</div>
-				<label class="col-md-4 control-label">E-MAIL <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control" name="email" value="{{ $user->email }}" required type="text">
+				<div class="row">
+					<label class="col-md-4 control-label">ТЕЛЕФОН <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control" name="phone" value="{{ $user->phone }}" type="text">
+						</div>
 					</div>
 				</div>
-				<label class="col-md-4 control-label">СТАРЫЙ ПАРОЛЬ <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control" autocomplete="off" name="old_password" value="" type="password">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="header_blok_user">Регистрационные данные</h3>
 					</div>
 				</div>
-				<label class="col-md-4 control-label">ПАРОЛЬ <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control" autocomplete="off" name="password" value="" type="password">
+				<div class="row">
+					<label class="col-md-4 control-label">E-MAIL <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control" name="email" value="{{ $user->email }}" type="text">
+						</div>
 					</div>
 				</div>
-				<label class="col-md-4 control-label">ПОВТОРИТЕ ПАРОЛЬ <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control" autocomplete="off" name="password_confirmation" value="" type="password">
+				<div class="row">
+					<label class="col-md-4 control-label">СТАРЫЙ ПАРОЛЬ <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control" autocomplete="off" name="old_password" value="" type="password">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<label class="col-md-4 control-label">ПАРОЛЬ <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control" autocomplete="off" name="password" value="" type="password">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<label class="col-md-4 control-label">ПОВТОРИТЕ ПАРОЛЬ <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control" autocomplete="off" name="password_confirmation" value="" type="password">
+						</div>
 					</div>
 				</div>
 			</div>
 			<div id="panel2" class="tab-pane fade">
-				<div class="col-md-12">
-					<h3 class="header_blok_user">Я умею учить</h3>
-				</div>
-				<label class="col-md-4 control-label">СТЕПЕНЬ ВАШЕГО ОПЫТА <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group select_form">
-						<select class="form-control" name="grade_experience">
-						  <option value="">Выбрать</option> 
-						  	@foreach($degree_experience as $item)
-                           		<option {{ ($user['grade_experience'] == $item->id) ? 'selected' : '' }} value="{{$item->id}}">
-                           			{{$item->name}}
-                           		</option>
-                        	@endforeach  
-						</select>
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="header_blok_user">Я умею учить</h3>
 					</div>
 				</div>
-				<label class="col-md-4 control-label">ОПЫТ РАБОТЫ УЧИТЕЛЕМ С <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control datepicker ll-skin-melon" 
-						       name="experience_from" 
-						       value="{{ !empty($user->experience_from) ? date('d.m.Y', strtotime($user->experience_from)) : '' }}" 
-						       required="" 
-						       autocomplete="off"
-						       type="text">
-					</div>
-				</div>
-				<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА (₽) <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<input class="form-control number__field price__input" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
-					</div>
-				</div>
-				<div class="col-md-12">
-					<h3 class="header_blok_user">Ваша специализация</h3>
-				</div>
-				<div class="col-md-12">
-					@php
-						$teacher_specializations = array_map(function ($item) {
-						    return $item['id_specialization'];
-						}, $teacher_specializations->toArray());    
-					@endphp
-					@foreach($specializations_list as $specialization)
-						<label class="checkbox-inline">
-							<input type="checkbox" 
-							       {{ in_array($specialization->id, $teacher_specializations) ? 'checked' : '' }}
-							       name="specializations[{{ $specialization->id }}]" 
-							       id="specialization{{ $specialization->id }}"> {{ $specialization->name }}
-						</label>
-					@endforeach 
-				</div>
-				 
-				<div class="col-md-12">
-					<h3 class="header_blok_user">Ваша предметная область</h3>
-				</div>
-
-				<?php if (false): ?> 
-				<label class="col-md-4 control-label">ПРЕДМЕТЫ <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group"> 
-						<select name="" class="form-control teacher_subjects_select" onchange="teacherSubject(this)">
-							<option value="0">Выбрать</option>
-							@php
-								$teacherSubjectsId = $user->subjects->pluck('id')->toArray();
-							@endphp
-							@foreach($subjects_list as $subject) 
-								@php
-									$disabled = '';
-									if(in_array($subject->id, $teacherSubjectsId)){
-										$disabled = 'disabled';
-									}
-								@endphp
-								<option {{ $disabled }} value="{{ $subject->id }}">{{ $subject->name }}</option>
-							@endforeach
-						</select>  
-						<div class="selected__teacher_subjects" style=" {{ !count($user->subjects) ? 'display: none;' : ''  }}">
-							@if(count($user->subjects))
-								@foreach($user->subjects as $subject)
-									<span id="teacher_subjects_{{ $subject->id }}" data-id="{{ $subject->id }}">
-										<div class="subject_tag"> 
-											{{ $subject->name }} 
-										</div>
-										<div onclick="deleteTeacherSubject({{ $subject->id }});" class="delete__subject">
-											<i class="fa fa-times" aria-hidden="true"></i>
-										</div>
-									</span>
-								@endforeach
-							@endif
-						</div>
-						<div class="selected__teacher_inputs">
-							@if(count($user->subjects))
-								@foreach($user->subjects as $subject)
-									<input type="hidden" id="teacher_subjects_input_{{ $subject->id }}" value="{{ $subject->id }}" name="teacher_subjects[]">
-								@endforeach
-							@endif
-						</div> 
-					</div>
-				</div>  
-				<?php endif ?> 
-
-				<label class="col-md-4 control-label">Направления <span class="req">*</span></label>
-				<div class="col-md-8">
-					<div class="form-group teacher_direction_inner"> 
-						<select name="" class="form-control" onchange="teacherDirections(this)">
-							<option value="0">Выбрать</option>
-							@php
-								$teacherDirectionId = $user->direction->pluck('id')->toArray(); 
-							@endphp
-							@foreach($categories as $direction) 
-								@php
-									$disabled = '';
-									if(in_array($direction['id'], $teacherDirectionId)){
-										$disabled = 'disabled';
-									}
-								@endphp
-								<option {{ $disabled }} value="{{ $direction['id'] }}">{{ $direction['name'] }}</option>
-							@endforeach
-						</select>  
-
-						<div class="selected__teacher_labels" style="{{ !count($user->direction) ? 'display: none;' : ''  }}">
-							@if(count($user->direction))
-								@foreach($user->direction as $direction)
-									<span id="teacher_label_{{ $direction->id }}" 
-										  data-id="{{ $direction->id }}">
-										<div class="subject_tag"> 
-											{{ $direction->name }} 
-										</div>
-										<div onclick="deleteTeacherDirection({{ $direction->id }}, '.teacher_direction_inner');" 
-											 class="delete__subject">
-											<i class="fa fa-times" aria-hidden="true"></i>
-										</div>
-									</span>
-								@endforeach
-							@endif
-						</div>
-						<div class="selected__teacher_inputs">
-							@if(count($user->direction))
-								@foreach($user->direction as $direction)
-									<input type="hidden" id="teacher_subjects_input_{{ $direction->id }}" value="{{ $direction->id }}" name="teacher_directions[]">
-								@endforeach
-							@endif
-						</div> 
-					</div>
-				</div>  
 				
-				<div class="subjects__form-group" style="{{ !count($user->subjects) ? 'display: none;' : ''  }}"> 
+				<div class="row">
+					<label class="col-md-4 control-label">СТЕПЕНЬ ВАШЕГО ОПЫТА <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group select_form">
+							<select class="form-control" name="grade_experience">
+							  <option value="">Выбрать</option> 
+							  	@foreach($degree_experience as $item)
+	                           		<option {{ ($user['grade_experience'] == $item->id) ? 'selected' : '' }} value="{{$item->id}}">
+	                           			{{$item->name}}
+	                           		</option>
+	                        	@endforeach  
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4 control-label">ОПЫТ РАБОТЫ УЧИТЕЛЕМ С <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control datepicker_birthdate ll-skin-melon" 
+							       name="experience_from" 
+							       value="{{ !empty($user->experience_from) ? date('d.m.Y', strtotime($user->experience_from)) : '' }}"  
+							       autocomplete="off"
+							       type="text">
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА (₽) <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<input class="form-control number__field price__input" name="price_hour" value="{{ $user->price_hour }}" type="text">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="header_blok_user">Ваша специализация <span class="req">*</span></h3>
+					</div>
+				</div>
+			 
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group"> 
+						@php
+							$teacher_specializations = array_map(function ($item) {
+							    return $item['id_specialization'];
+							}, $teacher_specializations->toArray());    
+						@endphp
+						@foreach($specializations_list as $specialization)
+							<label class="checkbox-inline">
+								<input type="checkbox" 
+								       {{ in_array($specialization->id, $teacher_specializations) ? 'checked' : '' }}
+								       name="specializations[{{ $specialization->id }}]" 
+								       id="specialization{{ $specialization->id }}"> {{ $specialization->name }}
+							</label>
+						@endforeach 
+						</div>
+					</div>
+				</div>
+			  
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="header_blok_user">Ваша предметная область <span class="req">*</span></h3>
+					</div> 
+				</div> 
+
+				<div class="row">
+					<label class="col-md-4 control-label">Направления <span class="req">*</span></label>
+					<div class="col-md-8">
+						<div class="form-group teacher_direction_inner"> 
+							<select name="" class="form-control" onchange="teacherDirections(this)">
+								<option value="0">Выбрать</option>
+								@php
+									$teacherDirectionId = $user->direction->pluck('id')->toArray(); 
+								@endphp
+								@foreach($categories as $direction) 
+									@php
+										$disabled = '';
+										if(in_array($direction['id'], $teacherDirectionId)){
+											$disabled = 'disabled';
+										}
+									@endphp
+									<option {{ $disabled }} value="{{ $direction['id'] }}">{{ $direction['name'] }}</option>
+								@endforeach
+							</select>  
+
+							<div class="selected__teacher_labels" style="{{ !count($user->direction) ? 'display: none;' : ''  }}">
+								@if(count($user->direction))
+									@foreach($user->direction as $direction)
+										<span id="teacher_label_{{ $direction->id }}" 
+											  data-id="{{ $direction->id }}">
+											<div class="subject_tag"> 
+												{{ $direction->name }} 
+											</div>
+											<div onclick="deleteTeacherDirection({{ $direction->id }}, '.teacher_direction_inner');" 
+												 class="delete__subject">
+												<i class="fa fa-times" aria-hidden="true"></i>
+											</div>
+										</span>
+									@endforeach
+								@endif
+							</div>
+							<div class="selected__teacher_inputs">
+								@if(count($user->direction))
+									@foreach($user->direction as $direction)
+										<input type="hidden" id="teacher_subjects_input_{{ $direction->id }}" value="{{ $direction->id }}" name="teacher_directions[]">
+									@endforeach
+								@endif
+							</div> 
+						</div>
+					</div> 
+				</div> 
+				
+				<div class="subjects__form-group row" style="{{ !count($user->subjects) ? 'display: none;' : ''  }}"> 
 					<label class="col-md-4 control-label">Предметы <span class="req">*</span></label>
 					<div class="col-md-8">
 						<div class="form-group teacher_subjects_inner"> 
@@ -378,119 +385,45 @@
 							</div> 
 						</div>
 					</div>  
-				</div>
-
-				<script> 
-
-					var categories = JSON.parse("<?=prepareArrayForJson($categories)?>");
-
-					function teacherDirections(select){
-					    var value = $(select).val();
-					    if (value <= 0) return; 
-
-					    var name  = $(select).find('option[value="'+value+'"]').text(); 
-					    var parent = '.teacher_direction_inner';
-					    $(select).find('option[value="'+value+'"]').attr('disabled',true);
-					    var input = '<input type="hidden" id="teacher_subjects_input_'+value+'" value="'+value+'" name="teacher_directions[]">';
-					    $(parent).find('.selected__teacher_inputs').append(input);
-					    var tagLabel = '<span data-id="'+value+'" id="teacher_label_'+value+'">'+
-					                   '<div class="subject_tag">'+name+'</div>'+
-					                   '<div class="delete__subject" onclick="deleteTeacherDirection('+value+', \''+parent+'\');"><i class="fa fa-times" aria-hidden="true"></i></div></span>';
-					    $(parent).find('.selected__teacher_labels').append(tagLabel);
-					    $(parent).find('.selected__teacher_labels').show();
- 
-					    if(categories[value]['childs']){
-					    	$('.subjects__form-group').show();
-					    	var select = $('.teacher_subjects_inner select');
-					    	$.each(categories[value]['childs'], function(key, item){
-					    		$(select).append('<option data-parent="' + value + '" value="' + item['id'] + '">' + item['name'] + '</option>');
-					    	});
-					    	initSelect2();
-					    }
-					}
-
-					function teacherSubjects(select){
-						var value = $(select).val();
-					    if (value <= 0) return; 
-
-					    var name  = $(select).find('option[value="'+value+'"]').text(); 
-					    var parent_id = $(select).find('option[value="'+value+'"]').attr('data-parent'); 
-					    
-					    var parent = '.teacher_subjects_inner';
-					    $(select).find('option[value="'+value+'"]').attr('disabled',true);
-					    var input = '<input type="hidden" data-parent="'+parent_id+'" id="teacher_subjects_input_'+value+'" value="'+value+'" name="teacher_subjects['+parent_id+'][]">';
-					    $(parent).find('.selected__teacher_inputs').append(input);
-					    var tagLabel = '<span data-id="'+value+'" data-parent="'+parent_id+'" id="teacher_label_'+value+'">'+
-					                   '<div class="subject_tag">'+name+'</div>'+
-					                   '<div class="delete__subject" onclick="deleteTeacherSubject('+value+', \''+parent+'\');"><i class="fa fa-times" aria-hidden="true"></i></div></span>';
-					    $(parent).find('.selected__teacher_labels').append(tagLabel);
-					    $(parent).find('.selected__teacher_labels').show();
-					}
-
-					function deleteTeacherDirection(id, parent){
-					    var span = $('span#teacher_label_' + id);
-					    var name = $(span).find('.subject_tag').text(); 
-					    var id = $(span).attr('data-id'); 
-					    $(parent).find('select option[value="'+id+'"]').attr('disabled',false);
-					    $('input#teacher_subjects_input_' + id).remove();
-					    $('span#teacher_label_' + id).remove();
-
-					    if ($(parent).find('.selected__teacher_labels span').length <= 0) {
-					        $(parent).find('.selected__teacher_labels').hide(); 
-					        $(parent).find('select option[selected="selected"]').each(
-					            function() {
-					                $(this).removeAttr('selected');
-					            }
-					        ); 
-					        $(parent).find('select option:first').attr('selected',true);
-					        $('.subjects__form-group').hide();
-					    } 
-					   	$('.teacher_subjects_inner').find('[data-parent="'+id+'"]').remove(); 
-					}
-
-					function deleteTeacherSubject(id, parent){
-					    var span = $('span#teacher_label_' + id);
-					    var name = $(span).find('.subject_tag').text(); 
-					    var id = $(span).attr('data-id'); 
-					    $(parent).find('select option[value="'+id+'"]').attr('disabled',false);
-					    $('input#teacher_subjects_input_' + id).remove();
-					    $('span#teacher_label_' + id).remove();
-
-					    if ($(parent).find('.selected__teacher_labels span').length <= 0) {
-					        $(parent).find('.selected__teacher_labels').hide(); 
-					        $(parent).find('select option[selected="selected"]').each(
-					            function() {
-					                $(this).removeAttr('selected');
-					            }
-					        ); 
-					        $(parent).find('select option:first').attr('selected',true); 
-					    }  
-					}
- 
+				</div> 
+				<script>  
+					var categories = JSON.parse("<?=prepareArrayForJson($categories)?>"); 
 				</script>
 
-				<div class="col-md-12">
-					<h3 class="header_blok_user">Варианты проведения занятий</h3>
-				</div>
-				<div class="col-md-12"> 
-					@php
-						$teacher_lesson_options = $user->lesson_options->pluck('id')->toArray() ;  
-					@endphp
-					@foreach($lesson_options_list as $lesson_option)
-						<label class="checkbox-inline">
-							<input type="checkbox" 
-								   {{ in_array($lesson_option->id, $teacher_lesson_options) ? 'checked' : '' }}
-							       name="lesson_options[{{ $lesson_option->id }}]" 
-							       id="lesson_options_list{{ $lesson_option->id }}"> {{ $lesson_option->name }}
-						</label>
-					@endforeach 
-				</div>
-				<label class="col-md-4 control-label">У ВАС (РЕПЕТИТОРА) НА ДОМУ</label>
-				<div class="col-md-8">
-					<div class="form-group">
-						<textarea class="form-control" name="lesson_place" autofocus="">{{ $user->lesson_place }}</textarea>
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="header_blok_user">Варианты проведения занятий <span class="req">*</span></h3>
+					</div> 
+					<div class="col-md-12"> 
+						<div class="form-group"> 
+							@php
+								$teacher_lesson_options = $user->lesson_options->pluck('id')->toArray() ;  
+							@endphp
+							@foreach($lesson_options_list as $lesson_option)
+								<label class="checkbox-inline">
+									<input type="checkbox" 
+										   {{ in_array($lesson_option->id, $teacher_lesson_options) ? 'checked' : '' }}
+									       name="lesson_options[{{ $lesson_option->id }}]" 
+									       id="lesson_options_list{{ $lesson_option->id }}"> {{ $lesson_option->name }}
+								</label>
+							@endforeach 
+						</div>
 					</div>
 				</div>
+			 
+				<div class="row">
+					<label class="col-md-4 control-label">
+						Адрес на дому
+						<p>Укажите адрес если занятия могут проходить у вас на дому</p>
+					</label>
+					<div class="col-md-8">
+						<div class="form-group">
+							<textarea class="form-control" name="lesson_place" autofocus="">{{ $user->lesson_place }}</textarea>
+
+						</div>
+					</div>
+				</div>
+				 
 			</div>
 			<div id="panel3" class="tab-pane fade">
                 
@@ -522,12 +455,14 @@
 					 
 			</div>
 
-			<div id="error-respond"></div>
-	        <div class="col-md-12 ">
-	            <button type="submit" class="btn btn_save" style="width: auto;">
-	                Сохранить
-	            </button>
-	        </div>
+			<div class="row">
+				<div id="error-respond"></div>
+		        <div class="col-md-12 ">
+		            <button type="submit" class="btn btn_save" style="width: auto;">
+		                Сохранить
+		            </button>
+		        </div>
+			</div>
 
 
 		</div> 

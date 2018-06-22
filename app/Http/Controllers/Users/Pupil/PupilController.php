@@ -6,14 +6,14 @@ use App\Models\User;
 use App\Models\Regions;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
- 
+use App\Http\Controllers\Controller; 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\UserMail;
-use App\Http\Controllers\Users\UserTypes\UserTypesInterface;
+
+use App\Mail\UserMail; 
 use App\Http\Controllers\Users\ProfileController;
 use App\Utils\Users\Pupil\User as PupilUser;
+use App\Utils\Classes\CourseFacade;
  
 class PupilController extends ProfileController  
 {
@@ -25,10 +25,14 @@ class PupilController extends ProfileController
     }
     
     public function showCourse()
-    { 
+    {  
         return view('users.user_profile', [ 
-            'user'               => Auth::user(), 
-            'include'            => $this->viewPath . 'courses',
+            'user'          => Auth::user(), 
+            'include'       => $this->viewPath . 'courses',
+            'courseFacade'  => new CourseFacade,
+            'scripts' => [
+                'js/courses.js'
+            ]
         ]); 
     }
 

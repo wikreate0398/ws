@@ -19,8 +19,7 @@ Route::group(['middlewars' => 'guest'], function(){
 	Route::get('finish-registration', 'Auth\RegisterController@finish_registration')->name('finish_registration');
 	Route::get('registration-confirm/{confirmation_hash}', 'Auth\RegisterController@confirmation'); 
 	Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-	Route::post('login', 'Auth\LoginController@login')->name('run_login');
-	Route::get('test_mail', 'Auth\RegisterController@test_mail');
+	Route::post('login', 'Auth\LoginController@login')->name('run_login'); 
 });
 
 Route::get('about', 'PagesController@about');
@@ -148,9 +147,7 @@ Route::group(['middleware' => ['web_auth']], function(){
 
 Route::group(['prefix' => 'cron'], function() { 
 	Route::get('checkIfCourseIsActive', 'CronJobController@checkIfCourseIsActive');   
-}); 
-
-
+});  
 
 Route::get('user/logout', function(){ 
 	Auth::guard('web')->logout(); 

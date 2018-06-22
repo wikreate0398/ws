@@ -84,47 +84,34 @@ class Courses extends Model
             $courses->whereHas('category', function($query) use($cat){
                 $query->where('url', $cat);
             });
-        }
-
-        $courses->whereHas('user', function($query){
-            return User::allowUser($query);
-        });
-
-        if (Auth::check() != true) 
-        {
-            $courses->where('available', '!=', '2');
         } 
-
-        $courses->where('isHide', 0);
-
-        return $courses->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
+ 
+        
+        return $courses->published()->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
                                       ['*'], 
                                       'page', 
                                       !empty($input['page']) ? $input['page'] : 1);
     }
 
-    public static function countTotal()
-    {   
-        $authCheck = Auth::check();
-        return Courses::whereHas('user', function($query){
+    public function scopePublished($query)
+    { 
+        if (Auth::check() != true) 
+        {
+            $query->where('available', '!=', '2');
+        } 
+
+        return $query->where('isHide', 0)->where('view', 1)->whereHas('user', function($query){
             return User::allowUser($query);
-        })->where(function($query) use($authCheck){
-            if ($authCheck != true) 
-            { 
-                $query->where('available', '!=', '2');
-            }
-        })->where('isHide', 0)->count();
+        });
+    }
+
+    public static function countTotal()
+    {    
+        return Courses::published()->count();
     }
 
     public static function getOneCourse($id, $authCheck = false)
     {
-        return Courses::with('sections')->where('id', $id)->whereHas('user', function($query){
-          return User::allowUser($query);
-        })->where(function($query) use($authCheck){
-            if ($authCheck != true) 
-            { 
-                $query->where('available', '!=', '2');
-            }
-        })->where('isHide', 0)->findOrFail($id);
+        return Courses::with('sections')->where('id', $id)->published()->findOrFail($id);
     }
 }

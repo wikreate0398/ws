@@ -197,7 +197,7 @@
 					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_one.png" alt="">
 					<h3>УЧЕНИКАМ/АББИТУРИЕНТАМ</h3>
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+						Найдите учебный курс с наиболее подходящим для вас содержанием и условием обучения. Получите доступ к максимально полной базе онлайн-семинаров, лекций и полноценных учебных программ!
 					</p>
 					<a href="">ИСКАТЬ КУРС</a>
 				</div>
@@ -207,7 +207,7 @@
 					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_two.png" alt="">
 					<h3>ВУЗАМ И ОНЛАЙН ШКОЛАМ</h3>
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+						Станьте нашим партнером, разместив максимально подробную информацию о вашем учебном заведении на страницах нашего сайта. Расскажите о вашем ВУЗе или онлайн-школе потенциальным абитуриентам!
 					</p>
 					<a href="">СТАТЬ ПАРТНЕРАМИ</a>
 				</div>
@@ -217,7 +217,7 @@
 					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_three.png" alt="">
 					<h3>ПРЕПОДАВАТЕЛЯМ</h3>
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+						Создайте профиль на нашем сайте, опишите свою квалификацию и направление работы – и уже скоро вы сможете передавать свои знания максимальному количеству учеников.
 					</p>
 					<a href="">НАЧАТЬ ОБУЧАТЬ</a>
 				</div>

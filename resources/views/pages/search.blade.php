@@ -4,20 +4,21 @@
 <div class="container no__home">
     <div class="row">
 
-        <div class="col-md-12">
-            <form id="search_form" action="/search/" style="margin-bottom: 20px;">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="form-group input-search-area">
-                            <input name="q" autocomplete="off" value="{{ urldecode(request()->input('q')) }}" class="form-control" id="search__input" placeholder="Введите название">
-                            <div class="loaded__search_result"></div>
-                        </div>
+        <div class="col-md-12" style="margin-bottom: 30px;"> 
+            <form class="no_home teacher__search_form" id="search_form" action="/search" method="Get" data-url-autocomplete="/autocomplete" >
+                    <div class="input-group">
+                        <input name="q" 
+                               autocomplete="off" 
+                               class="form-control" 
+                               id="search__input" 
+                               placeholder="Введите Название Вуза"
+                               value="{{ @urldecode(request()->input('q')) }}">
+                        <div class="loaded__search_result"></div>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn_search">Начать поиск</button>
+                        </span>
                     </div>
-                    <div class="col-lg-3">
-                        <button type="submit" class="btn btn-primary">Поиск</button>
-                    </div>
-                </div>
-            </form>
+            </form> 
         </div>
 
         <?php if (@count($data['courses'])): ?>
@@ -55,6 +56,14 @@
                 @endforeach
             </div>
         <?php endif ?> 
+
+        @if(@!count($data['courses']) && @!count($data['teachers']) && @!count($data['university']))
+            <div class="col-lg-12">
+                <div class="no__data"> 
+                    <h5>Ничего не найденно</h5>
+                </div>
+            </div>
+        @endif
     </div>
 </div>
 @stop

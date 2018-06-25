@@ -75,7 +75,7 @@ class UsersUniversity extends Model
         }
 
         $university->with('user')->whereHas('user', function($query){
-                                return User::allowUser($query);
+                                return User::allowUser();
                             })->orderBy('id_user', 'asc');
 
         return $university->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 

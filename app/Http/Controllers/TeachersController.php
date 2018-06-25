@@ -52,17 +52,17 @@ class TeachersController extends Controller
             'teachers'               => User::getTeachers($request),
             'teachersRequests'       => $this->_teacher_request,
             'subjects'               => CourseCategory::whereHas('usersSubjects', function($query){
-                                            return User::allowUser($query);
+                                            return User::allowUser();
                                         })->orderBy('page_up', 'asc')
                                           ->orderBy('id', 'desc')->get(),
 
             'specializations'        => TeacherSpecializationsList::whereHas('users', function($query){
-                                            return User::allowUser($query);
+                                            return User::allowUser();
                                         })->get(),
 
             'minMaxPrice'            => User::getTeachersMinMaxPrice(),
             'lesson_filter_options'  => LessonOptionsList::whereHas('users', function($query){
-                                                            return User::allowUser($query);
+                                                            return User::allowUser();
                                                         })->orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')->get(), 
 
@@ -89,7 +89,7 @@ class TeachersController extends Controller
                                'educations', 
                                'subjects'])
                          ->where(function($query){
-                              return User::allowUser($query);
+                              return User::allowUser();
                          })->where('user_type',2)
                          ->findOrFail($id); 
         $data = [
@@ -132,7 +132,7 @@ class TeachersController extends Controller
     {
       $query      = urldecode($request->input('search'));  
       $searchData = User::where('user_type', 2)->where(function($query){
-                              return User::allowUser($query);
+                              return User::allowUser();
                           })
                           ->where('name', 'like', "%$query%")
                           ->orderBy('created_at', 'desc')->get();

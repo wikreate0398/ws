@@ -33,16 +33,10 @@ class PagesController extends Controller
     { 
         $data = [
             'university' => UsersUniversity::getUniversities(),
-            'teachers'   => User::where('user_type', 2)->where(function($query){
-                                    return User::allowUser($query);
-                                })->orderBy('created_at', 'desc')->get(),
+            'teachers'   => User::allowUser()->where('user_type', 2)->orderBy('created_at', 'desc')->get(),
             'stats'      => [
-                'institutions' => User::where('user_type', 3)->where(function($query){
-                                    return User::allowUser($query);
-                                })->count(),
-                'teachers'     => User::where('user_type', 2)->where(function($query){
-                                    return User::allowUser($query);
-                                })->count(),
+                'institutions' => User::allowUser()->where('user_type', 3)->count(),
+                'teachers'     => User::allowUser()->where('user_type', 2)->count(),
                 'courses'      => Courses::published()->count() 
             ], 
             'courseCategories' => CourseCategory::with(['courses' => function($query){ 
@@ -59,14 +53,14 @@ class PagesController extends Controller
         $query      = urldecode($request->input('search'));   
         $searchData = $this->generateSearch($query);
         if (empty($searchData)) die();
-         
+        
         $content    = '';    
         if (@count($searchData['courses'])) 
         {
             $content .= '<div> <label>Курсы</label>';
             foreach ($searchData['courses'] as $course) 
             {
-                $content .= '<a href=""> 
+                $content .= '<a href="/course/'.$course['id'].'/"> 
                                 <i class="fa fa-angle-right" aria-hidden="true"></i>' . $course['name'] .  '
                             </a>';
             }
@@ -90,7 +84,7 @@ class PagesController extends Controller
             $content .= '<div> <label>Учебные заведения</label>';
             foreach ($searchData['university'] as $university)
             {
-                $content .= '<a href="/institution/'.$university['id'].'/">
+                $content .= '<a href="/university/'.$university['id'].'/">
                                 <i class="fa fa-angle-right" aria-hidden="true"></i>  ' . $university['full_name'] .  '
                             </a>';
             }
@@ -107,33 +101,48 @@ class PagesController extends Controller
         return view('pages.search', ['data' => $searchData]);
     }
 
-    private function generateSearch($query, $data = [])
+    private function generateSearch($searchStr, $data = [])
     {
 
-        if (empty($query)) 
+        if (empty($searchStr)) 
         {
             return array();
         }
 
-        $getCourses = \App\Models\Courses::where('name', 'like', "%$query%")->get(); 
+        $getCourses = \App\Models\Courses::published()
+                                         ->where('name', 'like', "%$searchStr%")
+                                         ->orWhereHas('category', function($query) use ($searchStr){ 
+                                            $query->where('name', 'like', "%$searchStr%");
+                                         })->orWhereHas('subCategory', function($query) use ($searchStr){ 
+                                            $query->where('name', 'like', "%$searchStr%");
+                                         })->OrderByCourses()
+                                           ->get(); 
+
         if (count($getCourses)) 
         {
             $data['courses'] = $getCourses;
         }
 
-        $getTeachers = User::where('user_type', 2)->where(function($query){
-                                    return User::allowUser($query);
-                                })->where('name', 'like', "%$query%")
-                                ->orderBy('created_at', 'desc')
-                                ->get(); 
+        $getTeachers = User::allowUser()
+                           ->where('user_type', 2)
+                           ->where('name', 'like', "%$searchStr%")
+                           ->orWhereHas('direction', function($query) use ($searchStr){
+                                $query->where('name', 'like', $searchStr.'%'); 
+                            })
+                           ->orWhereHas('subjects', function($query) use ($searchStr){
+                                $query->where('name', 'like', "%$searchStr%"); 
+                            })
+                           ->orderBy('created_at', 'desc')
+                           ->get(); 
+
         if (count($getTeachers)) 
         {
             $data['teachers'] = $getTeachers;
         }
 
-        $getUniversity = UsersUniversity::where('full_name', 'like', "%$query%")
+        $getUniversity = UsersUniversity::where('full_name', 'like', "%$searchStr%")
                                         ->whereHas('user', function($query){
-                                            return User::allowUser($query);
+                                            return User::allowUser();
                                         })
                                         ->orderBy('created_at', 'desc')
                                         ->get();  

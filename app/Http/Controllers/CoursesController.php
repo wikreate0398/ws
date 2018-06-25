@@ -104,20 +104,25 @@ class CoursesController extends Controller
 
     public function autocomplete(Request $request)
     { 
-        $query      = urldecode($request->input('search'));  
-        $searchData = Courses::whereHas('user', function($query){
-            return User::allowUser($query);
-        })->where('name', 'like', "%$query%")->orderBy('created_at', 'desc')->get();
-
+        $searchStr  = urldecode($request->input('search'));  
+        $searchData = Courses::published()
+                             ->where('name', 'like', "%$searchStr%")
+                             ->orWhereHas('category', function($query) use ($searchStr){ 
+                                $query->where('name', 'like', "%$searchStr%");
+                             })->orWhereHas('subCategory', function($query) use ($searchStr){ 
+                                $query->where('name', 'like', "%$searchStr%");
+                             })->orderByCourses()
+                               ->get(); 
+ 
         if (empty($searchData)) die();
          
         $content    = ''; 
         if (@count($searchData)) 
         {
-            foreach ($searchData as $teacher) 
+            foreach ($searchData as $course) 
             {
-                $content .= '<a href="/teacher/'.$teacher['id'].'/"> 
-                                <i class="fa fa-angle-right" aria-hidden="true"></i>' . $teacher['name'] .  '
+                $content .= '<a href="/course/'.$course['id'].'/"> 
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>' . $course['name'] .  '
                             </a>';
             }
             $content .= '</div>';

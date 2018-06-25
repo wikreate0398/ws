@@ -22,7 +22,7 @@
  
 		@if(count($user->coursesRequests)) 
 			@foreach($user->coursesRequests as $course)
-				<?php 
+				@php
 					$courseFacade->storage($course);
 
 					$id = '';
@@ -31,7 +31,7 @@
 					}else{
 						$id .= 'is_active';
 					}
-				?>
+				@endphp
 				<div class="col-md-4 {{ $id }}">
 					<div class="course_card">
 	            		<i class="fa fa-heart-o course_heart" aria-hidden="true"></i>
@@ -99,7 +99,7 @@
 		            				@endif
 		            			</div>
 		            			<div class="col-md-6">
-		            				<button type="button" class="course__btn about__course">О курсе</button>
+		            				<a href="/course/{{ $course->id }}" class="course__btn about__course">О курсе</a>
 		            			</div>
 		            		</div>
 	            		</div> 
@@ -146,6 +146,9 @@
                     outline: none;
                     font-size: 13px;
                     margin-bottom: 10px;
+                    display: inline-block;
+                    text-align: center;
+                    text-decoration: none;
                  }
 
                  .course__btn.learning__course{
@@ -157,6 +160,10 @@
                     color: #333;
                     border:1px solid rgba(153, 51, 102, 1);
                  }
+
+                .course__btn:hover{
+                	text-decoration: none;
+                }
 
                  .dwn__diplom{
                  	text-transform: uppercase;

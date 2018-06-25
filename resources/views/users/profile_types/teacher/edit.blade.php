@@ -285,8 +285,8 @@
 					<label class="col-md-4 control-label">Направления <span class="req">*</span></label>
 					<div class="col-md-8">
 						<div class="form-group teacher_direction_inner"> 
-							<select name="" class="form-control" onchange="teacherDirections(this)">
-								<option value="0">Выбрать</option>
+							<select name="teacher_directions_select" class="form-control" onchange="teacherDirections(this)">
+								<option value="">Выбрать</option>
 								@php
 									$teacherDirectionId = $user->direction->pluck('id')->toArray(); 
 								@endphp
@@ -332,8 +332,8 @@
 					<label class="col-md-4 control-label">Предметы <span class="req">*</span></label>
 					<div class="col-md-8">
 						<div class="form-group teacher_subjects_inner"> 
-							<select name="" class="form-control select2" onchange="teacherSubjects(this)" style="width: 100%;"> 
-								<option value="0">Выбрать</option> 
+							<select name="teacher_subjects_select" class="form-control select2" onchange="teacherSubjects(this)" style="width: 100%;"> 
+								<option value="">Выбрать</option> 
 								@if(count($user->direction))
 									@php
 										$teacherSubjectsId = $user->subjects->pluck('id')->toArray(); 

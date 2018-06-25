@@ -176,6 +176,7 @@ jQuery(document).ready(function($) {
                 $(form).find('.error__input').removeClass('error__input');
                 if (jsonResponse.msg === false) {
                     var message = ''; 
+                    var msgArr=[];
                     if (typeof jsonResponse.messages == 'object') { 
                         $.each(jsonResponse.messages, function(key, value){  
 
@@ -184,6 +185,11 @@ jQuery(document).ready(function($) {
                             if ($(inputError).hasClass('select2-hidden-accessible')) {
                                 $(inputError).next('.select2-container').find('.select2-selection').addClass("error__input");
                             }
+
+                            // if (key == 'teacher_subjects') { 
+                            //     $('select[name="teacher_directions_select"]').addClass('error__input');
+                            //     $('select[name="teacher_subjects_select"]').next('.select2-container').find('.select2-selection').addClass("error__input");
+                            // }
  
                             // .filter(function() {
                             //     return !this.value;
@@ -191,9 +197,15 @@ jQuery(document).ready(function($) {
 
                             $.each(value, function(k,v){
                                 if (key != 'multifields') { 
-                                    message += '<p>'+v+'</p>';
+
+                                    if ($.inArray(v, msgArr) == -1) { 
+                                        message += '<p>'+v+'</p>';
+                                    }
+                                    msgArr.push(v);
+
+                                    console.log(msgArr);
                                 }else{
-                                    var inputError = $(form).find('[name*="'+v+'"]');
+                                    var inputError = $(form).find('[name*="'+v+'"]'); 
                                     $(inputError).filter(function(){
                                         if ($(this).hasClass('required__input') == true && $(this).val() == '') 
                                         { 
@@ -349,6 +361,11 @@ function disableBlock(checkbox){
         $(checkbox).closest('.panel').find('button.add__more').attr('disabled', true); 
     } 
 }
+
+$(window).on('load', function(){
+    setEqualHeight2($('.course_card h2'), $('.course__catalog'));
+    setEqualHeight2($('.course_card h4'), $('.course__catalog'));
+});
  
 function setEqualHeight2(columns, parent) {   
     if (!$(columns).length ) { 
@@ -356,7 +373,7 @@ function setEqualHeight2(columns, parent) {
     }   
     if (parent) {
         var width       = $(parent).width();
-        var item_width  = $(columns).closest('.js_list__item').outerWidth();
+        var item_width  = $(columns).closest('.eq_list__item').outerWidth();
         var itemInRow = parseInt(width/item_width, 10); 
     }else{
         var itemInRow = 3; 

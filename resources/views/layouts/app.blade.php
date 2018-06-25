@@ -78,7 +78,7 @@
 							</li>
 							@else 
 							<li class="register_link">
-								<a href="{{ route('registration') }}">Хочу обучать</a>
+								<a href="{{ route('registration') }}?type=2">Хочу обучать</a>
 							</li>
 							<li>
 								<a href="{{ route('login') }}">Войти</a>

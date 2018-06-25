@@ -86,11 +86,11 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row course__catalog">
 
             	@foreach($courses as $course)
             	<div class="col-md-4"> 
-	            	<div class="course_card">
+	            	<div class="course_card eq_list__item">
 	            		<i class="fa fa-heart-o course_heart" aria-hidden="true"></i>
 	            		<div class="body__course_card">
 	            			<div class="cat-name"> 
@@ -105,6 +105,13 @@
 		            				{{ $course->name }}
 		            			</a>
 		            		</h2>
+
+		            		<h4>
+					            @if($course->user->user_type==3)
+					             {{ $course->user->university['full_name'] }} 
+					            @endif
+				        	</h4>
+
 		            		<table>
 		            			<tr>
 		            				<td>СТОИМОСТЬ</td> 

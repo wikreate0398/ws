@@ -38,8 +38,12 @@
                                            </span>
                                         </li>
                                     </ul>
-                                    <h3>{{ $course->name }}</h3>
-                                   <!--  <h4>МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ</h4> -->
+                                    <h3>{{ $course->name }}</h3> 
+                                    <h4>
+                                        @if($course->user->user_type==3)
+                                         {{ $course->user->university['full_name'] }} 
+                                        @endif
+                                    </h4>
                                     <ul class="list-unstyled card_info">
                                         <li>
                                             Стоимость 

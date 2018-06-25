@@ -101,8 +101,13 @@ class Courses extends Model
         } 
 
         return $query->where('isHide', 0)->where('view', 1)->whereHas('user', function($query){
-            return User::allowUser($query);
+            return User::allowUser();
         });
+    }
+
+    public function scopeOrderByCourses($query)
+    {
+        return $query->orderBy('date_from', 'asc');
     }
 
     public static function countTotal()

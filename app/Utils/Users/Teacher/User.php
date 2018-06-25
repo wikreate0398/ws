@@ -45,7 +45,9 @@ class User
         'email'                 => 'required|email', 
         'grade_experience'      => 'required',  
         'experience_from'       => 'required',
-        'price_hour'            => 'required',
+        'price_hour'            => 'required', 
+        // 'teacher_directions_select' => 'required',
+        // 'teacher_subjects_select'   => 'required',
         'teacher_subjects'      => 'required',  
         'specializations'       => 'required', 
         'lesson_options'        => 'required',   
@@ -63,7 +65,9 @@ class User
         'unique'                   => 'Пользователь уже Существует.',
         'specializations.required' => 'Укажите вашу Специализацию',
         'lesson_options.required'  => 'Укажите варианты проведения занятий',
-        'teacher_subjects.required' => 'Укажите Направления и предметы' 
+        'teacher_subjects.required' => 'Укажите Направления и предметы',
+        // 'teacher_directions_select.required' => 'Укажите Направления и предметы',
+        // 'teacher_subjects_select.required' => 'Укажите Направления и предметы',
     ];
 
     private $education = []; 

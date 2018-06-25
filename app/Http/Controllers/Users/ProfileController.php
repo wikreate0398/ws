@@ -37,7 +37,7 @@ class ProfileController extends Controller
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
         } 
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+        return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('user_profile'))], 'Данные успешно обновлены!'); 
     } 
 
     public function deleteCertificate(Request $request)

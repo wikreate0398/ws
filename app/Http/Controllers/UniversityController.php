@@ -38,7 +38,7 @@ class UniversityController extends Controller
             'filter' => [
                 'specializationList' => UniversitySpecializationsList::whereHas('users', function($query){ 
                                             return $query->whereHas('user', function($query){
-                                                return User::allowUser($query);
+                                                return User::allowUser();
                                             });
                                         })->orderBy('page_up', 'asc')
                                           ->orderBy('id', 'desc')->get(),
@@ -62,7 +62,7 @@ class UniversityController extends Controller
                 return $query->where('view','1');
             }
         ])->whereHas('user', function($query){
-            return User::allowUser($query);
+            return User::allowUser();
         })->where('id', $id)->get()->first();
         
         if (empty($university)) abort('404'); 
@@ -79,7 +79,7 @@ class UniversityController extends Controller
     {
         $query      = urldecode($request->input('search'));  
         $searchData = UsersUniversity::whereHas('user', function($query){
-                                            return User::allowUser($query);
+                                            return User::allowUser();
                                         })
                                         ->where('full_name', 'like', "%$query%")
                                         ->orderBy('id_user', 'asc')->get();
@@ -91,7 +91,7 @@ class UniversityController extends Controller
         {
             foreach ($searchData as $university) 
             {
-                $content .= '<a href="/universities/'.$university['id'].'/"> 
+                $content .= '<a href="/university/'.$university['id'].'/"> 
                                 <i class="fa fa-angle-right" aria-hidden="true"></i>' . $university['full_name'] .  '
                             </a>';
             }

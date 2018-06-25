@@ -77,12 +77,19 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Courses', 'course_request', 'id_user', 'id_course');
     }
 
-    public static function allowUser(Builder $query)
+    // public static function allowUser(Builder $query)
+    // {
+    //     return $query->where('activate', '1')
+    //                  ->where('confirm', '1') 
+    //                  ->where('data_filled','1');
+    //                  //->where('user_type', '2')
+    // }
+
+    public function scopeAllowUser($query)
     {
         return $query->where('activate', '1')
                      ->where('confirm', '1') 
                      ->where('data_filled','1');
-                     //->where('user_type', '2')
     }     
 
     public static function getTeachers($request = false)
@@ -139,9 +146,7 @@ class User extends Authenticatable
             });
         }
 
-        $user->where(function($query){
-            return User::allowUser($query);
-        })->where('user_type',2);
+        $user->allowUser()->where('user_type',2);
 
         return $user->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
                                       ['*'], 
@@ -188,16 +193,12 @@ class User extends Authenticatable
 
     public static function getTeachersMinMaxPrice()
     {
-        $min = self::where(function($query){
-                        return User::allowUser($query);
-                    })
+        $min = self::allowUser()
                     ->where('price_hour', '>', '0')
                     ->where('user_type',2)
                     ->min('price_hour');
 
-        $max = self::where(function($query){
-                        return User::allowUser($query);
-                    })
+        $max = self::allowUser()
                    ->where('price_hour', '>', '0')
                    ->where('user_type',2)
                    ->max('price_hour');

@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(request()->input('type')==2)
+    <script>
+        $(document).ready(function(){
+            $('a[href="#teacher"]').click();
+        });
+    </script>
+    @endif
     <div class="container no__home">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

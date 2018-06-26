@@ -5,18 +5,24 @@
 				<li class="tag_sticker">
 					<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
 				</li>
-				<li class="bookmark_tag">
-					<span>
-					   <button class="btn btn-default">
-						   <i class="fa fa-heart-o"></i>
-					   </button>
-				   </span>
-				</li>
+				@if(@Auth::check()) 
+                    @php 
+                        $favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); 
+                    @endphp
+                    <li class="bookmark_tag">
+                        <i class="fa course_heart 
+                           {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+                           onclick="courseFavorite(this, {{ $course->id }});"  
+                           aria-hidden="true"></i> 
+                    </li> 
+                @endif
 			</ul>
 			<h3>{{ $course->name }}</h3>
 			<h4>
 	            @if($course->user->user_type==3)
-	             {{ $course->user->university['full_name'] }} 
+	            		{{ $course->user->university['full_name'] }} 
+	            	@else
+						{{ $course->user->name }} 
 	            @endif
         	</h4>
 			<ul class="list-unstyled card_info">

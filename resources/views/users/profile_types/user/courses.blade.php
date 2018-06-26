@@ -8,22 +8,24 @@
 </ul> --> 
 
 <div class="course_lk">
-	<div class="row">
+		<div class="row">
 
-		<div class="col-md-12" style="margin:0 0 25px 0;">
-			<button class="btn btn-default toggle__course active" data-show=".is_active" onclick="activeFinishCourse(this);">
-				АКТИВНЫЕ
-			</button>
+			<div class="col-md-12" style="margin:0 0 25px 0;">
+				<button class="btn btn-default toggle__course active" data-show=".is_active" onclick="activeFinishCourse(this);">
+					АКТИВНЫЕ
+				</button>
 
-			<button class="btn btn-default toggle__course" data-show=".is_finished" onclick="activeFinishCourse(this);">
-				ЗАВЕРШЕННЫЕ
-			</button>
+				<button class="btn btn-default toggle__course" data-show=".is_finished" onclick="activeFinishCourse(this);">
+					ЗАВЕРШЕННЫЕ
+				</button>
+			</div>
 		</div>
- 
+ 		 
 		@if(count($user->coursesRequests)) 
+			<div class="row course__catalog"> 
 			@foreach($user->coursesRequests as $course)
 				@php
-					$courseFacade->storage($course);
+					$courseFacade->setId($course->id);
 
 					$id = '';
 					if ($courseFacade->isFinished()) {
@@ -33,8 +35,14 @@
 					}
 				@endphp
 				<div class="col-md-4 {{ $id }}">
-					<div class="course_card">
-	            		<i class="fa fa-heart-o course_heart" aria-hidden="true"></i>
+					<div class="course_card eq_list__item">
+	            		@if(@Auth::check()) 
+	            			@php $favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); @endphp
+		            		<i class="fa course_heart 
+		            		   {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+		            		   onclick="courseFavorite(this, {{ $course->id }});"  
+		            		   aria-hidden="true"></i>
+	            		@endif
 	            		<div class="body__course_card">
 	            			<div class="cat-name"> 
 	            				@if(!empty(@$course->subCategory->name)) 
@@ -48,6 +56,13 @@
 		            				{{ $course->name }}
 		            			</a>
 		            		</h2>
+		            		<h4>
+		            			@if($course->user->user_type==3)
+					            		{{ $course->user->university['full_name'] }} 
+					            	@else
+										{{ $course->user->name }} 
+					            @endif
+		            		</h4>
 		            		<table>
 		            			<tr>
 		            				<td>СТОИМОСТЬ</td> 
@@ -134,6 +149,7 @@
 	            	</div>
 				</div>
 			@endforeach 
+			</div>
 
 			<style>
     			.course__btn{
@@ -175,12 +191,14 @@
     		</style>
 
 		@else
-		<div class="col-lg-12">
-			<div class="no__data"> 
-				<h5>Вы не записаны на курсы</h5>
+		<div class="row"> 
+			<div class="col-lg-12">
+				<div class="no__data"> 
+					<h5>Вы не записаны на курсы</h5>
+				</div>
 			</div>
 		</div>
 		@endif 
-	</div>
+	 
 </div>
  

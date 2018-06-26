@@ -101,29 +101,30 @@ function deleteSectionBlock(item, id){
         return false;
     } 
 
-    if (id > 0) {
-        $.ajax({
-            url: '/user/actions/deleteCourseSection',
-            type: 'POST', 
-            data: {id_section: id, _token: CSRF_TOKEN}, 
-            cache: false, 
-            dataType: 'json',
-            beforeSend: function() {},
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                if (XMLHttpRequest.status === 401) document.location.reload(true);
-            },
-            success: function(jsonResponse, textStatus, request) {    
-                if (jsonResponse.msg === true) {
-                    $(item).closest('.course__section').remove();
-                } else {   
-                    alert('Ошибка');
-                } 
-            },
-            complete: function() {}
-        });
-    }else{
-        $(item).closest('.course__section').remove();
-    } 
+    // if (id > 0) {
+    //     $.ajax({
+    //         url: '/user/actions/deleteCourseSection',
+    //         type: 'POST', 
+    //         data: {id_section: id, _token: CSRF_TOKEN}, 
+    //         cache: false, 
+    //         dataType: 'json',
+    //         beforeSend: function() {},
+    //         error: function(XMLHttpRequest, textStatus, errorThrown) {
+    //             if (XMLHttpRequest.status === 401) document.location.reload(true);
+    //         },
+    //         success: function(jsonResponse, textStatus, request) {    
+    //             if (jsonResponse.msg === true) {
+    //                 $(item).closest('.course__section').remove();
+    //             } else {   
+    //                 alert('Ошибка');
+    //             } 
+    //         },
+    //         complete: function() {}
+    //     });
+    // }else{
+    //     $(item).closest('.course__section').remove();
+    // } 
+    $(item).closest('.course__section').remove();
 }
 
 function deleteLectureBlock(item, id){
@@ -132,29 +133,31 @@ function deleteLectureBlock(item, id){
         return false;
     } 
 
-    if (id > 0) {
-        $.ajax({
-            url: '/user/actions/deleteCourseSectionLecture',
-            type: 'POST', 
-            data: {id_lecture: id, _token: CSRF_TOKEN}, 
-            cache: false, 
-            dataType: 'json',
-            beforeSend: function() {},
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                if (XMLHttpRequest.status === 401) document.location.reload(true);
-            },
-            success: function(jsonResponse, textStatus, request) {    
-                if (jsonResponse.msg === true) {
-                    $(item).closest('.lecture__section').remove();
-                } else {   
-                    alert('Ошибка');
-                } 
-            },
-            complete: function() {}
-        });
-    }else{
-        $(item).closest('.lecture__section').remove();
-    }  
+    // if (id > 0) {
+    //     $.ajax({
+    //         url: '/user/actions/deleteCourseSectionLecture',
+    //         type: 'POST', 
+    //         data: {id_lecture: id, _token: CSRF_TOKEN}, 
+    //         cache: false, 
+    //         dataType: 'json',
+    //         beforeSend: function() {},
+    //         error: function(XMLHttpRequest, textStatus, errorThrown) {
+    //             if (XMLHttpRequest.status === 401) document.location.reload(true);
+    //         },
+    //         success: function(jsonResponse, textStatus, request) {    
+    //             if (jsonResponse.msg === true) {
+    //                 $(item).closest('.lecture__section').remove();
+    //             } else {   
+    //                 alert('Ошибка');
+    //             } 
+    //         },
+    //         complete: function() {}
+    //     });
+    // }else{
+    //     $(item).closest('.lecture__section').remove();
+    // } 
+
+     $(item).closest('.lecture__section').remove(); 
 }    
 
 function loadCourseSubcats(select, subcat){  
@@ -270,4 +273,27 @@ function activeFinishCourse(btn){
     $(showId).fadeIn(100);
     $('.toggle__course').removeClass('active');
     $(btn).addClass('active'); 
+}
+
+function courseFavorite(item, id){
+    $.ajax({
+        url: '/course/favorite',
+        type: 'POST', 
+        data: {'id':id, _token: CSRF_TOKEN}, 
+        dataType: 'json',
+        beforeSend: function() {},
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status === 401) document.location.reload(true);
+        },
+        success: function(jsonResponse, textStatus, request) {
+            if (jsonResponse.status == 1) {
+                $(item).addClass('is_favorite fa-heart');
+                $(item).removeClass('fa-heart-o');
+            }else{
+                $(item).removeClass('is_favorite fa-heart');
+                $(item).addClass('fa-heart-o');
+            }
+        },
+        complete: function() { }
+    });
 }

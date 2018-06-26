@@ -497,10 +497,22 @@ header .header_bottom .navbar-default {
 	margin-bottom: 0px;
 }
 header .header_bottom .navbar-default .navbar-nav{
-	margin-top: 20px;
+	/*margin-top: 20px;*/
     float: none;
     text-align: center;
 }
+
+.header__items{
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 600px){
+    .header__items{
+        display: block; 
+    }
+}
+
 header .header_bottom .navbar-default li{
     display: inline-block;
     float: none;
@@ -687,7 +699,8 @@ form#search_form .input-group{
 .owl-carousel .owl-nav .owl-prev{
     position: absolute;
     left: -50px;
-    top: 20%;
+    top: 50%;
+    margin-top: -83px;
 }
 .owl-carousel .owl-nav .owl-next{
     position: absolute;
@@ -744,14 +757,16 @@ form#search_form .input-group{
 }
 .external_card .caption .card_tag .bookmark_tag{
 	float: right;
+    padding: 0px;
+    margin-top: 10px;
 }
-.external_card .caption .card_tag .bookmark_tag span .btn-default{
+.external_card .caption .card_tag .bookmark_tag i{
 	color: #b93777;
     border: none;
-    padding: 0px;
+    cursor: pointer;
     font-size: 22px;
     line-height: 22px;
-	margin-top: 10px;
+	 
 }
 .external_card .caption .card_tag .bookmark_tag span .btn-default:focus,
 .external_card .caption .card_tag .bookmark_tag span .btn-default:hover{
@@ -1090,22 +1105,23 @@ form#search_form .input-group{
 	width: 80px;
 	border-radius: 20px;
 	height: 30px;
-	border: 1px solid #c1c1c1;
-	background-color: rgb(255, 255, 255);
-	transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;
+	border: 1px solid #fff;
+	background-color: #58b36c;
+	/*transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;*/
 	display: inline-block;
 	vertical-align: middle;
 	margin-right: 7px;
 	margin-left: 7px;
 }
+
 .teacher_employment .checkbox.checbox-switch label span:before,
 .teacher_employment .checkbox-inline.checbox-switch span:before {
 	display: inline-block;
 	width: 24px;
 	height: 24px;
 	border-radius: 50%;
-	border: 1px solid #c1c1c1;
-	background: rgb(255,255,255);
+	border: 1px solid #fff;
+	background: #fff;
 	content: " ";
 	top: 2px;
 	position: relative;
@@ -1118,10 +1134,10 @@ form#search_form .input-group{
 }
 .teacher_employment .checkbox.checbox-switch.switch-light label > input:checked + span,
 .teacher_employment .checkbox-inline.checbox-switch.switch-light > input:checked + span {
-	background-color: rgb(248,249,250);
-	border-color: rgb(248,249,250);
-	box-shadow: rgb(248,249,250) 0px 0px 0px 8px inset;
-	transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;
+	background-color: rgb(255, 86, 86);
+	border-color: rgb(255, 86, 86);
+	box-shadow: rgb(255, 86, 86) 0px 0px 0px 8px inset;
+/*	transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;*/
 }
 .lk_menu{
     text-align: center;
@@ -1342,6 +1358,16 @@ form#search_form .input-group{
     display: inline-block;
 	margin-left: -5px;
 }
+
+.add_course li.disabled a:hover{
+    border-bottom: none;
+}
+
+.add_course li.disabled{
+    opacity: 0.3;
+    pointer-events: none;
+}
+
 .add_course > li > a{
 	font-family: 'Helvetica Neue Cyr Roman';
     font-size: 13px;
@@ -2410,7 +2436,7 @@ select option:disabled {
     font-size: 18px;
     font-weight: bold; 
     margin-bottom: 0px;
-} 
+}  
 
 .course_card h4{
     font-size: 14px;
@@ -2483,4 +2509,8 @@ select option:disabled {
 
 .select2-container{
     width: 100% !important;
+}
+
+.is_favorite{
+    color: #b83976 !important;
 }

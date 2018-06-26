@@ -41,7 +41,10 @@ class PagesController extends Controller
             ], 
             'courseCategories' => CourseCategory::with(['courses' => function($query){ 
                                     $query->published()->withCount('userRequests');
-                                }])->where('parent_id','0')->has('courses', '>=', '1')->get()
+                                }])->where('parent_id','0')->has('courses', '>=', '1')->get(),
+            'scripts' => [ 
+                'js/courses.js'
+            ]
         ];  
 
         return view('home', $data);

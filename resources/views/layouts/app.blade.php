@@ -92,7 +92,7 @@
 		<div class="header_bottom">
 			<nav class="navbar navbar-default">
 			  <div class="container">
-				<div class="row">
+				<div class="row header__items">
                     <div class="col-md-2">
                         <div class="navbar-header">
                           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -125,14 +125,14 @@
                                 </a>
                             </li>
                             <li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
-                            <li class="dropdown">
+                            <!-- <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <img src="/images/icon_profile2.png"></a>
                               <ul class="dropdown-menu">
                                 <li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
-                                <!-- <li role="separator" class="divider"></li>  -->
+                                <li role="separator" class="divider"></li> 
                               </ul>
-                            </li>
+                            </li> -->
                           </ul>
                         @endif
                     </div>       
@@ -152,13 +152,7 @@
                             <li>
                                 <a href="/universities/">
                                     {{ $stats['institutions'] }} 
-                                    @if($stats['institutions'] == 1)
-                                        ВУЗ
-                                    @elseif($stats['institutions'] <= 4)
-                                        ВУЗА
-                                    @else
-                                        ВУЗОВ 
-                                    @endif
+                                    {{ format_by_count($stats['institutions'], 'ВУЗ', 'ВУЗА', 'ВУЗОВ') }}
                                 </a>
                             </li>
                             @endif
@@ -166,14 +160,8 @@
                             @if($stats['courses'] > 0)
                             <li>
                                 <a href="">
-                                    {{ $stats['courses'] }} 
-                                    @if($stats['courses'] == 1)
-                                        КУРС
-                                    @elseif($stats['courses'] <= 4)
-                                        КУРСА
-                                    @else
-                                        КУРСОВ 
-                                    @endif 
+                                    {{ $stats['courses'] }}   
+                                    {{ format_by_count($stats['courses'], 'КУРС', 'КУРСА', 'КУРСОВ') }}
                                 </a>
                             </li>
                             @endif 
@@ -182,13 +170,7 @@
                             <li>
                                 <a href="/teachers/">
                                     {{ $stats['teachers'] }} 
-                                    @if($stats['teachers'] == 1)
-                                        ПРЕПОДАВАТЕЛь
-                                    @elseif($stats['teachers'] <= 4)
-                                        ПРЕПОДАВАТЕЛЯ
-                                    @else
-                                        ПРЕПОДАВАТЕЛЕЙ 
-                                    @endif  
+                                    {{ format_by_count($stats['teachers'], 'ПРЕПОДАВАТЕЛь', 'ПРЕПОДАВАТЕЛЯ', 'ПРЕПОДАВАТЕЛЕЙ') }}
                                 </a>
                             </li>
                             @endif 

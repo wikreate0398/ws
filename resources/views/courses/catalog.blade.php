@@ -91,7 +91,13 @@
             	@foreach($courses as $course)
             	<div class="col-md-4"> 
 	            	<div class="course_card eq_list__item">
-	            		<i class="fa fa-heart-o course_heart" aria-hidden="true"></i>
+	            		@if(@Auth::check()) 
+	            			@php $favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); @endphp
+		            		<i class="fa course_heart 
+		            		   {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+		            		   onclick="courseFavorite(this, {{ $course->id }});"  
+		            		   aria-hidden="true"></i>
+	            		@endif
 	            		<div class="body__course_card">
 	            			<div class="cat-name"> 
 	            				@if(!empty(@$course->subCategory->name)) 
@@ -108,7 +114,9 @@
 
 		            		<h4>
 					            @if($course->user->user_type==3)
-					             {{ $course->user->university['full_name'] }} 
+					            		{{ $course->user->university['full_name'] }} 
+					            	@else
+										{{ $course->user->name }} 
 					            @endif
 				        	</h4>
 

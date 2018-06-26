@@ -47,19 +47,20 @@ class ProfileController extends Controller
     }  
 
     public function deleteCourseCertificate(Request $request, Course $course)
-    {
-        $id = $request->input('id');
-        if ($course->hasAccessCertificate($id, Auth::user()->id)) 
-        {
+    { 
+        $course->setUserId(Auth::user()->id);
+        $id = $request->input('id'); 
+        if ($course->hasAccessCertificate($id)) 
+        {  
             \App\Models\CoursesCertificates::whereId($id)->delete();
         }
     }
 
     public function deleteCourseSection(Request $request, Course $course)
     { 
-        $id_section = intval($request->input('id_section')); 
-
-        if ($course->hasAccessSection($id_section, Auth::user()->id)) 
+        $course->setUserId(Auth::user()->id);
+        $id_section = intval($request->input('id_section'));  
+        if ($course->hasAccessSection($id_section)) 
         {
             $course->deleteSection($id_section);
             return \App\Utils\JsonResponse::success();
@@ -68,9 +69,9 @@ class ProfileController extends Controller
 
     public function deleteCourseSectionLecture(Request $request, Course $course)
     { 
-        $id_lecture = intval($request->input('id_lecture')); 
-
-        if ($course->hasAccessLecture($id_lecture, Auth::user()->id)) 
+        $id_lecture = intval($request->input('id_lecture'));  
+        $course->setUserId(Auth::user()->id); 
+        if ($course->hasAccessLecture($id_lecture)) 
         {
             $course->deleteLecture($id_lecture);
             return \App\Utils\JsonResponse::success(); 

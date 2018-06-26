@@ -29,19 +29,25 @@
                                     <ul class="list-inline card_tag">
                                         <li class="tag_sticker">
                                             <span>{{ @$category->name }}</span>
-                                        </li>
-                                        <li class="bookmark_tag">
-                                            <span>
-                                               <button class="btn btn-default">
-                                                   <i class="fa fa-heart-o"></i>
-                                               </button>
-                                           </span>
-                                        </li>
+                                        </li> 
+                                        @if(@Auth::check()) 
+                                            @php 
+                                                $favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); 
+                                            @endphp
+                                            <li class="bookmark_tag">
+                                                <i class="fa course_heart 
+                                                   {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+                                                   onclick="courseFavorite(this, {{ $course->id }});"  
+                                                   aria-hidden="true"></i> 
+                                            </li> 
+                                        @endif 
                                     </ul>
                                     <h3>{{ $course->name }}</h3> 
                                     <h4>
                                         @if($course->user->user_type==3)
-                                         {{ $course->user->university['full_name'] }} 
+                                            {{ $course->user->university['full_name'] }} 
+                                        @else
+                                            {{ $course->user->name }} 
                                         @endif
                                     </h4>
                                     <ul class="list-unstyled card_info">
@@ -149,14 +155,16 @@
                     <h2 class="header_block">ВУЗЫ ПАРТНЕРЫ</h2>
                     <div id="partner_universities" class="owl-carousel owl-theme">
                         @foreach($university as $item)
-                            <div class="item"> 
-                                <?php $img = !empty($item['user']['image']) ? '/public/uploads/users/' . $item['user']['image'] : noImg()  ?>
+                            <div class="item">  
                                 <a href="/university/{{ $item['id'] }}/">
-									<img class="img-responsive" src="{{ $img }}">
+									<img class="img-responsive" src="{{ imageThumb(@$item->user->avatar, 'uploads/users', 400, 300, 'universities') }}">
 								</a> 
                                 <h3><a href="/university/{{ $item['id'] }}">{{ $item['full_name'] }}</a></h3>
                                 <ul class="list-unstyled">
-                                    <li>10 КУРСОВ</li>
+                                    <li>
+                                        {{ count($item->user->courses) }} 
+                                        {{ format_by_count(count($item->user->courses), 'курс', 'курса', 'курсов') }}
+                                    </li>
                                     <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
                                 </ul>
                             </div> 
@@ -176,10 +184,11 @@
                 <h2 class="header_block">ЛУЧШИЕ ПРЕПОДАВАТЕЛИ</h2>
                 <div id="teacher_carousel" class="owl-carousel owl-theme">
                     @foreach($teachers as $teacher)
-                        <div class="item">
-                            <?php $img = !empty($teacher['image']) ? '/public/uploads/users/' . $teacher['avatar'] : noImg()  ?>
+                        <div class="item"> 
                             <a href="/teacher/{{ $teacher['id'] }}/">
-								<img style="width: 180px; height: 180px;" class="img-responsive img-circle" src="{{ $img }}">
+								<img style="" 
+                                     class="img-responsive" 
+                                     src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
 							</a> 
                             <h3><a href="/teacher/{{ $teacher['id'] }}/">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
                             <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
@@ -199,7 +208,7 @@
 			<div class="col-lg-4">
 				<div class="user_type_home">
 					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_one.png" alt="">
-					<h3>УЧЕНИКАМ/АББИТУРИЕНТАМ</h3>
+					<h3>УЧЕНИКАМ/АБИТУРИЕНТАМ</h3>
 					<p>
 						Найдите учебный курс с наиболее подходящим для вас содержанием и условием обучения. Получите доступ к максимально полной базе онлайн-семинаров, лекций и полноценных учебных программ!
 					</p>

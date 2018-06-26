@@ -9,9 +9,7 @@ use App\Models\TeacherSpecializationsList;
  
 use App\Models\TeacherLessonOptions;
 use App\Models\TeacherCertificates;
-use App\Models\SubjectsList;
- 
-use App\Models\ProgramsType;
+use App\Models\SubjectsList; 
 use App\Models\GradeEducation;
 use App\Models\Regions;
   
@@ -40,15 +38,28 @@ class TeacherController extends ProfileController
         $this->_user = new TeacherUser;
     }  
 
-    public function showEditForm()
+    public function showGeneralForm()
     {
         $user       = Auth::user(); 
         $categories = map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray());
 
         $data = [ 
+            'user'                    => $user, 
             'regions'                 => Regions::where('country_id', 3159)->orderBy('name', 'asc')->get(),
-            'grade_education'         => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),
-            'programs_type'           => map_tree(ProgramsType::orderBy('page_up','asc')->get()->toArray()), 
+            'grade_education'         => map_tree(GradeEducation::orderBy('page_up','asc')->get()->toArray()),   
+            'scripts'                 => [
+                // 'js/tinymce/tinymce.min.js',
+                'js/teachers.js'
+            ]
+        ]; 
+        return view($this->viewPath . 'edit.general', $data); 
+    }  
+
+    public function showTutorDataForm()
+    {
+        $user       = Auth::user(); 
+        $categories = map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()); 
+        $data = [    
             'user'                    => $user, 
             'degree_experience'       => DB::table('degree_experience')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(),
 
@@ -57,18 +68,64 @@ class TeacherController extends ProfileController
             'subjects_list'           => SubjectsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(), 
             'teacher_specializations' => TeacherSpecializations::where('id_teacher', $user->id)->get(),  
             'teacher_lesson_options'  => TeacherLessonOptions::where('id_teacher', $user->id)->get(),
-            'categories'              => $categories,
-             
-            //'include'                 => $this->viewPath . 'edit',
-
-            'scripts'                 => [
-                // 'js/tinymce/tinymce.min.js',
+            'categories'              => $categories, 
+            'scripts'                 => [ 
                 'js/teachers.js'
             ]
-        ];
-        //exit(print_arr($data['user']->subjects));
-        return view($this->viewPath . 'edit', $data); 
+        ]; 
+        return view($this->viewPath . 'edit.tutor', $data); 
     }    
+
+    public function showCertificatesForm()
+    {
+        $user       = Auth::user(); 
+        $categories = map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray());
+
+        $data = [    
+            'scripts'                 => [ 
+                'js/teachers.js'
+            ],
+            'user'                    => $user, 
+        ]; 
+        return view($this->viewPath . 'edit.certificates', $data); 
+    }  
+
+    public function editGeneral(Request $request)
+    { 
+        $edit = $this->_user->setUserId(Auth::user()->id)->editGeneral($request->all());   
+        if ($edit !== true) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $edit]);  
+        } 
+        $this->_user->updateIfProfileFilled();
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+    }  
+
+    public function editTutor(Request $request)
+    { 
+        $edit = $this->_user->setUserId(Auth::user()->id)->editTutor($request->all());   
+        if ($edit !== true) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $edit]);  
+        } 
+        $this->_user->updateIfProfileFilled();
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+    } 
+
+    public function editCertifications(Request $request)
+    { 
+        $data = $request->all();
+        if (!empty($data['certificates'])) 
+        {
+            $this->_user->setUserId(Auth::user()->id)->saveCertificates($data['certificates']);
+        } 
+        else
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Сертификаты не выбраны']);  
+        }
+        $this->_user->updateIfProfileFilled();
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+    }   
 
     public function showSubscriptions()
     {   

@@ -62,6 +62,14 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\TeacherBoockmarks', 'id_user', 'id_teacher'); 
     }
 
+    public function courseFavorite()
+    {
+        // return $this->hasOne('App\Models\CourseFavorite', 'id_user', 'id_course'); 
+
+        return $this->belongsToMany('App\Models\Courses', 'course_favorite', 'id_user', 'id_course');
+        
+    }
+
     public function university()
     {
         return $this->hasOne('App\Models\UsersUniversity', 'id_user', 'id');

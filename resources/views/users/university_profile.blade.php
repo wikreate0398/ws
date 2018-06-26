@@ -29,7 +29,6 @@
 				<div class="col-lg-9">
 					<span class="teacher_type">Учебное заведение</span>
 					<h1>{{ $user['university']['full_name'] }}</h1>
-					 
 					@if(Auth::user()->data_filled == 0)  
 						<div class="data_coverage">
 							<a href="{{ route(userRoute('user_edit')) }}" class="btn edit_profile">Публиковать профиль</a>

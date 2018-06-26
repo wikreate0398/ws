@@ -55,38 +55,31 @@
                      <td>На платное <label class="badge">2</label></td>
                   </tr>
                   <tr>
-                     <th>Наличие военной кафедры</th>
-                     <td>
-                        @if($university->has_military_department)
-                        {!! $true  !!}
-                        @else
-                        {!! $false  !!}
-                        @endif
-                     </td>
-                     <td> 
-                     </td>
+                      <th>Наличие военной кафедры</th>
+                      <td> 
+                        <i class="fa fa-check-circle {{ $university->has_military_department ? 'active__icon' : 'inactive__icon' }}" aria-hidden="true"></i>
+                      </td>
+                      <td> 
+                        <i class="fa fa-times-circle {{ !$university->has_military_department ? 'active__icon' : 'inactive__icon' }}" aria-hidden="true"></i>
+                      </td>
                   </tr>
                   <tr>
                      <th>Наличие общежития</th>
-                     <td>
-                        @if($university->has_hostel)
-                        {!! $true  !!}
-                        @else
-                        {!! $false  !!}
-                        @endif
+                     <td> 
+                        <i class="fa fa-check-circle {{ $university->has_hostel ? 'active__icon' : 'inactive__icon' }}" aria-hidden="true"></i>
                      </td>
-                     <td></td>
+                      <td>
+                        <i class="fa fa-times-circle {{ !$university->has_hostel ? 'active__icon' : 'inactive__icon' }}" aria-hidden="true"></i>
+                      </td>
                   </tr>
                   <tr>
                      <th>Дистанционное обучение</th>
-                     <td>
-                        @if($university->distance_learning)
-                        {!! $true  !!}
-                        @else
-                        {!! $false  !!}
-                        @endif
-                     </td>
-                     <td></td>
+                     <td>  
+                        <i class="fa fa-check-circle {{ $university->distance_learning ? 'active__icon' : 'inactive__icon' }}" aria-hidden="true"></i>
+                      </td>
+                      <td>
+                        <i class="fa fa-times-circle {{ !$university->distance_learning ? 'active__icon' : 'inactive__icon' }}" aria-hidden="true"></i>
+                      </td>
                   </tr>
                </table>
             </div>
@@ -309,6 +302,14 @@
    .university__data_list li strong{
    font-size: 40px;
    display: block;
+   }
+
+   .active__icon{
+    color: #aa51b5;
+   }
+
+    .inactive__icon{
+    color: #ccc;
    }
 </style>
 @stop

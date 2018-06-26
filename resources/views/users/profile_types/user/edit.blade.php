@@ -53,7 +53,7 @@
                     <div class="col-md-8">
                         <div class="form-group"> 
                             <input type="text" 
-                               class="form-control datepicker_birthdate ll-skin-melon" 
+                               class="form-control datepicker_birthdate ll-skin-melon datepicker__input" 
                                name="date_birth"
                                value="{{ !empty($user->date_birth) ? date('d.m.Y', strtotime($user->date_birth)) : '' }}"  
                                autocomplete="off"

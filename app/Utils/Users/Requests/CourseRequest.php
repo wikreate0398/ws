@@ -17,7 +17,7 @@ class CourseRequest implements RequestInterface
     private $id_user    = null; 
 
     private $courseData = [];
-     
+    
     /**
      * Create a new controller instance.
      *

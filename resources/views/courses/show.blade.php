@@ -3,7 +3,12 @@
 @section('content')
 <div class="container no__home">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-12 course__in">
+			<ul class="breadcrumb">
+				<li><a href="/">Главная</a></li>
+				<li><a href="/courses">Курсы</a></li>
+				<li><span>{{ $course->name }}</span></li>
+			</ul>
  
 			@if(@count(Session::get('courseMsg')))
 			    <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
@@ -12,8 +17,15 @@
 			@endif 
 
 			<h1>{{ $course->name }}</h1>
+			<h3>
+				@if($course->user->user_type==3)
+	            		{{ $course->user->university['full_name'] }} 
+	            	@else
+						{{ $course->user->name }} 
+	            @endif
+			</h3>
 			<ul class="icons__info"> 
-				@if($canMakeRequest == true)
+				@if($courseFacade->canMakeRequest() === true)
 					@php $flag=true; @endphp
 					@if($course->hide_after_end == 1)
 						@if($course->max_nr_people > count($course->userRequests) 
@@ -88,10 +100,10 @@
 				
 			@endphp
 			<button type="button" 
-					@if($canMakeRequest==false && Auth::check() == true)
+					@if($courseFacade->canMakeRequest()!==true && Auth::check() == true)
 						disabled
 					@endif
-			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ $canMakeRequest }}')" 
+			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ ($courseFacade->canMakeRequest()!==true) ? false : true }}')" 
 			        class="btn course_request_btn">
 			    ЗАПИСАТЬСЯ НА КУРС
 			</button> 
@@ -153,6 +165,18 @@
 </script>
 
 <style>
+
+	.course__in h1{
+		text-transform: uppercase;
+		font-size: 22px;
+		font-weight: bold;
+	}
+	.course__in h3 {
+		color: #ccc;
+		text-transform: uppercase;
+		font-size: 16px;
+		margin-top: 0px;
+	}
 
 	.academic_plan table tr td{
 		border:none;

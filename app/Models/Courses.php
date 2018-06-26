@@ -59,6 +59,11 @@ class Courses extends Model
         return $this->belongsToMany('App\Models\User', 'course_request', 'id_course', 'id_user');
     }
 
+    public function userFavorite()
+    { 
+        return $this->belongsToMany('App\Models\User', 'course_favorite', 'id_course', 'id_user'); 
+    }
+
     public static function getCatalog($cat=false, $subcat = false, $input=false)
     {
         $courses = (new Courses)->newQuery();
@@ -100,7 +105,12 @@ class Courses extends Model
             $query->where('available', '!=', '2');
         } 
 
-        return $query->where('isHide', 0)->where('view', 1)->whereHas('user', function($query){
+        return $query->where('isHide', 0)
+                     ->where('general_filled', 1)
+                     ->where('program_filled', 1)
+                     ->where('settings_filled', 1)
+                     ->where('view', 1)
+                     ->whereHas('user', function($query){
             return User::allowUser();
         });
     }

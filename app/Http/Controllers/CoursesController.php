@@ -10,10 +10,12 @@ namespace App\Http\Controllers;
   
 use App\Models\User;
 use App\Models\Courses;
-use App\Models\CourseCategory;
-use App\Models\CourseRequest;
+use App\Models\CourseCategory; 
+use App\Models\CourseFavorite;
+ 
 use App\Utils\Users\Requests\CourseRequest as CourseRequestClass;
 use App\Utils\Users\Requests\RequestInterface;
+use App\Utils\Classes\CourseFacade;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -26,12 +28,7 @@ class CoursesController extends Controller
      *
      * @return void
      */
-    public function __construct() {}
-
-    private function courseRequestInstance($id)
-    {
-        return new CourseRequestClass($id, @Auth::user()->id);
-    }
+    public function __construct() {} 
 
     /**
      * Show the application dashboard.
@@ -82,7 +79,8 @@ class CoursesController extends Controller
             'categories'   => $categories,
             'baseUrl'      => $baseUrl,
             'scripts' => [
-                'js/filter_courses.js'
+                'js/filter_courses.js',
+                'js/courses.js'
             ]
         ];    
 
@@ -92,13 +90,18 @@ class CoursesController extends Controller
     public function show($id)
     {     
         $course = Courses::getOneCourse($id, Auth::check());
+
+        $courseFacade = new \App\Utils\Classes\CourseFacade;
+
         $data = [
             'course'         => $course,
-            'canMakeRequest' => ($this->courseRequestInstance($id)->canMakeRequest() === true) ? true : false, 
+            'courseFacade'   => $courseFacade->setId($id)->_requestInstance(),
+            // 'canMakeRequest' => ($courseFacade->setId($id)->_requestInstance()->canMakeRequest() === true) ? true : false, 
             'scripts'        => [
                 'js/courses.js'
             ]
         ]; 
+ 
         return view('courses.show', $data);
     } 
 
@@ -133,7 +136,7 @@ class CoursesController extends Controller
 
     public function makeRequest($id)
     { 
-        $courseRequest        = $this->courseRequestInstance($id);  
+        $courseRequest        = new CourseRequestClass($id, @Auth::user()->id);  
         $canMakeRequestStatus = $courseRequest->canMakeRequest();
         if ($canMakeRequestStatus === true) 
         {
@@ -145,5 +148,22 @@ class CoursesController extends Controller
             return redirect('course/' . $id)->with('courseMsg.error', $canMakeRequestStatus);
         } 
         return redirect('course/' . $id)->with('courseMsg.success', 'Вы успешно записаны на этот курс'); 
+    }
+
+    public function favorite(Request $request)
+    {
+        $id_course = $request->input('id');
+        $check     = CourseFavorite::where('id_user', Auth::user()->id)
+                                  ->where('id_course', $id_course)->count();
+
+        if ($check != false) {
+            CourseFavorite::where([['id_user', Auth::user()->id], ['id_course', $id_course]])->delete();
+            $status = 0;
+        }else{
+            CourseFavorite::insert(['id_user' => Auth::user()->id, 'id_course' => $id_course]);
+            $status = 1;
+        }
+
+        return \App\Utils\JsonResponse::success(['status' => $status]);
     }
 }

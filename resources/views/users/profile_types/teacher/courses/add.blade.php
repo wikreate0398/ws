@@ -18,16 +18,13 @@
             <li role="presentation" class="active">
                <a href="#about" aria-controls="about" role="tab" data-toggle="tab">О курсе</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="disabled">
                <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Настройки курса</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="disabled">
                <a href="#programm" aria-controls="programm" role="tab" data-toggle="tab">Программа курса</a>
-            </li>
-            <!-- <li role="presentation">
-               <a href="#participants" aria-controls="participants" role="tab" data-toggle="tab">Участники курса</a>
-            </li> -->
-            <li role="presentation">
+            </li> 
+            <li role="presentation" class="disabled">
                <a href="#certificate" aria-controls="certificate" role="tab" data-toggle="tab">Сертификат/диплом</a>
             </li>
          </ul>
@@ -109,195 +106,16 @@
                         </div>
                         <div class="radio">
                            <label>
-                           <input type="radio" name="pay" value="2" onchange="setPayCourse(this)"> Платный курс
+                           <input type="radio" name="pay" checked value="2" onchange="setPayCourse(this)"> Платный курс
                            </label>
                         </div>
                      </div>
                      <div class="col-md-7">
                         <div class="form-group">
-                           <input type="text" class="form-control price__course price__input" autocomplete="off" name="price" value="" placeholder="Стоимость, руб *" disabled>
+                           <input type="text" class="form-control price__course price__input" autocomplete="off" name="price" value="" placeholder="Стоимость, руб *">
                         </div>
                      </div>
-                  </div>
-                  <div role="tabpanel" class="tab-pane" id="settings">
-                     <div class="col-md-12">
-                        <h3 class="header_blok_course">Настройки курса</h3>
-                     </div> 
- 
-                     <label class="col-md-5 control-label">
-                        УКАЖИТЕ ТИП <span class="req">*</span>
-                        <p>от типа зависит разовое или постоянно действуещее событие</p>
-                     </label>
-                     <div class="col-md-7">
-                        <div class="row">
-                           <div class="col-md-12" id="course__cats">
-                              <div class="form-group select_form">
-                                 <select name="type"  class="form-control">
-                                    <option value="">Выбрать</option>
-                                    <option value="1">Курс</option>
-                                    <option value="2">Семинар</option>
-                                    <option value="3">Вебинар</option>
-                                 </select>
-                              </div>
-                           </div>
-                           <div class="col-md-12" id="load__subcats"></div>
-                        </div>
-                     </div>
-                     <div class="clearfix"></div>
-
-                     <label class="col-md-5 control-label">УКАЖИТЕ Длительность Курса <span class="req">*</span>
-                     </label>
-                     <div class="col-md-7">
-                        <div class="row">
-                           <div class="col-md-6">
-                              <div class="form-group">
-                                 <input class="form-control course_date_from datepicker__input" autocomplete="off" name="date_from" value="" placeholder="от" type="text">
-                              </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div class="form-group">
-                                 <input class="form-control course_date_to datepicker__input" autocomplete="off" name="date_to" value="" placeholder="до" type="text">
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="clearfix"></div>
-
-                     <label class="col-md-5 control-label">УКАЖИТЕ кол-во людей 
-                     </label>
-                     <div class="col-md-7">
-                        <div class="form-group">
-                           <input class="form-control number_field" autocomplete="off" name="max_nr_people" value="" type="text">
-                        </div> 
-                     </div>
-                     <div class="clearfix"></div>
- 
-                     <div class="col-md-12">
-                        <h3 class="header_blok_course">Доступность на сайте</h3>
-                     </div>
-                     <div class="col-md-12 form-group">
-                        <div class="radio">
-                           <label>
-                           <input type="radio" name="available" value="1"> Всем желающим
-                           </label>
-                        </div>
-                        <div class="radio">
-                           <label>
-                           <input type="radio" name="available" value="2"> Только для зарегистрированных пользователей
-                           </label>
-                        </div>
-                        <div class="list_checkbox"> 
-                           <div class="checkbox">
-                              <label> 
-                                 <input type="checkbox" onchange="showCourseDuration(this)" name="hide_after_end">
-                                 <span class="jackdaw">
-                                    <i class="jackdaw-icon fa fa-check"></i>
-                                 </span>
-                                 Скрыть курс по окончанию набора
-                              </label>
-                           </div>
-                        </div>
-                        
-                        <div class="course__duration row" style="display: none;">
-                           <label class="col-md-5 control-label">УКАЖИТЕ ИНТЕРВАЛ ДОСТУПНОСТИ ЗАПИСИ 
-                              <span class="req">*</span>
-                           </label>
-                           <div class="col-md-7">
-                              <div class="row">
-                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                       <input class="form-control datepicker__input course_is_open is_open_from" autocomplete="off" name="is_open_from" value="" placeholder="от" type="text">
-                                    </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                       <input class="form-control datepicker__input course_is_open is_open_to" autocomplete="off" name="is_open_to" value="" placeholder="до" type="text">
-                                    </div>
-                                 </div>
-                              </div>
-                           </div> 
-                        </div> 
-                     </div>
-                  </div>
-                   
-                  <div role="tabpanel" class="tab-pane" id="programm">
-                     <div class="course__sections">
-                        <div class="panel panel-default course__section first_block">
-                           <div class="panel-heading">
-                              <h3 class="panel-title">Раздел</h3>
-                           </div>
-                           <div class="panel-body">
-                              <div class="row">
-                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                       <label class="control-label" style="white-space: nowrap;">Название Раздела<span class="req">*</span></label>
-                                       <div class="">
-                                          <input type="text" class="form-control required__input" name="section[name][]" value="" placeholder="">
-                                       </div>
-                                    </div>
-                                    <div class="lecture__sections">
-                                       <div class="panel panel-warning lecture__section first_block">
-                                          <div class="panel-heading">
-                                             <h3 class="panel-title">Добавления лекции</h3>
-                                          </div>
-                                          <div class="panel-body">
-                                             <div class="form-group">
-                                                <label class="col-md-12 control-label">Название лекции <span class="req">*</span></label>
-                                                <div class="col-md-12">
-                                                   <input type="text" class="form-control required__input" name="lecture[0][name][]" value="">
-                                                </div>
-                                             </div>
-                                             <div class="form-group">
-                                                <label class="col-md-12 control-label">Описание лекции <span class="req">*</span></label>
-                                                <div class="col-md-12">
-                                                   <textarea name="lecture[0][description][]" class="form-control required__input" placeholder=""=""></textarea> 
-                                                </div>
-                                             </div>
-                                             <div class="form-group">
-                                                <label class="col-md-12 control-label">Длительность лекции <span class="req">*</span></label>
-                                                <div class="col-md-2">
-                                                   <input type="text" class="form-control number_field required__input" name="lecture[0][hourse][]" placeholder="чч" value="" autocomplete="false">
-                                                </div>
-                                                <div class="col-md-2">
-                                                   <input type="text" class="form-control number_field required__input" name="lecture[0][minutes][]" placeholder="мм" autocomplete="false" value="">
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-12">
-                                    <button type="button" onclick="addLecture(this);" class="btn btn-sm btn-dafault add__more">
-                                    Добавить лекцию
-                                    </button>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <button class="btn btn-default btn-sm" type="button" onclick="addCourseSection()">Добавить раздел</button>
-                  </div>
-                  <div role="tabpanel" class="tab-pane" id="participants">
-                     <div class="col-md-12">
-                        <h3 class="header_blok_course">Данная страница на стадии разработки</h3>
-                     </div>
-                  </div>
-                  <div role="tabpanel" class="tab-pane" id="certificate">
-                     <div class="col-md-12">
-                        <div id="certificates__images" class="row uploaderContainter" style="margin-bottom: 40px;"> 
-                           <div class="col-md-4 {{ !count($user->certificates) ? 'col-md-offset-4' : ''}}">
-                              <div class="certificateLoadArea">
-                                 <input type="file" 
-                                     name="diploms[]" 
-                                     multiple 
-                                     id="certificateInpuT" 
-                                     onchange="multipleImages(this, '#certificates__images')">
-                                   <span class="file__input_name"> Добавить или перетащить <br> сюда изображение</span>
-                              </div>
-                           </div> 
-                        </div>  
-                     </div>
-                  </div>
+                  </div> 
                </div>
                <div class="row">
                   <div class="col-md-12">

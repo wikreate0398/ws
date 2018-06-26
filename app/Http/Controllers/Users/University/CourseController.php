@@ -36,6 +36,9 @@ class CourseController extends UniversityController
             'user'    => Auth::user(), 
             'courses' => $courses,
             'include' => $this->viewPath . 'courses.list',
+            'scripts' => [ 
+                'js/courses.js'
+            ]
         ]); 
     }
 

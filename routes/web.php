@@ -44,6 +44,7 @@ Route::get('courses/cat/{cat}', 'CoursesController@index');
 Route::get('course/{id}', 'CoursesController@show');
 Route::get('course/{id}/makeRequest', 'CoursesController@makeRequest');
 Route::get('courses/autocomplete', 'CoursesController@autocomplete');
+Route::post('course/favorite', 'CoursesController@favorite', ['middleware' => 'web_auth']); 
 
 Route::get('search', 'PagesController@search');  
 
@@ -80,8 +81,14 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::group(['prefix' => 'course'], function() use($userDefine) {
 		 		$controller = 'CourseController'; 
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile");
+
 			 	Route::get('add', "$controller@showCourseForm")->name("{$userDefine}_add_course");  
-				Route::get('{id_course}/edit', "$controller@editCourseForm")->name("{$userDefine}_edit_course");
+				Route::get('{id_course}/edit/general', "$controller@editCourseForm")->name("{$userDefine}_edit_course");
+				Route::get('{id_course}/edit/settings', "$controller@editCourseSettingsForm")->name("{$userDefine}_edit_course_settings");
+				Route::get('{id_course}/edit/program', "$controller@editCourseProgramForm")->name("{$userDefine}_edit_course_program");
+				Route::get('{id_course}/participants', "$controller@viewCourseParticipants")->name("{$userDefine}_course_participants");
+				Route::get('{id_course}/edit/сertificates', "$controller@editCourseCertificatesForm")->name("{$userDefine}_edit_course_сertificates");
+
 				Route::get('{id}/delete', "$controller@deleteCourse")->name("{$userDefine}_delete_course"); 
 				Route::post('save', "$controller@saveCourse")->name("{$userDefine}_save_course"); 
 				Route::post('{id}/edit', "$controller@editCourse")->name("{$userDefine}_update_course");  
@@ -91,10 +98,16 @@ Route::group(['middleware' => ['web_auth']], function(){
 		Route::group(['prefix' => 'teacher-profile', 'namespace' => 'Users\Teacher'], function() { 
 			$controller = 'TeacherController';
 			$userDefine = 'teacher';
-		 	 
-		 	Route::get('edit', "$controller@showEditForm")->name("{$userDefine}_user_edit");
-		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
+		 	
+		 	Route::get('edit/general', "$controller@showGeneralForm")->name("{$userDefine}_user_edit");
+		 	Route::get('edit/tutor', "$controller@showTutorDataForm")->name("{$userDefine}_user_edit_tutor");
+		 	Route::get('edit/certificates', "$controller@showCertificatesForm")->name("{$userDefine}_user_edit_certificates");
 
+		 	Route::post('edit/general', "$controller@editGeneral")->name("{$userDefine}_user_update_general");
+		 	Route::post('edit/tutor', "$controller@editTutor")->name("{$userDefine}_user_update_tutor");
+		 	Route::post('edit/certificates', "$controller@editCertifications")->name("{$userDefine}_user_update_certificates");
+
+		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
 	 		Route::get('reviews', "{$controller}@showReviews")->name("{$userDefine}_user_reviews"); 
 			Route::get('subscriptions', "{$controller}@showSubscriptions")->name("{$userDefine}_user_subscriptions"); 
 			Route::get('bookmarks', "{$controller}@showBookmarks")->name("{$userDefine}_user_bookmarks"); 
@@ -106,11 +119,22 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::group(['prefix' => 'course'], function() use($userDefine) {
 		 		$controller = 'CourseController'; 
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
-			 	Route::get('add', "$controller@showCourseForm")->name("{$userDefine}_add_course");  
-				Route::get('{id_course}/edit', "$controller@editCourseForm")->name("{$userDefine}_edit_course");
+
+
+			 	Route::get('add', "$controller@showCourseForm")->name("{$userDefine}_add_course");   
+				Route::get('{id_course}/edit/general', "$controller@editCourseForm")->name("{$userDefine}_edit_course");
+				Route::get('{id_course}/edit/settings', "$controller@editCourseSettingsForm")->name("{$userDefine}_edit_course_settings");
+				Route::get('{id_course}/edit/program', "$controller@editCourseProgramForm")->name("{$userDefine}_edit_course_program");
+				Route::get('{id_course}/participants', "$controller@viewCourseParticipants")->name("{$userDefine}_course_participants");
+				Route::get('{id_course}/edit/сertificates', "$controller@editCourseCertificatesForm")->name("{$userDefine}_edit_course_сertificates");
+
+				Route::post('{id}/edit/general', "$controller@editCourseGeneral")->name("{$userDefine}_update_course_general"); 
+				Route::post('{id}/edit/settings', "$controller@editCourseSettings")->name("{$userDefine}_update_course_settings");  
+				Route::post('{id}/edit/program', "$controller@editCourseProgram")->name("{$userDefine}_update_course_program");  
+				Route::post('{id}/edit/certificates', "$controller@saveCertificates")->name("{$userDefine}_update_course_сertificates");  
+
 				Route::get('{id}/delete', "$controller@deleteCourse")->name("{$userDefine}_delete_course"); 
-				Route::post('save', "$controller@saveCourse")->name("{$userDefine}_save_course"); 
-				Route::post('{id}/edit', "$controller@editCourse")->name("{$userDefine}_update_course");  
+				Route::post('save', "$controller@saveCourse")->name("{$userDefine}_save_course");  
 			}); 
 		});  
 

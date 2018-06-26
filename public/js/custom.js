@@ -36,7 +36,7 @@ jQuery(document).ready(function($) {
                 items:3
             },
             1000:{
-                items:5
+                items:4
             }
         }
     });
@@ -102,6 +102,8 @@ jQuery(document).ready(function($) {
         autoHide: true,
         startView:2
     });  
+
+    $('.datepicker__input').attr("readonly", 'readonly'); 
 
     $('.delete__item').click(function(e){
         if (!confirm('Вы действительно хотите удалить?')) {
@@ -363,8 +365,11 @@ function disableBlock(checkbox){
 }
 
 $(window).on('load', function(){
+    
     setEqualHeight2($('.course_card h2'), $('.course__catalog'));
     setEqualHeight2($('.course_card h4'), $('.course__catalog'));
+    setEqualHeight($('#teacher_carousel .item h3'));
+     
 });
  
 function setEqualHeight2(columns, parent) {   
@@ -608,7 +613,7 @@ function InputMask(){
         digits: 2,
         autoGroup: true,
         allowMinus: false  
-    });
+    }); 
 } 
 
 function teacherStatus(input){

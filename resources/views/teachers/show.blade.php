@@ -146,7 +146,10 @@
 					</a> 
 					<h3><a href="/institution/1">{{ $university['full_name'] }}</a></h3>
 					<ul class="list-unstyled">
-						<li>10 КУРСОВ</li>
+						<li>
+							{{ count($university->user->courses) }} 
+                       		{{ format_by_count(count($university->user->courses), 'курс', 'курса', 'курсов') }}
+						</li>
 						<li>15 ПРЕПОДАВАТЕЛЕЙ</li>
 					</ul>
 				</div>

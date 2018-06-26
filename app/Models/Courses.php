@@ -26,7 +26,10 @@ class Courses extends Model
         'type',
         'available',
         'price',
-        'isHide'
+        'isHide',
+        'general_filled',
+        'settings_filled',
+        'program_filled'
     ];
 
     public function category()

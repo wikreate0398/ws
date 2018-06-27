@@ -27,7 +27,14 @@
         	</h4>
 			<ul class="list-unstyled card_info">
 				<li>
-					Стоимость <span> бесплатно </span>
+					Стоимость 
+					<span> 
+						@if($course->pay == 1)
+							бесплатно
+						@else
+							₽{{ $course->price }}
+        				@endif 
+					</span>
 				</li>
 				<li>
 					Длительность 

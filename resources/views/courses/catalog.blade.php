@@ -174,7 +174,9 @@
 								<i class="fa fa-calendar" aria-hidden="true"></i>
 							    <div class="set__going_date">  
 									<span> {{ $courseFacade['status'] }} </span> 
-        							<strong> {{ $courseFacade['date'] }} </strong> 
+									@if($courseFacade['date'])
+										<strong> {{ $courseFacade['date'] }} </strong>
+									@endif 
     							</div>  
 	            			</div>
 	            		</div>

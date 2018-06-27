@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Courses extends Model
 { 
@@ -93,9 +94,10 @@ class Courses extends Model
                 $query->where('url', $cat);
             });
         } 
- 
+
+         
         
-        return $courses->published()->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
+        return $courses->published()->with('user')->orderByCourses()->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
                                       ['*'], 
                                       'page', 
                                       !empty($input['page']) ? $input['page'] : 1);
@@ -116,11 +118,11 @@ class Courses extends Model
                      ->whereHas('user', function($query){
                         return User::allowUser();
                     });
-    }
+    } 
 
     public function scopeOrderByCourses($query)
     {
-        return $query->orderBy('date_from', 'asc');
+        return $query->orderBy(DB::raw('ABS(DATEDIFF(date_from, NOW()))'));
     }
 
     public static function countTotal()

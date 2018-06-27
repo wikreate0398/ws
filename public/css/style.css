@@ -2476,6 +2476,7 @@ select option:disabled {
     color: #fff;
     padding:10px 15px;
     background-color: rgba(153, 153, 153, 1);
+    box-sizing: border-box;
 }
 
 .course_card .footer__course_card .set__going_date{

@@ -369,6 +369,8 @@ $(window).on('load', function(){
     setEqualHeight2($('.course_card h2'), $('.course__catalog'));
     setEqualHeight2($('.course_card h4'), $('.course__catalog'));
     setEqualHeight($('#teacher_carousel .item h3'));
+    setEqualHeight2($('.course_card .footer__course_card'), $('.course__catalog'));
+
      
 });
  

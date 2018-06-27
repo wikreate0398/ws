@@ -96,6 +96,8 @@
                     @elseif($diff->y == 0 && $diff->m == 0)
                         Без опыта
                     @endif 
+                @else
+                	Без опыта
 				@endif
 				, {{ ($teacher->sex == 'male') ? 'Мужской' : 'Женский' }}
 				</span>

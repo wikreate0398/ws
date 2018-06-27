@@ -14,7 +14,7 @@
 				</div>
 				
 				<div class="row">
-					<label class="col-md-4 control-label">СТЕПЕНЬ ВАШЕГО ОПЫТА <span class="req">*</span></label>
+					<label class="col-md-4 control-label">СТЕПЕНЬ ВАШЕГО ОПЫТА</label>
 					<div class="col-md-8">
 						<div class="form-group select_form">
 							<select class="form-control" name="grade_experience">
@@ -30,7 +30,7 @@
 				</div>
 				
 				<div class="row">
-					<label class="col-md-4 control-label">ОПЫТ РАБОТЫ УЧИТЕЛЕМ С <span class="req">*</span></label>
+					<label class="col-md-4 control-label">ОПЫТ РАБОТЫ УЧИТЕЛЕМ С </label>
 					<div class="col-md-8">
 						<div class="form-group">
 							<input class="form-control datepicker_birthdate datepicker__input ll-skin-melon" 

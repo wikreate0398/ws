@@ -43,8 +43,8 @@ class User
         'address'               => 'required', 
         'phone'                 => 'required',  
         'email'                 => 'required|email', 
-        'grade_experience'      => 'required',  
-        'experience_from'       => 'required',
+        // 'grade_experience'      => 'required',  
+        // 'experience_from'       => 'required',
         'price_hour'            => 'required',  
         'teacher_subjects'      => 'required',  
         'specializations'       => 'required', 
@@ -146,8 +146,8 @@ class User
     private function validateTutor(array $data)
     {     
         $rules = [
-            'grade_experience'      => 'required',  
-            'experience_from'       => 'required',
+            // 'grade_experience'      => 'required',  
+            // 'experience_from'       => 'required',
             'price_hour'            => 'required',  
             'teacher_subjects'      => 'required',  
             'specializations'       => 'required', 
@@ -197,7 +197,7 @@ class User
             'sex'        => $data['sex'],
             'address'    => $data['address'],
             'grade_experience' => $data['grade_experience'],
-            'experience_from' => date('Y-m-d', strtotime($data['experience_from'])),
+            'experience_from' => !empty($data['experience_from']) ? date('Y-m-d', strtotime($data['experience_from'])) : null,
             'price_hour'      => toFloat($data['price_hour']),
             'lesson_place'    => $data['lesson_place'],
             'data_filled'     => '1'
@@ -370,9 +370,9 @@ class User
         ModelUser::where('id', $this->userId)
             ->update([ 
             'grade_experience' => $data['grade_experience'],
-            'experience_from' => date('Y-m-d', strtotime($data['experience_from'])),
-            'price_hour'      => toFloat($data['price_hour']),
-            'lesson_place'    => $data['lesson_place'],
+            'experience_from'  => !empty($data['experience_from']) ? date('Y-m-d', strtotime($data['experience_from'])) : null,
+            'price_hour'       => toFloat($data['price_hour']),
+            'lesson_place'     => $data['lesson_place'],
         ]); 
 
         TeacherSubjects::where('id_teacher', $this->userId)->delete();
@@ -473,9 +473,7 @@ class User
             'city',
             'address',
             'phone',
-            'email',
-            'grade_experience',
-            'experience_from',
+            'email', 
             'price_hour',
             'teacherSpecializations',
             'direction',

@@ -153,6 +153,8 @@
                                     @elseif($diff->y == 0 && $diff->m == 0)
                                         Без опыта
                                     @endif 
+                              	@else
+                                   	Без опыта
 								@endif
 								</span>
 								<ul class="list-inline teachers_label">

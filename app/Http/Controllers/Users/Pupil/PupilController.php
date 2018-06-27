@@ -26,14 +26,15 @@ class PupilController extends ProfileController
     
     public function showCourse()
     {  
-        return view('users.user_profile', [ 
-            'user'          => Auth::user(), 
+        $data = [ 
+            'user'          => Auth::user(),  
             'include'       => $this->viewPath . 'courses',
             'courseFacade'  => new CourseFacade,
             'scripts' => [
                 'js/courses.js'
             ]
-        ]); 
+        ]; 
+        return view('users.user_profile', $data); 
     }
 
     public function showEditForm()

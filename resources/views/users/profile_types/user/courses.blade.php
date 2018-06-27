@@ -20,7 +20,7 @@
 				</button>
 			</div>
 		</div>
- 		 
+ 	 
 		@if(count($user->coursesRequests)) 
 			<div class="row course__catalog"> 
 			@foreach($user->coursesRequests as $course)

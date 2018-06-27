@@ -82,7 +82,10 @@ class User extends Authenticatable
 
     public function coursesRequests()
     {
-        return $this->belongsToMany('App\Models\Courses', 'course_request', 'id_user', 'id_course');
+        return $this->belongsToMany('App\Models\Courses', 'course_request', 'id_user', 'id_course')
+                    ->whereHas('user', function($query){
+                        return $query->allowUser();
+                    });
     }
 
     // public static function allowUser(Builder $query)

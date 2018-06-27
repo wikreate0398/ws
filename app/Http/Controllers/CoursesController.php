@@ -35,7 +35,7 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($cat = false, $subcat = false, Request $request)
+    public function index($cat = false, $subcat = false, Request $request, CourseFacade $courseFacade)
     {  
         $baseUrl = '/courses';
         if (!empty($cat)) {
@@ -73,7 +73,8 @@ class CoursesController extends Controller
 
         $courses = Courses::getCatalog($cat, $subcat, $request->all()); 
         $data = [
-            'courses'      => $courses,
+            'courses'           => $courses,
+            'courseFacadeInstance' => $courseFacade, 
             'totalCourses' => Courses::countTotal(),
             'subcatFlag'   => $subcatFlag,
             'categories'   => $categories,
@@ -87,16 +88,13 @@ class CoursesController extends Controller
         return view('courses.catalog', $data);
     } 
 
-    public function show($id)
+    public function show($id, CourseFacade $courseFacade)
     {     
-        $course = Courses::getOneCourse($id, Auth::check());
-
-        $courseFacade = new \App\Utils\Classes\CourseFacade;
+        $course = Courses::getOneCourse($id, Auth::check()); 
 
         $data = [
             'course'         => $course,
-            'courseFacade'   => $courseFacade->setId($id)->_requestInstance(),
-            // 'canMakeRequest' => ($courseFacade->setId($id)->_requestInstance()->canMakeRequest() === true) ? true : false, 
+            'courseFacade'   => $courseFacade->setId($id), 
             'scripts'        => [
                 'js/courses.js'
             ]

@@ -18,13 +18,15 @@ class CourseFacade
 
     protected $_request = null; 
 
+    public $ids = [];
+
     public function _requestInstance($authUserId = null)
-    {
+    { 
         $authUserId = $authUserId ? $authUserId : @Auth::user()->id;
-        if ($this->_request != null) 
-        {
+        if ($this->_request != null && $this->id == $this->_request->getCourse()->id) 
+        { 
             return $this->_request;
-        }
+        }   
         $this->_request = new CourseRequestClass($this->id, $authUserId);
         return $this->_request;
     }
@@ -72,4 +74,51 @@ class CourseFacade
         } 
         return false;
     } 
+
+    public function esablishDate()
+    { 
+        if ($this->course->hide_after_end == 1 && !$this->_requestInstance()->ifHasRequest()) 
+        {
+            if ($this->course->max_nr_people > count($this->course->userRequests) 
+                                        && dateToTimestamp($this->course->is_open_to) > dateToTimestamp(date('Y-m-d'))) 
+            {
+                $status = 'идет набор до';
+                $date   = date('d.m.Y', strtotime($this->course->is_open_to));
+            }
+            else
+            {
+                $status = 'Набор закончен';
+                $date   = '';
+            }
+        }
+        elseif ($this->course->max_nr_people == count($this->course->userRequests) && !$this->_requestInstance()->ifHasRequest()) 
+        {
+            $status = 'Набор закончен';
+            $date   = '';
+        }
+        else
+        {
+            if ($this->isFinished()) 
+            {
+                $status = 'Завершен';
+                $date   = date('d.m.Y', strtotime($this->course->date_to));
+            }
+            elseif($this->isNotStarted())
+            {
+                $status = 'Начнется';
+                $date   = date('d.m.Y', strtotime($this->course->date_from));
+            }
+            else
+            {
+                $status = 'Начат с';
+                $date   = date('d.m.Y', strtotime($this->course->date_from));
+            }
+        }
+
+        if ($this->course->program_filled !=1) {
+            $status=$date='';
+        }
+
+        return ['status' => $status, 'date' => $date];
+    }
 }

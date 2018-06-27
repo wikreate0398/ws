@@ -33,7 +33,7 @@ class CourseRequest implements RequestInterface
     {
         if (empty($this->courseData))  
         { 
-            $this->courseData = Courses::getOneCourse($this->id_course, $this->id_user);
+            $this->courseData = Courses::whereId($this->id_course)->first(); 
         } 
         return $this->courseData;
     }
@@ -57,6 +57,15 @@ class CourseRequest implements RequestInterface
                 return 'Запись на курс ограничена';
             }
             
+            if ($this->getCourse()->isHide != 0 
+                or $this->getCourse()->general_filled != 1 
+                or $this->getCourse()->program_filled != 1
+                or $this->getCourse()->settings_filled != 1
+                or $this->getCourse()->view != 1) 
+            {
+                return 'Ошибка';
+            }
+
             $today        = dateToTimestamp(date('Y-m-d')); 
             $is_open_from = dateToTimestamp($this->getCourse()->is_open_from);
             $is_open_to   = dateToTimestamp($this->getCourse()->is_open_to);

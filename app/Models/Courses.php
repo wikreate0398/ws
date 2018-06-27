@@ -114,8 +114,8 @@ class Courses extends Model
                      ->where('settings_filled', 1)
                      ->where('view', 1)
                      ->whereHas('user', function($query){
-            return User::allowUser();
-        });
+                        return User::allowUser();
+                    });
     }
 
     public function scopeOrderByCourses($query)

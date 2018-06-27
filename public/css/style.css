@@ -2483,6 +2483,9 @@ select option:disabled {
     vertical-align: middle;
     margin-left: 10px;
 }
+.set__going_date span{
+    text-transform: uppercase;
+}
 
 .course_card .footer__course_card .set__going_date span, .course_card .footer__course_card .set__going_date strong{
     font-size: 11px;

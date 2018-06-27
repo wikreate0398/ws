@@ -63,9 +63,7 @@ class User
         'unique'                   => 'Пользователь уже Существует.',
         'specializations.required' => 'Укажите вашу Специализацию',
         'lesson_options.required'  => 'Укажите варианты проведения занятий',
-        'teacher_subjects.required' => 'Укажите Направления и предметы',
-        // 'teacher_directions_select.required' => 'Укажите Направления и предметы',
-        // 'teacher_subjects_select.required' => 'Укажите Направления и предметы',
+        'teacher_subjects.required' => 'Укажите Направления и предметы', 
     ];
 
     private $education = []; 

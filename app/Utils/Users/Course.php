@@ -43,6 +43,10 @@ class Course
         'available'    => 'required',  
     ]; 
 
+    private $customMessage = [ 
+        'available.required' => 'Укажите доступность на сайте' 
+    ];
+
     private $payOptions = ['1','2'];
 
     private $availableOptions = ['1','2'];
@@ -169,18 +173,23 @@ class Course
                 {
                     $rules['is_open_from'] = 'required';
                     $rules['is_open_to'] = 'required';
-                }
+                } 
 
-                if (!in_array($data['type'], $this->types) or !in_array($data['available'], $this->availableOptions)) 
-                {
-                    return 'Ошибка на сервере';
-                }
-
-                $validator = Validator::make($data, $rules); 
+                $validator = Validator::make($data, $rules, $this->customMessage); 
                 $validator->setAttributeNames($this->niceNames);  
                 if ($validator->fails()) 
                 {
                     $errors = array_merge($errors, $validator->errors()->toArray());
+                }
+
+                if (!empty($errors)) 
+                {
+                    return $errors;
+                } 
+
+                if (!in_array($data['type'], $this->types) or !in_array(@$data['available'], $this->availableOptions)) 
+                {
+                    return 'Ошибка на сервере';
                 }
 
                 break;

@@ -63,25 +63,12 @@
 			</ul>
 			<ul class="list-inline card_date_info">
 				<li class="left_date"><i class="fa fa-user"></i> {{ count($course->userRequests) }}</li>
-				@php $flag=true; @endphp
-				@if($course->hide_after_end == 1)
-					@if($course->max_nr_people > count($course->userRequests) 
-				    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
-						<li class="right_date"><i class="fa fa-calendar"></i> 
-							Идет набор до {{ date('d.m.Y', strtotime($course->is_open_to)) }}
-						</li> 
-					@else
-						@php $flag=false; @endphp 
-					@endif
-				@elseif($course->max_nr_people == count($course->userRequests))
-					@php $flag=false; @endphp 
-				@endif 
-
-				@if($flag==false)
-					<li class="right_date"> 
-						Набор закончен
-					</li>
-				@endif
+				@php 
+                    $esablishDate = $courseFacadeInstance->setId($course->id)->esablishDate();  
+                @endphp
+                <li class="right_date"> 
+                    {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}
+                </li> 
 			</ul>
 			<div class="row">
 				<div class="col-lg-6">

@@ -2,9 +2,9 @@
 <div class="course_lk">
 	<div class="row">
 		@if(count($courses) > 0) 
-		@foreach($courses as $course)
-		 	@include('users.partials.course_card', ['course' => $course])  
-		@endforeach 
+			@foreach($courses as $course)
+			 	@include('users.partials.course_card', ['course' => $course])  
+			@endforeach 
 		@else
 		<div class="col-lg-12">
 			<div class="no__data"> 

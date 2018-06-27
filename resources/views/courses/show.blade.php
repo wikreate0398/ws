@@ -24,29 +24,13 @@
 						{{ $course->user->name }} 
 	            @endif
 			</h3>
-			<ul class="icons__info"> 
-				@if($courseFacade->canMakeRequest() === true)
-					@php $flag=true; @endphp
-					@if($course->hide_after_end == 1)
-						@if($course->max_nr_people > count($course->userRequests) 
-					    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
-							<li><i class="fa fa-calendar"></i> &nbsp;
-								Идет набор до {{ date('d.m.Y', strtotime($course->is_open_to)) }}
-							</li> 
-						@else
-							@php $flag=false; @endphp
-						@endif
-					@elseif($course->max_nr_people == count($course->userRequests))
-						@php $flag=false; @endphp 
-					@endif
-
-					@if($flag==false)
-						<li> 
-							<i class="fa fa-calendar"></i>  Набор закончен
-						</li>
-					@endif
-				@endif  
-
+			<ul class="icons__info">
+				@php 
+					$esablishDate = $courseFacade->esablishDate();  
+				@endphp 
+				<li> 
+					<i class="fa fa-calendar"></i> {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}
+				</li> 
 				<li>
 					<i class="fa fa-user" aria-hidden="true"></i>
 					&nbsp;{{ count($course->userRequests) }}
@@ -100,10 +84,10 @@
 				
 			@endphp
 			<button type="button" 
-					@if($courseFacade->canMakeRequest()!==true && Auth::check() == true)
+					@if($courseFacade->_requestInstance()->canMakeRequest()!==true && Auth::check() == true)
 						disabled
 					@endif
-			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ ($courseFacade->canMakeRequest()!==true) ? false : true }}')" 
+			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ ($courseFacade->_requestInstance()->canMakeRequest()!==true) ? false : true }}')" 
 			        class="btn course_request_btn">
 			    ЗАПИСАТЬСЯ НА КУРС
 			</button> 

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\CourseCategory;
 use App\Models\Courses;  
 use App\Utils\Users\Course;
+use App\Utils\Classes\CourseFacade;
 
 class CourseController extends TeacherController
 {
@@ -27,15 +28,16 @@ class CourseController extends TeacherController
         $this->_course = new Course;
     } 
 
-    public function showCourse()
+    public function showCourse(CourseFacade $courseFacade)
     {   
         $user    = Auth::user();
         $courses = Courses::with('sections')->where('id_user', $user->id)->get();
-
+ 
         return view('users.teacher_profile', [ 
-            'user'               => $user, 
-            'courses'            => $courses,
-            'include'            => $this->viewPath . 'courses.list',
+            'user'                 => $user, 
+            'courseFacadeInstance' => $courseFacade, 
+            'courses'              => $courses,
+            'include'              => $this->viewPath . 'courses.list',
             'scripts' => [ 
                 'js/courses.js'
             ]
@@ -55,13 +57,39 @@ class CourseController extends TeacherController
     } 
 
     public function editCourseForm($id_course)
-    { 
+    {
+        $formSection = request()->segment(count(request()->segments()));
+
+        switch ($formSection) {
+            case 'general':
+                $view = 'general';
+                break;
+            
+            case 'settings':
+                $view = 'settings';
+                break;
+
+            case 'program':
+                $view = 'program';
+                break;
+
+            case 'participants':
+                $view = 'participants';
+                break;
+
+            case 'сertificates':
+                $view = 'certificates';
+                break;
+            default:
+                $view = 'general';
+                break;
+        }
+
         $user    = Auth::user();
         $course = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
  
-        return view('users.profile_types.teacher.courses.edit.general', [ 
-            'user'       => Auth::user(), 
-            // 'include'    => $this->viewPath . 'courses.edit',
+        return view('users.profile_types.teacher.courses.edit.' . $view, [ 
+            'user'       => Auth::user(),  
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
             'course'     => $course,
             'scripts' => [
@@ -69,67 +97,7 @@ class CourseController extends TeacherController
             ]
         ]); 
     }
-
-    public function editCourseSettingsForm($id_course)
-    {  
-        $user    = Auth::user();
-        $course = Courses::where('id_user', $user->id)->findOrFail($id_course); 
-
-        return view('users.profile_types.teacher.courses.edit.settings', [ 
-            'user'       => Auth::user(), 
-            'include'    => $this->viewPath . 'courses.edit', 
-            'course'     => $course,
-            'scripts' => [
-                'js/courses.js'
-            ]
-        ]); 
-    } 
-
-    public function editCourseProgramForm($id_course)
-    { 
-        $user    = Auth::user();
-        $course = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
  
-        return view('users.profile_types.teacher.courses.edit.program', [ 
-            'user'       => Auth::user(), 
-            'include'    => $this->viewPath . 'courses.edit', 
-            'course'     => $course,
-            'scripts' => [
-                'js/courses.js'
-            ]
-        ]); 
-    } 
-
-    public function viewCourseParticipants($id_course)
-    { 
-        $user    = Auth::user();
-        $course = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
- 
-        return view('users.profile_types.teacher.courses.edit.participants', [ 
-            'user'       => Auth::user(), 
-            'include'    => $this->viewPath . 'courses.edit', 
-            'course'     => $course,
-            'scripts' => [
-                'js/courses.js'
-            ]
-        ]); 
-    }  
-
-    public function editCourseCertificatesForm($id_course)
-    { 
-        $user    = Auth::user();
-        $course = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
- 
-        return view('users.profile_types.teacher.courses.edit.certificates', [ 
-            'user'       => Auth::user(), 
-            'include'    => $this->viewPath . 'courses.edit', 
-            'course'     => $course,
-            'scripts' => [
-                'js/courses.js'
-            ]
-        ]); 
-    }   
-
     public function saveCourse(Request $request)
     {
         $this->_course->setUserId(Auth::user()->id);
@@ -231,29 +199,7 @@ class CourseController extends TeacherController
         }  
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Курс успешно изменен!');
-    }   
-
-    // public function editCourse($idCourse, Request $request)
-    // { 
-    //     if (!$this->_course->hasAccessCourse($idCourse, Auth::user()->id)) 
-    //     {
-    //         return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
-    //     }
-
-    //     $validate = $this->_course->validation($request->all());
-    //     if ($validate !== true) 
-    //     {
-    //         return \App\Utils\JsonResponse::error(['messages' => $validate]);  
-    //     } 
-
-    //     $this->_course->deleteSectionsAndLectures($idCourse, Auth::user()->id); 
-    //     $this->_course->edit($request->all(), $idCourse, Auth::user()->id); 
-    //     if (!empty($this->_course->sections)) 
-    //     {
-    //         $this->_course->saveSections($idCourse);
-    //     }
-    //     return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('user_profile'))], 'Курс успешно изменен!');
-    // } 
+    }    
 
     public function deleteCourse($id_course)
     {  

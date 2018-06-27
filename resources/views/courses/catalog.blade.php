@@ -110,8 +110,7 @@
 		            			<a href="/course/{{ $course->id }}">
 		            				{{ $course->name }}
 		            			</a>
-		            		</h2>
-
+		            		</h2> 
 		            		<h4>
 					            @if($course->user->user_type==3)
 					            		{{ $course->user->university['full_name'] }} 
@@ -119,7 +118,6 @@
 										{{ $course->user->name }} 
 					            @endif
 				        	</h4>
-
 		            		<table>
 		            			<tr>
 		            				<td>СТОИМОСТЬ</td> 
@@ -130,8 +128,7 @@
 											₽{{ $course->price }}
 			            				@endif 
 		            				 </td>
-		            			</tr>
-
+		            			</tr> 
 		            			<tr> 
 		            				<td>ДЛИТЕЛЬНОСТЬ</td> 
 		            				<td style="text-transform: uppercase;">
@@ -152,8 +149,7 @@
 											@endphp  
 		            					@endif 
 		            				</td>
-		            			</tr>
-
+		            			</tr> 
 		            			<tr> 
 		            				<td>РЕЙТИНГ</td>
 		            				<td>
@@ -172,34 +168,19 @@
 	            				<span>{{ count($course->userRequests) }}</span>
 	            			</div>
 	            			<div class="set__going">   
-	            				@php $flag=true; @endphp
-								@if($course->hide_after_end == 1)
-									@if($course->max_nr_people > count($course->userRequests) 
-								    && dateToTimestamp($course->is_open_to) > dateToTimestamp(date('Y-m-d')))
-								    <i class="fa fa-calendar" aria-hidden="true"></i>
-								    <div class="set__going_date">  
-										<span> ИДЕТ НАБОР ДО </span> 
-            							<strong>{{ date('d.m.Y', strtotime($course->is_open_to)) }}</strong> 
-        							</div>
-									@else 
-										@php $flag=false; @endphp 
-									@endif
-								@elseif($course->max_nr_people == count($course->userRequests)) 
-									@php $flag=false; @endphp 
-								@endif 
-
-								@if($flag==false)
-									<i class="fa fa-calendar" aria-hidden="true"></i>
-								    <div class="set__going_date">  
-										<span> Набор закончен </span> 
-									</div>
-								@endif
+	            				@php 
+	            					$courseFacade = $courseFacadeInstance->setId($course->id)->esablishDate();  
+	            				@endphp  
+								<i class="fa fa-calendar" aria-hidden="true"></i>
+							    <div class="set__going_date">  
+									<span> {{ $courseFacade['status'] }} </span> 
+        							<strong> {{ $courseFacade['date'] }} </strong> 
+    							</div>  
 	            			</div>
 	            		</div>
 	            	</div>
             	</div>
-            	@endforeach
-
+            	@endforeach 
             </div>
             <div class="row">
             	<div class="col-lg-12">

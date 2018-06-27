@@ -30,7 +30,7 @@
              </div>
              <div class="clearfix"></div>
 
-             <label class="col-md-5 control-label">УКАЖИТЕ Длительность Курса <span class="req">*</span>
+             <label class="col-md-5 control-label">УКАЖИТЕ Длительность <span class="req">*</span>
              </label>
              <div class="col-md-7">
                 <div class="row">

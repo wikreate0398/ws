@@ -97,7 +97,7 @@
                           name="discount_price" 
                           value="{{ $course->discount_price }}" 
                           placeholder=""
-                          {{ (!$course->discount_price && $course->discount_percent) ? 'disabled' : '' }}>
+                          {{ (!$course->discount_price && $course->discount_percent && $course->pay == 1) ? 'disabled' : '' }}>
                    <small class="helper-form">Скидка, руб</small>
                 </div>
 
@@ -108,7 +108,7 @@
                           name="discount_percent" 
                           value="{{ $course->discount_percent }}" 
                           placeholder=""
-                          {{ (!$course->discount_percent && $course->discount_price) ? 'disabled' : '' }}>
+                          {{ (!$course->discount_percent && $course->discount_price && $course->pay == 1) ? 'disabled' : '' }}>
                    <small class="helper-form">Скидка, %</small>
                 </div>
 

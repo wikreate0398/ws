@@ -115,8 +115,25 @@ jQuery(document).ready(function($) {
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
           event.preventDefault();
         }
+    });
+
+    $('.course_discount_price').keyup(function(event) {
+        console.log($(this).val());
+        if ($(this).val() == '') {
+            $('.course_discount_percent').attr('disabled', false);
+        }else{
+            $('.course_discount_percent').attr('disabled', true);
+        } 
     });  
 
+    $('.course_discount_percent').keyup(function(event) {
+        if ($(this).val() == '') {
+            $('.course_discount_price').attr('disabled', false);
+        }else{
+            $('.course_discount_price').attr('disabled', true);
+        } 
+    }); 
+ 
     $('form#search_form').on('submit', function(e){
         var len = $('input#search__input').val().length;
         if (len < 3) {

@@ -1,42 +1,34 @@
 <?
 
-namespace App\Utils\Classes;
-use App\Models\Courses;
-
-use App\Utils\Users\Requests\RequestInterface;
-use App\Utils\Users\Requests\CourseRequest as CourseRequestClass;
+namespace App\Utils\Course; 
 use Illuminate\Support\Facades\Auth;
 
 /**
 * 
 */
-class CourseFacade
+class State extends Course
 {   
     private $id = null;
 
-    private $course = []; 
+    private $course = [];  
 
-    protected $_request = null; 
+    public function __construct($course)
+    {
+        parent::__construct();
+        $this->id     = @$course->id; 
+        $this->course = $course;
+    }  
 
-    public $ids = [];
-
-    public function _requestInstance($authUserId = null)
-    { 
-        $authUserId = $authUserId ? $authUserId : @Auth::user()->id;
-        if ($this->_request != null && $this->id == $this->_request->getCourse()->id) 
-        { 
-            return $this->_request;
-        }   
-        $this->_request = new CourseRequestClass($this->id, $authUserId);
-        return $this->_request;
-    }
-  
-    public function setId($id)
-    { 
-        $this->id = $id; 
-        $this->course = Courses::whereId($id)->first();
-        return $this;
-    }
+    // public function _requestInstance($authUserId = null)
+    // { 
+    //     $authUserId = $authUserId ? $authUserId : @Auth::user()->id;
+    //     if ($this->_request != null && $this->id == $this->_request->getCourse()->id) 
+    //     { 
+    //         return $this->_request;
+    //     }   
+    //     $this->_request = new CourseRequestClass($this->id, $authUserId);
+    //     return $this->_request;
+    // }
 
     public function isFinished()
     {  
@@ -77,7 +69,7 @@ class CourseFacade
 
     public function esablishDate()
     { 
-        if ($this->course->hide_after_end == 1 && !$this->_requestInstance()->ifHasRequest()) 
+        if ($this->course->hide_after_end == 1 && !$this->request($this->course)->ifHasRequest()) 
         {
             if ($this->course->max_nr_people > count($this->course->userRequests) 
                                         && dateToTimestamp($this->course->is_open_to) > dateToTimestamp(date('Y-m-d'))) 
@@ -91,7 +83,7 @@ class CourseFacade
                 $date   = '';
             }
         }
-        elseif ($this->course->max_nr_people == count($this->course->userRequests) && !$this->_requestInstance()->ifHasRequest()) 
+        elseif ($this->course->max_nr_people == count($this->course->userRequests) && !$this->request($this->course)->ifHasRequest()) 
         {
             $status = 'Набор закончен';
             $date   = '';

@@ -3,7 +3,7 @@
 		<div class="caption">
 			<ul class="list-inline card_tag">
 				<li class="tag_sticker">
-					<span>ПРОФЕССИОНАЛЬНЫЙ РОСТ</span>
+					<span>{{ @$course->category->name }}</span>
 				</li>
 				@if(@Auth::check()) 
                     @php 
@@ -32,7 +32,7 @@
 						@if($course->pay == 1)
 							бесплатно
 						@else
-							₽{{ $course->price }}
+							₽{{ priceString(Course::generatePrice($course)) }}
         				@endif 
 					</span>
 				</li>
@@ -70,8 +70,8 @@
 			</ul>
 			<ul class="list-inline card_date_info">
 				<li class="left_date"><i class="fa fa-user"></i> {{ count($course->userRequests) }}</li>
-				@php 
-                    $esablishDate = $courseFacadeInstance->setId($course->id)->esablishDate();  
+				@php  
+					$esablishDate = Course::manager($course)->esablishDate();  
                 @endphp
                 <li class="right_date"> 
                     {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}

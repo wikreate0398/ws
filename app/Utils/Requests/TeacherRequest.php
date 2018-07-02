@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Utils\Users\Requests;
+namespace App\Utils\Requests;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 use App\Models\User;   
 use App\Models\TeacherRequest as TeacherRequestModel;
-use App\Utils\Users\Requests\RequestInterface;
+use App\Utils\Requests\RequestInterface;
 use App\Mail\TeacherRequestMail; 
 use Illuminate\Support\Facades\Mail;
 

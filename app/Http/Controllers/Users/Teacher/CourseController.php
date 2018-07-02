@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\CourseCategory;
 use App\Models\Courses;  
-use App\Utils\Users\Course;
-use App\Utils\Classes\CourseFacade;
+use App\Utils\Course\Course;
 
 class CourseController extends TeacherController
 {
@@ -23,19 +22,18 @@ class CourseController extends TeacherController
      * @return void
      */
     public function __construct() 
-    {
+    { 
         $this->middleware('data_filled'); 
         $this->_course = new Course;
     } 
 
-    public function showCourse(CourseFacade $courseFacade)
+    public function showCourse()
     {   
         $user    = Auth::user();
         $courses = Courses::with('sections')->where('id_user', $user->id)->get();
  
         return view('users.teacher_profile', [ 
-            'user'                 => $user, 
-            'courseFacadeInstance' => $courseFacade, 
+            'user'                 => $user,  
             'courses'              => $courses,
             'include'              => $this->viewPath . 'courses.list',
             'scripts' => [ 
@@ -81,7 +79,7 @@ class CourseController extends TeacherController
                 $view = 'certificates';
                 break;
             default:
-                $view = 'general';
+                abort(404);
                 break;
         }
 
@@ -99,114 +97,110 @@ class CourseController extends TeacherController
     }
  
     public function saveCourse(Request $request)
-    {
-        $this->_course->setUserId(Auth::user()->id);
-        $validate = $this->_course->validation($request->all(), 'general');
+    { 
+        $crudFactory = $this->_course->crud(null, Auth::user());  
+        $validate = $crudFactory->validation($request->all(), 'general');
         if ($validate !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $validate]);  
-        } 
-
-        $idCourse = $this->_course->save($request->all()); 
-
-        if (!empty($this->_course->sections)) 
+        }  
+        $idCourse = $crudFactory->save($request->all());  
+        if (!empty($crudFactory->sections)) 
         {
-            $this->_course->saveSections($idCourse);
-        }
+            $crudFactory->saveSections($idCourse);
+        } 
 
         return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('edit_course_settings'), ['id' => $idCourse])], 'Курс успешно добавлен!');
     }
 
     public function saveCertificates($id, Request $request)
     { 
-        $this->_course->setUserId(Auth::user()->id)->setcourseId($id);
-        if (!$this->_course->hasAccessCourse()) 
+        $crudFactory = $this->_course->crud($id, Auth::user()); 
+        if (!$crudFactory->hasAccessCourse()) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
         }
+
         $certificates = $request->input('certificates');
         if (!empty($certificates)) 
         {
-            $this->_course->saveCertificates($certificates);
-        }
-        else
-        {
-            return \App\Utils\JsonResponse::error(['messages' => 'Сертификаты не выбраны']);  
-        }
+            $crudFactory->saveCertificates($certificates);
+        } 
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Сертификаты успешно сохранены!');
     } 
 
     public function editCourseGeneral($idCourse, Request $request)
-    { 
-        $this->_course->setUserId(Auth::user()->id)->setcourseId($idCourse);
-        if (!$this->_course->hasAccessCourse()) 
+    {  
+        $crudFactory = $this->_course->crud($idCourse, Auth::user());
+        if (!$crudFactory->hasAccessCourse()) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
         }
 
-        $validate = $this->_course->validation($request->all(), 'general');
+        $validate = $crudFactory->validation($request->all(), 'general');
         if ($validate !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $validate]);  
         } 
 
-        $this->_course->editGeneral($request->all());  
-        $this->_course->updateCourseHide($request->all());
+        $crudFactory->editGeneral($request->all());  
+        $crudFactory->updateCourseHide($request->all());
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Курс успешно изменен!');
     } 
 
     public function editCourseSettings($idCourse, Request $request)
     { 
-        $this->_course->setUserId(Auth::user()->id)->setcourseId($idCourse);
-        if (!$this->_course->hasAccessCourse()) 
+        $crudFactory = $this->_course->crud($idCourse, Auth::user()); 
+
+        if (!$crudFactory->hasAccessCourse()) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
         }
 
-        $validate = $this->_course->validation($request->all(), 'settings');
+        $validate = $crudFactory->validation($request->all(), 'settings');
         if ($validate !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $validate]);  
         } 
 
-        $this->_course->editSettings($request->all());  
+        $crudFactory->editSettings($request->all());  
         return \App\Utils\JsonResponse::success(['reload' => true], 'Курс успешно изменен!');
     } 
 
     public function editCourseProgram($idCourse, Request $request)
     {  
-        $this->_course->setUserId(Auth::user()->id)->setcourseId($idCourse);
-        if (!$this->_course->hasAccessCourse()) 
+        $crudFactory = $this->_course->crud($idCourse, Auth::user());
+        if (!$crudFactory->hasAccessCourse()) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
         }
 
-        $validate = $this->_course->validation($request->all(), 'program');
+        $validate = $crudFactory->validation($request->all(), 'program');
         if ($validate !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $validate]);  
         } 
- 
-        if (!empty($this->_course->sections)) 
-        {
-            $this->_course->deleteSectionsAndLectures();  
-            $this->_course->saveSections(); 
-            Courses::where('id', $this->_course->courseId)
-                    ->where('id_user', $this->_course->userId)
+        
+        $crudFactory->deleteSectionsAndLectures(); 
+        if (!empty($crudFactory->sections)) 
+        { 
+            $crudFactory->saveSections(); 
+            Courses::where('id', $crudFactory->id_course)
+                    ->where('id_user', $crudFactory->user->id)
                     ->update(['program_filled' => 1]); 
         }  
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Курс успешно изменен!');
-    }    
-
+    } 
+  
     public function deleteCourse($id_course)
     {  
-        $this->_course->setUserId(Auth::user()->id)->setcourseId($id_course);
-        if ($this->_course->hasAccessCourse()) 
+        $crudFactory = $this->_course->crud($id_course, Auth::user());
+        if ($crudFactory->hasAccessCourse($id_course, Auth::user()->id)) 
         {
-            $this->_course->delete($id_course, Auth::user()->id); 
+            $crudFactory->delete($id_course, Auth::user()->id); 
         }
         return redirect()->route(userRoute('user_profile'));
     }

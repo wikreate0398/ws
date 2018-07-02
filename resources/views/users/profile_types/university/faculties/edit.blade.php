@@ -111,7 +111,7 @@
 					</label>
 					<div class="col-md-7">
 						<div class="form-group select_form">
-							<select name="" class="form-control teacher_subjects_select" onchange="teacherSubject(this)">
+							<select name="" class="form-control teacher_subjects_select" onchange="addSubject(this)">
    							<option value="0">Выбрать</option> 
                         @php
                            $facultySubjectsId = $faculty->subjects->pluck('id')->toArray();
@@ -126,14 +126,14 @@
    								<option {{ $disabled }} value="{{ $subject->id }}">{{ $subject->name }}</option>
    							@endforeach
    						</select>  
-   						<div class="selected__teacher_subjects" style=" {{ !count($faculty->subjects) ? 'display: none;' : ''  }}">
+   						<div class="selected__teacher_labels" style=" {{ !count($faculty->subjects) ? 'display: none;' : ''  }}">
                         @if(count($faculty->subjects))
                            @foreach($faculty->subjects as $subject)
                               <span id="teacher_subjects_{{ $subject->id }}" data-id="{{ $subject->id }}">
                                  <div class="subject_tag"> 
                                     {{ $subject->name }} 
                                  </div>
-                                 <div onclick="deleteTeacherSubject({{ $subject->id }});" class="delete__subject">
+                                 <div onclick="deleteSubject({{ $subject->id }});" class="delete__subject">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                  </div>
                               </span>

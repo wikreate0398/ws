@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash; 
-use App\Utils\Users\Course;
+use Illuminate\Support\Facades\Hash;  
+use App\Utils\Course\Course;
 
 class ProfileController extends Controller
 { 
@@ -47,10 +47,10 @@ class ProfileController extends Controller
     }  
 
     public function deleteCourseCertificate(Request $request, Course $course)
-    { 
-        $course->setUserId(Auth::user()->id);
+    {   
         $id = $request->input('id'); 
-        if ($course->hasAccessCertificate($id)) 
+        $crudFactory = $course->crud($id, Auth::user()); 
+        if ($crudFactory->hasAccessCertificate($id)) 
         {  
             \App\Models\CoursesCertificates::whereId($id)->delete();
         }

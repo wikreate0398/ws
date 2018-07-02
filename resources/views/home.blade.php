@@ -57,7 +57,7 @@
                                                 @if($course->pay == 1)
                                                     бесплатно
                                                 @else
-                                                    ₽{{ $course->price }}
+                                                    ₽{{ priceString(Course::generatePrice($course)) }}
                                                 @endif 
                                             </span>
                                         </li>
@@ -96,7 +96,7 @@
                                     <ul class="list-inline card_date_info">
                                         <li class="left_date"><i class="fa fa-user"></i> {{ $course->user_requests_count }}</li> 
                                         @php 
-                                            $esablishDate = $courseFacadeInstance->setId($course->id)->esablishDate();  
+                                            $esablishDate = Course::manager($course)->esablishDate();  
                                         @endphp
                                         <li class="right_date"> 
                                             {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}

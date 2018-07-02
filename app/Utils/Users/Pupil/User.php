@@ -95,6 +95,7 @@ class User
                 'region'       => $data['region'],
                 'phone'        => $data['phone'], 
                 'sex'          => $data['sex'],
+                'data_filled'  => 1
       	]); 
 
         if (!empty($data['old_password'])) 

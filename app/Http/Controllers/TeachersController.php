@@ -24,8 +24,8 @@ use App\Models\CourseCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 
-use App\Utils\Users\Requests\TeacherRequest as TeacherRequestClass;
-use App\Utils\Users\Requests\RequestInterface;
+use App\Utils\Requests\TeacherRequest as TeacherRequestClass;
+use App\Utils\Requests\RequestInterface;
 
 class TeachersController extends Controller
 {

@@ -12,8 +12,7 @@ use App\Models\User;
 use App\Models\UsersUniversity;
 use App\Models\Courses;
 use App\Models\CourseCategory; 
-use Illuminate\Http\Request;
-use App\Utils\Classes\CourseFacade;
+use Illuminate\Http\Request; 
 
 class PagesController extends Controller
 {
@@ -29,7 +28,7 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(CourseFacade $courseFacade)
+    public function index()
     { 
         $data = [
             'university' => UsersUniversity::getUniversities(),
@@ -38,8 +37,7 @@ class PagesController extends Controller
                 'institutions' => User::allowUser()->where('user_type', 3)->count(),
                 'teachers'     => User::allowUser()->where('user_type', 2)->count(),
                 'courses'      => Courses::published()->count() 
-            ], 
-            'courseFacadeInstance' => $courseFacade, 
+            ],  
             'courseCategories' => CourseCategory::with(['courses' => function($query){ 
                                     $query->published()->withCount('userRequests');
                                 }])->where('parent_id','0')->has('courses', '>=', '1')->get(),

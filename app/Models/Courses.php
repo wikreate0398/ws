@@ -30,7 +30,9 @@ class Courses extends Model
         'isHide',
         'general_filled',
         'settings_filled',
-        'program_filled'
+        'program_filled',
+        'discount_percent',
+        'discount_price'
     ];
 
     public function category()

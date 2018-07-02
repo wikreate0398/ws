@@ -462,7 +462,7 @@ class User
 
     public function isProfileFilled()
     {
-        $data = ModelUser::with(['direction', 'subjects', 'lesson_options', 'teacherSpecializations'])->whereId($this->userId)->first(); 
+        $data = ModelUser::with(['direction', 'subjects', 'lesson_options', 'teacherSpecializations'])->whereId($this->userId)->first()->toArray(); 
         $flag = 1; 
         $requiredFields = [
             'name',
@@ -485,16 +485,17 @@ class User
             { 
                 $flag = 0; 
             }
-        }   
-
+        }    
         return $flag;
     } 
 
     public function updateIfProfileFilled()
     { 
+        $flag=0;
         if ($this->isProfileFilled() == true) 
         {
-            ModelUser::whereId($this->userId)->update(['data_filled' => 1]);
+            $flag=1;
         }
+        ModelUser::whereId($this->userId)->update(['data_filled' => $flag]);
     }
 }

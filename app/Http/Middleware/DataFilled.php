@@ -17,7 +17,7 @@ class DataFilled
     public function handle($request, Closure $next)
     { 
         if (Auth::user()->data_filled == 0) 
-        {
+        { 
             if (request()->ajax()) {
                 return response()->json(['error' => 'page not available'], 404);
             }  

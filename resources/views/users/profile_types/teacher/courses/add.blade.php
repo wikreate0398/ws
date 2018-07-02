@@ -112,7 +112,27 @@
                      </div>
                      <div class="col-md-7">
                         <div class="form-group">
-                           <input type="text" class="form-control price__course price__input" autocomplete="off" name="price" value="" placeholder="Стоимость, руб *">
+                           <input type="text" class="form-control price__course price__input" autocomplete="off" name="price" value="" placeholder="">
+                           <small class="helper-form">Стоимость, руб *</small>
+                        </div>
+
+                        <div class="form-group">
+                           <input type="text" class="form-control price__course price__input course_discount_price" 
+                                  autocomplete="off" 
+                                  name="discount_price" 
+                                  value="" 
+                                  placeholder="">
+                           <small class="helper-form">Скидка, руб</small>
+                        </div>
+
+                        <div class="form-group">
+                           <input type="text" 
+                                  class="form-control price__course number_field course_discount_percent" 
+                                  autocomplete="off" 
+                                  name="discount_percent" 
+                                  value="" 
+                                  placeholder="">
+                           <small class="helper-form">Скидка, %</small>
                         </div>
                      </div>
                   </div> 

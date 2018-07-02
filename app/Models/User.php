@@ -63,9 +63,7 @@ class User extends Authenticatable
     }
 
     public function courseFavorite()
-    {
-        // return $this->hasOne('App\Models\CourseFavorite', 'id_user', 'id_course'); 
-
+    { 
         return $this->belongsToMany('App\Models\Courses', 'course_favorite', 'id_user', 'id_course');
         
     }
@@ -86,16 +84,8 @@ class User extends Authenticatable
                     ->whereHas('user', function($query){
                         return $query->allowUser();
                     });
-    }
-
-    // public static function allowUser(Builder $query)
-    // {
-    //     return $query->where('activate', '1')
-    //                  ->where('confirm', '1') 
-    //                  ->where('data_filled','1');
-    //                  //->where('user_type', '2')
-    // }
-
+    } 
+    
     public function scopeAllowUser($query)
     {
         return $query->where('activate', '1')

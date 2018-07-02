@@ -23,6 +23,7 @@ class FacultiesController extends UniversityController
      */
     public function __construct() 
     {
+        $this->middleware('data_filled');
         $this->_faculties = new Faculties;
     } 
 
@@ -48,6 +49,9 @@ class FacultiesController extends UniversityController
             'user'          => Auth::user(), 
             'include'       => $this->viewPath . '.faculties.add',
             'subjects_list' => SubjectsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(), 
+            'scripts'       => [
+                'js/university.js'
+            ]
         ]); 
     } 
 
@@ -58,7 +62,10 @@ class FacultiesController extends UniversityController
             'user'          => Auth::user(), 
             'include'       => $this->viewPath . '.faculties.edit',
             'subjects_list' => SubjectsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(), 
-            'faculty'       => UniversityFaculties::where('id_university', $user->university->id)->findOrFail($id_faculty)
+            'faculty'       => UniversityFaculties::where('id_university', $user->university->id)->findOrFail($id_faculty),
+            'scripts'       => [
+                'js/university.js'
+            ]
         ]); 
     }
 

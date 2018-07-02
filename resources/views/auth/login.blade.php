@@ -55,6 +55,10 @@
 									Войти
 								</button>
 								<div class="clearfix"></div>
+								<a class="btn btn-link" href="{{ route('registration') }}">
+									Регистрация
+								</a>
+								/
 								<a class="btn btn-link" href="{{ route('forgot_password') }}">
 									Я забыл пароль
 								</a>

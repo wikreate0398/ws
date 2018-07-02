@@ -111,13 +111,13 @@
 					</label>
 					<div class="col-md-7">
 						<div class="form-group select_form">
-							<select name="" class="form-control teacher_subjects_select" onchange="teacherSubject(this)">
+							<select name="" class="form-control teacher_subjects_select" onchange="addSubject(this)">
 							<option value="0">Выбрать</option> 
 							@foreach($subjects_list as $subject)  
 								<option value="{{ $subject->id }}">{{ $subject->name }}</option>
 							@endforeach
 						</select>  
-						<div class="selected__teacher_subjects" style="display: none;"></div>
+						<div class="selected__teacher_labels" style="display: none;"></div>
 						<div class="selected__teacher_inputs"></div> 
 						</div>
 					</div>  

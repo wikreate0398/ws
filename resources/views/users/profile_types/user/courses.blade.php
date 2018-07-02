@@ -24,11 +24,10 @@
 		@if(count($user->coursesRequests)) 
 			<div class="row course__catalog"> 
 			@foreach($user->coursesRequests as $course)
-				@php
-					$courseFacade->setId($course->id);
+				@php 
 
 					$id = '';
-					if ($courseFacade->isFinished()) {
+					if (Course::manager($course)->isFinished()) {
 						$id .= 'is_finished';
 					}else{
 						$id .= 'is_active';
@@ -70,7 +69,7 @@
 										@if($course->pay == 1)
 											БЕСПЛАТНО
 										@else
-											₽{{ $course->price }}
+											₽{{ priceString(Course::generatePrice($course)) }}
 			            				@endif 
 		            				 </td>
 		            			</tr>
@@ -107,7 +106,7 @@
 							
 		            		<div class="row" style="margin-top: 10px;">
 		            			<div class="col-md-6">
-		            				@if(!$courseFacade->isFinished())
+		            				@if(!Course::manager($course)->isFinished())
 		            					<button type="button" class="course__btn learning__course">Обучение</button>
 		            					@else
 		            					<a href="" class="dwn__diplom">Скачать Диплом</a> 
@@ -125,13 +124,13 @@
 	            				<span>{{ count($course->userRequests) }}</span>
 	            			</div>
 	            			<div class="set__going">   
-	            				@if($courseFacade->isFinished())
+	            				@if(Course::manager($course)->isFinished())
 									<i class="fa fa-calendar" aria-hidden="true"></i>
 								    <div class="set__going_date">  
 										<span> Завершен </span> 
 										<strong>{{ date('d.m.Y', strtotime($course->date_to)) }}</strong> 
 									</div>
-									@elseif($courseFacade->isNotStarted())
+									@elseif(Course::manager($course)->isNotStarted())
 										<i class="fa fa-calendar" aria-hidden="true"></i>
 									    <div class="set__going_date">  
 											<span> Начнется </span> 

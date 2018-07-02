@@ -125,7 +125,7 @@
 										@if($course->pay == 1)
 											БЕСПЛАТНО
 										@else
-											₽{{ $course->price }}
+											₽{{ priceString(Course::generatePrice($course)) }}
 			            				@endif 
 		            				 </td>
 		            			</tr> 
@@ -169,13 +169,13 @@
 	            			</div>
 	            			<div class="set__going">   
 	            				@php 
-	            					$courseFacade = $courseFacadeInstance->setId($course->id)->esablishDate();  
-	            				@endphp  
+                                    $esablishDate = Course::manager($course)->esablishDate();  
+                                @endphp 
 								<i class="fa fa-calendar" aria-hidden="true"></i>
 							    <div class="set__going_date">  
-									<span> {{ $courseFacade['status'] }} </span> 
-									@if($courseFacade['date'])
-										<strong> {{ $courseFacade['date'] }} </strong>
+									<span> {{ $esablishDate['status'] }} </span> 
+									@if($esablishDate['date'])
+										<strong> {{ $esablishDate['date'] }} </strong>
 									@endif 
     							</div>  
 	            			</div>

@@ -26,13 +26,34 @@ class UniversityController extends ProfileController
 
     protected $_user;
 
-	function __construct() 
-    {
+	function __construct()
+    { 
         $this->_user = new UniversityUser;
-    }  
- 
+    }
+
     public function showEditForm()
     {  
+
+        $formSection = request()->segment(count(request()->segments()));
+
+        switch ($formSection) {
+            case 'profile':
+                $view = 'profile';
+                break;
+
+            case 'general':
+                $view = 'general';
+                break;
+
+            case 'certificates':
+                $view = 'certificates';
+                break;
+            
+            default:
+                abort(404);
+                break;
+        }
+
         $user = Auth::user(); 
 
         $data = [
@@ -45,6 +66,41 @@ class UniversityController extends ProfileController
 
         $data['userUniversity'] = $data['user']['university'];
 
-        return view($this->viewPath . 'edit', $data); 
+        return view($this->viewPath . 'edit.' . $view, $data); 
+    } 
+
+    public function editProfile(Request $request)
+    { 
+        $edit = $this->_user->setUserId(Auth::user()->id)->editProfile($request->all());   
+        if ($edit !== true) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $edit]);  
+        } 
+
+        $this->_user->updateIfProfileFilled();
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+    }  
+
+    public function editGeneral(Request $request)
+    { 
+        $edit = $this->_user->setUserId(Auth::user()->id)->editGeneral($request->all());   
+        if ($edit !== true) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => $edit]);  
+        } 
+
+        $this->_user->updateIfProfileFilled();
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+    }  
+
+    public function editCertifications(Request $request)
+    { 
+        $data = $request->all();
+        if (!empty($data['certificates'])) 
+        {
+            $this->_user->setUserId(Auth::user()->id)->saveCertificates($data['certificates']);
+        }  
+        $this->_user->updateIfProfileFilled();
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
     } 
 }

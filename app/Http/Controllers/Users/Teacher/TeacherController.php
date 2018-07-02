@@ -118,11 +118,7 @@ class TeacherController extends ProfileController
         if (!empty($data['certificates'])) 
         {
             $this->_user->setUserId(Auth::user()->id)->saveCertificates($data['certificates']);
-        } 
-        else
-        {
-            return \App\Utils\JsonResponse::error(['messages' => 'Сертификаты не выбраны']);  
-        }
+        }  
         $this->_user->updateIfProfileFilled();
         return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
     }   

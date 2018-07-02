@@ -26,8 +26,8 @@
 			</h3>
 			<ul class="icons__info">
 				@php 
-					$esablishDate = $courseFacade->esablishDate();  
-				@endphp 
+                    $esablishDate = Course::manager($course)->esablishDate();  
+                @endphp 
 				<li> 
 					<i class="fa fa-calendar"></i> {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}
 				</li> 
@@ -64,7 +64,7 @@
 						@if($course->pay == 1)
 							БЕСПЛАТНО
 						@else
-							₽{{ $course->price }}
+							₽{{ priceString(Course::generatePrice($course)) }}
         				@endif 
 					</button>
 				</li>
@@ -79,19 +79,15 @@
 					<i class="fa fa-star" aria-hidden="true"></i>
 				</li> 
 			</ul>
-
-			@php
-				
-			@endphp
+  
 			<button type="button" 
-					@if($courseFacade->_requestInstance()->canMakeRequest()!==true && Auth::check() == true)
+					@if(Course::request($course)->canMakeRequest() !== true && Auth::check() == true)
 						disabled
 					@endif
-			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ ($courseFacade->_requestInstance()->canMakeRequest()!==true) ? false : true }}')" 
+			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ (Course::request($course)->canMakeRequest()!==true) ? false : true }}')" 
 			        class="btn course_request_btn">
 			    ЗАПИСАТЬСЯ НА КУРС
 			</button> 
-		 
 
 			<div class="about__course">
 				<h2>О КУРСЕ</h2>

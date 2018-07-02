@@ -22,6 +22,7 @@ class NewsController extends UniversityController
      */
     public function __construct() 
     {
+        $this->middleware('data_filled');
         $this->_news = new News;
     } 
 

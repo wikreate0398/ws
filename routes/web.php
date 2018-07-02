@@ -54,10 +54,17 @@ Route::group(['middleware' => ['web_auth']], function(){
 		Route::group(['prefix' => 'university-profile', 'namespace' => 'Users\University'], function() { 
 			$controller = 'UniversityController';
 			$userDefine = 'university'; 
-		 	 
-		 	Route::get('edit', "$controller@showEditForm")->name("{$userDefine}_user_edit");
+
+		 	Route::get('edit/profile', "$controller@showEditForm")->name("{$userDefine}_user_edit");
+		 	Route::get('edit/general', "$controller@showEditForm")->name("{$userDefine}_user_general_edit");
+		 	Route::get('edit/certificates', "$controller@showEditForm")->name("{$userDefine}_user_certificates_edit");
+
 		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
-		 	  
+
+		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
+		 	Route::post('update-general', "$controller@editGeneral")->name("{$userDefine}_update_general");
+		 	Route::post('update-certificates', "$controller@editCertifications")->name("{$userDefine}_update_certificates");
+
 		 	Route::group(['prefix' => 'faculties'], function() use($userDefine) {
 		 		$controller = 'FacultiesController';
 		 		Route::get('/', "$controller@showFaculties")->name("{$userDefine}_user_faculties");
@@ -159,9 +166,7 @@ Route::group(['middleware' => ['web_auth']], function(){
 			Route::post('loadRegionCities', 'ProfileController@loadRegionCities');  
 			Route::post('deleteCertificate', 'ProfileController@deleteCertificate');
 			Route::post('deleteCourseCertificate', 'ProfileController@deleteCourseCertificate');
-			Route::post('loadCourseSubcats', 'ProfileController@loadCourseSubcats');
-			Route::post('deleteCourseSectionLecture', 'ProfileController@deleteCourseSectionLecture'); 
-			Route::post('deleteCourseSection', 'ProfileController@deleteCourseSection');  
+			Route::post('loadCourseSubcats', 'ProfileController@loadCourseSubcats'); 
 			Route::post('changeStatus', 'ProfileController@changeStatus');  
 		}); 
 	}); 

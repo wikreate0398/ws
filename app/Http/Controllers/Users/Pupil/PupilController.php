@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\UserMail; 
 use App\Http\Controllers\Users\ProfileController;
 use App\Utils\Users\Pupil\User as PupilUser;
-use App\Utils\Classes\CourseFacade;
+ 
  
 class PupilController extends ProfileController  
 {
@@ -28,8 +28,7 @@ class PupilController extends ProfileController
     {  
         $data = [ 
             'user'          => Auth::user(),  
-            'include'       => $this->viewPath . 'courses',
-            'courseFacade'  => new CourseFacade,
+            'include'       => $this->viewPath . 'courses', 
             'scripts' => [
                 'js/courses.js'
             ]

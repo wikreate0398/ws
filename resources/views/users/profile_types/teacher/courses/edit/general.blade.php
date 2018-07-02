@@ -87,8 +87,31 @@
              </div>
              <div class="col-md-7">
                 <div class="form-group">
-                   <input type="text" class="form-control price__course price__input" autocomplete="off" name="price" value="{{ $course->price }}" placeholder="Стоимость, руб *" {{ ($course->pay == 1) ? 'disabled' : '' }}>
+                   <input type="text" class="form-control price__course price__input" autocomplete="off" name="price" value="{{ $course->price }}" placeholder="" {{ ($course->pay == 1) ? 'disabled' : '' }}>
+                   <small class="helper-form">Стоимость, руб *</small>
                 </div>
+ 
+                <div class="form-group">
+                   <input type="text" class="form-control price__course price__input course_discount_price" 
+                          autocomplete="off" 
+                          name="discount_price" 
+                          value="{{ $course->discount_price }}" 
+                          placeholder=""
+                          {{ (!$course->discount_price && $course->discount_percent) ? 'disabled' : '' }}>
+                   <small class="helper-form">Скидка, руб</small>
+                </div>
+
+                <div class="form-group">
+                   <input type="text" 
+                          class="form-control price__course number_field course_discount_percent" 
+                          autocomplete="off" 
+                          name="discount_percent" 
+                          value="{{ $course->discount_percent }}" 
+                          placeholder=""
+                          {{ (!$course->discount_percent && $course->discount_price) ? 'disabled' : '' }}>
+                   <small class="helper-form">Скидка, %</small>
+                </div>
+
              </div>
 
 			<div class="row">

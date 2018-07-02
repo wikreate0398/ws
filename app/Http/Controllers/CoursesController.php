@@ -11,14 +11,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Courses;
 use App\Models\CourseCategory; 
-use App\Models\CourseFavorite;
- 
-use App\Utils\Users\Requests\CourseRequest as CourseRequestClass;
-use App\Utils\Users\Requests\RequestInterface;
-use App\Utils\Classes\CourseFacade;
-
+use App\Models\CourseFavorite; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Utils\Course\Course;
  
 class CoursesController extends Controller
 { 
@@ -35,7 +31,7 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($cat = false, $subcat = false, Request $request, CourseFacade $courseFacade)
+    public function index($cat = false, $subcat = false, Request $request)
     {  
         $baseUrl = '/courses';
         if (!empty($cat)) {
@@ -73,8 +69,7 @@ class CoursesController extends Controller
 
         $courses = Courses::getCatalog($cat, $subcat, $request->all()); 
         $data = [
-            'courses'           => $courses,
-            'courseFacadeInstance' => $courseFacade, 
+            'courses'           => $courses, 
             'totalCourses' => Courses::countTotal(),
             'subcatFlag'   => $subcatFlag,
             'categories'   => $categories,
@@ -88,13 +83,12 @@ class CoursesController extends Controller
         return view('courses.catalog', $data);
     } 
 
-    public function show($id, CourseFacade $courseFacade)
+    public function show($id)
     {     
         $course = Courses::getOneCourse($id, Auth::check()); 
 
         $data = [
-            'course'         => $course,
-            'courseFacade'   => $courseFacade->setId($id), 
+            'course'         => $course, 
             'scripts'        => [
                 'js/courses.js'
             ]
@@ -132,18 +126,18 @@ class CoursesController extends Controller
         return \App\Utils\JsonResponse::success(['content' => $content]);
     }
 
-    public function makeRequest($id)
+    public function makeRequest($id, Course $courseFacade)
     { 
-        $courseRequest        = new CourseRequestClass($id, @Auth::user()->id);  
-        $canMakeRequestStatus = $courseRequest->canMakeRequest();
-        if ($canMakeRequestStatus === true) 
+        $course         = Courses::whereId($id)->published()->first(); 
+        $requestManager = $courseFacade->request($course);
+        if ($requestManager->canMakeRequest() === true) 
         {
-            $courseRequest->makeRequest(); 
-            //$courseRequest->sendNotification();
+            $requestManager->makeRequest(); 
+            $requestManager->sendNotification();  
         }
         else
         {  
-            return redirect('course/' . $id)->with('courseMsg.error', $canMakeRequestStatus);
+            return redirect('course/' . $id)->with('courseMsg.error', $requestManager->getError());
         } 
         return redirect('course/' . $id)->with('courseMsg.success', 'Вы успешно записаны на этот курс'); 
     }

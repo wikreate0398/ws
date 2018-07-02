@@ -178,8 +178,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class
-
+        App\Providers\RouteServiceProvider::class,
+        App\Providers\CourseServiceProvider::class 
     ],
 
     /*
@@ -229,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Course' => \App\Utils\Facades\Course::class
     ],
 
 ];

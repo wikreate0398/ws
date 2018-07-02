@@ -255,14 +255,17 @@ class Crud extends Course
             'discount_percent' => null
         ]; 
 
-        if (!empty($data['discount_price'])) 
-        {
-            $dataUpdate['discount_price'] = toFloat($data['discount_price']);
+        if (!empty($data['price'])) 
+        { 
+            if (!empty($data['discount_price'])) 
+            {
+                $dataUpdate['discount_price'] = toFloat($data['discount_price']);
+            }
+            elseif (!empty($data['discount_percent'])) 
+            {
+                $dataUpdate['discount_percent'] = toFloat($data['discount_percent']);
+            } 
         }
-        elseif (!empty($data['discount_percent'])) 
-        {
-            $dataUpdate['discount_percent'] = toFloat($data['discount_percent']);
-        } 
 
         Courses::where('id', $this->id_course)
         ->where('id_user', $this->user->id)

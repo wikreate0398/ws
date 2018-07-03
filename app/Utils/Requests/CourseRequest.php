@@ -30,7 +30,7 @@ class CourseRequest implements RequestInterface
 
     public function canMakeRequest()
     {  
-        if ($this->auth_user->id && $this->course) 
+        if (@$this->auth_user->id && $this->course) 
         { 
             if ($this->ifSelfCourse() == true or $this->auth_user->user_type != 1) 
             { 
@@ -78,7 +78,7 @@ class CourseRequest implements RequestInterface
 
     public function ifHasRequest()
     { 
-        if (in_array($this->auth_user->id, $this->course->userRequests->pluck('id')->toArray()) == true) 
+        if (in_array(@$this->auth_user->id, @$this->course->userRequests->pluck('id')->toArray()) == true) 
         {
             return true;
         }

@@ -26,4 +26,9 @@ class Page
 	{ 
 		(request()->segment(1) == $url) ? true : false;
 	}
+
+	public function currentPage($url)
+	{
+		return Menu::where('url', $url)->first();
+	}
 }

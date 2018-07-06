@@ -139,7 +139,11 @@
 
 		<div class="col-md-3">
 			<div class="course__trainers_box">
-				<h3>ПРЕПОДАВАТЕЛИ КУРСА</h3>
+				@if($course->user->user_type == 2)
+					<h3>ПРЕПОДАВАТЕЛь КУРСА</h3>
+				@else
+					<h3>ПРЕПОДАВАТЕЛИ КУРСА</h3>
+				@endif
 				<div class="trainer__box">
 					<div class="trainer_photo" style="background-image: url(/public/uploads/users/{{ $course->user->avatar ? $course->user->avatar : $course->user->image }}{{'?v=' . time()}})"> 
 					</div>

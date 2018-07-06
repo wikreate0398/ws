@@ -27,6 +27,7 @@
                     <div role="tabpanel" class="tab-pane active" id="user">
                         <form class="form-horizontal ajax__submit" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
+                            <input type="hidden" name="redirectUri" value="{{ request('redirectUri') }}">
                             <input type="hidden" name="user_type" value="1">
                             <div class="row" style="padding-top:20px;">
                                 <div class="col-md-12">

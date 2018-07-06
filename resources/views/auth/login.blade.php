@@ -55,7 +55,8 @@
 									Войти
 								</button>
 								<div class="clearfix"></div>
-								<a class="btn btn-link" href="{{ route('registration') }}">
+								@php $redirectUri =  request('redirectUri') ? '?redirectUri='.request('redirectUri') : '' @endphp
+								<a class="btn btn-link" href="{{ route('registration') . $redirectUri }}">
 									Регистрация
 								</a>
 								/

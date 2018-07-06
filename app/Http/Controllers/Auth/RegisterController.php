@@ -88,7 +88,7 @@ class RegisterController extends Controller
   
         if (empty($user->activate)) {
             User::where('id', $user->id)
-                  ->update(['activate' => 1, 'confirm_date' => date('Y-m-d H:i:s'), 'confirm' => 1]);
+                  ->update(['activate' => 1, 'confirm_date' => date('Y-m-d H:i:s'), 'confirm' => 1, 'redirectUri' => null]);
         }
 
         return view('auth.confirmation', compact('user')); 

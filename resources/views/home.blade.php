@@ -283,6 +283,8 @@
             </div>
         </div>
     </div> 
+
+    @if(Auth::check())
 	<div class="container user_type_block">
 		<div class="row">
 			<div class="col-lg-12">
@@ -320,4 +322,5 @@
 			</div>
 		</div>
 	</div>
+    @endif
 @stop

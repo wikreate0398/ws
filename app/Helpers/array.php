@@ -157,89 +157,7 @@ function ifNull($data=''){
     }
     return $data;
 }
-  
-  
-if (!function_exists('newthumbs')) {
-    function newthumbs($photo = '', $dir = '', $width = 0, $height = 0, $version = 0, $zc = 0)
-    {
-        return '';
-        //echo $dir; 
-        if (empty($photo) or !file_exists($dir . '/' . $photo)) {
-            $photo = "no-image.png";
-            if (!file_exists($dir . "/no-image-no-image-no-image.png")) {
-                copy(realpath('uploads') . "/no-image.png", $dir . "/" . $photo);
-            }
-        }
-        if (!file_exists($dir . '/' . $photo)) {
-            if (file_exists($dir . '/' . str_replace('.jpg', '.JPG', $photo))) {
-                $photo = str_replace('.jpg', '.JPG', $photo);
-            } elseif (file_exists($dir . '/' . str_replace(' .jpg', '.jpg', $photo))) {
-                $photo = str_replace(' .jpg', '.jpg', $photo);
-            } elseif (file_exists($dir . '/' . substr($photo, 1))) {
-                $photo = substr($photo, 1);
-            }
-        }
-        require_once(public_path('libs/phpthumb/phpthumb.class.php')); 
-        // echo $dir;exit();
-        $result = is_dir(realpath($dir) . '/thumbs');
-        if ($result) {
-            $prevdir = $dir . '/thumbs';
-        } else {
-            if (mkdir(realpath($dir) . '/thumbs')) {
-                $prevdir = $dir . '/thumbs';
-            } else {
-                return realpath('uploads') . '/no-image.png';
-            }
-        }
-        if (!empty($version)) {
-            $result = is_dir(realpath($dir) . '/thumbs/version_' . $version);
-            if ($result) {
-                $prevdir = $dir . '/thumbs/version_' . $version;
-            } else {
-                if (mkdir(realpath($dir) . '/thumbs/version_' . $version)) {
-                    $prevdir = $dir . '/thumbs/version_' . $version;
-                } else {
-                    return realpath('uploads') . '/no-image.png';
-                }
-            }
-        }
-        //$ext=end(explode('.',$photo));
-        $ext    = pathinfo($photo, PATHINFO_EXTENSION);
-        $timg   = realpath($dir) . '/' . $photo;
-        $catimg = realpath($prevdir) . '/' . $photo;
-        if (is_file($timg) && !is_file($catimg)) {
-            $opath1   = realpath($dir) . '/';
-            $opath2   = realpath($prevdir) . '/';
-            $dest     = $opath2 . $photo;
-            $source   = $opath1 . $photo;
-            $phpThumb = new phpThumb();
-            $phpThumb->setSourceFilename($source);
-            if (!empty($width))
-                $phpThumb->setParameter('w', $width);
-            if (!empty($height))
-                $phpThumb->setParameter('h', $height);
-            if ($ext == 'png')
-                $phpThumb->setParameter('f', 'png');
-            if (!empty($zc)) {
-                $phpThumb->setParameter('zc', '1');
-            }
-            $phpThumb->setParameter('q', 100);
-            if ($phpThumb->GenerateThumbnail()) {
-                if ($phpThumb->RenderToFile($dest)) {
-                    $img = $prevdir . '/' . $photo;
-                } else {
-                    return realpath('uploads') . '/no-image.png';
-                }
-            }
-        } elseif (is_file($catimg)) {
-            $img = $prevdir . '/' . $photo;
-        } else {
-            return realpath('uploads') . '/no-image.png';
-        }
-        return $img;
-    }
-}
-
+   
 function noImg()
 {
     return '/public/uploads/no-image.png';
@@ -428,7 +346,19 @@ function imageThumb($image, $path, $width, $height, $v)
 
     if (!file_exists($imgeThumbnailPath) or empty($image)) 
     {
-        return "http://via.placeholder.com/{$width}x{$height}/00d2ff/ffffff";
+        //return "https://via.placeholder.com/{$width}x{$height}/00d2ff/ffffff";
+        $explodePath = explode('/', $path);
+        $defImg = 'no-image.jpg';
+        if (end($explodePath) == 'users') 
+        {
+            $defImg = 'no-avatar.jpg';
+        } 
+
+        $img = Image::make(public_path('uploads/' . "/" . $defImg))->fit($width, $height, function ($constraint) {
+            $constraint->upsize();
+        });
+        $img->save(public_path($path . $thumbPath . "/" . $defImg));
+        return $path . $thumbPath . "/" . $defImg;
     }
 
     return env('APP_URL') . '/' . $path . $thumbPath . "/$image"; 

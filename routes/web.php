@@ -284,4 +284,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 });
  
 
+ Route::any('{all}', 'PagesController@page')->where('all', '.*');
+
  

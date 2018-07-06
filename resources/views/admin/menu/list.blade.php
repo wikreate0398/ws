@@ -8,11 +8,19 @@
 	            	{{ $item['name'] }}  
 	          	</p>
 	          	<p style="float:right; margin:0 !important;"> 
+	          		В шапке:
 	          		<input type="checkbox" 
-	          		       class="make-switch" data-size="mini" {{ !empty($item['view']) ? 'checked' : '' }} 
+	          		       class="make-switch" data-size="mini" {{ !empty($item['view_top']) ? 'checked' : '' }} 
 	          		       data-on-text="<i class='fa fa-check'></i>" 
 	          		       data-off-text="<i class='fa fa-times'></i>" 
-	          		       onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $item["id"] }}')"> 
+	          		       onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $item["id"] }}', 'view_top')"> 
+	          		&nbsp;&nbsp;
+	          		В подвале:
+	          		<input type="checkbox" 
+	          		       class="make-switch" data-size="mini" {{ !empty($item['view_bottom']) ? 'checked' : '' }} 
+	          		       data-on-text="<i class='fa fa-check'></i>" 
+	          		       data-off-text="<i class='fa fa-times'></i>" 
+	          		       onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $item["id"] }}', 'view_bottom')"> 
 	             	<a style="margin-left: 5px;" href="/{{ $method }}/{{ $item['id'] }}/edit/" class="btn btn-primary btn-xs">Редактировать</a>  
 	             	<a class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal_{{ $table }}_{{ $item['id'] }}">Удалить</a>  
 	            	<!-- Modal -->

@@ -83,10 +83,10 @@
                     </div>
                 </div> 
 
-                <div class="row">
+                <div class="row universities_catalog">
                     @foreach($universities as $university)
                         <div class="col-md-4">
-                            <div class="university__item">
+                            <div class="university__item eq_list__item">
                                 <div class="university__img">
                                     <a href="/university/{{ $university->id }}/">
                                         <img class="img-responsive" src="{{ imageThumb(@$university->user->avatar, 'uploads/users', 400, 300, 'universities') }}">

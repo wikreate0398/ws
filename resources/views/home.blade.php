@@ -6,11 +6,18 @@
             <div class="col-lg-12">
                 <h2 class="header_block">ПОПУЛЯРНЫЕ КУРСЫ</h2>
                 <ul class="nav nav-tabs popular_courses">
+
+                    <li class="active">
+                        <a data-toggle="tab" href="#course_all">
+                            Все
+                        </a>
+                    </li>
+
                     @php $i=0; @endphp
                     @foreach($courseCategories as $category)
-                        <li class="{{ ($i==0) ? 'active' : '' }}">
+                        <li class="">
                             <a data-toggle="tab" href="#course_category_{{ $category->id }}">
-                                {{ $category->name }} {{ count($category->courses) }}
+                                {{ $category->name }}
                             </a>
                         </li> @php $i++ @endphp
                     @endforeach 
@@ -19,12 +26,101 @@
             </div>
             <div class="col-lg-12">
                 <div class="tab-content">
+
+                    <div id="course_all" class="tab-pane fade in active"> 
+                        @foreach($allCourses as $course)  
+                        <div class="col-lg-4">
+                            <div class="external_card eq_list__item">
+                                <div class="caption">
+                                    <ul class="list-inline card_tag">
+                                        <li class="tag_sticker">
+                                            <span>{{ @$course->category->name }}</span>
+                                        </li> 
+                                        @if(@Auth::check()) 
+                                            @php 
+                                                $favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); 
+                                            @endphp
+                                            <li class="bookmark_tag">
+                                                <i class="fa course_heart 
+                                                   {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+                                                   onclick="courseFavorite(this, {{ $course->id }});"  
+                                                   aria-hidden="true"></i> 
+                                            </li> 
+                                        @endif 
+                                    </ul>
+                                    <h3>{{ $course->name }}</h3> 
+                                    <h4>
+                                        @if($course->user->user_type==3)
+                                            {{ $course->user->university['full_name'] }} 
+                                        @else
+                                            {{ $course->user->name }} 
+                                        @endif
+                                    </h4>
+                                    <ul class="list-unstyled card_info">
+                                        <li>
+                                            Стоимость 
+                                            <span> 
+                                                @if($course->pay == 1)
+                                                    бесплатно
+                                                @else
+                                                    ₽{{ priceString(Course::generatePrice($course)) }}
+                                                @endif 
+                                            </span>
+                                        </li>
+                                        <li>
+                                            Длительность 
+                                            <span>
+                                                @php 
+                                                    $diff = dateDiff($course->date_from, $course->date_to);
+                                                @endphp
+                                                @if($diff->m)
+                                                    {{ $diff->m }} {{ monthCase($diff->m) }}
+                                                @endif 
+
+                                                @if($diff->d) 
+                                                    @if($diff->m)
+                                                        и
+                                                    @endif 
+                                                    {{ $diff->d }}  
+                                                    @php 
+                                                        echo dayCase($diff->d);
+                                                    @endphp  
+                                                @endif 
+                                            </span>
+                                        </li>
+                                        <li>
+                                            Рейтинг 
+                                            <span class="rating_star"> 
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i> 
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-inline card_date_info">
+                                        <li class="left_date"><i class="fa fa-user"></i> {{ $course->user_requests_count }}</li> 
+                                        @php 
+                                            $esablishDate = Course::manager($course)->esablishDate();  
+                                        @endphp
+                                        <li class="right_date"> 
+                                            {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}
+                                        </li> 
+                                    </ul>
+                                    <div class="more_card"><a href="/course/{{ $course->id }}">Подробнее</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach  
+                    </div>
+
                     @php $i=0; @endphp
                     @foreach($courseCategories as $category) 
-                    <div id="course_category_{{ $category->id }}" class="tab-pane fade in {{ ($i==0) ? 'active' : '' }}"> 
+                    <div id="course_category_{{ $category->id }}" class="tab-pane fade in"> 
                         @foreach($category->courses as $course)  
                         <div class="col-lg-4">
-                            <div class="external_card">
+                            <div class="external_card eq_list__item">
                                 <div class="caption">
                                     <ul class="list-inline card_tag">
                                         <li class="tag_sticker">
@@ -199,7 +295,7 @@
 					<p>
 						Найдите учебный курс с наиболее подходящим для вас содержанием и условием обучения. Получите доступ к максимально полной базе онлайн-семинаров, лекций и полноценных учебных программ!
 					</p>
-					<a href="">ИСКАТЬ КУРС</a>
+					<a href="{{ route('registration') }}?type=user">ИСКАТЬ КУРС</a>
 				</div>
 			</div>
 			<div class="col-lg-4">
@@ -209,7 +305,7 @@
 					<p>
 						Станьте нашим партнером, разместив максимально подробную информацию о вашем учебном заведении на страницах нашего сайта. Расскажите о вашем ВУЗе или онлайн-школе потенциальным абитуриентам!
 					</p>
-					<a href="">СТАТЬ ПАРТНЕРАМИ</a>
+					<a href="{{ route('registration') }}?type=teacher">СТАТЬ ПАРТНЕРАМИ</a>
 				</div>
 			</div>
 			<div class="col-lg-4">
@@ -219,7 +315,7 @@
 					<p>
 						Создайте профиль на нашем сайте, опишите свою квалификацию и направление работы – и уже скоро вы сможете передавать свои знания максимальному количеству учеников.
 					</p>
-					<a href="">НАЧАТЬ ОБУЧАТЬ</a>
+					<a href="{{ route('registration') }}?type=university">НАЧАТЬ ОБУЧАТЬ</a>
 				</div>
 			</div>
 		</div>

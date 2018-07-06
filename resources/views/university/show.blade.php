@@ -259,11 +259,78 @@
          </div>
       </div>
       <div class="col-md-3">
-          
+          <div class="vuz__card_sidebar">
+            <div class="vuz__logo" style="background-image: url(/public/uploads/users/{{ $university->user->avatar ? $university->user->avatar : $university->user->image }}{{'?v=' . time()}});)"> 
+            </div>
+            <div class="vuz__price_box">
+              <small>От</small>
+              <span class="vuz_price">
+                {{ priceString($university->price) }}
+              </span>
+              <small>р./год</small>
+              <button class="default__btn btn_study_here">ХОЧУ УЧИТЬСЯ ЗДЕСЬ</button>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <sup>4.5</sup>
+              <a href="" class="vuz__review_link">15 отзывов</a>
+            </div>
+          </div>
       </div>
    </div>
 </div>
 <style>
+
+.vuz__card_sidebar{
+  text-align: center;
+  background: rgba(242, 242, 242, 1);
+  padding: 20px;
+}
+
+.vuz__logo{
+  width: 100%;
+  padding-bottom: 100%;
+  background-color: #ccc;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.vuz_price{
+  font-size: 30px;
+}
+
+.vuz__price_box small{
+  color: #999999;
+}
+
+.vuz__review_link{
+  display: block;
+}
+
+      .default__btn{
+          width: 100%; 
+          color: #fff;
+          text-transform: uppercase;
+          border-radius: 20px;
+          padding:10px 0;
+          border:none;
+          outline: none;
+          font-size: 13px;
+          margin-bottom: 10px;
+          display: inline-block;
+          text-align: center;
+          text-decoration: none;
+       }
+
+       .default__btn.btn_study_here{
+          background-color: rgba(153, 153, 204, 1);
+          font-weight: bold;
+          margin: 10px 0;
+       }
+
     .university__news a{
         color: #333;
         text-decoration:underline;

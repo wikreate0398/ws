@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
-    @if(request()->input('type')==2)
+@section('content') 
+    @if(in_array(request()->input('type'), ['teacher', 'user', 'university']))
     <script>
         $(document).ready(function(){
-            $('a[href="#teacher"]').click();
+            $('a[href="#{{ request()->input('type') }}"]').click();
         });
     </script>
     @endif

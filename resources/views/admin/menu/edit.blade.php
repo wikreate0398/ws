@@ -24,7 +24,7 @@
 						<div class="tab-pane active" id="tab_1"> 
 							@include('admin.utils.input', ['label' => 'Название', 'name' => 'name', 'value' => $data['name']])
 							
-							@if($data['alone'] == 0)
+							@if($data['page_type'] != 'home')
 								@include('admin.utils.input', ['label' => 'Ссылка', 'name' => 'url', 'value' => $data['url'], 'help' => 'Без http://www и.т.п просто английская фраза, без пробелов, отражающая пункт меню, например Наш подход - our-approach'])  
 							@endif
 

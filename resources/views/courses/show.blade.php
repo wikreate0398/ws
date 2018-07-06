@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container no__home">
-	<div class="row">
-		<div class="col-md-12 course__in">
+	<div class="row course__in">
+		<div class="col-md-9">
 			<ul class="breadcrumb">
 				<li><a href="/">Главная</a></li>
 				<li><a href="/courses">Курсы</a></li>
@@ -136,6 +136,26 @@
 			</div>
 			<a href="/courses" class="btn btn-default">Вернуться в каталог курсов</a>
 		</div>
+
+		<div class="col-md-3">
+			<div class="course__trainers_box">
+				<h3>ПРЕПОДАВАТЕЛИ КУРСА</h3>
+				<div class="trainer__box">
+					<div class="trainer_photo" style="background-image: url(/public/uploads/users/{{ $course->user->avatar ? $course->user->avatar : $course->user->image }}{{'?v=' . time()}})"> 
+					</div>
+					<div class="trainer_name">
+						@if($course->user->user_type==3)
+			            		{{ $course->user->university['full_name'] }} 
+			            	@else
+								{{ $course->user->name }} 
+			            @endif
+					</div>
+					<div class="trainer_description">
+						{{ str_limit($course->user->about, 100) }} 
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <script>
@@ -145,6 +165,51 @@
 </script>
 
 <style>
+
+	.course__trainers_box{
+		background: #f2f2f2;
+		padding:0 20px 50px 20px;
+		text-align: center;
+	}
+
+	.course__trainers_box h3{
+		text-transform: uppercase;
+		font-weight: 700;
+		text-align: center;
+		font-size: 16px;
+		color: #333 !important;
+		padding: 25px 0;
+		margin: 0;
+	}
+
+	.trainer__box{
+		background: #fff;
+		border-radius: 5%;
+		box-shadow: 0 1px 3px rgba(0,0,0,.3);
+		padding: 15px;
+	}
+
+	.trainer_photo{
+		border-radius: 50%;
+		width: 100px;
+		height: 100px;
+		margin: auto;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+	}
+
+	.trainer_name{
+		text-transform: uppercase;
+		font-weight: bold;
+		color: #333;
+		font-size: 13px;
+		margin:15px 0;
+	}
+
+	.trainer_description{
+		font-size: 12px;
+	}
 
 	.course__in h1{
 		text-transform: uppercase;

@@ -78,7 +78,7 @@
 							</li>
 							@else 
 							<li class="register_link">
-								<a href="{{ route('registration') }}?type=2">Хочу обучать</a>
+								<a href="{{ route('registration') }}?type=teacher">Хочу обучать</a>
 							</li>
 							<li>
 								<a href="{{ route('login') }}">Войти</a>
@@ -108,10 +108,13 @@
                     <div class="col-md-7" style="text-align: center;">
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                           <ul class="nav navbar-nav">
-                            <li><a href="/about/">О ПРОЕКТЕ</a></li>
-                            <li><a href="/courses/">КУРСЫ</a></li>
-                            <li><a href="/universities/">ВУЗЫ И ШКОЛЫ</a></li>
-                            <li><a href="/teachers/">ПРЕПОДАВАТЕЛИ</a></li>
+                            @foreach(Page::top() as $menu)
+                                <li>
+                                    <a class="{{ (request()->segment(1) == $menu['url']) ? 'active' : '' }}" href="/{{ $menu['url'] }}">
+                                        {{ $menu['name'] }}
+                                    </a>
+                                </li>
+                            @endforeach 
                           </ul> 
                         </div>
                     </div>  
@@ -261,10 +264,14 @@
 				<div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1">
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
-							<ul class="list-inline footer_menu">
-								<li><a href="">О ПРОЕКТЕ</a></li>
-								<li><a href="">РЕКЛАМА НА САЙТЕ</a></li>
-								<li><a href="">ВУЗАМ И ПРЕПОДАВАТЕЛЯМ</a></li>
+							<ul class="list-inline footer_menu"> 
+                                @foreach(Page::bottom() as $menu)
+                                    <li>
+                                        <a class="{{ (request()->segment(1) == $menu['url']) ? 'active' : '' }}" href="/{{ $menu['url'] }}">
+                                            {{ $menu['name'] }}
+                                        </a>
+                                    </li>
+                                @endforeach  
 							</ul>
 						</div>
 					</div>

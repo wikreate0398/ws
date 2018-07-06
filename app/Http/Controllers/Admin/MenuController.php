@@ -43,7 +43,7 @@ class MenuController extends Controller
     public function create(Request $request)
     {
         $input        = $request->all(); 
-        $input['url'] = str_slug($input['url'], '-'); 
+        $input['url'] = !empty($input['url']) ? str_slug($input['url'], '-') : str_slug($input['name'], '-'); 
         Menu::create($input);
         return \App\Utils\JsonResponse::success(['redirect' => route('admin_menu')], trans('admin.save')); 
     }
@@ -57,10 +57,11 @@ class MenuController extends Controller
     { 
         $data         = Menu::findOrFail($id); 
         $input        = $request->all(); 
-        if ($request->has('url') )
+        if ($data['page_type'] != 'home') 
         {
-            $input['url'] = str_slug($input['url'], '-'); 
-        }         
+            $input['url'] = !empty($input['url']) ? str_slug($input['url'], '-') : str_slug($input['name'], '-'); 
+        } 
+
         $data->fill($input)->save(); 
         return \App\Utils\JsonResponse::success(['redirect' => route('admin_menu')], trans('admin.save')); 
     } 

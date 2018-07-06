@@ -532,7 +532,8 @@ header .header_bottom .dropdown-menu li a{
 }
  
 header .header_bottom .navbar-default li a:focus,
-header .header_bottom .navbar-default li a:hover{
+header .header_bottom .navbar-default li a:hover,
+header .header_bottom .navbar-default li a.active{
 	color: #b93777;
 }
 header .header_bottom .navbar-default .nav .open > a, header .header_bottom .navbar-default .nav .open > a:focus, header .header_bottom .navbar-default .nav .open > a:hover {
@@ -2199,7 +2200,8 @@ footer .footer_menu li a{
 	text-transform: uppercase;
 }
 footer .footer_menu li a:focus,
-footer .footer_menu li a:hover{
+footer .footer_menu li a:hover,
+footer .footer_menu li a.active{
     color: #fff;
 	text-decoration: none;
 }

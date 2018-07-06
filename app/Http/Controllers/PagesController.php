@@ -13,6 +13,7 @@ use App\Models\UsersUniversity;
 use App\Models\Courses;
 use App\Models\CourseCategory; 
 use Illuminate\Http\Request; 
+use App\Models\Menu;
 
 class PagesController extends Controller
 {
@@ -40,13 +41,22 @@ class PagesController extends Controller
             ],  
             'courseCategories' => CourseCategory::with(['courses' => function($query){ 
                                     $query->published()->withCount('userRequests');
-                                }])->where('parent_id','0')->has('courses', '>=', '1')->get(),
+                                }])->where('parent_id','0')->has('courses', '>=', '1')
+                                  ->withCount('courses')->orderByDesc('courses_count')
+                                  ->limit(5)
+                                  ->get(),
             'scripts' => [ 
                 'js/courses.js'
-            ]
+            ],
+            'allCourses' => Courses::published()->orderByCourses()->limit(6)->get()
         ];  
 
         return view('home', $data);
+    }
+
+    public function page($url)
+    { 
+        return view('pages/page', ['page' => Menu::where('url', $url)->firstOrFail()]);
     }
  
 

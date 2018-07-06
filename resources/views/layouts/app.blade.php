@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>{{ @Page::currentPage(request()->segment(1))->seo_title }}</title>
-    <meta name="description" content="{{ @Page::currentPage(request()->segment(1))->seo_description }}">
-    <meta name="seo_keywords" content="{{ @Page::currentPage(request()->segment(1))->seo_keywords }}"> 
+    <title>{{ @Page::meta(request()->segment(1))->seo_title }}</title>
+    <meta name="description" content="{{ @Page::meta(request()->segment(1))->seo_description }}">
+    <meta name="seo_keywords" content="{{ @Page::meta(request()->segment(1))->seo_keywords }}"> 
 
     <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
 

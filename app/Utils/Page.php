@@ -27,7 +27,7 @@ class Page
 		(request()->segment(1) == $url) ? true : false;
 	}
 
-	public function currentPage($url)
+	public function meta($url)
 	{
 		return Menu::where('url', $url)->first();
 	}

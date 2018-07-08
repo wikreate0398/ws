@@ -85,6 +85,11 @@ class CourseController extends TeacherController
 
         $user    = Auth::user();
         $course = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
+
+        if ($this->_course->manager($course)->isStarted() && $formSection !== 'сertificates') 
+        { 
+            return redirect()->route(userRoute('edit_course_сertificates'), ['id' => $id_course]);
+        }
  
         return view('users.profile_types.teacher.courses.edit.' . $view, [ 
             'user'       => Auth::user(),  
@@ -198,7 +203,8 @@ class CourseController extends TeacherController
     public function deleteCourse($id_course)
     {  
         $crudFactory = $this->_course->crud($id_course, Auth::user());
-        if ($crudFactory->hasAccessCourse($id_course, Auth::user()->id)) 
+        if ($crudFactory->hasAccessCourse($id_course, Auth::user()->id) &&
+            $this->_course->manager(Courses::whereId($id_course)->first())->isStarted() != true) 
         {
             $crudFactory->delete($id_course, Auth::user()->id); 
         }

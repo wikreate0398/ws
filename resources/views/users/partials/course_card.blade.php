@@ -81,9 +81,11 @@
 				<div class="col-lg-6">
 					<div class="more_card"><a href="{{ route(userRoute('edit_course'), ['id' => $course->id]) }}">Управлять курсом</a></div>
 				</div>
-				<div class="col-lg-6">
-					<div class="more_card delete__item"><a href="{{ route(userRoute('delete_course'), ['id' => $course->id]) }}">Удалить</a></div>
-				</div>
+				@if(!Course::manager($course)->isStarted()) 
+					<div class="col-lg-6">
+						<div class="more_card delete__item"><a href="{{ route(userRoute('delete_course'), ['id' => $course->id]) }}">Удалить</a></div>
+					</div>
+				@endif
 			</div>
 		</div>
 	</div>

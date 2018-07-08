@@ -17,22 +17,11 @@ class State extends Course
         parent::__construct();
         $this->id     = @$course->id; 
         $this->course = $course;
-    }  
-
-    // public function _requestInstance($authUserId = null)
-    // { 
-    //     $authUserId = $authUserId ? $authUserId : @Auth::user()->id;
-    //     if ($this->_request != null && $this->id == $this->_request->getCourse()->id) 
-    //     { 
-    //         return $this->_request;
-    //     }   
-    //     $this->_request = new CourseRequestClass($this->id, $authUserId);
-    //     return $this->_request;
-    // }
-
+    }   
+    
     public function isFinished()
     {  
-        if (dateToTimestamp($this->course->date_to) < dateToTimestamp(date('Y-m-d'))) 
+        if (dateToTimestamp(@$this->course->date_to) < dateToTimestamp(date('Y-m-d')) && @$this->course->settings_filled == 1) 
         {
             return true;
         }
@@ -40,15 +29,17 @@ class State extends Course
 
     public function isNotStarted()
     {
-        if (dateToTimestamp($this->course->date_from) > dateToTimestamp(date('Y-m-d'))) 
+        if (dateToTimestamp($this->course->date_from) > dateToTimestamp(date('Y-m-d')) && @$this->course->settings_filled == 1) 
         {
             return true;
         }
     }
 
     public function isStarted()
-    {
-        if (dateToTimestamp($this->course->date_from) <= dateToTimestamp(date('Y-m-d')) && !$this->isFinished()) 
+    { 
+        if (dateToTimestamp(@$this->course->date_from) <= dateToTimestamp(date('Y-m-d')) 
+            && !$this->isFinished() 
+            && @$this->course->settings_filled == 1) 
         {
             return true;
         }

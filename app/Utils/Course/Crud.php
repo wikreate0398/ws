@@ -112,7 +112,12 @@ class Crud extends Course
     } 
 
     public function validation(array $data, $type='general')
-    {
+    { 
+        if ($this->manager(Courses::whereId($this->id_course)->first())->isStarted() == true && $this->id_course != null) 
+        {
+            return 'Ошибка';
+        }
+
         $errors = []; 
         switch ($type) {
             case 'general':

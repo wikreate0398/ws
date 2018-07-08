@@ -463,6 +463,7 @@ class User
     public function isProfileFilled()
     {
         $data = ModelUser::with(['direction', 'subjects', 'lesson_options', 'teacherSpecializations'])->whereId($this->userId)->first()->toArray(); 
+
         $flag = 1; 
         $requiredFields = [
             'name',
@@ -475,14 +476,14 @@ class User
             'phone',
             'email', 
             'price_hour',
-            'teacherSpecializations',
+            'teacher_specializations',
             'direction',
             'subjects',
             'lesson_options', 
         ]; 
         foreach ($requiredFields as $key => $value) {
             if (empty($data[$value])) 
-            { 
+            {  
                 $flag = 0; 
             }
         }    
@@ -496,6 +497,7 @@ class User
         {
             $flag=1;
         }
+
         ModelUser::whereId($this->userId)->update(['data_filled' => $flag]);
     }
 }

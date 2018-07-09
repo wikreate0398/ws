@@ -69,28 +69,6 @@
 
 <body>
 	<header>
-		<div class="container">
-			<div class="header_top">
-				<div class="row">
-					<div class="col-lg-12">
-						<ul class="list-inline header_top_nav">
-							@if(Auth::check())
-							<li>
-								<a href="{{ route('logout') }}">Выйти</a>
-							</li>
-							@else 
-							<li class="register_link">
-								<a href="{{ route('registration') }}?type=teacher">Хочу обучать</a>
-							</li>
-							<li>
-								<a href="{{ route('login') }}">Войти</a>
-							</li>
-							@endif
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="header_bottom">
 			<nav class="navbar navbar-default">
 			  <div class="container">
@@ -122,24 +100,26 @@
                     </div>  
 
                     <div class="col-md-3">
-                        @if(Auth::check())
-                          <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="{{ route(userRoute('user_profile')) }}">
-                                    <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
-                                </a>
-                            </li>
-                            <li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
-                            <!-- <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="/images/icon_profile2.png"></a>
-                              <ul class="dropdown-menu">
-                                <li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
-                                <li role="separator" class="divider"></li> 
-                              </ul>
-                            </li> -->
-                          </ul>
-                        @endif
+						<ul class="nav navbar-nav navbar-right">
+							@if(Auth::check())<li>
+								<li>
+									<a href="{{ route(userRoute('user_profile')) }}">
+										<img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
+									</a>
+								</li>
+								<li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
+								<li>
+									<a href="{{ route('logout') }}">Выйти</a>
+								</li>
+							@else 
+								<li class="register_link">
+									<a href="{{ route('registration') }}?type=teacher">Хочу обучать</a>
+								</li>
+								<li>
+									<a href="{{ route('login') }}">Войти</a>
+								</li>
+							@endif
+                        </ul>
                     </div>       
                 </div>
 				 
@@ -430,6 +410,36 @@
             {!! setScript('/public/', $script) !!}
         @endforeach
     @endif 
+	
+	<!-- Yandex.Metrika counter -->
+	<script type="text/javascript" >
+		(function (d, w, c) {
+			(w[c] = w[c] || []).push(function() {
+				try {
+					w.yaCounter49528195 = new Ya.Metrika2({
+						id:49528195,
+						clickmap:true,
+						trackLinks:true,
+						accurateTrackBounce:true,
+						webvisor:true
+					});
+				} catch(e) { }
+			});
+
+			var n = d.getElementsByTagName("script")[0],
+				s = d.createElement("script"),
+				f = function () { n.parentNode.insertBefore(s, n); };
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://mc.yandex.ru/metrika/tag.js";
+
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else { f(); }
+		})(document, window, "yandex_metrika_callbacks2");
+	</script>
+	<noscript><div><img src="https://mc.yandex.ru/watch/49528195" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	<!-- /Yandex.Metrika counter -->
 </body>
 
 </html>

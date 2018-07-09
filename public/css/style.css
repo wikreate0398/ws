@@ -466,9 +466,6 @@ header .header_top_nav li a{
 	color: #1d3369;
 	text-transform: uppercase;
 }
-header .header_top_nav .register_link a{
-	color: #b93777;
-}
 header .header_bottom{
 	background: url(../images/header_bg1.jpg);
 	padding-top: 40px;
@@ -501,7 +498,6 @@ header .header_bottom .navbar-default .navbar-nav{
     float: none;
     text-align: center;
 }
-
 .header__items{
     display: flex;
     align-items: center;
@@ -553,7 +549,9 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
     background: transparent;
 }
  
-
+header .header_bottom .navbar-right .register_link a{
+	color: #b93777;
+}
 
 /* Заголовки блоков */
 .header_block{

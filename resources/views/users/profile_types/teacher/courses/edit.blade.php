@@ -17,7 +17,7 @@
       </div>
       @php
          $disabled = '';
-         if(Course::manager($course)->isStarted()){
+         if(Course::manager($course)->canManage() != true){
             $disabled = 'disabled';
          }
       @endphp
@@ -36,7 +36,7 @@
                <a href="#programm" aria-controls="programm" onclick="window.location='<?=route(userRoute('edit_course_program'), ['id' => $course->id])?>'" role="tab" data-toggle="tab">Программа курса</a>
             </li>
             <li role="presentation" 
-                class="{{ isActive(route(userRoute('course_participants'), ['id' => $course->id])) ? 'active' : '' }} {{ $disabled }}">
+                class="{{ isActive(route(userRoute('course_participants'), ['id' => $course->id])) ? 'active' : '' }}">
                <a href="#participants" aria-controls="participants" onclick="window.location='<?=route(userRoute('course_participants'), ['id' => $course->id])?>'" role="tab" data-toggle="tab">Участники курса ({{ count($course->userRequests) }})</a>
             </li>
             <li role="presentation" 

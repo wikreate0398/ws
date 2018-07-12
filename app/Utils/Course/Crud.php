@@ -113,7 +113,7 @@ class Crud extends Course
 
     public function validation(array $data, $type='general')
     { 
-        if ($this->manager(Courses::whereId($this->id_course)->first())->isStarted() == true && $this->id_course != null) 
+        if ($this->manager(Courses::whereId($this->id_course)->first())->canManage() == false && $this->id_course != null) 
         {
             return 'Ошибка';
         }

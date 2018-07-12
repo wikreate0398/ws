@@ -45,6 +45,15 @@ class State extends Course
         }
     }
 
+    public function canManage()
+    {
+        if ($this->isStarted() or $this->isFinished()) 
+        {
+            return false;
+        }
+        return true;
+    }
+
     public function ifCourseHide()
     { 
         $today        = dateToTimestamp(date('Y-m-d')); 

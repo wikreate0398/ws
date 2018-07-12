@@ -86,7 +86,7 @@ class CourseController extends UniversityController
         $user    = Auth::user();
         $course = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
 
-        if ($this->_course->manager($course)->isStarted() && $formSection !== 'сertificates') 
+        if (!$this->_course->manager($course)->canManage() && !in_array($formSection, ['сertificates', 'participants'])) 
         { 
             return redirect()->route(userRoute('edit_course_сertificates'), ['id' => $id_course]);
         }
@@ -204,7 +204,7 @@ class CourseController extends UniversityController
     {  
         $crudFactory = $this->_course->crud($id_course, Auth::user());
         if ($crudFactory->hasAccessCourse($id_course, Auth::user()->id) &&
-            $this->_course->manager(Courses::whereId($id_course)->first())->isStarted() != true) 
+            $this->_course->manager(Courses::whereId($id_course)->first())->canManage() != true) 
         {
             $crudFactory->delete($id_course, Auth::user()->id); 
         }

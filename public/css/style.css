@@ -466,11 +466,9 @@ header .header_top_nav li a{
 	color: #1d3369;
 	text-transform: uppercase;
 }
-header .header_top_nav .register_link a{
-	color: #b93777;
-}
 header .header_bottom{
 	background: url(../images/header_bg1.jpg);
+	background-position: center;
 	padding-top: 40px;
 	padding-bottom: 40px;
 }
@@ -506,21 +504,53 @@ header .header_bottom .navbar-default .navbar-nav{
     align-items: center;
 }
 
-.cities_header select{
+.cities_header a{
+    display: block;
+    font-size: 15px !important;
+    line-height: 15px !important;
+    text-transform: uppercase !important;
+    color: #000 !important;
+    font-family: 'Bebas Neue Regular' !important;
+    border: 1px solid #000;
+    padding:10px 20px !important;
+    text-decoration:none;
+}
+
+.cities_header a i{
+    position: relative;
+    top: -3px;
+}
+
+
+
+.select2-container--default .select2-selection--single{ 
+    outline: none !important;
+}
+
+
+/*.cities_header select{
     max-width: 165px;
 }
 
-.cities_header .select2-container--default .select2-selection--single{
+ .select2-container--default .select2-selection--single{
     border: 1px solid #525351;
     background: transparent !important;
     outline: none !important;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered{
+.cities_header .select2-container--default .select2-selection--single .select2-selection__arrow b{
+    display: block;
+    border-color: #000 transparent transparent transparent;
+}
+*/
+/*.cities_header .select2-container--default .select2-selection--single .select2-selection__arrow{
+    top: 4px;
+}*/
+
+/*.select2-container--default .select2-selection--single .select2-selection__rendered{
     color: #000 !important;
     font-family: 'Bebas Neue Regular';
-}
-
+}*/
 .header__items{
     display: flex;
     align-items: center;
@@ -543,7 +573,15 @@ header .header_bottom .navbar-default li a{
 	color: #000000;
 	letter-spacing: 0.2em;
 	padding-top: 0px;
-	padding-bottom: 0px;
+	padding-bottom: 0px; 
+}
+
+.nav__actions li a{
+    padding: 0;
+}
+
+.nav__actions:before, .nav__actions:after{
+    content: none;
 }
 
 header .header_bottom .dropdown-menu li a{
@@ -573,6 +611,9 @@ header .header_bottom .navbar-default .dropdown-menu li a:hover{
 }
  
 
+header .header_bottom .navbar-right .register_link a{
+	color: #b93777;
+}
 
 /* Заголовки блоков */
 .header_block{
@@ -2292,7 +2333,7 @@ footer .copyright{
 .select2-container--default .select2-selection--single .select2-selection__arrow b{
     display: none;
 }
-
+ 
 .form-control:focus {
   border-color: none;
   outline: 0;
@@ -2301,30 +2342,133 @@ footer .copyright{
 } 
 
 /* Предметы */
-.selected__teacher_labels{
+.selected--subjects-list{
     justify-content: flex-start;
     display: flex;
     width: 100%;
-    align-items: center;
-    margin-top: 20px;
-    flex-flow: wrap;
+    align-items: center; 
+    flex-flow: wrap; 
+    border: 1px solid #c1c1c1;
+    padding: 5px; 
 }
-.selected__teacher_labels span{
+
+.selected--subjects-list .select--subjects-label{
+    padding: 1px 10px;
+    margin: 0;
+    color: #5f5f5f;
+    font-size: 14px;
+}
+
+.selected--subjects-list span{
     background-color: #b93777;
     color: #fff;
     position: relative;
     padding: 5px 20px 5px 10px;
     font-size: 12px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-right: 5px;
+    margin: 5px 5px 5px 0;
+    border-radius: 20px;
 }
 
-.selected__teacher_labels span .delete__subject{
+.selected--subjects-list span .delete__subject{
     position: absolute;
     right: 6px;
     top: 50%;
     margin-top: -8px;
     cursor: pointer;
+}
+
+.category--subjects{
+    position: relative;
+}
+
+.dropdown-category ul li ul{
+    display: none;
+    list-style: none; 
+    color: #333;
+}
+
+.dropdown-category > ul > li ul li{
+    text-transform: capitalize;
+    font-size: 14px;
+    padding: 8px 0;
+}
+
+.dropdown-category > ul > li ul li span{
+    cursor: pointer;
+    display: block;
+    position: relative;
+}
+
+.selected--subject{
+    color: #b93777;
+}
+
+.selected--subject:before{
+    content: ""; 
+    left: -20px;
+    top: 1px;
+    background: url(/public/images/checked_hover.png);
+    width: 15px;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; 
+    position: absolute;
+}
+
+.dropdown-category{ 
+    box-shadow: 0 1px 4px 0 rgba(27,23,37,.12);
+    border: 1px solid #c1c1c1;
+    position: absolute;
+    z-index: 90; 
+    width: 100%;
+    background: #fff;
+    display: none;
+    margin-top: 5px;
+}
+
+.dropdown-category.open--dropdown{
+    display: block;
+}
+
+.dropdown-category > ul{
+    margin:0;
+    padding: 0;
+    list-style: none;
+    color: #a8a8a8; 
+    text-transform: uppercase;
+    font-size: 12px;  
+    overflow: auto;  
+    max-height: 245px;
+}
+
+.dropdown-category > ul::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.dropdown-category > ul::-webkit-scrollbar-track { 
+}
+ 
+/* Handle */
+.dropdown-category > ul::-webkit-scrollbar-thumb {
+    background: #a8a8a8;  
+}
+
+/* Handle on hover */
+.dropdown-category > ul::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8; 
+} 
+
+.dropdown-category > ul > li > span{ 
+    display: block;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.dropdown-category > ul > li:hover > span{ 
+    background: #f9f9fa; 
 }
 
 select option:disabled {

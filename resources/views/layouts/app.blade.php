@@ -69,28 +69,6 @@
 
 <body>
 	<header>
-		<div class="container">
-			<div class="header_top">
-				<div class="row">
-					<div class="col-lg-12">
-						<ul class="list-inline header_top_nav">
-							@if(Auth::check())
-							<li>
-								<a href="{{ route('logout') }}">Выйти</a>
-							</li>
-							@else 
-							<li class="register_link">
-								<a href="{{ route('registration') }}?type=teacher">Хочу обучать</a>
-							</li>
-							<li>
-								<a href="{{ route('login') }}">Войти</a>
-							</li>
-							@endif
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="header_bottom">
 			<nav class="navbar navbar-default">
 			  <div class="container">
@@ -119,36 +97,84 @@
                             @endforeach 
                           </ul> 
                         </div>
-                    </div>  
-
-                    <div class="col-md-3"> 
-                        <ul class="nav navbar-nav navbar-left">
+                    </div>   
+                    <div class="col-md-4">
+						<ul class="nav navbar-nav nav__actions"> 
                             <li>
                                 <div class="cities_header"> 
-                                    <select name="" class="select2" data-container-class="cities_header_select2">
+                                    <a href="#user_location" data-toggle="modal">
+                                        Город
+                                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                    </a>
+                                    @if(false)
+                                    <select name="" onchange="selectLocation(this)" class="select2" data-container-class="cities_header_select2">
+                                        <option value="">Выберите Город</option>
+                                         
                                         @foreach(\App\Models\Cities::where('country_id', 3159)->orderBy('name', 'asc')->get() as $city)
                                             <option value="{{ $city['id'] }}">{{ $city['name'] }}</option>
-                                        @endforeach 
+                                        @endforeach  
                                     </select>
+                                    @endif
                                 </div>
+
+                                <div id="user_location" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+                                   <div class="modal-dialog">
+                                      <div class="modal-content">
+                                         <div class="modal-header">
+
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </button>
+                                            <h4 class="modal-title">Выберите Область/Город</h4>
+                                         </div>
+                                         <div class="modal-body">
+                                            <div class="row"> 
+                                                <div class="col-md-12"> 
+                                                    <div class="row">
+                                                        <div class="col-md-6 regions__area">
+                                                            <div class="form-group select_form">
+                                                                <select class="form-control select2" id="select__regions" onchange="loadRegionCities(this)" name="region">
+                                                                    <option value="">Область</option>
+                                                                    @foreach(\App\Models\Regions::where('country_id', 3159)->orderBy('name', 'asc')->get() as $item)
+                                                                        <option value="{{$item['id']}}">
+                                                                            {{$item['name']}}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div> 
+                                                        <div class="col-md-6 cities__area" style="display: none;"></div> 
+                                                    </div> 
+                                                    <button type="button" data-dismiss="modal" style="float: none;" class="btn btn_save">Сохранить</button> 
+                                                </div>
+                                            </div>
+                                         </div> 
+                                      </div>
+                                   </div>
+                                </div>
+
                             </li>
-                            @if(Auth::check())
-                                <li>
-                                    <a href="{{ route(userRoute('user_profile')) }}">
-                                        <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
-                                    </a>
-                                </li>
-                                <li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
-                                <!-- <li class="dropdown">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <img src="/images/icon_profile2.png"></a>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
-                                    <li role="separator" class="divider"></li> 
-                                  </ul>
-                                </li> -->
-                            @endif
-                        </ul> 
+
+							@if(Auth::check())<li>
+								<li>
+									<a href="{{ route(userRoute('user_profile')) }}">
+										<img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
+									</a>
+								</li>
+								<li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
+								<li>
+									<a href="{{ route('logout') }}">Выйти</a>
+								</li>
+							@else 
+								<li class="register_link">
+									<a href="{{ route('registration') }}?type=teacher">Хочу обучать</a>
+								</li>
+								<li>
+									<a href="{{ route('login') }}">Войти</a>
+								</li>
+							@endif
+                        </ul>
+ 
                     </div>       
                 </div>
 				 
@@ -379,6 +405,36 @@
             {!! setScript('/public/', $script) !!}
         @endforeach
     @endif 
+	
+	<!-- Yandex.Metrika counter -->
+	<script type="text/javascript" >
+		(function (d, w, c) {
+			(w[c] = w[c] || []).push(function() {
+				try {
+					w.yaCounter49528195 = new Ya.Metrika2({
+						id:49528195,
+						clickmap:true,
+						trackLinks:true,
+						accurateTrackBounce:true,
+						webvisor:true
+					});
+				} catch(e) { }
+			});
+
+			var n = d.getElementsByTagName("script")[0],
+				s = d.createElement("script"),
+				f = function () { n.parentNode.insertBefore(s, n); };
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://mc.yandex.ru/metrika/tag.js";
+
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else { f(); }
+		})(document, window, "yandex_metrika_callbacks2");
+	</script>
+	<noscript><div><img src="https://mc.yandex.ru/watch/49528195" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	<!-- /Yandex.Metrika counter -->
 </body>
 
 </html>

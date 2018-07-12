@@ -377,10 +377,9 @@ class User
 
         TeacherSubjects::where('id_teacher', $this->userId)->delete();
         if (!empty($data['teacher_subjects'])) 
-        { 
+        {  
             foreach ($data['teacher_subjects'] as $id_direction => $subjects) 
-            {
-                 
+            { 
                 foreach ($subjects as $key => $id_subject) { 
                     $insert[] = [
                         'id_teacher'   => $this->userId,

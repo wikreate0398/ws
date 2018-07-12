@@ -81,114 +81,78 @@
 					<div class="col-md-12">
 						<h3 class="header_blok_user">Ваша предметная область <span class="req">*</span></h3>
 					</div> 
-				</div> 
+				</div>  
 
-				<div class="row">
-					<label class="col-md-4 control-label">Направления <span class="req">*</span></label>
-					<div class="col-md-8">
-						<div class="form-group teacher_direction_inner"> 
-							<select name="teacher_directions_select" class="form-control" onchange="teacherDirections(this)">
-								<option value="">Выбрать</option>
-								@php
-									$teacherDirectionId = $user->direction->pluck('id')->toArray(); 
-								@endphp
-								@foreach($categories as $direction) 
-									@php
-										$disabled = '';
-										if(in_array($direction['id'], $teacherDirectionId)){
-											$disabled = 'disabled';
-										}
-									@endphp
-									<option {{ $disabled }} value="{{ $direction['id'] }}">{{ $direction['name'] }}</option>
-								@endforeach
-							</select>  
-
-							<div class="selected__teacher_labels" style="{{ !count($user->direction) ? 'display: none;' : ''  }}">
-								@if(count($user->direction))
-									@foreach($user->direction as $direction)
-										<span id="teacher_label_{{ $direction->id }}" 
-											  data-id="{{ $direction->id }}">
-											<div class="subject_tag"> 
-												{{ $direction->name }} 
-											</div>
-											<div onclick="deleteTeacherDirection({{ $direction->id }}, '.teacher_direction_inner');" 
-												 class="delete__subject">
-												<i class="fa fa-times" aria-hidden="true"></i>
-											</div>
-										</span>
-									@endforeach
-								@endif
-							</div>
-							<div class="selected__teacher_inputs">
-								@if(count($user->direction))
-									@foreach($user->direction as $direction)
-										<input type="hidden" id="teacher_subjects_input_{{ $direction->id }}" value="{{ $direction->id }}" name="teacher_directions[]">
-									@endforeach
-								@endif
-							</div> 
-						</div>
-					</div> 
-				</div> 
-				
-				<div class="subjects__form-group row" style="{{ !count($user->subjects) ? 'display: none;' : ''  }}"> 
+				<div class="row" style=""> 
 					<label class="col-md-4 control-label">Предметы <span class="req">*</span></label>
 					<div class="col-md-8">
-						<div class="form-group teacher_subjects_inner"> 
-							<select name="teacher_subjects_select" class="form-control select2" onchange="teacherSubjects(this)" style="width: 100%;"> 
-								<option value="">Выбрать</option> 
-								@if(count($user->direction))
+						<div class="form-group"> 
+							<div class="category--subjects"> 
+								<div class="selected--subjects-list"> 
+									@if(count($user->subjects))
+										@foreach($user->subjects as $subject)
+											<span id="teacher_label_{{ $subject->id }}" 
+												  data-parent="{{ $subject->pivot->id_direction }}" 
+												  data-id="{{ $subject->id }}">
+												<div class="subject_tag"> 
+													{{ $subject->name }} 
+												</div>
+												<div onclick="deleteTeacherSubject({{ $subject->id }}, 'teacher_subjects_inner');" 
+													 class="delete__subject">
+													<i class="fa fa-times" aria-hidden="true"></i>
+												</div>
+											</span>
+										@endforeach  
+									@endif 
+
+									<p style="{{ count($user->subjects) ? 'display: none;' : '' }}" class="select--subjects-label">
+										Выбрать
+									</p>
+								</div>
+								<div class="dropdown-category">  
+									<ul>
 									@php
 										$teacherSubjectsId = $user->subjects->pluck('id')->toArray(); 
+										$teacherDirectionId = $user->direction->pluck('id')->toArray();
 									@endphp
-
-									@foreach($user->direction as $direction)
-										@if(!empty($categories[$direction['id']]['childs']))
-											@foreach($categories[$direction['id']]['childs'] as $subject) 
-												@php
-													$disabled = '';
-													if(in_array($subject['id'], $teacherSubjectsId)){
-														$disabled = 'disabled';
-													}
-												@endphp 
-												<option {{ $disabled }} data-parent="{{ $direction['id'] }}" 
-												        value="{{ $subject['id'] }}">{{ $subject['name'] }}</option>
-											@endforeach
-										@endif 
+									@foreach($categories as $direction) 
+										@if(count($direction['childs']))
+											<li>
+												<span onclick="openDirectionSubjects(this);" 
+												      direction-id="{{ $direction['name'] }}">{{ $direction['name'] }}</span>
+												<ul style="{{ in_array($direction['id'], $teacherDirectionId) ? 'display: block' : '' }}""> 
+													@foreach($direction['childs'] as $subject)  
+														<li>
+															<span onclick="selectSubject(this);" 
+															      direction-id="{{ $direction['id'] }}" 
+															      subject-id="{{ $subject['id'] }}"
+															      class="{{ in_array($subject['id'], $teacherSubjectsId) ? 'selected--subject' : ''}}">
+																{{ $subject['name'] }}
+															</span>
+														</li>
+													@endforeach
+												</ul>
+											</li> 
+										@endif
 									@endforeach
-								@endif
-							</select>  
-
-							<div class="selected__teacher_labels" style=" {{ !count($user->subjects) ? 'display: none;' : ''  }}">
-								@if(count($user->subjects))
-									@foreach($user->subjects as $subject)
-										<span id="teacher_label_{{ $subject->id }}" 
-											  data-parent="{{ $subject->pivot->id_direction }}" 
-											  data-id="{{ $subject->id }}">
-											<div class="subject_tag"> 
-												{{ $subject->name }} 
-											</div>
-											<div onclick="deleteTeacherSubject({{ $subject->id }}, 'teacher_subjects_inner');" 
-												 class="delete__subject">
-												<i class="fa fa-times" aria-hidden="true"></i>
-											</div>
-										</span>
-									@endforeach
-								@endif
+									</ul>
+								</div>
 							</div>
+
 							<div class="selected__teacher_inputs">
 								@if(count($user->subjects)) 
 									@foreach($user->subjects as $subject)
-										<input type="hidden" 
-										       data-parent="{{ $subject->pivot->id_direction }}" 
+										<input type="hidden"  
 										       id="teacher_subjects_input_{{ $subject->id }}" 
 										       value="{{ $subject->id }}" 
 										       name="teacher_subjects[{{ $subject->pivot->id_direction }}][]">
 									@endforeach
 								@endif
-							</div> 
+							</div>
 						</div>
 					</div>  
-				</div> 
+				</div>  
+				 
 				<script>  
 					var categories = JSON.parse("<?=prepareArrayForJson($categories)?>"); 
 				</script>

@@ -70,7 +70,7 @@ class FastRegistration
             'email'        => $this->requestData['email'],    
             'confirm_hash' => $confirm_hash, 
             'password'     => bcrypt($this->requestData['password']),
-            'redirectUri'  => $this->requestData['redirectUri']
+            'redirectUri'  => @$this->requestData['redirectUri']
         ])->id; 
 
         if ($this->userType == 3) 

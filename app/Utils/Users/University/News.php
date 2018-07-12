@@ -16,7 +16,7 @@ class News
 
     private $rules = [
         'name'              => 'required|max:80',
-        'description'       => 'required|max:200', 
+        'description'       => 'required|min:200', 
         'type'              => 'required', 
     ];  
 

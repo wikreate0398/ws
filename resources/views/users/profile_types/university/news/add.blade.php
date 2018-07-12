@@ -49,7 +49,7 @@
                      <div class="col-md-7">
                         <div class="form-group">
                            <textarea class="form-control" maxlength="200" name="description"></textarea>
-                           <div class="maxlength__label"><span>0</span> символов (200 максимум)</div>
+                           <div class="maxlength__label">(200 символов минимум)</div>
                         </div>
                      </div>
                      <div class="clearfix"></div> 

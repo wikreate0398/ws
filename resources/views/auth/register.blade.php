@@ -93,6 +93,7 @@
                     <div role="tabpanel" class="tab-pane" id="teacher">
                         <form class="form-horizontal ajax__submit" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
+                            <input type="hidden" name="redirectUri" value="{{ request('redirectUri') }}">
                             <input type="hidden" name="user_type" value="2">
                             <div class="row" style="padding-top:20px;">
                                 <div class="col-md-12">
@@ -160,8 +161,8 @@
 
                         <form class="form-horizontal ajax__submit" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
-                            <input type="hidden" name="user_type" value="3">
-                               
+                            <input type="hidden" name="redirectUri" value="{{ request('redirectUri') }}">
+                            <input type="hidden" name="user_type" value="3"> 
                             <div class="row" style="padding-top:20px;">
                                 <div class="col-md-12">
                                     <div class="form-group">

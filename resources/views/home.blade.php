@@ -284,7 +284,7 @@
         </div>
     </div> 
 
-    @if(Auth::check())
+    @if(!Auth::check())
 	<div class="container user_type_block">
 		<div class="row">
 			<div class="col-lg-12">

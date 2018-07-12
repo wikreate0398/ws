@@ -88,7 +88,7 @@ class CourseController extends TeacherController
 
         if (!$this->_course->manager($course)->canManage() && !in_array($formSection, ['сertificates', 'participants'])) 
         { 
-            return redirect()->route(userRoute('edit_course_сertificates'), ['id' => $id_course]);
+            return redirect()->route(userRoute('course_participants'), ['id' => $id_course]);
         }
  
         return view('users.profile_types.teacher.courses.edit.' . $view, [ 

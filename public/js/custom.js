@@ -484,9 +484,7 @@ function initSelect2(){
         if ($(this).hasClass('select2-hidden-accessible')) {
             $(this).select2('destroy');
         }
-        $(this).select2().focus(function(){
-            alert('asd');
-        });
+        $(this).select2();
     });  
 }
 

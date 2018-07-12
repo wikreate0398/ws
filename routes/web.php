@@ -48,6 +48,16 @@ Route::post('course/favorite', 'CoursesController@favorite', ['middleware' => 'w
 
 Route::get('search', 'PagesController@search');  
 
+
+Route::group(['prefix' => 'user/actions'], function() {
+ 	Route::post('update-image', 'Users\ProfileController@updateImage')->name('update_image')->middleware('web_auth');
+	Route::post('loadRegionCities', 'AjaxController@loadRegionCities');  
+	Route::post('deleteCertificate', 'Users\ProfileController@deleteCertificate')->middleware('web_auth');
+	Route::post('deleteCourseCertificate', 'Users\ProfileController@deleteCourseCertificate')->middleware('web_auth');
+	Route::post('loadCourseSubcats', 'Users\ProfileController@loadCourseSubcats')->middleware('web_auth'); 
+	Route::post('changeStatus', 'Users\ProfileController@changeStatus')->middleware('web_auth');  
+}); 
+
 Route::group(['middleware' => ['web_auth']], function(){  
 
 	Route::group(['prefix' => 'user'], function() { 
@@ -159,17 +169,8 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
 			}); 
-		}); 
-
-		Route::group(['prefix' => 'actions', 'namespace' => 'Users'], function() {
-		 	Route::post('update-image', 'ProfileController@updateImage')->name('update_image');
-			Route::post('loadRegionCities', 'ProfileController@loadRegionCities');  
-			Route::post('deleteCertificate', 'ProfileController@deleteCertificate');
-			Route::post('deleteCourseCertificate', 'ProfileController@deleteCourseCertificate');
-			Route::post('loadCourseSubcats', 'ProfileController@loadCourseSubcats'); 
-			Route::post('changeStatus', 'ProfileController@changeStatus');  
-		}); 
-	}); 
+		});  
+	});  
   
 	// Route::post('user/updatePass', 'ProfileController@updatePassword')->name('update_pass'); 
 	// Route::post('user/update-profile', 'ProfileController@editProfile')->name('update_profile');  

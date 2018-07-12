@@ -6,6 +6,7 @@ namespace App\Utils\Requests;
 use App\Utils\Requests\RequestInterface;
 use App\Mail\CourseRequestMail; 
 use Illuminate\Support\Facades\Mail;
+use App\Utils\Course\Course;
 
 class CourseRequest implements RequestInterface
 {
@@ -26,13 +27,17 @@ class CourseRequest implements RequestInterface
     { 
         $this->course    = $course;
         $this->auth_user = $auth_user; 
+        $this->course_facade = new Course;
     } 
 
     public function canMakeRequest()
     {  
         if (@$this->auth_user->id && $this->course) 
         { 
-            if ($this->ifSelfCourse() == true or $this->auth_user->user_type != 1) 
+            if ($this->ifSelfCourse() == true 
+                or $this->auth_user->user_type != 1 
+                or $this->course_facade->manager($this->course)->isStarted() 
+                or $this->course_facade->manager($this->course)->isFinished()) 
             { 
                 $this->setError('Вы не можете записаться на этот курс');
                 return false;
@@ -48,7 +53,7 @@ class CourseRequest implements RequestInterface
             { 
                 $this->setError('Запись на курс ограничена');
                 return false;
-            } 
+            }  
 
             $today        = dateToTimestamp(date('Y-m-d')); 
             $is_open_from = dateToTimestamp($this->course->is_open_from);

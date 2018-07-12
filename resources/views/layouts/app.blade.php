@@ -121,25 +121,34 @@
                         </div>
                     </div>  
 
-                    <div class="col-md-3">
-                        @if(Auth::check())
-                          <ul class="nav navbar-nav navbar-right">
+                    <div class="col-md-3"> 
+                        <ul class="nav navbar-nav navbar-left">
                             <li>
-                                <a href="{{ route(userRoute('user_profile')) }}">
-                                    <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
-                                </a>
+                                <div class="cities_header"> 
+                                    <select name="" class="select2" data-container-class="cities_header_select2">
+                                        @foreach(\App\Models\Cities::where('country_id', 3159)->orderBy('name', 'asc')->get() as $city)
+                                            <option value="{{ $city['id'] }}">{{ $city['name'] }}</option>
+                                        @endforeach 
+                                    </select>
+                                </div>
                             </li>
-                            <li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
-                            <!-- <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="/images/icon_profile2.png"></a>
-                              <ul class="dropdown-menu">
-                                <li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
-                                <li role="separator" class="divider"></li> 
-                              </ul>
-                            </li> -->
-                          </ul>
-                        @endif
+                            @if(Auth::check())
+                                <li>
+                                    <a href="{{ route(userRoute('user_profile')) }}">
+                                        <img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
+                                    </a>
+                                </li>
+                                <li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
+                                <!-- <li class="dropdown">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <img src="/images/icon_profile2.png"></a>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="{{ route(userRoute('user_profile'))  }}">Личный кабинет</a></li>
+                                    <li role="separator" class="divider"></li> 
+                                  </ul>
+                                </li> -->
+                            @endif
+                        </ul> 
                     </div>       
                 </div>
 				 
@@ -277,45 +286,62 @@
 							</ul>
 						</div>
 					</div>
-					<div class="row">
-                        <div class="col-lg-3">
-							<div class="footer_menu_bottom">
-								<h3>ЛИЧНЫЙ КАБИНЕТ</h3>
-								<ul class="list-unstyled"> 
-									@if(Auth::check())
-									<li><a href="{{ route(userRoute('user_profile')) }}">Профиль</a></li> 
-									@else  
-									<li><a href="{{ route('login') }}">Войти</a></li>
-									<li><a href="{{ route('registration') }}">Регистрация</a></li>
-									@endif  
-								</ul>
-							</div>
+
+                    @yield('footer')
+
+                    @if(@Auth::user()->user_type == 3)
+                        @include('partials.university_footer') 
+                    @else
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="footer_menu_bottom">
+                                    <h3>ЛИЧНЫЙ КАБИНЕТ</h3>
+                                    <ul class="list-unstyled"> 
+                                        @if(Auth::check())
+                                            <li class="{{ isActive(route(userRoute('user_edit'))) ? 'active' : '' }}">
+                                                <a href="{{ route(userRoute('user_edit')) }}">Личные данные</a></li> 
+                                            <li>
+                                                <a href="{{ route('logout') }}">Выйти</a>
+                                            </li>
+                                        @else  
+                                            <li class="{{ isActive(route('login')) ? 'active' : '' }}">
+                                                <a href="{{ route('login') }}">Войти</a>
+                                            </li>
+                                            <li class="{{ isActive(route('registration')) ? 'active' : '' }}">
+                                                <a href="{{ route('registration') }}">Регистрация</a>
+                                            </li>
+                                        @endif  
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="footer_menu_bottom">
+                                    <h3>КУРСЫ</h3>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Разместить курс</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="footer_menu_bottom">
+                                    <h3>ВУЗЫ И ШКОЛЫ</h3>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Стать партнером сайта</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="footer_menu_bottom">
+                                    <h3>ПРЕПОДВАТЕЛИ</h3>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Опубликооать профиль</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3">
-							<div class="footer_menu_bottom">
-								<h3>КУРСЫ</h3>
-								<ul class="list-unstyled">
-									<li><a href="#">Разместить курс</a></li>
-								</ul>
-							</div>
-                        </div>
-                        <div class="col-lg-3">
-							<div class="footer_menu_bottom">
-								<h3>ВУЗЫ И ШКОЛЫ</h3>
-								<ul class="list-unstyled">
-									<li><a href="#">Стать партнером сайта</a></li>
-								</ul>
-							</div>
-                        </div>
-                        <div class="col-lg-3">
-							<div class="footer_menu_bottom">
-								<h3>ПРЕПОДВАТЕЛИ</h3>
-								<ul class="list-unstyled">
-									<li><a href="#">Опубликооать профиль</a></li>
-								</ul>
-							</div>
-                        </div>
-					</div>
+                    @endif  
+					 
+
 					<div class="row">
                         <div class="col-lg-12 col-md-12">
 							<span class="copyright">Все права защищены © КОРПОРАЦИЯ МОЗГА, 2018</span>
@@ -324,84 +350,7 @@
 				</div>
 			</div>
 		</div>
-        <!--<div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-xs-12">
-                    <a href="/"><img src="images/logo.png" alt=""></a>
-                </div>
-                <div class="col-lg-6 col-xs-12">
-                    <ul class="list-inline footer_menu">
-                        <li><a href="#">О ПРОЕКТЕ</a></li>
-                        <li><a href="#">РЕКЛАМА НА САЙТЕ</a></li>
-                        <li><a href="#">ВУЗАМ И ПРЕПОДАВАТЕЛЯМ</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-xs-12">
-                    <ul class="list-inline social_menu">
-                        <li>МЫ В СОЦ, СЕТЯХ</li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-facebook-square" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-vk" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-odnoklassniki-square" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row footer_bottom">
-                <div class="col-lg-12">
-                    <br>
-                </div>
-                <div class="col-lg-3">
-                    <p>
-                        Все права защищены <br>
-                        © КОРПОРАЦИЯ МОЗГА, 2018
-                    </p>
-                </div>
-                <div class="col-lg-9">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <h3>ЛИЧНЫЙ КАБИНЕТ</h3>
-                            <ul class="list-unstyled"> 
-                                @if(Auth::check())
-                                <li><a href="">Профиль</a></li> 
-                                @else  
-                                <li><a href="{{ route('login') }}">Войти</a></li>
-                                <li><a href="{{ route('registration') }}">Регистрация</a></li>
-                                @endif  
-                            </ul>
-                        </div>
-                        <div class="col-lg-3">
-                            <h3>КУРСЫ</h3>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Разместить курс</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-3">
-                            <h3>ВУЗЫ И ШКОЛЫ</h3>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Стать партнером сайта</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-3">
-                            <h3>ПРЕПОДВАТЕЛИ</h3>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Опубликооать профиль</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+         
     </footer>
 
     <div id="overlay"></div>

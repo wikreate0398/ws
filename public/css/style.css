@@ -500,6 +500,25 @@ header .header_bottom .navbar-default .navbar-nav{
 	/*margin-top: 20px;*/
     float: none;
     text-align: center;
+    justify-content: space-between;
+    display: flex;
+    max-width: 100%;
+    align-items: center;
+}
+
+.cities_header select{
+    max-width: 165px;
+}
+
+.cities_header .select2-container--default .select2-selection--single{
+    border: 1px solid #525351;
+    background: transparent !important;
+    outline: none !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    color: #000 !important;
+    font-family: 'Bebas Neue Regular';
 }
 
 .header__items{
@@ -2223,7 +2242,8 @@ footer .footer_menu_bottom ul li a{
 	color: #b1b1b1;
 }
 footer .footer_menu_bottom ul li a:focus,
-footer .footer_menu_bottom ul li a:hover{
+footer .footer_menu_bottom ul li a:hover,
+footer .footer_menu_bottom ul li.active a{
 	color: #fff;
 	text-decoration: none;
 }

@@ -61,7 +61,7 @@ class FastRegistration
 	}
 
 	public function register()
-	{
+	{ 
 		$confirm_hash = md5(microtime()); 
         $id_user = User::create([ 
             'name'         => $this->requestData['name'], 

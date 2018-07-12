@@ -10,7 +10,7 @@
 
 					<form class="form-horizontal ajax__submit profile__image_form" method="POST" action="{{ route('update_image') }}">
 		    			{{ csrf_field() }}
-						<div class="profile__img" style="background-image: url(/public/uploads/users/{{ $user->avatar ? $user->avatar : $user->image }}{{'?v=' . time()}});">
+						<div class="profile__img" style="background-image: url({{ imageThumb(($user->avatar ? $user->avatar : $user->image), 'uploads/users', 400, 300, 'universities') }});"> 
 							<div class="actions__upload_photo">
 								<span class="btn-file">
 								    <i class="fa fa-file-image-o" aria-hidden="true"></i>

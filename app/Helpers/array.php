@@ -352,13 +352,15 @@ function imageThumb($image, $path, $width, $height, $v)
         if (end($explodePath) == 'users') 
         {
             $defImg = 'no-avatar.jpg';
-        } 
+        }  
 
-        $img = Image::make(public_path('uploads/' . "/" . $defImg))->fit($width, $height, function ($constraint) {
+        $img = Image::make(public_path('uploads/' . $defImg))->fit($width, $height, function ($constraint) {
             $constraint->upsize();
-        });
+        }); 
+
         $img->save(public_path($path . $thumbPath . "/" . $defImg));
-        return $path . $thumbPath . "/" . $defImg;
+
+        return '/' . $path . $thumbPath . "/" . $defImg;
     }
 
     return env('APP_URL') . '/' . $path . $thumbPath . "/$image"; 

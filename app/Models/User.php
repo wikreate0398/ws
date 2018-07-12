@@ -34,6 +34,7 @@ class User extends Authenticatable
         'site', 
         'image', 
         'confirm_hash',
+        'redirectUri',
         'activate',
         'confirm'
     ];

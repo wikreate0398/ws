@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
     }); 
     
     initSelect2();
-
+ 
     $('#teacher_carousel').owlCarousel({
         loop:false,
         margin:60,
@@ -471,13 +471,22 @@ function loadRegionCities(select, city){
     }); 
 }
 
-function initSelect2(){
-    //// $('.select2').select2('destroy');
+function initSelect2(){ 
+
+    // $('[data-container-class]').each(function() {
+    //    var className = $(this).attr('data-container-class');
+    //    var container = $('.select2-dropdown');
+    //    container.addClass(className);
+    //    container.find('.select2-dropdown').removeClass(className);
+    // });
+
     $('.select2').each(function(){
         if ($(this).hasClass('select2-hidden-accessible')) {
             $(this).select2('destroy');
         }
-        $(this).select2();
+        $(this).select2().focus(function(){
+            alert('asd');
+        });
     });  
 }
 

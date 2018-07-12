@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator; 
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -83,12 +84,20 @@ class RegisterController extends Controller
     }
 
     public function confirmation($confirmation_hash)
-    {
+    { 
         $user = User::where('confirm_hash', $confirmation_hash)->get()->first();  
   
-        if (empty($user->activate)) {
+        if (empty($user->activate)) { 
             User::where('id', $user->id)
-                  ->update(['activate' => 1, 'confirm_date' => date('Y-m-d H:i:s'), 'confirm' => 1, 'redirectUri' => null]);
+                  ->update(['activate' => 1, 'confirm_date' => date('Y-m-d H:i:s'), 'confirm' => 1, 'redirectUri' => null]);  
+            Auth::guard('web')->login($user); 
+
+            if (!empty($user['redirectUri'])) 
+            {
+                return redirect($user['redirectUri']);
+            }
+            
+            return redirect()->route(userRoute('user_profile'))->with('flash_message', trans('auth.success_login'));  
         }
 
         return view('auth.confirmation', compact('user')); 

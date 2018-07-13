@@ -180,7 +180,7 @@ span.req{
     position: relative;
     overflow: hidden;
 }
-.btn-file input[type=file] {
+.btn-file input[type=file], input.avatar__fileimage{
     position: absolute;
     top: 0;
     right: 0;
@@ -196,6 +196,31 @@ span.req{
     display: block;
 }
 
+.loading__save_image .preloader__image_content{
+    display: block !important;
+    text-align: center;
+} 
+
+.loading__save_image .actions__upload_photo{
+    display: flex;
+    cursor: default !important;
+    pointer-events: none;
+}
+
+.loading__save_image .actions__upload_photo input.avatar__fileimage, .loading__save_image .profile__img{
+    cursor: default !important;
+}
+
+.loading__save_image .actions__upload_photo .btn-file{
+    display: none;
+    cursor: default !important;
+}
+
+.preloader__image_content .ball-pulse > div{
+    width: 13px;
+    height: 13px;
+}
+ 
 .profile__img{
     position: relative;
     cursor: pointer;
@@ -1167,7 +1192,9 @@ form#search_form .input-group{
 	border-radius: 20px;
 	height: 30px;
 	border: 1px solid #fff;
-	background-color: #58b36c;
+	 
+    background-color: rgb(255, 86, 86);
+    border-color: rgb(255, 86, 86);
 	/*transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;*/
 	display: inline-block;
 	vertical-align: middle;
@@ -1195,9 +1222,9 @@ form#search_form .input-group{
 }
 .teacher_employment .checkbox.checbox-switch.switch-light label > input:checked + span,
 .teacher_employment .checkbox-inline.checbox-switch.switch-light > input:checked + span {
-	background-color: rgb(255, 86, 86);
-	border-color: rgb(255, 86, 86);
-	box-shadow: rgb(255, 86, 86) 0px 0px 0px 8px inset;
+	background-color: #58b36c;
+    border-color: #58b36c;
+/*	box-shadow: rgb(255, 86, 86) 0px 0px 0px 8px inset;*/
 /*	transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;*/
 }
 .lk_menu{
@@ -2683,4 +2710,41 @@ select option:disabled {
 
 .is_favorite{
     color: #b83976 !important;
+}
+
+.ajax__submit{
+    position: relative;
+}
+
+.preloader__form{
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.preloader__form .preloader__form_content{
+    position: absolute;
+    display: block !important;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: auto;
+    z-index: 9999;
+}
+
+.preloader__form .preloader__form_content .ball-pulse div{
+    background-color: #000;
+    width: 20px;
+    height: 20px;
+}
+
+.preloader__form:before{
+    display: table;
+    content: " ";
+}
+
+.preloader__form:after{
+    display: table;
+    content: " ";
+    clear: both;
 }

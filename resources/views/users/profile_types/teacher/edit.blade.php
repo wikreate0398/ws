@@ -15,18 +15,19 @@
 	<div class="col-lg-12">
 		<ul class="nav nav-tabs user_edit">
 			<li class="{{ isActive(route(userRoute('user_edit'))) ? 'active' : '' }}">
-				<a data-toggle="tab" onclick="window.location='{{ route(userRoute('user_edit')) }}'" href="#panel1"> О Вас </a>
+				<a data-toggle="tab" href="{{ route(userRoute('user_edit')) }}"> О Вас </a>
 			</li>
 			<li class="{{ isActive(route(userRoute('user_edit_tutor'))) ? 'active' : '' }}">
-				<a data-toggle="tab" onclick="window.location='{{ route(userRoute('user_edit_tutor')) }}'" href="#panel2"> Я репетитор </a>
+				<a data-toggle="tab" href="{{ route(userRoute('user_edit_tutor')) }}"> Я репетитор </a>
 			</li>
 			<li class="{{ isActive(route(userRoute('user_edit_certificates'))) ? 'active' : '' }}">
-				<a data-toggle="tab" onclick="window.location='{{ route(userRoute('user_edit_certificates')) }}'" href="#panel3"> Сертификат/Диплом </a>
+				<a data-toggle="tab" href="{{ route(userRoute('user_edit_certificates')) }}"> Сертификат/Диплом </a>
 			</li>
 		</ul>
 	</div>
-	
-	@yield('edit_form')
+	<div class="row">
+		@yield('edit_form')
+	</div> 
 
 </div>
 <div class="clearfix"></div> 

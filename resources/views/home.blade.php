@@ -20,8 +20,7 @@
                                 {{ $category->name }}
                             </a>
                         </li> @php $i++ @endphp
-                    @endforeach 
-                     
+                    @endforeach  
                 </ul>
             </div>
             <div class="col-lg-12">

@@ -12,15 +12,20 @@
 		    			{{ csrf_field() }}
 						<div class="profile__img" 
 						     style="background-image: url(/public/uploads/users/{{ $user->avatar ? $user->avatar : $user->image }}{{'?v=' . time()}});">
-
-							<div class="actions__upload_photo">
+							<div class="actions__upload_photo" onclick="$('input.avatar__fileimage').click()">
 								<span class="btn-file">
-								    <i class="fa fa-file-image-o" aria-hidden="true"></i>
-								    <input type="file" name="image" onchange="profilePhoto(this)">
+								    <i class="fa fa-file-image-o" aria-hidden="true"></i> 
 								</span>
+								<input type="file" class="avatar__fileimage" name="image" onchange="profilePhoto(this)"> 
+								<input type="hidden" name="avatar" id="avatar">  
+							</div>
 
-								<input type="hidden" name="avatar" id="avatar"> 
-
+							<div class="preloader__image_content" style="display: none;">
+								<div class="loader-inner ball-pulse"> 
+	            					<div></div> 
+	            					<div></div> 
+	            					<div></div> 
+            					</div>
 							</div>
 						</div>
 						<div id="error-respond"></div>

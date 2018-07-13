@@ -145,15 +145,22 @@
 					<h3>ПРЕПОДАВАТЕЛИ КУРСА</h3>
 				@endif
 				<div class="trainer__box">
-					<div class="trainer_photo" style="background-image: url(/public/uploads/users/{{ $course->user->avatar ? $course->user->avatar : $course->user->image }}{{'?v=' . time()}})"> 
-					</div>
-					<div class="trainer_name">
+					@php
+						if($course->user->user_type==3){
+							$link = '/university/' . $course->user->university->id;
+						}else{
+							$link = '/teacher/' . $course->user->id;
+						}
+					@endphp
+					<a href="{{ $link }}" class="trainer_photo" style="background-image: url(/public/uploads/users/{{ $course->user->avatar ? $course->user->avatar : $course->user->image }}{{'?v=' . time()}})"> 
+					</a>
+					<a href="{{ $link }}" class="trainer_name">
 						@if($course->user->user_type==3)
 			            		{{ $course->user->university['full_name'] }} 
 			            	@else
 								{{ $course->user->name }} 
 			            @endif
-					</div>
+					</a>
 					<div class="trainer_description">
 						{{ str_limit($course->user->about, 100) }} 
 					</div>
@@ -194,6 +201,7 @@
 	}
 
 	.trainer_photo{
+		display: block;
 		border-radius: 50%;
 		width: 100px;
 		height: 100px;
@@ -201,14 +209,18 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: cover;
+		background-color: #ededed;
 	}
 
-	.trainer_name{
+	.trainer_name, .trainer_name:hover, .trainer_name:focus{
 		text-transform: uppercase;
 		font-weight: bold;
 		color: #333;
 		font-size: 13px;
 		margin:15px 0;
+		text-decoration: none;
+		line-height: 21px;
+		display: block;
 	}
 
 	.trainer_description{

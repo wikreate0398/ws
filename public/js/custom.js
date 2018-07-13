@@ -4,7 +4,41 @@ jQuery(document).ready(function($) {
     //   selector: 'textarea',  // change this value according to your HTML
     //   auto_focus: 'element1'
     // });
- 
+
+    var numChange = 0;
+    $("form.listener__change_form").change(function(e) { 
+      if (!$(e.target).hasClass('onload__change')) {numChange++}
+       
+      if (numChange > 0) {
+        $(this).data("changed","true");
+      }
+      numChange++; 
+    });
+
+    $('a').click(function(e){ 
+        if ($('.course__form').length > 0) { 
+            e.preventDefault();  
+            formHasChanged(this, '.course__form'); 
+        }
+
+        if ($('.teacher_form').length > 0) { 
+            e.preventDefault();   
+            formHasChanged(this, '.teacher_form'); 
+        }  
+    }); 
+
+    function formHasChanged(a, formClass){  
+        if ($(formClass).data('changed') == undefined) { 
+          window.location = a.href;
+        }else{
+          if (confirm('Сохранить изменения')) {
+            $(formClass).find('input#redirectUri').val(a.href);
+            $(formClass).find('button[type="submit"]').trigger('click'); 
+          }else{
+            window.location = a.href;
+          }
+        }  
+    } 
      
     InputMask(); 
 
@@ -259,6 +293,9 @@ jQuery(document).ready(function($) {
                     'padding-right': '0'
                 });
                 $(button).text(button_txt);
+                $('.profile__image_form').removeClass('loading__save_image');
+                $(form).removeClass('preloader__form');
+                $(form).remove('.preloader__form_content');
                 InputMask();
             }
         });
@@ -285,7 +322,17 @@ jQuery(document).ready(function($) {
         $(button).attr('disabled', true); 
         $(button).width(button_width);
         $(button).height(button_height);
+        $('.profile__image_form').addClass('loading__save_image');
 
+        $(form).addClass('preloader__form');
+        var formLoaderContent = '<div class="preloader__form_content" style="display: none;">'+
+                                    '<div class="loader-inner ball-pulse"> '+
+                                            '<div></div>'+ 
+                                            '<div></div>'+ 
+                                            '<div></div>'+ 
+                                        '</div>'+
+                                '</div>';
+        $('.preloader__form').append(formLoaderContent);
         setTimeout(function(){
             serializeForm(form, button, action, button_txt);
         }, 500);
@@ -663,5 +710,4 @@ function teacherStatus(input){
         success: function(jsonResponse, textStatus, request) {},
         complete: function() {}
     }); 
-}
- 
+} 

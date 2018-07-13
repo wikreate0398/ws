@@ -1,8 +1,9 @@
 @extends('users.profile_types.teacher.courses.edit')
 
 @section('edit_form')   
-	<form class="ajax__submit" method="POST" action="{{ route(userRoute('update_course_general'), ['id' => $course->id]) }}">
+	<form class="ajax__submit listener__change_form course__form" method="POST" action="{{ route(userRoute('update_course_general'), ['id' => $course->id]) }}">
 	    {{ csrf_field() }}
+      <input type="hidden" name="redirectUri" id="redirectUri">
 	    <div class="col-lg-8 col-lg-offset-2 course_form">
 			
 			<div class="col-md-12">
@@ -55,7 +56,7 @@
                 <div class="row">
                    	<div class="col-md-12" id="course__cats">
                       <div class="form-group select_form">
-                         <select name="id_category" class="form-control" onchange="loadCourseSubcats(this, {{ $course->id_subcat }})">
+                         <select name="id_category" class="form-control onload__change" onchange="loadCourseSubcats(this, {{ $course->id_subcat }})">
                             <option value="">Выбрать</option>
                             @foreach($categories as $item)
                             <option {{ ($course->id_category == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">{{$item['name']}}</option>
@@ -118,7 +119,11 @@
 	          <div class="col-md-12">
 	             <div id="error-respond"></div>
 	             <button type="submit" class="btn btn_save" style="display: inline-block; width: auto;">
-	             Сохранить 
+                  @if($course->general_filled)
+                    Сохранить
+                  @else
+                    Далее
+                  @endif 
 	             </button>
 	          </div>
 	       </div>

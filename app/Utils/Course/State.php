@@ -83,8 +83,10 @@ class State extends Course
                 $date   = '';
             }
         }
-        elseif ($this->course->max_nr_people == count($this->course->userRequests) && !$this->request($this->course)->ifHasRequest()) 
-        {
+        elseif ($this->course->max_nr_people > 0 
+                && $this->course->max_nr_people == count($this->course->userRequests) 
+                && !$this->request($this->course)->ifHasRequest()) 
+        {  
             $status = 'Набор закончен';
             $date   = '';
         }

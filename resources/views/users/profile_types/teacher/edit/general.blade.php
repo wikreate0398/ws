@@ -1,9 +1,11 @@
 @extends('users.profile_types.teacher.edit')
 
 @section('edit_form')  
-<form class="ajax__submit" method="POST" action="{{ route(userRoute('user_update_general')) }}">
+<form class="ajax__submit listener__change_form teacher_form" method="POST" action="{{ route(userRoute('user_update_general')) }}">
+   	
+   	  
     {{ csrf_field() }}
- 
+ 	<input type="hidden" name="redirectUri" id="redirectUri">
 	<div class="col-lg-8 col-lg-offset-2" style="min-height: 300px;">
 		<div class="user_form"> 
 			<div class="row">
@@ -65,7 +67,7 @@
 					<div class="row">
 						<div class="col-md-6 regions__area">
 							<div class="form-group select_form">
-								<select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
+								<select class="form-control select2 onload__change" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
 								  	<option value="">Область</option>
 								  	@foreach($regions as $item)
 		                           		<option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">

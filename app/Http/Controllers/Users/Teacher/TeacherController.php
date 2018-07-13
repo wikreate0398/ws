@@ -92,24 +92,26 @@ class TeacherController extends ProfileController
 
     public function editGeneral(Request $request)
     { 
-        $edit = $this->_user->setUserId(Auth::user()->id)->editGeneral($request->all());   
+        $data = $request->all();
+        $edit = $this->_user->setUserId(Auth::user()->id)->editGeneral($data);   
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
         } 
         $this->_user->updateIfProfileFilled();
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave($data), 'Данные успешно обновлены!'); 
     }  
 
     public function editTutor(Request $request)
     { 
-        $edit = $this->_user->setUserId(Auth::user()->id)->editTutor($request->all());   
+        $data = $request->all();
+        $edit = $this->_user->setUserId(Auth::user()->id)->editTutor($data);   
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
         } 
         $this->_user->updateIfProfileFilled();
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave($data), 'Данные успешно обновлены!'); 
     } 
 
     public function editCertifications(Request $request)
@@ -120,8 +122,23 @@ class TeacherController extends ProfileController
             $this->_user->setUserId(Auth::user()->id)->saveCertificates($data['certificates']);
         }  
         $this->_user->updateIfProfileFilled();
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave($data), 'Данные успешно обновлены!'); 
     }   
+
+    private static function redirectAfterSave($request)
+    { 
+        $redirect = ['reload' => true]; 
+        if (!empty($request['redirectUri'])) 
+        {
+            $parseUri = parse_url($request['redirectUri']); 
+            if ($parseUri['host'] == request()->server('HTTP_HOST')) 
+            {
+                $redirect = ['redirect' => $request['redirectUri']];
+            }
+        }
+
+        return $redirect;
+    }
 
     public function showSubscriptions()
     {   

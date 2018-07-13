@@ -283,7 +283,7 @@ class Crud extends Course
             'type'           => intval($data['type']),
             'is_open_to'     => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_to'])) : null,
             'is_open_from'   => !empty($data['hide_after_end']) ? date('Y-m-d', strtotime($data['is_open_from'])) : null,
-            'max_nr_people'  => intval($data['max_nr_people']),
+            'max_nr_people'  => !empty($data['max_nr_people']) ? intval($data['max_nr_people']) : null,
             'date_to'        => date('Y-m-d', strtotime($data['date_to'])),
             'date_from'      => date('Y-m-d', strtotime($data['date_from'])),
             'hide_after_end' => !empty($data['hide_after_end']) ? 1 : 0,
@@ -346,8 +346,9 @@ class Crud extends Course
                 'id_course' => $this->id_course,
                 'image'     => $fileName
             ];
-        } 
-        CoursesCertificates::insert($insert);
+        }  
+        CoursesCertificates::insert($insert);  
+        Courses::whereId($this->id_course)->update(['сertificates_filled' => 1]);
     } 
 
     public function hasAccessCourse()

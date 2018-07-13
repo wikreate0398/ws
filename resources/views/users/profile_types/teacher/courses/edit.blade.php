@@ -16,32 +16,35 @@
          </div>
       </div>
       @php
-         $disabled = '';
-         if(Course::manager($course)->canManage() != true){
+          $disabled = '';
+          if(Course::manager($course)->canManage() != true){
             $disabled = 'disabled';
-         }
+          }
       @endphp
       <div class="row">
          <ul class="nav add_course" role="tablist">
             <li role="presentation" 
                 class="{{ isActive(route(userRoute('edit_course'), ['id' => $course->id])) ? 'active' : '' }} {{ $disabled }}">
-               <a href="#about" aria-controls="about" onclick="window.location='<?=route(userRoute('edit_course'), ['id' => $course->id])?>'" role="tab" data-toggle="tab">О курсе</a>
+               <a aria-controls="about" href="<?=route(userRoute('edit_course'), ['id' => $course->id])?>" role="tab" data-toggle="tab">О курсе</a>
             </li>
             <li role="presentation" 
-                class="{{ isActive(route(userRoute('edit_course_settings'), ['id' => $course->id])) ? 'active' : '' }} {{ $disabled }}">
-               <a href="#settings" aria-controls="settings" onclick="window.location='<?=route(userRoute('edit_course_settings'), ['id' => $course->id])?>'" role="tab" data-toggle="tab">Настройки курса</a>
+                class="{{ isActive(route(userRoute('edit_course_settings'), ['id' => $course->id])) ? 'active' : '' }} 
+                       {{ $course->general_filled ? $disabled : 'disabled' }}">
+               <a aria-controls="settings" href="{{ route(userRoute('edit_course_settings'), ['id' => $course->id]) }}" role="tab" data-toggle="tab">Настройки курса</a>
             </li>
             <li role="presentation" 
-                class="{{ isActive(route(userRoute('edit_course_program'), ['id' => $course->id])) ? 'active' : '' }} {{ $disabled }}">
-               <a href="#programm" aria-controls="programm" onclick="window.location='<?=route(userRoute('edit_course_program'), ['id' => $course->id])?>'" role="tab" data-toggle="tab">Программа курса</a>
+                class="{{ isActive(route(userRoute('edit_course_program'), ['id' => $course->id])) ? 'active' : '' }} 
+                       {{ ($course->settings_filled && $course->general_filled) ? $disabled : 'disabled' }}">
+               <a aria-controls="programm" href="{{ route(userRoute('edit_course_program'), ['id' => $course->id]) }}" role="tab" data-toggle="tab">Программа курса</a>
+            </li> 
+            <li role="presentation" 
+                class="{{ isActive(route(userRoute('edit_course_сertificates'), ['id' => $course->id])) ? 'active' : '' }}
+                       {{ ($course->program_filled &&$course->settings_filled && $course->general_filled) ? '' : 'disabled' }}">
+               <a aria-controls="certificate" href="{{ route(userRoute('edit_course_сertificates'), ['id' => $course->id]) }}" role="tab" data-toggle="tab">Сертификат/диплом</a>
             </li>
             <li role="presentation" 
                 class="{{ isActive(route(userRoute('course_participants'), ['id' => $course->id])) ? 'active' : '' }}">
-               <a href="#participants" aria-controls="participants" onclick="window.location='<?=route(userRoute('course_participants'), ['id' => $course->id])?>'" role="tab" data-toggle="tab">Участники курса ({{ count($course->userRequests) }})</a>
-            </li>
-            <li role="presentation" 
-                class="{{ isActive(route(userRoute('edit_course_сertificates'), ['id' => $course->id])) ? 'active' : '' }}">
-               <a href="#certificate" aria-controls="certificate" onclick="window.location='<?=route(userRoute('edit_course_сertificates'), ['id' => $course->id])?>'" role="tab" data-toggle="tab">Сертификат/диплом</a>
+               <a aria-controls="participants" href="{{ route(userRoute('course_participants'), ['id' => $course->id]) }}" role="tab" data-toggle="tab">Участники курса ({{ count($course->userRequests) }})</a>
             </li>
          </ul>
          
@@ -50,4 +53,5 @@
       </div>
    </div>
 </div> 
+ 
 @stop

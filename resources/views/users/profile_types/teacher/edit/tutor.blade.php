@@ -1,9 +1,10 @@
 @extends('users.profile_types.teacher.edit')
 
 @section('edit_form')  
-<form class="ajax__submit" method="POST" action="{{ route(userRoute('user_update_tutor')) }}">
+<form class="ajax__submit listener__change_form teacher_form" method="POST" action="{{ route(userRoute('user_update_tutor')) }}">
     {{ csrf_field() }}
- 
+ 	<input type="hidden" name="redirectUri" id="redirectUri">
+ 	
 	<div class="col-lg-8 col-lg-offset-2" style="min-height: 300px;">
 		<div class="user_form">
 		 

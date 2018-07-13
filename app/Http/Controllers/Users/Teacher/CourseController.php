@@ -115,24 +115,35 @@ class CourseController extends TeacherController
             $crudFactory->saveSections($idCourse);
         } 
 
-        return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('edit_course_settings'), ['id' => $idCourse])], 'Курс успешно добавлен!');
+        return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('edit_course_settings'), ['id' => $idCourse])], '');
     }
 
     public function saveCertificates($id, Request $request)
     { 
+        $course      = Courses::whereId($id)->first();
         $crudFactory = $this->_course->crud($id, Auth::user()); 
         if (!$crudFactory->hasAccessCourse()) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
         }
-
+ 
         $certificates = $request->input('certificates');
         if (!empty($certificates)) 
         {
             $crudFactory->saveCertificates($certificates);
+        }
+        else
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Вы не добавили новые сертификаты']);
+        } 
+ 
+        $message  = 'Сертификаты успешно сохранены!';
+        if (!$course->сertificates_filled) 
+        { 
+            $message  = 'Ваш курс успешно добавлен и размещен в каталоге';
         } 
 
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Сертификаты успешно сохранены!');
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave('certificates', $request->all(), $course), $message);
     } 
 
     public function editCourseGeneral($idCourse, Request $request)
@@ -151,14 +162,14 @@ class CourseController extends TeacherController
 
         $crudFactory->editGeneral($request->all());  
         $crudFactory->updateCourseHide($request->all());
-
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Курс успешно изменен!');
-    } 
+        
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave('general', $request->all()), 'Данные успешно сохранены!');
+    }  
 
     public function editCourseSettings($idCourse, Request $request)
-    { 
-        $crudFactory = $this->_course->crud($idCourse, Auth::user()); 
-
+    {  
+        $course      = Courses::whereId($idCourse)->first();
+        $crudFactory = $this->_course->crud($idCourse, Auth::user());  
         if (!$crudFactory->hasAccessCourse()) 
         {
             return \App\Utils\JsonResponse::error(['messages' => 'Ошибка']);
@@ -171,11 +182,13 @@ class CourseController extends TeacherController
         } 
 
         $crudFactory->editSettings($request->all());  
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Курс успешно изменен!');
+ 
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave('settings', $request->all(), $course), 'Данные успешно сохранены!');
     } 
 
     public function editCourseProgram($idCourse, Request $request)
     {  
+        $course      = Courses::whereId($idCourse)->first();
         $crudFactory = $this->_course->crud($idCourse, Auth::user());
         if (!$crudFactory->hasAccessCourse()) 
         {
@@ -195,19 +208,64 @@ class CourseController extends TeacherController
             Courses::where('id', $crudFactory->id_course)
                     ->where('id_user', $crudFactory->user->id)
                     ->update(['program_filled' => 1]); 
-        }  
-
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Курс успешно изменен!');
+        } 
+ 
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave('program', $request->all(), $course), 'Данные успешно сохранены!');
     } 
   
     public function deleteCourse($id_course)
     {  
         $crudFactory = $this->_course->crud($id_course, Auth::user());
         if ($crudFactory->hasAccessCourse($id_course, Auth::user()->id) &&
-            $this->_course->manager(Courses::whereId($id_course)->first())->canManage() != true) 
+            $this->_course->manager(Courses::whereId($id_course)->first())->canManage() == true) 
         {
             $crudFactory->delete($id_course, Auth::user()->id); 
         }
         return redirect()->route(userRoute('user_profile'));
+    }
+
+    private static function redirectAfterSave($action, $request, $course = null)
+    { 
+        $redirect = ['reload' => true];
+        switch ($action) {
+            case 'general':  
+                break;
+
+            case 'settings': 
+                if (!$course->settings_filled) 
+                { 
+                    $redirect = ['redirect' => route(userRoute('edit_course_program'), ['id' => $course->id])];
+                }   
+                break;
+
+            case 'program': 
+                if (!$course->program_filled) 
+                {
+                    $redirect = ['redirect' => route(userRoute('edit_course_сertificates'), ['id' => $course->id])];
+                }  
+                break;
+
+            case 'certificates':   
+                if (!$course->сertificates_filled) 
+                {
+                    $redirect = ['redirect' => route(userRoute('user_profile'))];
+                }   
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        if (!empty($request['redirectUri'])) 
+        {
+            $parseUri = parse_url($request['redirectUri']); 
+            if ($parseUri['host'] == request()->server('HTTP_HOST')) 
+            {
+                $redirect = ['redirect' => $request['redirectUri']];
+            }
+        }
+
+        return $redirect;
     }
 }

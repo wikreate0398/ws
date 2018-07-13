@@ -1,8 +1,9 @@
 @extends('users.profile_types.teacher.courses.edit')
 
 @section('edit_form')   
-	<form class="ajax__submit" method="POST" action="{{ route(userRoute('update_course_сertificates'), ['id' => $course->id]) }}">
+	<form class="ajax__submit listener__change_form course__form" method="POST" action="{{ route(userRoute('update_course_сertificates'), ['id' => $course->id]) }}">
 	    {{ csrf_field() }}
+      <input type="hidden" name="redirectUri" id="redirectUri">
 	    <div class="col-lg-8 col-lg-offset-2 course_form">
 			 
             <div id="certificates__images" class="row uploaderContainter" style="margin-bottom: 40px;"> 
@@ -32,8 +33,12 @@
 			<div class="row">
 	          <div class="col-md-12" style="text-align: center;">
 	             <div id="error-respond"></div>
-	             <button type="submit" class="btn btn_save" style="display: inline-block; width: auto; float: none;">
-	             Сохранить 
+	             <button type="submit" class="btn btn_save" style="display: inline-block; width: auto; float: none;"> 
+                  @if($course->сertificates_filled)
+                    Сохранить
+                  @else
+                    Добавить курс
+                  @endif 
 	             </button>
 	          </div>
 	       </div>

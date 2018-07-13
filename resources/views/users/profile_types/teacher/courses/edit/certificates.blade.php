@@ -1,7 +1,7 @@
 @extends('users.profile_types.teacher.courses.edit')
 
 @section('edit_form')   
-	<form class="ajax__submit listener__change_form course__form" method="POST" action="{{ route(userRoute('update_course_сertificates'), ['id' => $course->id]) }}">
+	<form class="ajax__submit has--preload listener__change_form course__form_hc" method="POST" action="{{ route(userRoute('update_course_сertificates'), ['id' => $course->id]) }}">
 	    {{ csrf_field() }}
       <input type="hidden" name="redirectUri" id="redirectUri">
 	    <div class="col-lg-8 col-lg-offset-2 course_form">

@@ -1,7 +1,7 @@
 @extends('users.profile_types.teacher.edit')
 
 @section('edit_form')  
-<form class="ajax__submit listener__change_form teacher_form" method="POST" action="{{ route(userRoute('user_update_tutor')) }}">
+<form class="ajax__submit has--preload listener__change_form teacher__form_hc" method="POST" action="{{ route(userRoute('user_update_tutor')) }}">
     {{ csrf_field() }}
  	<input type="hidden" name="redirectUri" id="redirectUri">
  	

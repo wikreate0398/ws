@@ -16,7 +16,7 @@
       </div>
       <div class="row">
       
-         <form class="ajax__submit course_form" method="POST" action="{{ route(userRoute('save_faculty')) }}">
+         <form class="ajax__submit has--preload course_form" method="POST" action="{{ route(userRoute('save_faculty')) }}">
             {{ csrf_field() }}
             <div class="col-lg-8 col-lg-offset-2">
 

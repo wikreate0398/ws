@@ -28,7 +28,7 @@
                <a href="#certificate" aria-controls="certificate" role="tab" data-toggle="tab">Сертификат/диплом</a>
             </li>
          </ul>
-         <form class="ajax__submit course__form" method="POST" action="{{ route(userRoute('save_course')) }}">
+         <form class="ajax__submit has--preload" method="POST" action="{{ route(userRoute('save_course')) }}">
             {{ csrf_field() }}
             <div class="col-lg-8 col-lg-offset-2">
                <div class="tab-content course_form">

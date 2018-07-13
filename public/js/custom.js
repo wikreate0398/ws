@@ -16,14 +16,14 @@ jQuery(document).ready(function($) {
     });
 
     $('a').click(function(e){ 
-        if ($('.course__form').length > 0) { 
+        if ($('.course__form_hc').length > 0) { 
             e.preventDefault();  
-            formHasChanged(this, '.course__form'); 
+            formHasChanged(this, '.course__form_hc'); 
         }
 
-        if ($('.teacher_form').length > 0) { 
+        if ($('.teacher__form_hc').length > 0) { 
             e.preventDefault();   
-            formHasChanged(this, '.teacher_form'); 
+            formHasChanged(this, '.teacher__form_hc'); 
         }  
     }); 
 
@@ -296,6 +296,8 @@ jQuery(document).ready(function($) {
                 $('.profile__image_form').removeClass('loading__save_image');
                 $(form).removeClass('preloader__form');
                 $(form).remove('.preloader__form_content');
+                $('.has--preload input#redirectUri').val('');
+                 
                 InputMask();
             }
         });
@@ -332,7 +334,11 @@ jQuery(document).ready(function($) {
                                             '<div></div>'+ 
                                         '</div>'+
                                 '</div>';
-        $('.preloader__form').append(formLoaderContent);
+
+        if ($(form).hasClass('has--preload')) {
+            $('.preloader__form').append(formLoaderContent);
+        }
+         
         setTimeout(function(){
             serializeForm(form, button, action, button_txt);
         }, 500);

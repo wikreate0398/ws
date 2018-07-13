@@ -1,7 +1,7 @@
 @extends('users.profile_types.university.edit')
 
 @section('edit_form')  
-	<form class="ajax__submit" method="POST" action="{{ route(userRoute('update_profile')) }}">
+	<form class="ajax__submit has--preload" method="POST" action="{{ route(userRoute('update_profile')) }}">
 	    {{ csrf_field() }} 
 		<div class="col-lg-8 col-lg-offset-2 user_form"> 
 			 

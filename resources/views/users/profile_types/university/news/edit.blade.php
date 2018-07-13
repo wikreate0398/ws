@@ -16,7 +16,7 @@
       </div>
       <div class="row">
       
-         <form class="ajax__submit course_form" method="POST" action="{{ route(userRoute('update_news'), ['id' => $news->id]) }}">
+         <form class="ajax__submit course_form has--preload" method="POST" action="{{ route(userRoute('update_news'), ['id' => $news->id]) }}">
             {{ csrf_field() }}
             <div class="col-lg-8 col-lg-offset-2">
 
@@ -48,7 +48,7 @@
                      <label class="col-md-5 control-label">ОПИСАНИЕ<span class="req">*</span></label>
                      <div class="col-md-7">
                         <div class="form-group">
-                           <textarea class="form-control" maxlength="200" name="description">{{ $news->description }}</textarea>
+                           <textarea class="form-control" name="description">{{ $news->description }}</textarea>
                            <div class="maxlength__label">(200 символов минимум)</div>
                         </div>
                      </div>

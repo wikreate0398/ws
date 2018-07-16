@@ -112,6 +112,27 @@ jQuery(document).ready(function($) {
         }
     });
 
+    $('#certificates__box').owlCarousel({
+        loop:true,
+        margin:00,
+        nav:false,
+        dots:true,
+        items:1,
+        // navText: ['<img src="/public/images/left-arrow.png">', '<img src="/public/images/right-arrow.png">'],
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:1
+            },
+            1000:{
+                items:1
+            }
+        }
+    });
+
+      
     $("input#teacher_status").switchButton({
         on_label: 'Свободен',
         off_label: 'Занят', 
@@ -145,10 +166,24 @@ jQuery(document).ready(function($) {
         } 
     }); 
 
-    $('.number_field').keypress(function(event) {
+    $(document).on('keypress', '.number_field', function(event) {
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
           event.preventDefault();
         }
+    });
+
+    $(document).on('input', '.number_field', function (e) {
+     
+        var max = parseInt($(this).attr('max'));
+        var min = parseInt($(this).attr('min'));
+        if ($(this).val() > max)
+        {
+            $(this).val(max); 
+        }
+        else if ($(this).val() < min)
+        { 
+            $(this).val(min);
+        }   
     });
 
     $('.course_discount_price').keyup(function(event) {
@@ -442,13 +477,16 @@ $(window).on('load', function(){
     setEqualHeight2($('.course_card .footer__course_card .set__going_date'), $('.course__catalog'));
     setEqualHeight2($('.university__item h3'), $('.universities_catalog'));
 
-    setEqualHeight2($('.external_card h3'), $('.tab-pane'));
-    setEqualHeight2($('.external_card h4'), $('.tab-pane'));
-
-     
- 
-     
+    homeCourseEq();
 });
+
+function homeCourseEq()
+{
+    $('.tab-pane').each(function(){ 
+        setEqualHeight2($(this).find('.external_card h3'), $(this));
+        setEqualHeight2($(this).find('.external_card h4'), $(this)); 
+    }); 
+}
  
 function setEqualHeight2(columns, parent) {   
     if (!$(columns).length ) { 

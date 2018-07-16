@@ -98,8 +98,10 @@
 				<h2>УЧЕБНЫЙ ПЛАН</h2>
 
 				<div class="panel-group" id="accordion">
-					@php $sectionNum = 1; @endphp
+					@php $sectionNum = 0; @endphp
+					@php $totaLecture = 0; @endphp
 					@foreach($course->sections as $section)
+						@php $sectionNum++ @endphp
 					    <div class="panel panel-default">
 					      <div class="panel-heading">
 					        <h4 class="panel-title">
@@ -112,8 +114,9 @@
 					      <div id="collapse{{ $sectionNum }}" class="panel-collapse collapse {{ ($sectionNum == 1) ? 'in' : ''}}">
 					        <div class="panel-body">
 								<table class="table">
-									@php $lectureNum = 1; @endphp
+									@php $lectureNum = 0; @endphp
 									@foreach($section->lectures as $lecture)
+										@php $lectureNum++; $totaLecture++ @endphp
 										<tr>
 											<td>
 												ЛЕКЦИЯ {{ $sectionNum }}.{{ $lectureNum }}
@@ -123,14 +126,12 @@
 												<i class="fa fa-clock-o" aria-hidden="true"></i>
 												{{ $lecture->duration_hourse }} ч {{ $lecture->duration_minutes }} мин.
 											</td>
-										</tr>
-										@php $lectureNum++ @endphp
+										</tr> 
 									@endforeach
 								</table>
 					        </div>
 					      </div>
-					    </div> 
-					    @php $sectionNum++ @endphp
+					    </div>  
 				    @endforeach
 				</div> 
 			</div>
@@ -138,7 +139,7 @@
 		</div>
 
 		<div class="col-md-3">
-			<div class="course__trainers_box">
+			<div class="course__sidebar_box">
 				@if($course->user->user_type == 2)
 					<h3>ПРЕПОДАВАТЕЛь КУРСА</h3>
 				@else
@@ -166,24 +167,41 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="course__sidebar_box" style="padding-bottom: 30px;">
+				<h3>СЕРТИФИКАТ ОБ <br> ОКОНЧАНИИ</h3>
+				<div class="certificates__box owl-carousel owl-theme" id="certificates__box">
+				 	@foreach($course->certificates as $certificate)
+						<div class="certificate_slider__item">
+							<img src="/public/uploads/courses/certificates/{{ $certificate->image }}" alt="">
+						</div>
+				 	@endforeach
+				</div>
+			</div>
+
 		</div>
 	</div>
 </div>
 <script>
 	$(document).ready(function(){
-		$('li.courseSections').text('{{ $lectureNum }} {{ lectionCase($lectureNum) }}');
+		$('li.courseSections').text('{{ $totaLecture }} {{ lectionCase($totaLecture) }}');
 	});
 </script>
 
 <style>
+	
+	.certificate_slider__item img{
+		max-width: 100%;
+	}
 
-	.course__trainers_box{
+	.course__sidebar_box{
 		background: #f2f2f2;
 		padding:0 20px 50px 20px;
 		text-align: center;
+		margin-bottom: 20px;
 	}
 
-	.course__trainers_box h3{
+	.course__sidebar_box h3{
 		text-transform: uppercase;
 		font-weight: 700;
 		text-align: center;

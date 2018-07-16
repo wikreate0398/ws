@@ -21,7 +21,7 @@
     <link href="{{ asset('css/select2.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/style.css') . '?v=' . time() }}" rel="stylesheet">
     <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/media-queries.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/media-queries.css') }}" rel="stylesheet"> 
 
     <!-- Cropper -->
     <link  href="{{ asset('js/cropperjs/dist/cropper.css') }}" rel="stylesheet">

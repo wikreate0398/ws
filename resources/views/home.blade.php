@@ -8,7 +8,7 @@
                 <ul class="nav nav-tabs popular_courses">
 
                     <li class="active">
-                        <a data-toggle="tab" href="#course_all">
+                        <a data-toggle="tab" onclick="homeCourseEq();" href="#course_all">
                             Все
                         </a>
                     </li>
@@ -16,7 +16,7 @@
                     @php $i=0; @endphp
                     @foreach($courseCategories as $category)
                         <li class="">
-                            <a data-toggle="tab" href="#course_category_{{ $category->id }}">
+                            <a data-toggle="tab" onclick="homeCourseEq();" href="#course_category_{{ $category->id }}">
                                 {{ $category->name }}
                             </a>
                         </li> @php $i++ @endphp

@@ -110,13 +110,13 @@ class Courses extends Model
         if (Auth::check() != true) 
         {
             $query->where('available', '!=', '2');
-        } 
-
-        return $query->where('isHide', 0)
-                     ->where('general_filled', 1)
+        }
+                     
+        return $query->where('general_filled', 1)
                      ->where('program_filled', 1)
                      ->where('settings_filled', 1)
                      ->where('view', 1)
+                     ->whereRaw('If(`hide_after_end`= 1, `is_open_to` >= CURDATE(), `view`=1)')
                      ->whereHas('user', function($query){
                         return User::allowUser();
                     });
@@ -124,7 +124,7 @@ class Courses extends Model
 
     public function scopeOrderByCourses($query)
     {
-        return $query->orderBy(DB::raw('ABS(DATEDIFF(date_from, NOW()))'));
+        return $query->orderBy(DB::raw('ABS(DATEDIFF(date_from, NOW()))')); 
     }
 
     public static function countTotal()

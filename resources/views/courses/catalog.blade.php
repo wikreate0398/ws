@@ -120,6 +120,12 @@
 				        	</h4>
 		            		<table>
 		            			<tr>
+		            				<td>Начало</td> 
+		            				<td>
+										{{ date('d.m.Y', strtotime($course->date_from)) }}
+		            				 </td>
+		            			</tr> 
+		            			<tr>
 		            				<td>СТОИМОСТЬ</td> 
 		            				<td>
 										@if($course->pay == 1)

@@ -38,13 +38,14 @@ class CoursesController extends Controller
             $baseUrl .= "/cat/$cat";
         }
 
-        $currentCat = CourseCategory::where('url', $cat)->first();
+         
         $authCheck = Auth::check();
 
         $categories = [];
         $subcatFlag = false;
         if (!empty($cat)) 
         {  
+            $currentCat = CourseCategory::where('url', $cat)->first();
             if ($currentCat->parent_id!='0') 
             {
                 $id     = $currentCat->parent_id;
@@ -68,6 +69,7 @@ class CoursesController extends Controller
         } 
 
         $courses = Courses::getCatalog($cat, $subcat, $request->all()); 
+        
         $data = [
             'courses'           => $courses, 
             'totalCourses' => Courses::countTotal(),

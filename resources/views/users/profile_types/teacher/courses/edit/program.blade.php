@@ -64,13 +64,14 @@
 										            	       class="form-control number_field required__input" 
 										            	       name="lecture[{{$sectionsNum}}][hourse][]" 
 										            	       placeholder="чч" 
+										            	       min="0" max="23"
 										            	       value="{{ $lecture->duration_hourse }}">
 										            </div>
 										            <div class="col-md-2">
 										            	<input type="text" 
 										            	       class="form-control number_field required__input" 
 										            	       name="lecture[{{$sectionsNum}}][minutes][]" 
-										            	       placeholder="мм" value="{{ $lecture->duration_minutes }}">
+										            	       placeholder="мм" min="0" max="59" value="{{ $lecture->duration_minutes }}">
 										            </div>
 										        </div>
 							            	</div>
@@ -125,12 +126,14 @@
                                          </div>
                                          <div class="form-group">
                                             <label class="col-md-12 control-label">Длительность лекции <span class="req">*</span></label>
+                                          
                                             <div class="col-md-2">
-                                               <input type="text" class="form-control number_field required__input" name="lecture[0][hourse][]" placeholder="чч" value="" autocomplete="false">
+                                               <input type="number" class="form-control number_field required__input" name="lecture[0][hourse][]" placeholder="чч" min="0" max="23" value="" autocomplete="false">
                                             </div>
                                             <div class="col-md-2">
-                                               <input type="text" class="form-control number_field required__input" name="lecture[0][minutes][]" placeholder="мм" autocomplete="false" value="">
-                                            </div>
+                                               <input type="number" class="form-control number_field required__input" name="lecture[0][minutes][]" placeholder="мм" min="0" max="59" autocomplete="false" value="">
+                                            </div> 
+                                            
                                          </div>
                                       </div>
                                    </div>
@@ -161,5 +164,5 @@
 	          </div>
 	       </div>
 		</div>
-	</form> 
+	</form>  
 @stop

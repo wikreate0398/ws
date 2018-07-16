@@ -96,7 +96,7 @@ class CourseController extends TeacherController
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
             'course'     => $course,
             'scripts' => [
-                'js/courses.js'
+                'js/courses.js' 
             ]
         ]); 
     }

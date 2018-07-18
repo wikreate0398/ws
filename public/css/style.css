@@ -1706,6 +1706,7 @@ input#amount{
 	border: 1px solid #c1c1c1;
 	padding: 3px 15px;
 	text-transform: uppercase;
+    margin-bottom: 5px;
 }
 .teachers_external_card .teachers_subjects{
 	padding-left: 5px;
@@ -1756,6 +1757,11 @@ input#amount{
 .teachers_external_card .teachers_about p{
 	margin-bottom: 20px;
 }
+
+.teachers_external_card img.img-responsive{
+    width: 100%;
+}
+
 /* Фильтр */
 .filter_block{
 	margin-top: 30px;

@@ -12,7 +12,7 @@
 			</ul>
 		</div>
 		<div class="col-lg-3"> 
-			<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
+			<img class="img-responsive" style="width: 100%;" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
 			<button @if($hasRequest==true && Auth::check() == true)
 						disabled
 					@endif

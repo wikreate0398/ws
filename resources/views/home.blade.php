@@ -277,7 +277,9 @@
                                      src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
 							</a> 
                             <h3><a href="/teacher/{{ $teacher['id'] }}/">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
-                            <p>ЕГЭ, ФИЗИКА, МАТЕМАТИКА</p>
+                            <p>{{ implode(',', array_slice($teacher->subjects->pluck('name')->toArray(), 0, 2)) }}</p>
+ 
+
                         </div> 
                     @endforeach
                 </div>

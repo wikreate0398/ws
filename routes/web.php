@@ -45,6 +45,7 @@ Route::get('course/{id}', 'CoursesController@show');
 Route::get('course/{id}/makeRequest', 'CoursesController@makeRequest');
 Route::get('courses/autocomplete', 'CoursesController@autocomplete');
 Route::post('course/favorite', 'CoursesController@favorite', ['middleware' => 'web_auth']); 
+Route::post('course/review/{id}', 'CoursesController@review', ['middleware' => 'web_auth'])->name('course_review'); 
 
 Route::get('search', 'PagesController@search');  
 

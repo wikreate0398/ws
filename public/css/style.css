@@ -890,6 +890,11 @@ form#search_form .input-group{
 .external_card .caption .card_info .rating_star{
     color: #e4ba0d;
 }
+
+.external_card .caption .card_info .rating_star a{
+    font-size: 14px;
+}
+
 .external_card .caption .card_date_info{
 	font-family: 'Helvetica Neue Cyr Roman';
 	font-size: 13px;
@@ -2684,6 +2689,14 @@ select option:disabled {
     width: 100%;
     font-size: 11px;
     color: #333;
+}
+ 
+.course_item_stars a{
+    font-size: 14px !important; 
+}
+
+.course_item_stars .br-widget{
+    height: auto !important; 
 }
 
 .course_card .body__course_card table tr td:last-child{

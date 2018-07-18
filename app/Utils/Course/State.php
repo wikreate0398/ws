@@ -67,6 +67,16 @@ class State extends Course
         return false;
     } 
 
+    public function ifHasUserReview($id_user=null)
+    {
+
+        if (in_array($id_user, $this->course->reviews->pluck('id_user')->toArray())) 
+        {
+            return true;
+        } 
+        return false;
+    }
+
     public function esablishDate()
     { 
         if ($this->course->hide_after_end == 1 && !$this->request($this->course)->ifHasRequest()) 

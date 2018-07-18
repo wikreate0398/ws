@@ -49,7 +49,7 @@ class Courses extends Model
     {
         return $this->hasMany('App\Models\CourseSections', 'id_course', 'id');
     } 
-
+  
     public function user()
     {
         return $this->hasOne('App\Models\User', 'id', 'id_user');
@@ -69,6 +69,11 @@ class Courses extends Model
     { 
         return $this->belongsToMany('App\Models\User', 'course_favorite', 'id_course', 'id_user'); 
     }
+
+    public function reviews()
+    {  
+        return $this->hasMany('App\Models\CourseReviews', 'id_course', 'id')->orderBy('created_at', 'desc');
+    } 
 
     public static function getCatalog($cat=false, $subcat = false, $input=false)
     {
@@ -130,10 +135,19 @@ class Courses extends Model
     public static function countTotal()
     {    
         return Courses::published()->count();
-    }
+    } 
+
+    // public function scopeRating($query)
+    // {
+    //     return $query->leftJoin('course_reviews', 'course_reviews.id_course', '=', 'courses.id') 
+    //                  ->select(DB::raw('COUNT(course_reviews.id) as count_reviews, FORMAT(avg(rating),1) as avg1')); 
+    // }
 
     public static function getOneCourse($id, $authCheck = false)
     {
-        return Courses::with('sections')->where('id', $id)->published()->findOrFail($id);
+        return Courses::with('sections') 
+                      // ->rating()
+                      ->published()
+                      ->findOrFail($id);
     }
 }

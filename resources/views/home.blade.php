@@ -89,13 +89,15 @@
                                         </li>
                                         <li>
                                             Рейтинг 
-                                            <span class="rating_star"> 
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i> 
-                                            </span>
+                                            <span class="rating_star">  
+                                                <select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($course->reviews->avg('rating')) }}" autocomplete="off">
+                                                  <option value="1">1</option> 
+                                                  <option value="2">2</option>
+                                                  <option value="3">3</option>
+                                                  <option value="4">4</option>
+                                                  <option value="5">5</option>
+                                                </select> 
+                                            </span> 
                                         </li>
                                     </ul>
                                     <ul class="list-inline card_date_info">
@@ -179,12 +181,14 @@
                                         </li>
                                         <li>
                                             Рейтинг 
-                                            <span class="rating_star"> 
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i> 
+                                            <span class="rating_star">  
+                                                <select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($course->reviews->avg('rating')) }}" autocomplete="off">
+                                                  <option value="1">1</option> 
+                                                  <option value="2">2</option>
+                                                  <option value="3">3</option>
+                                                  <option value="4">4</option>
+                                                  <option value="5">5</option>
+                                                </select> 
                                             </span>
                                         </li>
                                     </ul>

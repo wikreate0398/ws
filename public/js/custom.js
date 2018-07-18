@@ -5,6 +5,23 @@ jQuery(document).ready(function($) {
     //   auto_focus: 'element1'
     // });
 
+    $('.rating-stars').each(function(){
+        var currentRating = $(this).data('current-rating');
+
+        $(this).barrating({
+            theme: 'fontawesome-stars-o',
+            showSelectedRating: false,
+            initialRating: parseFloat(currentRating),
+            allowEmpty:true, 
+            deselectable:true,
+            emptyValue: 0,
+            onSelect:function(value, text, event){ 
+            } 
+        }); 
+        var state = ($(this).attr('data-readonly') == 'true') ? true : false; 
+        $(this).barrating('readonly', state);  
+    }); 
+
     var numChange = 0;
     $("form.listener__change_form").change(function(e) { 
       if (!$(e.target).hasClass('onload__change')) {numChange++}

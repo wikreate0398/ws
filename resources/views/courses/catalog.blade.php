@@ -158,11 +158,16 @@
 		            			</tr> 
 		            			<tr> 
 		            				<td>РЕЙТИНГ</td>
-		            				<td>
-		            					<i class="fa fa-star" aria-hidden="true"></i>
-		            					<i class="fa fa-star" aria-hidden="true"></i>
-		            					<i class="fa fa-star" aria-hidden="true"></i>
-		            					<i class="fa fa-star" aria-hidden="true"></i>
+		            				<td> 
+		            					<div class="course_item_stars" >
+							                <select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($course->reviews->avg('rating')) }}" autocomplete="off">
+							                  <option value="1">1</option> 
+							                  <option value="2">2</option>
+							                  <option value="3">3</option>
+							                  <option value="4">4</option>
+							                  <option value="5">5</option>
+							                </select> 
+							          	</div>  
 		            				</td>
 		            			</tr>
 		            		</table>
@@ -220,5 +225,5 @@
 		</div>
 
     </div>
-</div> 
+</div>  
 @stop

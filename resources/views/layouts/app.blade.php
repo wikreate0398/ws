@@ -22,6 +22,7 @@
     <link href="{{ asset('css/style.css') . '?v=' . time() }}" rel="stylesheet">
     <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media-queries.css') }}" rel="stylesheet"> 
+    <link rel="stylesheet" href="{{ asset('js/bar-rating/dist/themes/fontawesome-stars-o.css') }}">  
 
     <!-- Cropper -->
     <link  href="{{ asset('js/cropperjs/dist/cropper.css') }}" rel="stylesheet">
@@ -45,6 +46,7 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('js/bar-rating/jquery.barrating.js') }}"></script>
     <script src="{{ asset('js/switcher.js') }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script> 
 

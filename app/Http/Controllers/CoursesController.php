@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\Courses;
 use App\Models\CourseCategory; 
 use App\Models\CourseFavorite; 
+use App\Models\CourseReviews; 
+ 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Utils\Course\Course;
@@ -88,9 +90,9 @@ class CoursesController extends Controller
     public function show($id)
     {     
         $course = Courses::getOneCourse($id, Auth::check()); 
-
+ 
         $data = [
-            'course'         => $course, 
+            'course'         => $course,  
             'scripts'        => [
                 'js/courses.js'
             ]
@@ -159,5 +161,31 @@ class CoursesController extends Controller
         }
 
         return \App\Utils\JsonResponse::success(['status' => $status]);
+    }
+
+    public function review($id, Request $request, Course $courseFacade)
+    {
+        $course = Courses::getOneCourse($id, Auth::check()); 
+
+        if (!$courseFacade->manager($course)->isFinished() 
+         || !$courseFacade->request($course)->ifHasRequest() 
+         || $courseFacade->manager($course)->ifHasUserReview(@Auth::user()->id)) 
+        {
+            return;
+        } 
+
+        if (!$request->input('message')) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Заполните поле с комментарием']); 
+        }
+
+        CourseReviews::create([
+            'id_course' => $id,
+            'id_user'   => Auth::user()->id,
+            'review'    => $request->input('message'),
+            'rating'    => floatval($request->input('rating'))
+        ]);
+
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Отзыв успешно добавлен и ожидает проверки модератора'); 
     }
 }

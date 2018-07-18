@@ -135,8 +135,7 @@ class TeacherController extends ProfileController
             {
                 $redirect = ['redirect' => $request['redirectUri']];
             }
-        }
-
+        } 
         return $redirect;
     }
 

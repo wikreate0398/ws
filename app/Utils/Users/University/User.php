@@ -114,6 +114,10 @@ class User
         ]);
 
         $id_university = UsersUniversity::where('id_user', $this->userId)->first()->id;
+
+        ModelUser::where('id', $this->userId)->update([   
+            'univ_general_filled' => '1'
+        ]);  
   
         UniversitySpecializations::where('id_university', $id_university)->delete();
         if (!empty($data['specializations'])) 
@@ -165,7 +169,8 @@ class User
             'phone'   => $data['phone'],
             'phone2'  => !empty($data['phone2']) ? $data['phone2'] : '', 
             'site'    => !empty($data['site']) ? $data['site'] : '',
-            'email'   => $data['email'] 
+            'email'   => $data['email'],
+            'univ_profile_filled' => '1'
         ]);  
 
         UsersUniversity::where('id_user', $this->userId)->update([    
@@ -222,6 +227,11 @@ class User
             ];
         } 
         UsersCertificates::insert($insert);
+
+        ModelUser::where('id', $this->userId)->update([   
+            'univ_certificates_filled' => '1',
+            'data_filled'              => '1'
+        ]); 
     } 
 
     public function isProfileFilled()

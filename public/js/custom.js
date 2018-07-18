@@ -42,6 +42,11 @@ jQuery(document).ready(function($) {
             e.preventDefault();   
             formHasChanged(this, '.teacher__form_hc'); 
         }  
+
+        if ($('.univ__form_hc').length > 0) { 
+            e.preventDefault();   
+            formHasChanged(this, '.univ__form_hc'); 
+        }  
     }); 
 
     function formHasChanged(a, formClass){  

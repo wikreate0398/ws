@@ -1456,7 +1456,7 @@ form#search_form .input-group{
     border-bottom: none;
 }
 
-.add_course li.disabled{
+.add_course li.disabled, .user_edit.nav-tabs li.disabled{
     opacity: 0.3;
     pointer-events: none;
 }

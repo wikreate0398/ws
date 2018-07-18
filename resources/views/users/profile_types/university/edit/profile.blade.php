@@ -1,8 +1,9 @@
 @extends('users.profile_types.university.edit')
 
 @section('edit_form')  
-	<form class="ajax__submit has--preload" method="POST" action="{{ route(userRoute('update_profile')) }}">
+	<form class="ajax__submit has--preload listener__change_form univ__form_hc" method="POST" action="{{ route(userRoute('update_profile')) }}">
 	    {{ csrf_field() }} 
+	    <input type="hidden" name="redirectUri" id="redirectUri">
 		<div class="col-lg-8 col-lg-offset-2 user_form"> 
 			 
 			<div class="col-md-12">
@@ -39,7 +40,7 @@
 				<div class="row">
 					<div class="col-md-12 regions__area">
 						<div class="form-group select_form">
-							<select class="form-control select2" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
+							<select class="form-control select2 onload__change" id="select__regions" onchange="loadRegionCities(this, '{{ $user['city'] }}')" name="region">
 							  	<option value="">Область</option>
 							  	@foreach($regions as $item)
 	                           		<option {{ ($user['region'] == $item['id']) ? 'selected' : '' }} value="{{$item['id']}}">
@@ -115,7 +116,11 @@
 			<div class="col-lg-12">
 				<div id="error-respond"></div>
 				<button type="submit" class="btn btn_save">
-					Сохранить
+					@if($user->univ_profile_filled)
+	                    Сохранить
+	                @else
+	                    Далее
+	                @endif 
 				</button>
 			</div> 
 		</div>

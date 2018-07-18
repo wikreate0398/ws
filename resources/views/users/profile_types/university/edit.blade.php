@@ -14,13 +14,13 @@
 		<div class="col-lg-12">
 			<ul class="nav nav-tabs user_edit">
 				<li class="{{ isActive(route(userRoute('user_edit'))) ? 'active' : '' }}">
-					<a data-toggle="tab" href="#profile" onclick="window.location='{{ route(userRoute('user_edit')) }}'">Профиль ВУЗА</a>
+					<a data-toggle="tab" href="{{ route(userRoute('user_edit')) }}">Профиль ВУЗА</a>
 				</li>
-				<li class="{{ isActive(route(userRoute('user_general_edit'))) ? 'active' : '' }}">
-					<a data-toggle="tab" href="#information" onclick="window.location='{{ route(userRoute('user_general_edit')) }}'">Общая информация</a>
+				<li class="{{ isActive(route(userRoute('user_general_edit'))) ? 'active' : '' }} {{ !$user->univ_profile_filled ? 'disabled' : '' }}">
+					<a data-toggle="tab" href="{{ route(userRoute('user_general_edit')) }}">Общая информация</a>
 				</li>
-				<li class="{{ isActive(route(userRoute('user_certificates_edit'))) ? 'active' : '' }}">
-					<a data-toggle="tab" href="#certificate" onclick="window.location='{{ route(userRoute('user_certificates_edit')) }}'"> Сертификат/Диплом </a>
+				<li class="{{ isActive(route(userRoute('user_certificates_edit'))) ? 'active' : '' }} {{ (!$user->univ_profile_filled or !$user->univ_general_filled) ? 'disabled' : '' }}">
+					<a data-toggle="tab" href="{{ route(userRoute('user_certificates_edit')) }}"> Сертификат/Диплом </a>
 				</li>
 			</ul>
 		</div>

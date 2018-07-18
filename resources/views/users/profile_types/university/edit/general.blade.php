@@ -1,8 +1,9 @@
 @extends('users.profile_types.university.edit')
 
 @section('edit_form')  
-	<form class="ajax__submit has--preload" method="POST" action="{{ route(userRoute('update_general')) }}">
+	<form class="ajax__submit has--preload listener__change_form univ__form_hc" method="POST" action="{{ route(userRoute('update_general')) }}">
 	    {{ csrf_field() }} 
+	    <input type="hidden" name="redirectUri" id="redirectUri">
 		<div class="col-lg-8 col-lg-offset-2 user_form"> 
 			 
 			<div class="col-md-12">
@@ -123,8 +124,12 @@
 	  
 			<div class="col-lg-12">
 				<div id="error-respond"></div>
-				<button type="submit" class="btn btn_save">
-					Сохранить
+				<button type="submit" class="btn btn_save"> 
+					@if($user->univ_general_filled)
+	                    Сохранить
+	                @else
+	                    Далее
+	                @endif 
 				</button>
 			</div> 
 		</div>

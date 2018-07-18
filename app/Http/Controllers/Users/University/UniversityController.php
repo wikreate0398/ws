@@ -70,15 +70,15 @@ class UniversityController extends ProfileController
     } 
 
     public function editProfile(Request $request)
-    { 
+    {  
         $edit = $this->_user->setUserId(Auth::user()->id)->editProfile($request->all());   
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
         } 
-
-        $this->_user->updateIfProfileFilled();
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+ 
+ 
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave('profile', $request, Auth::user()), 'Данные успешно сохранены!'); 
     }  
 
     public function editGeneral(Request $request)
@@ -87,20 +87,68 @@ class UniversityController extends ProfileController
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
-        } 
-
-        $this->_user->updateIfProfileFilled();
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+        }  
+ 
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave('general', $request, Auth::user()), 'Данные успешно сохранены!'); 
     }  
 
     public function editCertifications(Request $request)
     { 
+        $user = Auth::user();
         $data = $request->all();
         if (!empty($data['certificates'])) 
         {
             $this->_user->setUserId(Auth::user()->id)->saveCertificates($data['certificates']);
-        }  
-        $this->_user->updateIfProfileFilled();
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+        }   
+ 
+        $msg      = 'Данные успешно сохранены!';
+        if (!$user->univ_certificates_filled) 
+        { 
+            $msg      = 'Ваш профиль успешно активирован';
+        }
+
+        return \App\Utils\JsonResponse::success(self::redirectAfterSave('certificates', $request, $user), $msg); 
     } 
+
+    private static function redirectAfterSave($action, $request, $user = null)
+    { 
+        $redirect = ['reload' => true];
+        switch ($action) {
+            case 'general':  
+                if (!$user->univ_certificates_filled) 
+                {
+                    $redirect = ['redirect' => route(userRoute('user_certificates_edit'))];
+                }
+                break;
+
+            case 'profile': 
+                if (!$user->univ_general_filled) 
+                {
+                    $redirect = ['redirect' => route(userRoute('user_general_edit'))];
+                } 
+                break; 
+
+            case 'certificates':   
+                if (!$user->univ_certificates_filled) 
+                {
+                    $redirect = ['redirect' => route(userRoute('user_profile'))]; 
+                } 
+                break;
+            
+            default:
+                # code...
+                break;
+        } 
+
+        if (!empty($request['redirectUri'])) 
+        {
+            $parseUri = parse_url($request['redirectUri']); 
+            if ($parseUri['host'] == request()->server('HTTP_HOST')) 
+            {
+                $redirect = ['redirect' => $request['redirectUri']];
+            }
+        }
+
+        return $redirect;
+    }
 }

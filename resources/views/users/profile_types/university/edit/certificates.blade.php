@@ -1,8 +1,9 @@
 @extends('users.profile_types.university.edit')
 
 @section('edit_form')  
-	<form class="ajax__submit" method="POST" action="{{ route(userRoute('update_certificates')) }}">
+	<form class="ajax__submit has--preload listener__change_form univ__form_hc" method="POST" action="{{ route(userRoute('update_certificates')) }}">
 	    {{ csrf_field() }} 
+	    <input type="hidden" name="redirectUri" id="redirectUri">
 		<div class="col-lg-8 col-lg-offset-2 user_form">  
 			<div id="certificate">
 				<div id="certificates__images" class="row uploaderContainter" style="margin-bottom: 40px;"> 
@@ -31,7 +32,11 @@
 			<div class="col-lg-12" style="text-align: center;">
 				<div id="error-respond"></div>
 				<button type="submit" class="btn btn_save" style="float: none;">
-					Сохранить
+					@if($user->univ_certificates_filled)
+	                    Сохранить
+	                @else
+	                    Сохранить и активировать
+	                @endif 
 				</button>
 			</div> 
 		</div>

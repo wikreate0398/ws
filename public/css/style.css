@@ -937,6 +937,15 @@ form#search_form .input-group{
 	color: #232323;
 	text-align: center;
     margin-top: 0px;
+    margin-bottom: 0px;
+	letter-spacing: 0.1em;
+}
+.about_us_block h2{
+	font-family: 'Cuprum Regular';
+	font-size: 30px;
+	color: #232323;
+	text-align: center;
+    margin-top: 0px;
     margin-bottom: 30px;
 	letter-spacing: 0.1em;
 }

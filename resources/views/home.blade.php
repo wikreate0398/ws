@@ -226,8 +226,9 @@
 	<div class="container about_us_block">
 		<div class="row">
 			<div class="col-lg-10 col-lg-offset-1">
-				<h1>ПРОЕКТ "КОРПОРАЦИЯ МОЗГА"</h1>
-				<p>LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. AENEAN EUISMOD BIBENDUM LAOREET. PROIN GRAVIDA DOLOR SIT AMET LACUS ACCUMSAN ET VIVERRA JUSTO COMMODO. PROIN SODALES PULVINAR TEMPOR. CUM SOCIIS NATOQUE PENATIBUS ET MAGNIS DIS PARTURIENT MONTES, NASCETUR RIDICULUS MUS. NAM FERMENTUM, NULLA LUCTUS PHARETRA VULPUTATE, FELIS TELLUS MOLLIS ORCI, SED RHONCUS SAPIEN NUNC EGET.</p>
+				<h1>КОРПОРАЦИЯ ОБРАЗОВАННЫХ ЛЮДЕЙ</h1>
+				<p>КОРПОРАЦИЯ МОЗГА — это тысячи обучающих материалов, уроков и семинаров в одном месте. Здесь вы можете найти подходящий курс за считанные секунды, начать преподавать онлайн, если вы имеете подходящую квалификацию или стать нашим партнером (для учебных заведений). Наша миссия: помочь ученикам найти источник знаний, а преподавателям и ВУЗам — реализовать свой образовательный потенциал.</p>
+				<p>Каждый участник корпорации: ученик, преподаватель или учебное заведение — звенья одной большой цепи под названием «Современное обучение». Мы хотим сделать его именно таким свободным, удобным и доступным каждому. Присоединяйтесь к современному обучению и вы, становитесь частью большого дела!</p>
 			</div>
 			<div class="col-lg-12">
 				<img class="img-responsive" src="/images/about_us.png" alt="">

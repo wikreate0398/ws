@@ -10,7 +10,7 @@ use App\Models\UniversityFaculties;
 use App\Models\UniversityFacultiesSubjects;     
 use App\Utils\Users\University\Faculties;
 use Illuminate\Support\Facades\Auth;
-use App\Models\SubjectsList;
+use App\Models\CourseCategory;
 
 class FacultiesController extends UniversityController
 {
@@ -45,10 +45,11 @@ class FacultiesController extends UniversityController
 
     public function showFacultyForm()
     {   
+        $categories = map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()); 
         return view('users.university_profile', [ 
             'user'          => Auth::user(), 
-            'include'       => $this->viewPath . '.faculties.add',
-            'subjects_list' => SubjectsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(), 
+            'include'       => $this->viewPath . '.faculties.add', 
+            'categories'              => $categories, 
             'scripts'       => [
                 'js/university.js'
             ]
@@ -58,11 +59,12 @@ class FacultiesController extends UniversityController
     public function editFacultyForm($id_faculty)
     {
         $user = Auth::user(); 
+        $categories = map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()); 
         return view('users.university_profile', [ 
             'user'          => Auth::user(), 
-            'include'       => $this->viewPath . '.faculties.edit',
-            'subjects_list' => SubjectsList::where('view', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get(), 
+            'include'       => $this->viewPath . '.faculties.edit', 
             'faculty'       => UniversityFaculties::where('id_university', $user->university->id)->findOrFail($id_faculty),
+            'categories'              => $categories, 
             'scripts'       => [
                 'js/university.js'
             ]

@@ -2408,9 +2408,7 @@ footer .copyright{
     top: 50%;
     margin-top: -8px;
     cursor: pointer;
-}
-
-
+} 
 
 
 .selected--subjects-list{
@@ -2420,7 +2418,36 @@ footer .copyright{
     align-items: center; 
     flex-flow: wrap; 
     border: 1px solid #c1c1c1;
-    padding: 5px; 
+    padding: 5px 25px 5px 5px; 
+    position: relative;
+}
+
+.selected--subjects-list:before{
+    content: "\f107";
+    font: normal normal normal 14px/1 FontAwesome;
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    margin-top: -9px;
+    font-size: 18px;
+    cursor: pointer; 
+    z-index: 99;
+    color: #b3b3b3;
+}
+
+.selected--subjects-list:after{
+    content: "";
+    position: relative;
+    width: 25px;
+    height: 100%;
+    right: 0;
+    background: #ededed;
+    position: absolute;
+    cursor: pointer;
+}
+
+.active--drowdown:before{
+    content: "\f106";
 }
 
 .selected--subjects-list .select--subjects-label{

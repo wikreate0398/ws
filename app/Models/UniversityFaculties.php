@@ -21,10 +21,17 @@ class UniversityFaculties extends Model
         'non_public_learning',
         'distance_learning'
     ];
+ 
+    public function direction()
+    {
+        return $this->belongsToMany('App\Models\CourseCategory', 'university_faculties_subjects', 'id_faculty', 'id_direction')
+                    ->orderBy('page_up', 'asc')->orderBy('id', 'desc')->groupBy('id');
+    }
 
     public function subjects()
     {
-        return $this->belongsToMany('App\Models\SubjectsList', 'university_faculties_subjects', 'id_faculty', 'id_subject')->orderBy('page_up', 'asc')->orderBy('id', 'desc');
+        return $this->belongsToMany('App\Models\CourseCategory', 'university_faculties_subjects', 'id_faculty', 'id_subject')
+                    ->orderBy('page_up', 'asc')->orderBy('id', 'desc')->withPivot('id_direction');
     }
 
     public static function getProfileFaculties($universityId, $request = false, $formLearningOptipons)

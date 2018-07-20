@@ -106,49 +106,73 @@
                         <h3 class="header_blok_course">ЭКЗАМЕНЫ ДЛЯ ПОСТУПЛЕНИЯ</h3>
                     </div> 
 
-                    <label class="col-md-5 control-label">Предметы <span class="req">*</span>
-					<p>Укажите предметы, которые вы преподаете</p>
-					</label>
-					<div class="col-md-7">
-						<div class="form-group select_form">
-							<select name="" class="form-control teacher_subjects_select" onchange="addSubject(this)">
-   							<option value="0">Выбрать</option> 
-                        @php
-                           $facultySubjectsId = $faculty->subjects->pluck('id')->toArray();
-                        @endphp
-   							@foreach($subjects_list as $subject)  
+                    <label class="col-md-5 control-label">Предметы <span class="req">*</span></label>
+               <div class="col-md-7">
+                  <div class="form-group"> 
+                     <div class="category--subjects"> 
+                        <div class="selected--subjects-list"> 
+                           @if(count($faculty->subjects))
+                              @foreach($faculty->subjects as $subject)
+                                 <span id="teacher_label_{{ $subject->id }}" 
+                                      data-parent="{{ $subject->pivot->id_direction }}" 
+                                      data-id="{{ $subject->id }}">
+                                    <div class="subject_tag"> 
+                                       {{ $subject->name }} 
+                                    </div>
+                                    <div onclick="deleteTeacherSubject({{ $subject->id }}, 'teacher_subjects_inner');" 
+                                        class="delete__subject">
+                                       <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+                                 </span>
+                              @endforeach  
+                           @endif 
+
+                           <p style="{{ count($faculty->subjects) ? 'display: none;' : '' }}" class="select--subjects-label">
+                              Выбрать
+                           </p>
+                        </div>
+                        <div class="dropdown-category">  
+                           <ul>
                            @php
-                              $disabled = '';
-                              if(in_array($subject->id, $facultySubjectsId)){
-                                 $disabled = 'disabled';
-                              }
+                              $teacherSubjectsId = $faculty->subjects->pluck('id')->toArray(); 
+                              $teacherDirectionId = $faculty->direction->pluck('id')->toArray();
                            @endphp
-   								<option {{ $disabled }} value="{{ $subject->id }}">{{ $subject->name }}</option>
-   							@endforeach
-   						</select>  
-   						<div class="selected__teacher_labels" style=" {{ !count($faculty->subjects) ? 'display: none;' : ''  }}">
-                        @if(count($faculty->subjects))
+                           @foreach($categories as $direction) 
+                              @if(count($direction['childs']))
+                                 <li>
+                                    <span onclick="openDirectionSubjects(this);" 
+                                          direction-id="{{ $direction['name'] }}">{{ $direction['name'] }}</span>
+                                    <ul style="{{ in_array($direction['id'], $teacherDirectionId) ? 'display: block' : '' }}""> 
+                                       @foreach($direction['childs'] as $subject)  
+                                          <li>
+                                             <span onclick="selectSubject(this);" 
+                                                   direction-id="{{ $direction['id'] }}" 
+                                                   subject-id="{{ $subject['id'] }}"
+                                                   class="{{ in_array($subject['id'], $teacherSubjectsId) ? 'selected--subject' : ''}}">
+                                                {{ $subject['name'] }}
+                                             </span>
+                                          </li>
+                                       @endforeach
+                                    </ul>
+                                 </li> 
+                              @endif
+                           @endforeach
+                           </ul>
+                        </div>
+                     </div>
+
+                     <div class="selected__teacher_inputs">
+                        @if(count($faculty->subjects)) 
                            @foreach($faculty->subjects as $subject)
-                              <span id="teacher_subjects_{{ $subject->id }}" data-id="{{ $subject->id }}">
-                                 <div class="subject_tag"> 
-                                    {{ $subject->name }} 
-                                 </div>
-                                 <div onclick="deleteSubject({{ $subject->id }});" class="delete__subject">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                 </div>
-                              </span>
+                              <input type="hidden"  
+                                     id="teacher_subjects_input_{{ $subject->id }}" 
+                                     value="{{ $subject->id }}" 
+                                     name="teacher_subjects[{{ $subject->pivot->id_direction }}][]">
                            @endforeach
                         @endif
                      </div>
-                     <div class="selected__teacher_inputs">
-                        @if(count($faculty->subjects))
-                           @foreach($faculty->subjects as $subject)
-                              <input type="hidden" id="teacher_subjects_input_{{ $subject->id }}" value="{{ $subject->id }}" name="teacher_subjects[]">
-                           @endforeach
-                        @endif
-                     </div> 
-						</div>
-					</div>  
+                  </div>
+               </div> 
 				</div>
                 
                 <div class="row">

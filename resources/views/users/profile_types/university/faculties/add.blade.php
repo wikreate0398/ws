@@ -103,24 +103,65 @@
 					</div>
 
 					<div class="col-md-12">
-                        <h3 class="header_blok_course">ЭКЗАМЕНЫ ДЛЯ ПОСТУПЛЕНИЯ</h3>
-                    </div> 
+                  <h3 class="header_blok_course">ЭКЗАМЕНЫ ДЛЯ ПОСТУПЛЕНИЯ</h3>
+              </div> 
+  
+ 
+               <label class="col-md-5 control-label">Предметы <span class="req">*</span></label>
+               <div class="col-md-7">
+                  <div class="form-group"> 
+                     <div class="category--subjects"> 
+                        <div class="selected--subjects-list"> 
+                           @if(count($user->subjects))
+                              @foreach($user->subjects as $subject)
+                                 <span id="teacher_label_{{ $subject->id }}" 
+                                      data-parent="{{ $subject->pivot->id_direction }}" 
+                                      data-id="{{ $subject->id }}">
+                                    <div class="subject_tag"> 
+                                       {{ $subject->name }} 
+                                    </div>
+                                    <div onclick="deleteTeacherSubject({{ $subject->id }}, 'teacher_subjects_inner');" 
+                                        class="delete__subject">
+                                       <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+                                 </span>
+                              @endforeach  
+                           @endif 
 
-                    <label class="col-md-5 control-label">Предметы <span class="req">*</span>
-					<p>Укажите предметы, которые вы преподаете</p>
-					</label>
-					<div class="col-md-7">
-						<div class="form-group select_form">
-							<select name="" class="form-control teacher_subjects_select" onchange="addSubject(this)">
-							<option value="0">Выбрать</option> 
-							@foreach($subjects_list as $subject)  
-								<option value="{{ $subject->id }}">{{ $subject->name }}</option>
-							@endforeach
-						</select>  
-						<div class="selected__teacher_labels" style="display: none;"></div>
-						<div class="selected__teacher_inputs"></div> 
-						</div>
-					</div>  
+                           <p style="{{ count($user->subjects) ? 'display: none;' : '' }}" class="select--subjects-label">
+                              Выбрать
+                           </p>
+                        </div>
+                        <div class="dropdown-category">  
+                           <ul> 
+                           @foreach($categories as $direction) 
+                              @if(count($direction['childs']))
+                                 <li>
+                                    <span onclick="openDirectionSubjects(this);" 
+                                          direction-id="{{ $direction['name'] }}">{{ $direction['name'] }}</span>
+                                    <ul style=""> 
+                                       @foreach($direction['childs'] as $subject)  
+                                          <li>
+                                             <span onclick="selectSubject(this);" 
+                                                   direction-id="{{ $direction['id'] }}" 
+                                                   subject-id="{{ $subject['id'] }}"
+                                                   class="">
+                                                {{ $subject['name'] }}
+                                             </span>
+                                          </li>
+                                       @endforeach
+                                    </ul>
+                                 </li> 
+                              @endif
+                           @endforeach
+                           </ul>
+                        </div>
+                     </div>
+
+                     <div class="selected__teacher_inputs"></div>
+                  </div>
+               </div>   
+
 				</div>
                 
                 <div class="row">

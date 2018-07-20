@@ -77,24 +77,27 @@ class Faculties
         } 
 
         $add = UniversityFaculties::create($createArray);  
-        $this->saveFacultySubjects($data['teacher_subjects'], $add->id); 
+        $this->saveFacultySubjects($data, $add->id); 
         return $add->id;
     }
 
-    public function saveFacultySubjects($subjects, $id_faculty)
-    { 
+    public function saveFacultySubjects($data, $id_faculty)
+    {  
         UniversityFacultiesSubjects::where('id_faculty', $id_faculty)->delete();
-        if (!empty($subjects)) 
+        if (!empty($data['teacher_subjects'])) 
         {  
-            foreach ($subjects as $key => $id_subject) 
-            {
-                $insert[] = [
-                    'id_faculty' => $id_faculty,
-                    'id_subject' => $id_subject
-                ];
-            }
+            foreach ($data['teacher_subjects'] as $id_direction => $subjects) 
+            { 
+                foreach ($subjects as $key => $id_subject) { 
+                    $insert[] = [
+                        'id_faculty'   => $id_faculty,
+                        'id_direction' => $id_direction,
+                        'id_subject'   => $id_subject
+                    ];
+                } 
+            } 
             UniversityFacultiesSubjects::insert($insert);
-        } 
+        }
     }
 
     public function edit(array $data, $id_faculty, $id_university)
@@ -122,7 +125,7 @@ class Faculties
         UniversityFaculties::where('id', $id_faculty)
         ->where('id_university', $id_university)
         ->update($editArray); 
-        $this->saveFacultySubjects($data['teacher_subjects'], $id_faculty); 
+        $this->saveFacultySubjects($data, $id_faculty); 
     } 
 
     public function hasAccessFaculty($id_faculty, $id_university)

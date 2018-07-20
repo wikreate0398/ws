@@ -34,7 +34,7 @@
          </div>
          <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#general">ОБЩАЯ ИНФОРМАЦИЯ</a></li>
-            <li><a data-toggle="tab" href="#course">КУРСЫ И ПРОГРАММЫ</a></li>
+            <li><a data-toggle="tab" href="#course" onclick="setTimeout(function(){ eqBlocksInit(); }, 200);">КУРСЫ И ПРОГРАММЫ</a></li>
             <li><a data-toggle="tab" href="#teachers">ПРЕПОДАВАТЕЛИ</a></li>
             <li><a data-toggle="tab" href="#faculties">ФАКУЛЬТЕТЫ</a></li>
             <li><a data-toggle="tab" href="#news">НОВОСТИ</a></li>
@@ -51,8 +51,8 @@
                <table class="univ__tbl">
                   <tr>
                      <th>Средний балл ЕГЭ</th>
-                     <td>На бюджет  <label class="badge">32</label></td>
-                     <td>На платное <label class="badge">2</label></td>
+                     <td>На бюджет  <label class="badge">{{ $university->budget_points_admission }}</label></td>
+                     <td>На платное <label class="badge">{{ $university->payable_points_admission }}</label></td>
                   </tr>
                   <tr>
                       <th>Наличие военной кафедры</th>
@@ -84,66 +84,113 @@
                </table>
             </div>
             <div id="course" class="tab-pane fade">
-               <div class="row">
+               <div class="row course__catalog">
                     @if(count($university->user->courses))
                   @foreach($university->user->courses as $course)
-                  <div class="col-md-4">
-                     <div class="course_card">
-                        <i class="fa fa-heart-o course_heart" aria-hidden="true"></i>
-                        <div class="body__course_card">
-                           <div class="cat-name">
-                              @if(!empty($course->subCategory))
-                              {{ $course->subCategory->name }}
-                              @else
-                              {{ $course->category->name }}
-                              @endif 
-                           </div>
-                           <h2>
-                              <a href="/course/{{ $course->id }}">
-                              {{ $course->name }}
-                              </a>
-                           </h2>
-                           <table>
-                              <tr>
-                                 <td>СТОИМОСТЬ</td>
-                                 <td>
-                                    @if($course->pay == 1)
-                                    БЕСПЛАТНО
-                                    @else
-                                    ₽{{ $course->price }}
-                                    @endif 
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>ДЛИТЕЛЬНОСТЬ</td>
-                                 <td>1 МЕСЯЦ</td>
-                              </tr>
-                              <tr>
-                                 <td>РЕЙТИНГ</td>
-                                 <td>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                 </td>
-                              </tr>
-                           </table>
-                        </div>
-                        <div class="footer__course_card">
-                           <div class="pers__num">
-                              <i class="fa fa-user" aria-hidden="true"></i>
-                              <span>10</span>
-                           </div>
-                           <div class="set__going">
-                              <i class="fa fa-calendar" aria-hidden="true"></i>
-                              <div class="set__going_date">
-                                 <span> ИДЕТ НАБОР ДО </span> 
-                                 <strong>20.10.2018</strong> 
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                  <div class="col-md-4"> 
+                <div class="course_card eq_list__item">
+                  @if(@Auth::check()) 
+                    @php $favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); @endphp
+                    <i class="fa course_heart 
+                       {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+                       onclick="courseFavorite(this, {{ $course->id }});"  
+                       aria-hidden="true"></i>
+                  @endif
+                  <div class="body__course_card">
+                    <div class="cat-name"> 
+                      @if(!empty(@$course->subCategory->name)) 
+                  {{ @$course->subCategory->name }}
+                @else 
+                  {{ @$course->category->name }}
+                      @endif 
+                    </div>
+                    <h2>
+                      <a href="/course/{{ $course->id }}">
+                        {{ $course->name }}
+                      </a>
+                    </h2> 
+                    <h4>
+                      @if($course->user->user_type==3)
+                          {{ $course->user->university['full_name'] }} 
+                        @else
+                    {{ $course->user->name }} 
+                      @endif
+                  </h4>
+                    <table>
+                      <tr>
+                        <td>Начало</td> 
+                        <td>
+                    {{ date('d.m.Y', strtotime($course->date_from)) }}
+                         </td>
+                      </tr> 
+                      <tr>
+                        <td>СТОИМОСТЬ</td> 
+                        <td>
+                    @if($course->pay == 1)
+                      БЕСПЛАТНО
+                    @else
+                      ₽{{ priceString(Course::generatePrice($course)) }}
+                          @endif 
+                         </td>
+                      </tr> 
+                      <tr> 
+                        <td>ДЛИТЕЛЬНОСТЬ</td> 
+                        <td style="text-transform: uppercase;">
+                          @php 
+                                $diff = dateDiff($course->date_from, $course->date_to);
+                          @endphp
+                          @if($diff->m)
+                      {{ $diff->m }} {{ monthCase($diff->m) }}
+                          @endif 
+
+                          @if($diff->d) 
+                            @if($diff->m)
+                        и
+                            @endif 
+                      {{ $diff->d }}  
+                      @php 
+                        echo dayCase($diff->d);
+                      @endphp  
+                          @endif 
+                        </td>
+                      </tr> 
+                      <tr> 
+                        <td>РЕЙТИНГ</td>
+                        <td> 
+                          <div class="course_item_stars" >
+                              <select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($course->reviews->avg('rating')) }}" autocomplete="off">
+                                <option value="1">1</option> 
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                              </select> 
+                          </div>  
+                        </td>
+                      </tr>
+                    </table>
                   </div>
+
+                  <div class="footer__course_card">
+                    <div class="pers__num">
+                      <i class="fa fa-user" aria-hidden="true"></i>
+                      <span>{{ count($course->userRequests) }}</span>
+                    </div>
+                    <div class="set__going">   
+                      @php 
+                                    $esablishDate = Course::manager($course)->esablishDate();  
+                                @endphp 
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                  <div class="set__going_date">  
+                  <span> {{ $esablishDate['status'] }} </span> 
+                  @if($esablishDate['date'])
+                    <strong> {{ $esablishDate['date'] }} </strong>
+                  @endif 
+                  </div>  
+                    </div>
+                  </div>
+                </div>
+              </div>
                   @endforeach
                   @else
                     <div class="col-md-12 no__data"> 

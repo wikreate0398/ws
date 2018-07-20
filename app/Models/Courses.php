@@ -129,7 +129,8 @@ class Courses extends Model
 
     public function scopeOrderByCourses($query)
     {
-        return $query->orderBy(DB::raw('ABS(DATEDIFF(date_from, NOW()))')); 
+        //return $query->orderBy(DB::raw('ABS(DATEDIFF(date_from, NOW()))')); 
+        return $query->orderBy('date_from'); 
     }
 
     public static function countTotal()
@@ -145,8 +146,7 @@ class Courses extends Model
 
     public static function getOneCourse($id, $authCheck = false)
     {
-        return Courses::with('sections') 
-                      // ->rating()
+        return Courses::with('sections')  
                       ->published()
                       ->findOrFail($id);
     }

@@ -493,22 +493,23 @@ function disableBlock(checkbox){
 
 $(window).on('load', function(){
     
+    eqBlocksInit();
+});
+
+function eqBlocksInit()
+{
     setEqualHeight2($('.course_card h2'), $('.course__catalog'));
     setEqualHeight2($('.course_card h4'), $('.course__catalog'));
     setEqualHeight($('#teacher_carousel .item h3'));
     setEqualHeight2($('.course_card .footer__course_card .set__going_date'), $('.course__catalog'));
     setEqualHeight2($('.university__item h3'), $('.universities_catalog'));
 
-    homeCourseEq();
-});
-
-function homeCourseEq()
-{
     $('.tab-pane').each(function(){ 
         setEqualHeight2($(this).find('.external_card h3'), $(this));
         setEqualHeight2($(this).find('.external_card h4'), $(this)); 
     }); 
 }
+ 
  
 function setEqualHeight2(columns, parent) {   
     if (!$(columns).length ) { 

@@ -47,7 +47,7 @@
 				</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control number_field" value="{{ $userUniversity->budget_points_admission }}" name="budget_points_admission" type="text">
+						<input class="form-control number_field" min="0" max="100" value="{{ $userUniversity->budget_points_admission }}" name="budget_points_admission" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -56,7 +56,7 @@
 				</label>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input class="form-control" value="{{ $userUniversity->payable_points_admission }}" name="payable_points_admission" type="text">
+						<input class="form-control" min="0" max="100" value="{{ $userUniversity->payable_points_admission }}" name="payable_points_admission" type="text">
 					</div>
 				</div>
 				<div class="clearfix"></div>

@@ -238,6 +238,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::post('loadRegionCities', 'LocationController@loadRegionCities'); 
 	});  
 
+	Route::group(['prefix' => 'news/category'], function() { 
+		Route::get('/', 'NewsCategoriesController@show')->name('admin_nw_cat');    
+		Route::get('{id}/edit', 'NewsCategoriesController@showeditForm');   
+		Route::get('add', 'NewsCategoriesController@showAddForm');
+		Route::post('create', 'NewsCategoriesController@create'); 
+		Route::post('{id}/update', 'NewsCategoriesController@update');  
+	});  
+
 	Route::group(['prefix' => 'profile'], function() { 
 		Route::get('/', 'ProfileController@showForm')->name('profile');
 		Route::post('edit', 'ProfileController@edit');

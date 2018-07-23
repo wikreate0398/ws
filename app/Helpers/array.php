@@ -258,6 +258,31 @@ function adminMenu()
             ]
         ], 
 
+        'news' => [
+            'name'   => 'Новости', 
+            'icon'   => '<i class="fa fa-newspaper-o" aria-hidden="true"></i>',
+            'link'   => '/admin/course/',
+            'view'   => true,
+            'edit'   => 'Редактировать',
+            'childs' => [
+                'category' => [
+                    'name' => 'Категории', 
+                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                    'link' => '/admin/news/category/',
+                    'view' => true,
+                    'edit' => 'Редактировать' 
+                ],
+
+                'news' => [
+                    'name' => 'Статьи', 
+                    'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
+                    'link' => '/admin/news/articles/',
+                    'view' => true,
+                    'edit' => 'Редактировать' 
+                ] 
+            ]
+        ], 
+
         // 'constants' => [
         //     'name' => 'Константы', 
         //     'icon' => '<i class="fa fa-anchor" aria-hidden="true"></i>',

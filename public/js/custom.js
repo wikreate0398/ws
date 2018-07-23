@@ -498,8 +498,8 @@ $(window).on('load', function(){
 
 function eqBlocksInit()
 {
-    setEqualHeight2($('.course_card h2'), $('.course__catalog'));
-    setEqualHeight2($('.course_card h4'), $('.course__catalog'));
+    setEqualHeight2($('.external_card h3'), $('.course__catalog'));
+    setEqualHeight2($('.external_card h4'), $('.course__catalog'));
     setEqualHeight($('#teacher_carousel .item h3'));
     setEqualHeight2($('.course_card .footer__course_card .set__going_date'), $('.course__catalog'));
     setEqualHeight2($('.university__item h3'), $('.universities_catalog'));

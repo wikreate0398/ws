@@ -87,113 +87,93 @@
             </div>
 
             <div class="row course__catalog">
-
-            	@foreach($courses as $course)
-            	<div class="col-md-4"> 
-	            	<div class="course_card eq_list__item">
-	            		@if(@Auth::check()) 
-	            			@php $favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); @endphp
-		            		<i class="fa course_heart 
-		            		   {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
-		            		   onclick="courseFavorite(this, {{ $course->id }});"  
-		            		   aria-hidden="true"></i>
-	            		@endif
-	            		<div class="body__course_card">
-	            			<div class="cat-name"> 
-	            				@if(!empty(@$course->subCategory->name)) 
-									{{ @$course->subCategory->name }}
-								@else 
-									{{ @$course->category->name }}
-	            				@endif 
-	            			</div>
-		            		<h2>
-		            			<a href="/course/{{ $course->id }}">
-		            				{{ $course->name }}
-		            			</a>
-		            		</h2> 
-		            		<h4>
-					            @if($course->user->user_type==3)
-					            		{{ $course->user->university['full_name'] }} 
-					            	@else
-										{{ $course->user->name }} 
-					            @endif
-				        	</h4>
-		            		<table>
-		            			<tr>
-		            				<td>Начало</td> 
-		            				<td>
-										{{ date('d.m.Y', strtotime($course->date_from)) }}
-		            				 </td>
-		            			</tr> 
-		            			<tr>
-		            				<td>СТОИМОСТЬ</td> 
-		            				<td>
+				@foreach($courses as $course)  
+				<div class="col-lg-6">
+					<div class="external_card eq_list__item">
+						<div class="caption">
+							<ul class="list-inline card_tag">
+								<li class="tag_sticker">
+									<span>{{ @$course->category->name }}</span>
+								</li> 
+								@if(@Auth::check()) 
+									@php 
+										$favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); 
+									@endphp
+									<li class="bookmark_tag">
+										<i class="fa course_heart 
+										   {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+										   onclick="courseFavorite(this, {{ $course->id }});"  
+										   aria-hidden="true"></i> 
+									</li> 
+								@endif 
+							</ul>
+							<h3>{{ $course->name }}</h3> 
+							<h4>
+								@if($course->user->user_type==3)
+									{{ $course->user->university['full_name'] }} 
+								@else
+									{{ $course->user->name }} 
+								@endif
+							</h4>
+							<ul class="list-unstyled card_info">
+								<li>
+									Стоимость 
+									<span> 
 										@if($course->pay == 1)
-											БЕСПЛАТНО
+											бесплатно
 										@else
 											₽{{ priceString(Course::generatePrice($course)) }}
-			            				@endif 
-		            				 </td>
-		            			</tr> 
-		            			<tr> 
-		            				<td>ДЛИТЕЛЬНОСТЬ</td> 
-		            				<td style="text-transform: uppercase;">
-		            					@php 
-						                    $diff = dateDiff($course->date_from, $course->date_to);
-		            					@endphp
-		            					@if($diff->m)
+										@endif 
+									</span>
+								</li>
+								<li>
+									Длительность 
+									<span>
+										@php 
+											$diff = dateDiff($course->date_from, $course->date_to);
+										@endphp
+										@if($diff->m)
 											{{ $diff->m }} {{ monthCase($diff->m) }}
-		            					@endif 
+										@endif 
 
-		            					@if($diff->d) 
-			            					@if($diff->m)
+										@if($diff->d) 
+											@if($diff->m)
 												и
-			            					@endif 
+											@endif 
 											{{ $diff->d }}  
 											@php 
 												echo dayCase($diff->d);
 											@endphp  
-		            					@endif 
-		            				</td>
-		            			</tr> 
-		            			<tr> 
-		            				<td>РЕЙТИНГ</td>
-		            				<td> 
-		            					<div class="course_item_stars" >
-							                <select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($course->reviews->avg('rating')) }}" autocomplete="off">
-							                  <option value="1">1</option> 
-							                  <option value="2">2</option>
-							                  <option value="3">3</option>
-							                  <option value="4">4</option>
-							                  <option value="5">5</option>
-							                </select> 
-							          	</div>  
-		            				</td>
-		            			</tr>
-		            		</table>
-	            		</div>
-
-	            		<div class="footer__course_card">
-	            			<div class="pers__num">
-	            				<i class="fa fa-user" aria-hidden="true"></i>
-	            				<span>{{ count($course->userRequests) }}</span>
-	            			</div>
-	            			<div class="set__going">   
-	            				@php 
-                                    $esablishDate = Course::manager($course)->esablishDate();  
-                                @endphp 
-								<i class="fa fa-calendar" aria-hidden="true"></i>
-							    <div class="set__going_date">  
-									<span> {{ $esablishDate['status'] }} </span> 
-									@if($esablishDate['date'])
-										<strong> {{ $esablishDate['date'] }} </strong>
-									@endif 
-    							</div>  
-	            			</div>
-	            		</div>
-	            	</div>
-            	</div>
-            	@endforeach 
+										@endif 
+									</span>
+								</li>
+								<li>
+									Рейтинг 
+									<span class="rating_star">  
+										<select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($course->reviews->avg('rating')) }}" autocomplete="off">
+										  <option value="1">1</option> 
+										  <option value="2">2</option>
+										  <option value="3">3</option>
+										  <option value="4">4</option>
+										  <option value="5">5</option>
+										</select> 
+									</span> 
+								</li>
+							</ul>
+							<ul class="list-inline card_date_info">
+								<li class="left_date"><i class="fa fa-user"></i> {{ $course->user_requests_count }}</li> 
+								@php 
+									$esablishDate = Course::manager($course)->esablishDate();  
+								@endphp
+								<li class="right_date"> 
+									{{ $esablishDate['status'] }} {{ $esablishDate['date'] }}
+								</li> 
+							</ul>
+							<div class="more_card"><a href="/course/{{ $course->id }}">Подробнее</a></div>
+						</div>
+					</div>
+				</div>
+				@endforeach
             </div>
             <div class="row">
             	<div class="col-lg-12">

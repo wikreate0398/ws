@@ -671,7 +671,7 @@ header .header_bottom .navbar-right .register_link a{
 /* Хлебные крошки */
 .breadcrumb {
     padding: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 60px;
     list-style: none;
     background-color: transparent;
     border-radius: 0px;
@@ -2826,4 +2826,129 @@ select option:disabled {
     display: table;
     content: " ";
     clear: both;
+}
+
+.course_page .card_tag{
+	margin-bottom: 20px;
+	text-align: center;
+}
+.course_page .card_tag li{
+	vertical-align: middle;
+}
+.course_page .card_tag .tag_sticker span {
+    font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+    color: #ffffff;
+    background: #b93777;
+    padding: 12px 15px;
+	display: inline-block;
+}
+.course_page .card_tag .bookmark_tag{
+    font-size: 40px;
+    line-height: 40px;
+	color: #a8a8a8;
+}
+.course_page h1{
+    font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 25px;
+    color: #000000;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+.course_page h2{
+    font-family: 'Cuprum Regular';
+	font-size: 18px;
+    color: #a8a8a8;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+.course_page .short_info_course{
+	margin-bottom: 20px;
+	text-align: center;
+}
+.course_page .short_info_course li{
+	color: #c3bbbb;
+	font-size: 16px;
+}
+.course_page .price_info_course{
+	margin-bottom: 20px;
+	text-align: center;
+}
+.course_page .price_info_course li{
+	color: #c3bbbb;
+	font-size: 16px;
+}
+.course_page .price_info_course .price{
+	color: #000000;
+	font-size: 20px;
+}
+.course_page .price_info_course .download_program a{
+	color: #b93777;
+	font-size: 16px;
+}
+.course_page .price_info_course .review_count{
+	color: #b93777;
+	font-size: 16px;
+}
+.course_page .add_list_course{
+	margin-bottom: 70px;
+	text-align: center;
+}
+.course_page .add_list_course .add_course_btn{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 13px;
+	color: #fff;
+	border: 1px solid #b93777;
+	padding: 10px 25px;
+	background: #b93777;
+	border-radius: 0px;
+}
+.course_page .add_list_course .add_course_free{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 13px;
+	color: #95979c;
+	border: 1px solid #95979c;
+	padding: 10px 25px;
+	background: #fff;
+	border-radius: 0px;
+}
+.course_page h3{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 14px;
+	color: #5f5f5f;
+	margin-top: 30px;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+}
+.course_page .program_group .panel {
+    border-radius: 0px;
+}
+.course_page .program_group .panel-heading {
+    color: #5f5f5f;
+    background-color: #fff;
+    border-color: #c1c1c1;
+	border-radius: 0px;
+}
+.course_page .program_group .panel-heading span{
+    color: #a8a8a8;
+}
+.course_page .program_group .panel-heading:focus,
+.course_page .program_group .panel-heading:hover{
+    color: #fff;
+    background-color: #b93777;
+    border-color: #b93777;
+}
+.course_page .program_group .panel-heading:focus a,
+.course_page .program_group .panel-heading:hover a{
+    color: #fff;
+	text-decoration: none;
+}
+.course_page .program_group .panel-heading:focus a span,
+.course_page .program_group .panel-heading:hover a span{
+    color: #FCFCFC;
+}
+.course_page .table > tbody > tr > td, .course_page .table > tbody > tr > th, .course_page .table > tfoot > tr > td, .course_page .table > tfoot > tr > th, .course_page .table > thead > tr > td, .course_page .table > thead > tr > th{
+	border: 0px;
 }

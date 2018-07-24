@@ -2,40 +2,36 @@
 
 @section('content')
 <div class="container no__home">
-	<div class="row course__in">
-		<div class="col-md-9">
+	<div class="row course__in course_page">
+	    <div class="col-lg-12">
 			<ul class="breadcrumb">
 				<li><a href="/">Главная</a></li>
 				<li><a href="/courses">Курсы</a></li>
 				<li><span>{{ $course->name }}</span></li>
 			</ul>
- 
-			@if(@count(Session::get('courseMsg')))
-			    <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
-			    	<p>{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}</p>
-			    </div> 
-			@endif 
-
+			<ul class="list-inline card_tag">
+				<li class="tag_sticker">
+					<span>Профессиональные курсы</span>
+				</li> 
+				<li class="bookmark_tag">
+					<i class="fa fa-bookmark-o" onclick="courseFavorite(this, 6);" aria-hidden="true"></i> 
+				</li> 
+			</ul>
 			<h1>{{ $course->name }}</h1>
-			<h3>
+			<h2>
 				@if($course->user->user_type==3)
 	            		{{ $course->user->university['full_name'] }} 
 	            	@else
 						{{ $course->user->name }} 
 	            @endif
-			</h3>
-			<ul class="icons__info">
+			</h2>
+			<ul class="list-inline short_info_course">
 				@php 
                     $esablishDate = Course::manager($course)->esablishDate();  
                 @endphp 
-				<li> 
-					<i class="fa fa-calendar"></i> {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}
-				</li> 
-				<li>
-					<i class="fa fa-user" aria-hidden="true"></i>
-					&nbsp;{{ count($course->userRequests) }}
-				</li>
-				<li>
+				<li><i class="fa fa-calendar"></i> {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}</li>
+				<li><i class="fa fa-user" aria-hidden="true"></i> {{ count($course->userRequests) }}</li>
+				<li><i class="fa fa-clock-o" aria-hidden="true"></i>
 					@php 
 	                    $diff = dateDiff($course->date_from, $course->date_to);
 					@endphp
@@ -53,26 +49,20 @@
 						@endphp  
 					@endif 
 				</li>
-				<li class="courseSections">
-				
-				</li>
+				<li class="courseSections"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i></li>
 			</ul>
-
-			<ul class="price_review">
-				<li>
-					<button class="price__in_course">
-						@if($course->pay == 1)
-							БЕСПЛАТНО
-						@else
-							₽{{ priceString(Course::generatePrice($course)) }}
-        				@endif 
-					</button>
+			<ul class="list-inline price_info_course">
+				<li class="price">
+					@if($course->pay == 1)
+						Бесплатно
+					@else
+						₽{{ priceString(Course::generatePrice($course)) }}
+					@endif 
 				</li>
-				<li>
-					<a href="">СКАЧАТЬ ПРОГРАММУ</a>
+				<li class="download_program">
+					<a href="">Скачать программу</a>
 				</li>
-				<li> 
-					ОТЗЫВЫ ({{ count($course->reviews) }}) &nbsp;
+				<li class="review_count">
 					<div class="course_top_stars" style="display: inline-block; vertical-align: middle;">
 		                <select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($course->reviews->avg('rating')) }}" autocomplete="off">
 		                  <option value="1">1</option> 
@@ -82,68 +72,86 @@
 		                  <option value="5">5</option>
 		                </select> 
 		          	</div> 
-				</li> 
+					({{ count($course->reviews) }})
+				</li>
 			</ul>
-  
-			<button type="button" 
-					@if(Course::request($course)->canMakeRequest() !== true && Auth::check() == true)
-						disabled
-					@endif
-			        onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ (Course::request($course)->canMakeRequest()!==true) ? false : true }}')" 
-			        class="btn course_request_btn">
-			    ЗАПИСАТЬСЯ НА КУРС
-			</button> 
+			<ul class="list-inline add_list_course">
+				<li>
+					<button type="button" 
+						@if(Course::request($course)->canMakeRequest() !== true && Auth::check() == true)
+							disabled
+						@endif
+						onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ (Course::request($course)->canMakeRequest()!==true) ? false : true }}')" 
+						class="btn add_course_btn course_request_btn">
+						ЗАПИСАТЬСЯ НА КУРС
+					</button> 
+				</li>
+				<li>
+					<button type="button" 
+						@if(Course::request($course)->canMakeRequest() !== true && Auth::check() == true)
+							disabled
+						@endif
+						onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ (Course::request($course)->canMakeRequest()!==true) ? false : true }}')" 
+						class="btn add_course_free course_request_btn">
+						ПОПРОБЫВАТЬ БЕСПЛАТНО
+					</button> 
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-9">
+ 
+			@if(@count(Session::get('courseMsg')))
+			    <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
+			    	<p>{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}</p>
+			    </div> 
+			@endif
 
 			<div class="about__course">
-				<h2>О КУРСЕ</h2>
 				<p>{{ $course->text }}</p>
 			</div>
-
-			<div class="academic_plan">
-				<h2>УЧЕБНЫЙ ПЛАН</h2>
-
-				<div class="panel-group" id="accordion">
+			<div class="program_plan">
+				<h3>УЧЕБНЫЙ ПЛАН</h3>
+				<div class="panel-group program_group" id="accordion">
 					@php $sectionNum = 0; @endphp
 					@php $totaLecture = 0; @endphp
 					@foreach($course->sections as $section)
 						@php $sectionNum++ @endphp
-					    <div class="panel panel-default">
-					      <div class="panel-heading">
-					        <h4 class="panel-title">
-					       		<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $sectionNum }}">
-					        		<strong>Раздел {{ $sectionNum }}:</strong> {{ $section->name }}
-					        	</a>
-					        </h4>
-					      </div>
-
-					      <div id="collapse{{ $sectionNum }}" class="panel-collapse collapse {{ ($sectionNum == 1) ? 'in' : ''}}">
-					        <div class="panel-body">
-								<table class="table">
-									@php $lectureNum = 0; @endphp
-									@foreach($section->lectures as $lecture)
-										@php $lectureNum++; $totaLecture++ @endphp
-										<tr>
-											<td>
-												ЛЕКЦИЯ {{ $sectionNum }}.{{ $lectureNum }}
-												{{ $lecture->name }}
-											</td>
-											<td style="text-align: right;">
-												<i class="fa fa-clock-o" aria-hidden="true"></i>
-												{{ $lecture->duration_hourse }} ч {{ $lecture->duration_minutes }} мин.
-											</td>
-										</tr> 
-									@endforeach
-								</table>
-					        </div>
-					      </div>
-					    </div>  
-				    @endforeach
-				</div> 
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $sectionNum }}">
+										Раздел {{ $sectionNum }}: <span>{{ $section->name }}</span>
+									</a>
+								</h4>
+							</div>
+							<div id="collapse{{ $sectionNum }}" class="panel-collapse collapse {{ ($sectionNum == 1) ? 'in' : ''}}">
+								 <div class="panel-body">
+									<table class="table">
+										@php $lectureNum = 0; @endphp
+										@foreach($section->lectures as $lecture)
+											@php $lectureNum++; $totaLecture++ @endphp
+											<tr>
+												<td>
+													ЛЕКЦИЯ {{ $sectionNum }}.{{ $lectureNum }}
+													{{ $lecture->name }}
+												</td>
+												<td style="text-align: right;">
+													<i class="fa fa-clock-o" aria-hidden="true"></i>
+													{{ $lecture->duration_hourse }} ч {{ $lecture->duration_minutes }} мин.
+												</td>
+											</tr> 
+										@endforeach
+									</table>
+								 </div>
+							</div>
+						</div>
+					@endforeach
+				</div>
 			</div>
 
 			@if(count($course->reviews) > 0)
 				<div class="review__container">
-					<div class="title__review_section">Отзывы ({{ count($course->reviews) }})</div>
+					<h3>Отзывы ({{ count($course->reviews) }})</h3>
 					<div class="reviews_items"> 
 						@foreach($course->reviews as $review)
 							<div class="review_item"> 
@@ -291,32 +299,25 @@
 		</div>
 
 		<div class="col-md-3">
-			<div class="course__sidebar_box">
-				@if($course->user->user_type == 2)
-					<h3>ПРЕПОДАВАТЕЛь КУРСА</h3>
-				@else
-					<h3>ПРЕПОДАВАТЕЛИ КУРСА</h3>
-				@endif
-				<div class="trainer__box">
-					@php
-						if($course->user->user_type==3){
-							$link = '/university/' . $course->user->university->id;
-						}else{
-							$link = '/teacher/' . $course->user->id;
-						}
-					@endphp
-					<a href="{{ $link }}" class="trainer_photo" style="background-image: url({{ imageThumb(($course->user->avatar ? $course->user->avatar : $course->user->image), 'uploads/users', 150, 150, 'small') }})"> 
-					</a>
-					<a href="{{ $link }}" class="trainer_name">
-						@if($course->user->user_type==3)
-			            		{{ $course->user->university['full_name'] }} 
-			            	@else
-								{{ $course->user->name }} 
-			            @endif
-					</a>
-					<div class="trainer_description">
-						{{ str_limit($course->user->about, 100) }} 
-					</div>
+			<div class="trainer__box">
+				@php
+					if($course->user->user_type==3){
+						$link = '/university/' . $course->user->university->id;
+					}else{
+						$link = '/teacher/' . $course->user->id;
+					}
+				@endphp
+				<a href="{{ $link }}" class="trainer_photo" style="background-image: url({{ imageThumb(($course->user->avatar ? $course->user->avatar : $course->user->image), 'uploads/users', 150, 150, 'small') }})"> 
+				</a>
+				<a href="{{ $link }}" class="trainer_name">
+					@if($course->user->user_type==3)
+							{{ $course->user->university['full_name'] }} 
+						@else
+							{{ $course->user->name }} 
+					@endif
+				</a>
+				<div class="trainer_description">
+					{{ str_limit($course->user->about, 100) }} 
 				</div>
 			</div>
 			
@@ -399,17 +400,6 @@
 		font-size: 12px;
 	}
 
-	.course__in h1{
-		text-transform: uppercase;
-		font-size: 22px;
-		font-weight: bold;
-	}
-	.course__in h3 {
-		color: #ccc;
-		text-transform: uppercase;
-		font-size: 16px;
-		margin-top: 0px;
-	}
 
 	.academic_plan table tr td{
 		border:none;

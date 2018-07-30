@@ -62,8 +62,7 @@ class UniversitiesConnectionController extends TeacherController
                                      ->with(['connects' => function($query) use($userId){
                                         return $query->where('id_teacher', $userId);
                                      }]) 
-                                     ->withCount('connects')
-                                     ->has('connects')
+                                     ->has('connects')   
                                      ->orderBy('id_user', 'asc')
                                      ->get(),   
             'include' => $this->viewPath . 'universities.connect',
@@ -71,8 +70,6 @@ class UniversitiesConnectionController extends TeacherController
                 'js/teachers.js'
             ]
         ];   
-
-
 
         return view('users.teacher_profile',  $data); 
     }
@@ -82,15 +79,14 @@ class UniversitiesConnectionController extends TeacherController
         $searchStr = urldecode($request->input('search')); 
         $userId    = Auth::user()->id; 
 
-        $searchData = UsersUniversity::allow()   
-                                     ->with('user.connectionTeachers') 
+        $searchData = UsersUniversity::allow()    
                                      ->whereHas('user', function($query) use($searchStr){
                                         return $query->Where('email', 'like', "%$searchStr%");
-                                     })
+                                     }) 
                                      ->orWhere('full_name', 'like', "%$searchStr%") 
                                      ->orderBy('id_user', 'asc')
-                                     ->get();  
- 
+                                     ->get();   
+
         if (empty($searchData)) die();
          
         $content    = ''; 

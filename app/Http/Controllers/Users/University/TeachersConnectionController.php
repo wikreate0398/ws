@@ -29,6 +29,9 @@ class TeachersConnectionController extends UniversityController
         $data   = [ 
             'user'                => $user,    
             'requestFromTeachers' => TeacherUniversityConnect::with('teacher')
+                                                             ->whereHas('teacher', function($query){
+                                                                return $query->allowUser();
+                                                             })
                                                              ->fromTeacher()
                                                              ->where('decline', '0')
                                                              ->where('id_university', $userId)

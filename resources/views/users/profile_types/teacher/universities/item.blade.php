@@ -11,8 +11,8 @@
 			</span>
 
 			<span>
-				{{ intval($item->connects_count) }}   
-				{{ format_by_count(intval($item->connects_count), 'ПРЕПОДАВАТЕЛЬ','ПРЕПОДАВАТЕЛЯ','ПРЕПОДАВАТЕЛЕЙ') }}
+				{{ count($item['user']['connectionTeachers']) }}   
+				{{ format_by_count(count($item['user']['connectionTeachers']), 'ПРЕПОДАВАТЕЛЬ','ПРЕПОДАВАТЕЛЯ','ПРЕПОДАВАТЕЛЕЙ') }}
 			</span>
 		</div>
 		

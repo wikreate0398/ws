@@ -56,6 +56,10 @@
 			      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
 			      		<a href="{{ route('university_user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
 			      	</li> 
+					
+					<li class="{{ isActive(route(userRoute('user_teachers'))) ? 'active' : '' }}">
+			      		<a href="{{ route(userRoute('user_teachers')) }}">ПРЕПОДАВАТЕЛИ</a>
+			      	</li>  
 
 			      	<li class="{{ isActive(route(userRoute('user_faculties'))) ? 'active' : '' }}">
 			      		<a href="{{ route(userRoute('user_faculties')) }}">Факультеты</a>
@@ -75,14 +79,18 @@
 		<div class="row">
 			 
 			<div class="col-md-12">   
-				@if(Session::has('flash_message'))
-				    <div class="alert alert-success">
-				    	<p>{{ Session::get('flash_message') }}</p>
+				@if(Session::has('flash_message') or Session::has('error_flash_message'))
+					@php
+						$message = @Session::has('flash_message') ? @Session::get('flash_message') : @Session::get('error_flash_message');
+						$status  = @Session::has('flash_message') ? 'alert-success' : 'alert-danger';
+					@endphp
+				    <div class="alert {{ $status }}">
+				    	<p>{{ $message }}</p>
 				    </div> 
 				@endif 
 
 				<div style="min-height: 400px;">
-					@include($include)  
+					@include($include)   
 				</div>
 			</div>
 		</div>

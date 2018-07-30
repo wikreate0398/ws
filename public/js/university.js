@@ -39,6 +39,38 @@ $(document).ready(function(){
         $('.selected--subjects-list').removeClass('active--drowdown');
         } 
     }); 
+
+    $('input#search_teachers').keyup(function(){  
+        if ($(this).val().length >= 3) {  
+            var url = $(this).attr('data-url-autocomplete'); 
+            $.ajax({
+                type: "GET",
+                url: url,
+                data:{search: $(this).val()},
+                dataType: 'json',
+                beforeSend: function(){},
+                success: function(jsonData){
+                    if (jsonData.content != '') {
+                        $('.exists__connection').hide();
+                        $('.loaded__university__teacher').show();
+                        $('.loaded__university__teacher').html(jsonData.content); 
+                        setTimeout(function(){
+                            eqBlocksInit();
+                        },200);
+                    }else{
+                        $('.exists__connection').hide();
+                        $('.loaded__university__teacher').hide();
+                        $('.loaded__university__teacher').html(''); 
+                    } 
+                }
+            }); 
+        }else{
+            $('.loaded__university__teacher').hide();
+            $('.loaded__university__teacher').html(''); 
+            $('.exists__connection').hide(); 
+        }
+        if (!$(this).val()) $('.exists__connection').show();         
+    });
 }); 
 
 function deleteTeacherSubject(id) {

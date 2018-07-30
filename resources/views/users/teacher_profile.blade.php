@@ -77,6 +77,9 @@
 					<li class="{{ isActive(route(userRoute('user_subscriptions'))) ? 'active' : '' }}">
 						<a href="{{ route(userRoute('user_subscriptions')) }}">ПОДПИСКИ</a>
 					</li>
+					<li class="{{ isActive(route(userRoute('user_universities'))) ? 'active' : '' }}">
+						<a href="{{ route(userRoute('user_universities')) }}">УЧЕБНЫЕ ЗАВЕДЕНИЯ ({{ count($user->connectionUniversities) }})</a>
+					</li>
 					<li class="{{ isActive(route(userRoute('user_reviews'))) ? 'active' : '' }}">
 						<a href="{{ route(userRoute('user_reviews')) }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
 					</li> 
@@ -87,8 +90,7 @@
 	</div> 
 
 	<div class="container"> 
-		<div class="row">
-			 
+		<div class="row"> 
 			<div class="col-md-12">   
 				@if(Session::has('flash_message'))
 				    <div class="alert alert-success">
@@ -102,6 +104,5 @@
 			</div>
 		</div>
 	</div>
-</div>  
- 
+</div>   
 @stop

@@ -1249,6 +1249,7 @@ form#search_form .input-group{
     text-transform: uppercase;
 	margin-right: 0px;
 	border-radius: 0px;
+    border-bottom: 1px solid transparent;
 }
 .lk_menu > li > a:focus,
 .lk_menu > li > a:hover{
@@ -2952,3 +2953,125 @@ select option:disabled {
 .course_page .table > tbody > tr > td, .course_page .table > tbody > tr > th, .course_page .table > tfoot > tr > td, .course_page .table > tfoot > tr > th, .course_page .table > thead > tr > td, .course_page .table > thead > tr > th{
 	border: 0px;
 }
+
+.searche__header{
+        margin-bottom: 30px;
+    }
+
+    .searche__header h3{
+        font-weight: bold;
+        font-size: 18px;
+        color: #000;
+    }
+
+    .searche__header p{
+        font-weight: bold;
+        color: #999;
+        text-transform: uppercase;
+        font-size: 13px;
+    }
+
+    .teacher__universities .item__block{
+        border: 1px solid #ededed;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .teacher__universities .item__img img{
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .teacher__universities .item__info .item__name{ 
+        font-weight: bold;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #000;
+    }
+
+    .teacher__universities .item__info span{
+        font-size: 10px;
+        display: block;
+        text-transform: uppercase;
+    }
+
+    .teacher__universities .item__info{
+        padding: 15px 0;
+        border-bottom: 1px solid #333;
+        margin-bottom: 15px;
+    }
+
+    .teacher__universities .item__block .modal-content{
+        text-align: left;
+    }
+
+    .teacher__universities .item__footer .btn{
+        border-radius: 20px;
+        background-color: rgba(153, 153, 204, 1);
+        border: 1px solid rgba(153, 153, 204, 1);
+        outline: none;
+        color: #fff;
+    }  
+
+    .teacher__universities .item__footer .btn.decline{
+        background:transparent;
+        border: 1px solid #333;
+        color: #333;
+    } 
+
+    .teacher__universities .connect_model form label{
+        font-size: 10px;
+    }
+
+    .teacher__universities .connect_model form #error-respond{
+        position: relative !important; 
+        top:0; 
+        right: 0;
+        background: transparent;
+        color: #f97f7f;
+        padding: 0;
+        box-shadow: none;
+        border-radius: none;
+    }
+
+    .teacher__universities .connect_model form #error-respond span{
+        display: none;
+    }
+    
+    .teacher__universities .item__status span{
+        display: block;
+    }
+
+    .teacher__universities .item__status .decline{
+        color: red;
+        font-size: 12px; 
+    }
+
+    .item__status .for_review{
+        font-size: 12px;
+        color: #999999;
+    }
+
+    .teacher__universities .item__status .for_review_date{
+        font-size: 12px;
+        color: #333;
+    }
+
+    .teacher__universities .item__status .repeat_request{
+        font-size: 12px;
+        color: #999999;
+    }
+
+    .teacher__universities .item__status .repeat_request_date{
+        font-size: 12px;
+        color: #333;
+    } 
+
+    .teacher__universities .item__footer{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-flow: wrap;
+    }

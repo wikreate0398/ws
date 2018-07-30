@@ -30,6 +30,18 @@ class UsersUniversity extends Model
         return $this->hasMany('App\Models\UniversityNews', 'id_university', 'id')->orderBy('created_at', 'desc');
     }
 
+    public function scopeAllow($query)
+    {
+        return $query->whereHas('user', function($query){
+            return User::allowUser();
+        });
+    }
+
+    public function connects()
+    {
+        return $this->hasOne('App\Models\TeacherUniversityConnect', 'id_university', 'id_user')->fromTeacher()->orderBy('created_at', 'desc');
+    }
+ 
     public static function getUniversities($request = false)
     {
         $university = (new UsersUniversity)->newQuery();

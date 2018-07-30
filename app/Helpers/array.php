@@ -169,8 +169,8 @@ function uri($segment)
 }
 
 function isActive($route, $domain='')
-{   
-    return (request()->url() == $route) ? true :  false;
+{     
+    return (request()->url() == $route or strpos(request()->url(), $route) !== false) ? true :  false;
 }
 
 function adminMenu()

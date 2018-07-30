@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Utils\Requests;
- 
- 
+  
 use App\Utils\Requests\RequestInterface;
 use App\Mail\CourseRequestMail; 
 use Illuminate\Support\Facades\Mail;
@@ -95,6 +94,7 @@ class CourseRequest implements RequestInterface
             'id_course' => $this->course->id,
             'id_user'   => $this->auth_user->id
         ]);
+        $this->sendNotification();
     }
     
     public function sendNotification()

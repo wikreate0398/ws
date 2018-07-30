@@ -134,8 +134,8 @@ class UniversitiesConnectionController extends TeacherController
         TeacherUniversityConnect::whereId($checkRequest['id'])->delete();
 
         $fileNames = [];
-        if (!empty($request->has('files'))) 
-        { 
+        if (!empty($request->file('files'))) 
+        {  
             foreach($request->file('files') as $key => $file) 
             {
                 $n = $key+1;
@@ -143,7 +143,7 @@ class UniversitiesConnectionController extends TeacherController
                 $fileNames[] = $fileName;
                 $file->move(public_path() . '/uploads/users/teacher_connects/', $fileName);
             }
-        }
+        } 
  
         TeacherUniversityConnect::create([
             'id_teacher'    => Auth::user()->id,

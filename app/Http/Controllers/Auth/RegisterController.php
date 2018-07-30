@@ -40,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest', ['except' => 'confirmation']);
     }
 
     public function showRegistrationForm()
@@ -91,7 +91,8 @@ class RegisterController extends Controller
             User::where('id', $user->id)
                   ->update(['activate' => 1, 'confirm_date' => date('Y-m-d H:i:s'), 'confirm' => 1, 'redirectUri' => null]); 
             
-            if (Auth::check()) {
+            if (Auth::check()) 
+            {
                 Auth::guard('web')->logout(); 
             }
             Auth::guard('web')->login($user); 

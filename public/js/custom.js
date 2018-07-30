@@ -350,11 +350,27 @@ jQuery(document).ready(function($) {
                 } else {    
                     if (jsonResponse.redirect !== undefined) {   
                         window.location = jsonResponse.redirect; 
+                        return;
                     }
 
                     if (jsonResponse.reload == true) { 
                         window.location.reload(true);
+                        return;
                     }  
+
+                    $(form).find('#error-respond').fadeOut();  
+
+                    setTimeout(function() {
+                        $('.success').fadeIn(200); 
+                        $('.success').find('h2').html(jsonResponse.message);
+                    }, 300);
+
+                    setTimeout(function() {
+                        $('.success').fadeOut(300);
+                    }, 4000); 
+                    $(form)[0].reset();
+
+                    $('.modal').modal('hide'); 
                 } 
             },
             complete: function() {

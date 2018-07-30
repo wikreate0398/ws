@@ -79,6 +79,7 @@ $(document).ready(function(){
     $('input#search_universities').keyup(function(){  
         if ($(this).val().length >= 3) {  
             var url = $(this).attr('data-url-autocomplete'); 
+            $('.loaded__teacher__universities').addClass('onLoad__process');
             $.ajax({
                 type: "GET",
                 url: url,
@@ -89,9 +90,10 @@ $(document).ready(function(){
                     if (jsonData.content != '') {
                         $('.exists__connection').hide();
                         $('.loaded__teacher__universities').show();
+                        $('.loaded__teacher__universities').removeClass('onLoad__process');
                         $('.loaded__teacher__universities').html(jsonData.content); 
                         eqBlocksInit();
-                    }else{
+                    }else{ 
                         $('.exists__connection').hide();
                         $('.loaded__teacher__universities').hide();
                         $('.loaded__teacher__universities').html(''); 

@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth; 
 use App\Models\User; 
-use App\Models\TeacherUniversityConnect; 
-// use App\Models\UniversityTeacherConnect;  
+use App\Models\TeacherUniversityConnect;  
 use App\Models\TeachersUniversity; 
 use App\Mail\Connections\Teacher\NotifyRequest;
 use App\Mail\Connections\Teacher\ConfirmRequest; 
 use App\Mail\Connections\Teacher\DeclineRequest;
 use App\Mail\Connections\Teacher\DestroyRequest; 
+use App\Mail\Connections\Teacher\InviteTeacher; 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
    
 class TeachersConnectionController extends UniversityController
 {
@@ -201,5 +202,23 @@ class TeachersConnectionController extends UniversityController
         Mail::to($teacher->email)->send(new DestroyRequest); 
 
         return redirect()->back()->with('flash_message', 'Заявка успешно удалено!');
+    }
+
+    public function inviteTeacher(Request $request)
+    {
+        $rules = [
+            'email' => 'required|string|email|' 
+        ];
+
+        $validator = Validator::make($request->all(), $rules); 
+        if ($validator->fails()) 
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Укажите правильный E-mail']); 
+        }
+
+        $email = $request->input('email');
+
+        Mail::to($email)->send(new InviteTeacher(Auth::user())); 
+        return \App\Utils\JsonResponse::success(['message' => 'Приглашение успешно отправлено']); 
     }
 }

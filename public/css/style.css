@@ -3014,6 +3014,19 @@ select option:disabled {
         color: #fff;
     }  
 
+    .btn2{
+        border-radius: 20px;
+        background-color: rgba(153, 153, 204, 1);
+        border: 1px solid rgba(153, 153, 204, 1);
+        outline: none;
+        color: #fff;
+    }
+
+    .btn2:hover, .btn2:focus{
+        background-color: rgba(153, 153, 204, .7);
+        border: 1px solid rgba(153, 153, 204, .7);
+    }
+
     .teacher__universities .item__footer .btn.decline{
         background:transparent;
         border: 1px solid #333;
@@ -3033,6 +3046,7 @@ select option:disabled {
         padding: 0;
         box-shadow: none;
         border-radius: none;
+        z-index: 1;
     }
 
     .teacher__universities .connect_model form #error-respond span{
@@ -3074,4 +3088,60 @@ select option:disabled {
         align-items: center;
         width: 100%;
         flex-flow: wrap;
+    }
+
+    .onLoad__process{
+        opacity: .6;
+    }
+
+    .fade__modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, .8);
+        z-index: 99999;
+        display: none;
+    }
+    .fade__modal h2 {
+        color: #299a31;
+        font-size: 14px;
+        line-height: 22px;
+        margin:0;
+    }
+
+    @media screen and (max-width: 550px){
+      .success .fade__modal__wrapper{
+        width: 85%;
+      }
+    }
+
+    .fade__modal__wrapper {
+        background-color: #f9f9f9;
+        padding: 20px 50px; 
+        margin: 40px auto;
+        position: relative;
+        border-radius: 3px
+    }
+
+    .success .fade__modal__wrapper{
+      max-width: 480px;
+      text-align: center;
+    }
+
+
+    @media screen and (max-width: 500px){ 
+      .fade__modal__wrapper .close{
+        top: -20px !important;
+        right: -3px !important;
+      } 
+    } 
+
+    .fade__modal__wrapper .close {
+        cursor: pointer;
+        position: absolute;
+        display: inline-block;  
+        top: 17px;
+        right: 17px
     }

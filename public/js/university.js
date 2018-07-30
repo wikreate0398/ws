@@ -43,6 +43,7 @@ $(document).ready(function(){
     $('input#search_teachers').keyup(function(){  
         if ($(this).val().length >= 3) {  
             var url = $(this).attr('data-url-autocomplete'); 
+            $('.loaded__university__teacher').addClass('onLoad__process');  
             $.ajax({
                 type: "GET",
                 url: url,
@@ -50,15 +51,18 @@ $(document).ready(function(){
                 dataType: 'json',
                 beforeSend: function(){},
                 success: function(jsonData){
-                    if (jsonData.content != '') {
+                    if (jsonData.content != '') { 
                         $('.exists__connection').hide();
+                        $('.invite__teacher').hide();
                         $('.loaded__university__teacher').show();
+                        $('.loaded__university__teacher').removeClass('onLoad__process');
                         $('.loaded__university__teacher').html(jsonData.content); 
                         setTimeout(function(){
                             eqBlocksInit();
                         },200);
-                    }else{
+                    }else{  
                         $('.exists__connection').hide();
+                        $('.invite__teacher').show(); 
                         $('.loaded__university__teacher').hide();
                         $('.loaded__university__teacher').html(''); 
                     } 

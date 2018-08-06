@@ -293,10 +293,10 @@
     @if(!Auth::check())
 	<div class="container user_type_block">
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h2 class="header_block">НАЙДЕМ МЕСТО КАЖДОМУ</h2>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				<div class="user_type_home">
 					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_one.png" alt="">
 					<h3>УЧЕНИКАМ/АБИТУРИЕНТАМ</h3>
@@ -306,7 +306,7 @@
 					<a href="{{ route('registration') }}?type=user">ИСКАТЬ КУРС</a>
 				</div>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				<div class="user_type_home">
 					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_two.png" alt="">
 					<h3>ВУЗАМ И ОНЛАЙН ШКОЛАМ</h3>
@@ -316,7 +316,7 @@
 					<a href="{{ route('registration') }}?type=university">СТАТЬ ПАРТНЕРАМИ</a>
 				</div>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				<div class="user_type_home">
 					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_three.png" alt="">
 					<h3>ПРЕПОДАВАТЕЛЯМ</h3>

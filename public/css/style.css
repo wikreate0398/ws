@@ -785,13 +785,12 @@ form#search_form .input-group{
 .owl-carousel .owl-nav .owl-prev{
     position: absolute;
     left: -50px;
-    top: 50%;
-    margin-top: -83px;
+    top: 25%;
 }
 .owl-carousel .owl-nav .owl-next{
     position: absolute;
     right: -50px;
-    top: 20%;
+    top: 25%;
 }
 /* Список курсов на главной */
 .popular_courses{

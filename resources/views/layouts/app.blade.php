@@ -237,13 +237,13 @@
     <div class="container">
         <div class="banner_block">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <img class="img-responsive" src="/images/banner_3.jpg" alt="">
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <img class="img-responsive" src="/images/banner_4.jpg" alt="">
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <img class="img-responsive" src="/images/banner_5.jpg" alt="">
                 </div>
             </div>
@@ -252,8 +252,79 @@
 
     <footer>
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-3">
+			<div class="row visible-xs">
+				<div class="col-xs-12">
+					<div class="footer_logo">
+						<img class="img-responsive" src="/images/footer_logo.png" alt="">
+					</div>
+					<ul class="list-inline footer_menu">
+							<li>
+								<a class="" href="/about">
+									О ПРОЕКТЕ
+								</a>
+								<a class="" href="/courses">
+									КУРСЫ
+								</a>
+								<a class="" href="/universities">
+									ВУЗЫ И ШКОЛЫ
+								</a>
+								<a class="" href="/teachers">
+									ПРЕПОДВАТЕЛИ
+								</a>
+								@if(Auth::check())
+									<li>
+										<a href="{{ route(userRoute('user_edit')) }}">Личные данные</a>
+									</li> 
+								@else  
+								@endif  
+							</li>
+					</ul>
+					<ul class="list-inline nav-justified social_menu">
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-vk fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-odnoklassniki fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="fa-stack fa-lg">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-skype fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row hidden-xs">
+				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 					<div class="footer_logo">
 						<img class="img-responsive" src="/images/footer_logo.png" alt="">
 					</div>

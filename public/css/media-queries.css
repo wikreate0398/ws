@@ -36,6 +36,22 @@
 		.banner_block img{
 			margin-bottom: 30px;
 		}
+		footer {
+			padding-top: 30px;
+			padding-bottom: 45px;
+			background-position: center;
+		}
+		footer .footer_menu {
+			margin-top: 30px;
+			margin-bottom: 0px;
+			text-align: center;
+		}
+		footer .social_menu {
+			margin-top: 30px;
+		}
+		footer .copyright {
+			text-align: center;
+		}
     }
     @media (min-width: 768px) and (max-width: 991px) {
       /* стили для sm-устройств */

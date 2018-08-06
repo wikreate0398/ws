@@ -257,27 +257,33 @@
 					<div class="footer_logo">
 						<img class="img-responsive" src="/images/footer_logo.png" alt="">
 					</div>
-					<ul class="list-inline footer_menu">
+					<ul class="list-unstyled footer_menu">
 							<li>
 								<a class="" href="/about">
 									О ПРОЕКТЕ
 								</a>
+							</li>
+							<li>
 								<a class="" href="/courses">
 									КУРСЫ
 								</a>
+							</li>
+							<li>
 								<a class="" href="/universities">
 									ВУЗЫ И ШКОЛЫ
 								</a>
+							</li>
+							<li>
 								<a class="" href="/teachers">
 									ПРЕПОДВАТЕЛИ
 								</a>
+							</li>
 								@if(Auth::check())
 									<li>
 										<a href="{{ route(userRoute('user_edit')) }}">Личные данные</a>
 									</li> 
 								@else  
 								@endif  
-							</li>
 					</ul>
 					<ul class="list-inline nav-justified social_menu">
 						<li>
@@ -321,6 +327,9 @@
 							</a>
 						</li>
 					</ul>
+				</div>
+				<div class="col-xs-12">
+					<span class="copyright">Все права защищены © КОРПОРАЦИЯ МОЗГА, 2018</span>
 				</div>
 			</div>
 			<div class="row hidden-xs">

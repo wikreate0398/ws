@@ -5,6 +5,12 @@ jQuery(document).ready(function($) {
     //   auto_focus: 'element1'
     // });
 
+    if ($('.lk_menu').length) {
+        $('html,body').animate({
+            scrollTop: $('.lk_menu').offset().top
+        }, 50);
+    }
+    
     $('.rating-stars').each(function(){
         var currentRating = $(this).data('current-rating');
 
@@ -182,8 +188,16 @@ jQuery(document).ready(function($) {
 
     $('.datepicker__input').attr("readonly", 'readonly'); 
 
-    $('.delete__item').click(function(e){
+    $(document).on('click', '.delete__item', function(e){
         if (!confirm('Вы действительно хотите удалить?')) {
+            e.preventDefault();
+        } 
+    });
+
+    $(document).on('click', '.confirm__item', function(e){
+        var msg = $(this).attr('data-confirm');
+        var msg = msg ? msg : 'Подтвердить операцию';
+        if (!confirm(msg)) {
             e.preventDefault();
         } 
     }); 
@@ -336,11 +350,27 @@ jQuery(document).ready(function($) {
                 } else {    
                     if (jsonResponse.redirect !== undefined) {   
                         window.location = jsonResponse.redirect; 
+                        return;
                     }
 
                     if (jsonResponse.reload == true) { 
                         window.location.reload(true);
+                        return;
                     }  
+
+                    $(form).find('#error-respond').fadeOut();  
+
+                    setTimeout(function() {
+                        $('.success').fadeIn(200); 
+                        $('.success').find('h2').html(jsonResponse.message);
+                    }, 300);
+
+                    setTimeout(function() {
+                        $('.success').fadeOut(300);
+                    }, 4000); 
+                    $(form)[0].reset();
+
+                    $('.modal').modal('hide'); 
                 } 
             },
             complete: function() {
@@ -360,7 +390,7 @@ jQuery(document).ready(function($) {
         });
     }
 
-    $('form.ajax__submit').on('submit', function(e){
+    $(document).on('submit', 'form.ajax__submit', function(e){
         e.preventDefault();
         var form   = $(this);
         var button = $(form).find('button[type="submit"]');
@@ -491,8 +521,7 @@ function disableBlock(checkbox){
     } 
 }
 
-$(window).on('load', function(){
-    
+$(window).on('load', function(){ 
     eqBlocksInit();
 });
 
@@ -503,6 +532,15 @@ function eqBlocksInit()
     setEqualHeight($('#teacher_carousel .item h3'));
     setEqualHeight2($('.course_card .footer__course_card .set__going_date'), $('.course__catalog'));
     setEqualHeight2($('.university__item h3'), $('.universities_catalog'));
+
+    setEqualHeight2($('.item__block .item__name'), $('.teacher__universities'));
+    setEqualHeight2($('.item__block .item__footer'), $('.teacher__universities')); 
+
+    setEqualHeight2($('.item__block .item__name'), $('.teachers__conections_container')); 
+    setEqualHeight2($('.item__block .item__img'), $('.teachers__conections_container')); 
+     
+
+     
 
     $('.tab-pane').each(function(){ 
         setEqualHeight2($(this).find('.external_card h3'), $(this));

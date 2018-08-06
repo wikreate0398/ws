@@ -65,8 +65,22 @@ class User extends Authenticatable
 
     public function courseFavorite()
     { 
-        return $this->belongsToMany('App\Models\Courses', 'course_favorite', 'id_user', 'id_course');
-        
+        return $this->belongsToMany('App\Models\Courses', 'course_favorite', 'id_user', 'id_course'); 
+    }
+
+    public function connectionTeachers()
+    {
+        return $this->belongsToMany('App\Models\User', 'teachers_university', 'id_university', 'id_teacher')->allowUser();
+    }
+
+    public function connectionUniversities()
+    {
+        return $this->belongsToMany('App\Models\User', 'teachers_university', 'id_teacher', 'id_university')->with('university')->allowUser();
+    }
+
+    public function connectsUniversityRequest()
+    {
+        return $this->hasOne('App\Models\TeacherUniversityConnect', 'id_teacher', 'id')->fromUniversity()->orderBy('created_at', 'desc');
     }
 
     public function university()
@@ -77,7 +91,7 @@ class User extends Authenticatable
     public function courses()
     {
         return $this->hasMany('App\Models\Courses', 'id_user', 'id')->orderBy('created_at', 'desc');
-    }
+    } 
 
     public function coursesRequests()
     {
@@ -92,7 +106,7 @@ class User extends Authenticatable
         return $query->where('activate', '1')
                      ->where('confirm', '1') 
                      ->where('data_filled','1');
-    }     
+    }      
 
     public static function getTeachers($request = false)
     {

@@ -96,6 +96,18 @@ Route::group(['middleware' => ['web_auth']], function(){
 				Route::post('{id}/edit', "$controller@editNews")->name("{$userDefine}_update_news");  
 			}); 
 
+			Route::group(['prefix' => 'teachers'], function() use($userDefine) {
+				$controller = 'TeachersConnectionController';
+		 		Route::get('/', "$controller@index")->name("{$userDefine}_user_teachers");
+		 		Route::get('confirm/{id}', "$controller@confirm")->name("{$userDefine}_user_teachers_confirm"); 
+		 		Route::get('decline/{id}', "$controller@decline")->name("{$userDefine}_user_teachers_decline");  
+		 		Route::get('destroy/{id}', "$controller@destroy")->name("{$userDefine}_user_teachers_delete");  
+		 		Route::get('autocomplete', "$controller@autocomplete")->name("{$userDefine}_user_teachers_autocomplete");   
+		 		Route::get('request/{id}', "$controller@request")->name("{$userDefine}_user_teachers_request");  
+		 		Route::get('destroyRequest/{id}', "$controller@destroyRequest")->name("{$userDefine}_user_teachers_delete_request");
+		 		Route::post('inviteTeacher', "$controller@inviteTeacher")->name("{$userDefine}_user_teacher_invite"); 
+			});  
+
 		 	Route::group(['prefix' => 'course'], function() use($userDefine) {
 		 		$controller = 'CourseController'; 
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile");
@@ -134,6 +146,19 @@ Route::group(['middleware' => ['web_auth']], function(){
 	 		Route::get('reviews', "{$controller}@showReviews")->name("{$userDefine}_user_reviews"); 
 			Route::get('subscriptions', "{$controller}@showSubscriptions")->name("{$userDefine}_user_subscriptions"); 
 			Route::get('bookmarks', "{$controller}@showBookmarks")->name("{$userDefine}_user_bookmarks"); 
+
+			Route::group(['prefix' => 'universities'], function() {  
+				$userDefine = 'teacher'; 
+			 	Route::get('/', "UniversitiesConnectionController@index")->name("{$userDefine}_user_universities");
+				Route::get('connect', "UniversitiesConnectionController@connect")->name("{$userDefine}_user_universities_connect");
+				Route::get('autocomplete', "UniversitiesConnectionController@autocomplete")->name("{$userDefine}_user_universities_autocomplete"); 
+				Route::post('request/{id}', "UniversitiesConnectionController@request")->name("{$userDefine}_user_universities_request"); 
+				Route::get('destroy/{id}', "UniversitiesConnectionController@destroy")->name("{$userDefine}_user_universities_delete_connect");
+				Route::get('destroyRequest/{id}', "UniversitiesConnectionController@destroyRequest")->name("{$userDefine}_user_universities_delete_request"); 
+				Route::get('decline/{id}', "UniversitiesConnectionController@decline")->name("{$userDefine}_user_universities_decline"); 
+				Route::get('confirm/{id}', "UniversitiesConnectionController@confirm")->name("{$userDefine}_user_universities_confirm");  
+			});			 
+
 			Route::get('diplomas', "{$controller}@showDiploms")->name("{$userDefine}_user_diplomas");
 			Route::get('deleteUserEducation/{id}', "{$controller}@deleteUserEducation")->name("{$userDefine}_delete_education");
 

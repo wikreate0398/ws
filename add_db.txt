@@ -1,5 +1,0 @@
-table
-regions,
-
-add columns tables
-users,

@@ -4,7 +4,7 @@
 /public/uploads
 /storage/*.key
 /.idea
-/.vagrant
+/.vagrant 
 Homestead.json
 Homestead.yaml
 npm-debug.log

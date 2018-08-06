@@ -75,6 +75,38 @@ $(document).ready(function(){
         $('.selected--subjects-list').removeClass('active--drowdown');
         } 
     }); 
+
+    $('input#search_universities').keyup(function(){  
+        if ($(this).val().length >= 3) {  
+            var url = $(this).attr('data-url-autocomplete'); 
+            $('.loaded__teacher__universities').addClass('onLoad__process');
+            $.ajax({
+                type: "GET",
+                url: url,
+                data:{search: $(this).val()},
+                dataType: 'json',
+                beforeSend: function(){},
+                success: function(jsonData){
+                    if (jsonData.content != '') {
+                        $('.exists__connection').hide();
+                        $('.loaded__teacher__universities').show();
+                        $('.loaded__teacher__universities').removeClass('onLoad__process');
+                        $('.loaded__teacher__universities').html(jsonData.content); 
+                        eqBlocksInit();
+                    }else{ 
+                        $('.exists__connection').hide();
+                        $('.loaded__teacher__universities').hide();
+                        $('.loaded__teacher__universities').html(''); 
+                    } 
+                }
+            }); 
+        }else{
+            $('.loaded__teacher__universities').hide();
+            $('.loaded__teacher__universities').html(''); 
+            $('.exists__connection').hide(); 
+        }
+        if (!$(this).val()) $('.exists__connection').show();         
+    });
 }); 
 
 function deleteTeacherSubject(id) {

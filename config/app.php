@@ -170,6 +170,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Balping\BladeFunction\BladeFunctionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -180,7 +181,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\CourseServiceProvider::class,
-        App\Providers\PageServiceProvider::class
+        App\Providers\PageServiceProvider::class,
     ],
 
     /*
@@ -232,6 +233,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Course' => \App\Utils\Facades\Course::class,
         'Page'   => \App\Utils\Facades\Page::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

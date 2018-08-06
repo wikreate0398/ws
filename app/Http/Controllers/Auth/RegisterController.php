@@ -40,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest', ['except' => 'confirmation']);
     }
 
     public function showRegistrationForm()
@@ -85,11 +85,16 @@ class RegisterController extends Controller
 
     public function confirmation($confirmation_hash)
     { 
-        $user = User::where('confirm_hash', $confirmation_hash)->get()->first();  
+        $user = User::where('confirm_hash', $confirmation_hash)->first();  
   
         if (empty($user->activate)) { 
             User::where('id', $user->id)
-                  ->update(['activate' => 1, 'confirm_date' => date('Y-m-d H:i:s'), 'confirm' => 1, 'redirectUri' => null]);  
+                  ->update(['activate' => 1, 'confirm_date' => date('Y-m-d H:i:s'), 'confirm' => 1, 'redirectUri' => null]); 
+            
+            if (Auth::check()) 
+            {
+                Auth::guard('web')->logout(); 
+            }
             Auth::guard('web')->login($user); 
 
             if (!empty($user['redirectUri'])) 

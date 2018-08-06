@@ -1248,6 +1248,7 @@ form#search_form .input-group{
     text-transform: uppercase;
 	margin-right: 0px;
 	border-radius: 0px;
+    border-bottom: 1px solid transparent;
 }
 .lk_menu > li > a:focus,
 .lk_menu > li > a:hover{
@@ -2951,3 +2952,195 @@ select option:disabled {
 .course_page .table > tbody > tr > td, .course_page .table > tbody > tr > th, .course_page .table > tfoot > tr > td, .course_page .table > tfoot > tr > th, .course_page .table > thead > tr > td, .course_page .table > thead > tr > th{
 	border: 0px;
 }
+
+.searche__header{
+        margin-bottom: 30px;
+    }
+
+    .searche__header h3{
+        font-weight: bold;
+        font-size: 18px;
+        color: #000;
+    }
+
+    .searche__header p{
+        font-weight: bold;
+        color: #999;
+        text-transform: uppercase;
+        font-size: 13px;
+    }
+
+    .teacher__universities .item__block{
+        border: 1px solid #ededed;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .teacher__universities .item__img img{
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .teacher__universities .item__info .item__name{ 
+        font-weight: bold;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #000;
+    }
+
+    .teacher__universities .item__info span{
+        font-size: 10px;
+        display: block;
+        text-transform: uppercase;
+    }
+
+    .teacher__universities .item__info{
+        padding: 15px 0;
+        border-bottom: 1px solid #333;
+        margin-bottom: 15px;
+    }
+
+    .teacher__universities .item__block .modal-content{
+        text-align: left;
+    }
+
+    .teacher__universities .item__footer .btn{
+        border-radius: 20px;
+        background-color: rgba(153, 153, 204, 1);
+        border: 1px solid rgba(153, 153, 204, 1);
+        outline: none;
+        color: #fff;
+    }  
+
+    .btn2{
+        border-radius: 20px;
+        background-color: rgba(153, 153, 204, 1);
+        border: 1px solid rgba(153, 153, 204, 1);
+        outline: none;
+        color: #fff;
+    }
+
+    .btn2:hover, .btn2:focus{
+        background-color: rgba(153, 153, 204, .7);
+        border: 1px solid rgba(153, 153, 204, .7);
+    }
+
+    .teacher__universities .item__footer .btn.decline{
+        background:transparent;
+        border: 1px solid #333;
+        color: #333;
+    } 
+
+    .teacher__universities .connect_model form label{
+        font-size: 10px;
+    }
+
+    .teacher__universities .connect_model form #error-respond{
+        position: relative !important; 
+        top:0; 
+        right: 0;
+        background: transparent;
+        color: #f97f7f;
+        padding: 0;
+        box-shadow: none;
+        border-radius: none;
+        z-index: 1;
+    }
+
+    .teacher__universities .connect_model form #error-respond span{
+        display: none;
+    }
+    
+    .teacher__universities .item__status span{
+        display: block;
+    }
+
+    .teacher__universities .item__status .decline{
+        color: red;
+        font-size: 12px; 
+    }
+
+    .item__status .for_review{
+        font-size: 12px;
+        color: #999999;
+    }
+
+    .teacher__universities .item__status .for_review_date{
+        font-size: 12px;
+        color: #333;
+    }
+
+    .teacher__universities .item__status .repeat_request{
+        font-size: 12px;
+        color: #999999;
+    }
+
+    .teacher__universities .item__status .repeat_request_date{
+        font-size: 12px;
+        color: #333;
+    } 
+
+    .teacher__universities .item__footer{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-flow: wrap;
+    }
+
+    .onLoad__process{
+        opacity: .6;
+    }
+
+    .fade__modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, .8);
+        z-index: 99999;
+        display: none;
+    }
+    .fade__modal h2 {
+        color: #299a31;
+        font-size: 14px;
+        line-height: 22px;
+        margin:0;
+    }
+
+    @media screen and (max-width: 550px){
+      .success .fade__modal__wrapper{
+        width: 85%;
+      }
+    }
+
+    .fade__modal__wrapper {
+        background-color: #f9f9f9;
+        padding: 20px 50px; 
+        margin: 40px auto;
+        position: relative;
+        border-radius: 3px
+    }
+
+    .success .fade__modal__wrapper{
+      max-width: 480px;
+      text-align: center;
+    }
+
+
+    @media screen and (max-width: 500px){ 
+      .fade__modal__wrapper .close{
+        top: -20px !important;
+        right: -3px !important;
+      } 
+    } 
+
+    .fade__modal__wrapper .close {
+        cursor: pointer;
+        position: absolute;
+        display: inline-block;  
+        top: 17px;
+        right: 17px
+    }

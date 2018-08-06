@@ -109,6 +109,7 @@ class TeacherRequest implements RequestInterface
           'id_teacher' => $this->id_teacher,
           'id_user'    => $this->id_user
         ]);
+        $this->sendNotification();
     }
     
     public function sendNotification()

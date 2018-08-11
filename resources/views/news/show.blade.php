@@ -18,7 +18,7 @@
 	    </div>
 
 		<div class="row"> 
-			<div class="col-md-8"> 
+			<div class="@if(count($more_news)) col-md-8 @else col-md-12 @endif"> 
 				<div class="row news__show"> 
 					<div class="col-md-12">
 						<span class="nws__time">{{ date('d.m.Y H:i', strtotime($data['created_at'])) }}</span>
@@ -29,7 +29,8 @@
 					</div>
 				</div>
 			</div>
-
+			
+			@if(count($more_news))
 			<div class="col-md-4">
 				<ul class="more_news" style="margin-top: 0px;"> 
 					@foreach($more_news as $item)
@@ -47,6 +48,7 @@
 					@endforeach
 				</ul>
 			</div>
+			@endif
 		</div>
 	</div> 
 

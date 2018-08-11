@@ -19,8 +19,8 @@
                   КУРСОВ
                </li>
                <li>
-                  <strong>10</strong>
-                  ПРЕПОДАВАТЕЛЕЙ
+                  <strong>{{ count($university->user->connectionTeachers) }} </strong> 
+                  {{ format_by_count(count($university->user->connectionTeachers), 'ПРЕПОДАВАТЕЛЬ','ПРЕПОДАВАТЕЛЯ','ПРЕПОДАВАТЕЛЕЙ') }} 
                </li>
                <li>
                   <strong>{{ count($university->faculties) }}</strong>

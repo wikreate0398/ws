@@ -3172,6 +3172,10 @@ select option:disabled {
         display: block;
     }
 
+    .news__catalog .news__item{
+        margin-bottom: 20px;
+    }
+
     .news__catalog .news__item p{
         font-size: 16px;
         font-family: 'Cuprum Regular';

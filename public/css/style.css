@@ -785,13 +785,12 @@ form#search_form .input-group{
 .owl-carousel .owl-nav .owl-prev{
     position: absolute;
     left: -50px;
-    top: 50%;
-    margin-top: -83px;
+    top: 25%;
 }
 .owl-carousel .owl-nav .owl-next{
     position: absolute;
     right: -50px;
-    top: 20%;
+    top: 25%;
 }
 /* Список курсов на главной */
 .popular_courses{
@@ -2294,20 +2293,20 @@ footer .footer_menu{
 }
 footer .footer_menu li a{
 	font-family: 'Cuprum Regular';
-    color: #463e39;
+    color: #7c7c7c;
 	font-size: 18px;
 	text-transform: uppercase;
 }
 footer .footer_menu li a:focus,
 footer .footer_menu li a:hover,
 footer .footer_menu li a.active{
-    color: #fff;
+    color: #000;
 	text-decoration: none;
 }
 footer .footer_menu_bottom h3{
 	font-family: 'Bebas Neue Regular';
     font-size: 15px;
-	color: #ffffff;
+	color: #000000;
 	margin-top: 0px;
 	margin-bottom: 25px;
 	letter-spacing: 0.2em;
@@ -2319,7 +2318,7 @@ footer .footer_menu_bottom ul li{
 footer .footer_menu_bottom ul li a{
 	font-family: 'Cuprum Regular';
     font-size: 16px;
-	color: #b1b1b1;
+	color: #7c7c7c;
 }
 footer .footer_menu_bottom ul li a:focus,
 footer .footer_menu_bottom ul li a:hover,

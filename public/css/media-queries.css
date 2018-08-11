@@ -1,0 +1,64 @@
+    @media (max-width: 767px) {
+      /* стили для xs-устройств */
+		#search_form{
+			display: none;
+		}
+		#partner_universities{
+			padding-left: 40px;
+			padding-right: 40px;
+		}
+		.owl-carousel .owl-nav .owl-prev{
+			left: -10px;
+		}
+		.owl-carousel .owl-nav .owl-next{
+			right: -10px;
+		}
+		#teacher_carousel{
+			padding-left: 40px;
+			padding-right: 40px;
+		}
+		.link_more a {
+			padding: 15px 20px;
+		}
+		.header_block {
+			font-size: 30px;
+		}
+		.about_us_block h1 {
+			font-size: 36px;
+		}
+		.user_type_home{
+			margin-bottom: 30px;
+		}
+		.user_type_block {
+			padding-bottom: 0px;
+			margin-bottom: 0px;
+		}
+		.banner_block img{
+			margin-bottom: 30px;
+		}
+		footer {
+			padding-top: 30px;
+			padding-bottom: 45px;
+			background-position: center;
+		}
+		footer .footer_menu {
+			margin-top: 30px;
+			margin-bottom: 0px;
+			text-align: center;
+		}
+		footer .social_menu {
+			margin-top: 30px;
+		}
+		footer .copyright {
+			text-align: center;
+		}
+    }
+    @media (min-width: 768px) and (max-width: 991px) {
+      /* стили для sm-устройств */
+    }
+    @media (min-width: 991px) and (max-width: 1199px) {
+      /* стили для md-устройств */
+    }
+    @media (min-width: 1200px) {
+      /* стили для lg-устройств */
+    }

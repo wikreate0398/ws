@@ -2098,6 +2098,8 @@ input#amount{
     font-weight: 300; 
     font-size: 13px; 
     text-decoration: none;
+    display: block;
+    line-height: 30px;
 } 
 
 .loaded__search_result a i{
@@ -3148,7 +3150,7 @@ select option:disabled {
         color: #fff;
     }
 
-    .fade__modal.success .fade__modal__wrapper{
+    .fade__modal.fade-success .fade__modal__wrapper{
         background: #69c371 !important;
         color: #fff !important;
     } 

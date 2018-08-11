@@ -102,15 +102,11 @@
  
 			@if(@count(Session::get('courseMsg')))
 				<script> 
-					$(document).ready(function(){ 
-						$('.fade__modal').addClass("{{ Session::get('courseMsg.success') ? 'success' : 'fade-danger' }}");
-						$('.fade__modal__wrapper h2').text('{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}');
-						$('.fade__modal').fadeIn(300);
+					$(document).ready(function(){  
+						showFadeModal("{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}", 
+							          "{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}");
 					});
-				</script>
-			    <!-- <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
-			    	<p>{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}</p>
-			    </div>  -->
+				</script> 
 			@endif
 
 			<div class="about__course">

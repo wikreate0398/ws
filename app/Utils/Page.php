@@ -14,12 +14,12 @@ class Page
 
 	public function top()
 	{
-		return Menu::where('view_top', '1')->get();
+		return Menu::where('view_top', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
 	}
 
 	public function bottom()
 	{
-		return Menu::where('view_bottom', '1')->get();
+		return Menu::where('view_bottom', '1')->orderBy('page_up', 'asc')->orderBy('id', 'desc')->get();
 	}
 
 	public function active($url)

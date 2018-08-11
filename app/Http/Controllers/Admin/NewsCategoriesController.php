@@ -11,7 +11,7 @@ class NewsCategoriesController extends Controller
 
     private $method = 'admin/news/category'; 
 
-    private $folder = 'news';
+    private $folder = 'news.category';
 
     private $redirectRoute = 'admin_nw_cat';
 

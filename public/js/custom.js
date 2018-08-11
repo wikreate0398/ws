@@ -546,10 +546,10 @@ function eqBlocksInit()
 
     setEqualHeight2($('.item__block .item__name'), $('.teachers__conections_container')); 
     setEqualHeight2($('.item__block .item__img'), $('.teachers__conections_container')); 
-     
 
-     
-
+    setEqualHeight2($('.news__item a.news_name'), $('.news__catalog')); 
+    setEqualHeight2($('.news__item p'), $('.news__catalog')); 
+    
     $('.tab-pane').each(function(){ 
         setEqualHeight2($(this).find('.external_card h3'), $(this));
         setEqualHeight2($(this).find('.external_card h4'), $(this)); 

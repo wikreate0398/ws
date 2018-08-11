@@ -47,8 +47,11 @@ Route::get('courses/autocomplete', 'CoursesController@autocomplete');
 Route::post('course/favorite', 'CoursesController@favorite', ['middleware' => 'web_auth']); 
 Route::post('course/review/{id}', 'CoursesController@review', ['middleware' => 'web_auth'])->name('course_review'); 
 
-Route::get('search', 'PagesController@search');  
+Route::get('news', 'NewsController@index');
+Route::get('news/cat/{id}', 'NewsController@index'); 
+Route::get('news/view/{url}', 'NewsController@view');  
 
+Route::get('search', 'PagesController@search');  
 
 Route::group(['prefix' => 'user/actions'], function() {
  	Route::post('update-image', 'Users\ProfileController@updateImage')->name('update_image')->middleware('web_auth');
@@ -269,6 +272,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 		Route::get('add', 'NewsCategoriesController@showAddForm');
 		Route::post('create', 'NewsCategoriesController@create'); 
 		Route::post('{id}/update', 'NewsCategoriesController@update');  
+	}); 
+
+	Route::group(['prefix' => 'news/articles'], function() { 
+		Route::get('/', 'NewsController@show')->name('admin_news');    
+		Route::get('{id}/edit', 'NewsController@showeditForm');   
+		Route::get('add', 'NewsController@showAddForm');
+		Route::post('create', 'NewsController@create'); 
+		Route::post('{id}/update', 'NewsController@update');  
 	});  
 
 	Route::group(['prefix' => 'profile'], function() { 
@@ -312,7 +323,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 	Route::group(['prefix' => 'ajax'], function() {  
 		Route::post('depth-sort', 'AjaxController@depthSort')->name('depth_sort');
 		Route::post('viewElement', 'AjaxController@viewElement')->name('viewElement'); 
-		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement');   
+		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement'); 
+		Route::post('deleteImg', 'AjaxController@deleteImg')->name('deleteImg');   
 	}); 
 
 	Route::get('logout', 'LoginController@logout')->name('admin_logout'); 

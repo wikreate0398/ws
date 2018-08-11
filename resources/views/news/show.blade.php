@@ -32,6 +32,7 @@
 			
 			@if(count($more_news))
 			<div class="col-md-4">
+				<h3 class="view__more-ttl">Смотрите также:</h3>
 				<ul class="more_news" style="margin-top: 0px;"> 
 					@foreach($more_news as $item)
 						<li> 

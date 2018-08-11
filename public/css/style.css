@@ -3210,6 +3210,14 @@ select option:disabled {
         text-transform: uppercase;
     }
 
+    .view__more-ttl{
+        font-size: 18px;
+        margin: 0 0 20px 0;
+        font-family: 'Cuprum Regular'; 
+        border-bottom: 1px solid #ededed;
+        padding-bottom: 6px;
+    }
+
     ul.more_news{
         padding: 0;
         list-style: none;

@@ -140,6 +140,11 @@
 													{{ $lecture->duration_hourse }} ч {{ $lecture->duration_minutes }} мин.
 												</td>
 											</tr> 
+											<tr>
+												<td colspan="2" style="font-size: 14px; padding-top: 0px;">
+													{{ $lecture->description }}
+												</td>
+											</tr>
 										@endforeach
 									</table>
 								 </div>

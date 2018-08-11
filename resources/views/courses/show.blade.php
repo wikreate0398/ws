@@ -101,9 +101,16 @@
 		<div class="col-md-9">
  
 			@if(@count(Session::get('courseMsg')))
-			    <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
+				<script> 
+					$(document).ready(function(){ 
+						$('.fade__modal').addClass("{{ Session::get('courseMsg.success') ? 'success' : 'fade-danger' }}");
+						$('.fade__modal__wrapper h2').text('{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}');
+						$('.fade__modal').fadeIn(300);
+					});
+				</script>
+			    <!-- <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
 			    	<p>{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}</p>
-			    </div> 
+			    </div>  -->
 			@endif
 
 			<div class="about__course">
@@ -376,6 +383,8 @@
 		border-radius: 5%;
 		box-shadow: 0 1px 3px rgba(0,0,0,.3);
 		padding: 15px;
+		margin-bottom: 20px;
+		text-align: center;
 	}
 
 	.trainer_photo{

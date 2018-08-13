@@ -83,7 +83,8 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                           </button>
-                          <a class="navbar-brand" href="/"><img src="/images/logo2.png" alt=""></a>
+                          <a class="navbar-brand hidden-xs" href="/"><img src="/images/logo2.png" alt=""></a>
+                          <a class="navbar-brand visible-xs" href="/"><img src="/images/logo_mob.png" alt=""></a>
                         </div>
                     </div>   
 

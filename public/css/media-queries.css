@@ -1,5 +1,16 @@
     @media (max-width: 767px) {
       /* стили для xs-устройств */
+		header .header_bottom h2 {
+			margin-top: 40px;
+		}
+		header .navbar-toggle {
+			float: left;
+			border: 0px solid transparent;
+			border-radius: 0px;
+			margin-top: 0px;
+			margin-right: 15px;
+			margin-bottom: 0px;
+		}
 		#search_form{
 			display: none;
 		}

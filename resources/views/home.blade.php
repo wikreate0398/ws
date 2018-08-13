@@ -252,7 +252,10 @@
                                         {{ count($item->user->courses) }} 
                                         {{ format_by_count(count($item->user->courses), 'курс', 'курса', 'курсов') }}
                                     </li>
-                                    <li>15 ПРЕПОДАВАТЕЛЕЙ</li>
+                                    <li>
+                                        {{ count($item->user->connectionTeachers) }}   
+                                        {{ format_by_count(count($item->user->connectionTeachers), 'ПРЕПОДАВАТЕЛЬ','ПРЕПОДАВАТЕЛЯ','ПРЕПОДАВАТЕЛЕЙ') }}
+                                    </li>
                                 </ul>
                             </div> 
                         @endforeach 

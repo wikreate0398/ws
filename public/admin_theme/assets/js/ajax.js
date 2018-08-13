@@ -161,6 +161,41 @@ var Ajax = {
         }); 
     },
 
+    deleteImg: function(element, table, id, name){ 
+        $.ajax({
+            type: "POST",
+            url: '/admin/ajax/deleteImg',
+            data: {
+                'id': id,
+                'table': table,
+                'name' : !name ? null : name,
+                '_token': CSRF_TOKEN
+            },
+            dataType: 'json',
+            success: function(res) {
+                if (res.msg === 'error') {
+                    Ajax.notify('error', res.cause); 
+                } else { 
+                    Ajax.notify('success', res.message);
+
+                    var parent = $('.fileupload');  
+                    $(element).closest(parent).find('.modal').fadeOut(100);
+                    $('.modal-backdrop').fadeOut(100); 
+                      
+                    $(element).closest(parent).find('.modal').fadeOut(100);
+                    if (name == 'swf') {
+                        $(element).closest('.fileupload').find('#thumb-img').remove();
+                        $('#swf-file').html('<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>');
+                    }else{
+                        $(element).closest(parent).find('#thumb-img').attr('src', 'http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image');
+                    }
+                 
+                    $(element).closest(parent).find('.del_btn').hide();
+                }
+            }
+        }); 
+    },
+
     nestable: function(item){
 
         var arr = $(item).nestable('serialize');

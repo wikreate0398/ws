@@ -273,7 +273,7 @@ function adminMenu()
                     'edit' => 'Редактировать' 
                 ],
 
-                'news' => [
+                'articles' => [
                     'name' => 'Статьи', 
                     'icon' => '<i class="fa fa-book" aria-hidden="true"></i>',
                     'link' => '/admin/news/articles/',

@@ -84,4 +84,15 @@ class AjaxController extends Controller
 
         return \App\Utils\JsonResponse::success(['message' => trans('admin.delete_true')]);
     } 
+
+    public function deleteImg(Request $request)
+    {
+        $id        = $request->input('id');
+        $table     = $request->input('table'); 
+        $nameField = $request->input('name') ? $request->input('name') : 'image'; 
+        if (Schema::hasColumn($table, $nameField)) {
+            DB::table($table)->where('id', $id)->update([$nameField => '']);   
+        }
+        return \App\Utils\JsonResponse::success(['message' => trans('admin.delete_true')]);
+    }
 }

@@ -360,14 +360,9 @@ jQuery(document).ready(function($) {
 
                     $(form).find('#error-respond').fadeOut();  
 
-                    setTimeout(function() {
-                        $('.success').fadeIn(200); 
-                        $('.success').find('h2').html(jsonResponse.message);
-                    }, 300);
+                    showFadeModal('success', jsonResponse.message);
 
-                    setTimeout(function() {
-                        $('.success').fadeOut(300);
-                    }, 4000); 
+                     
                     $(form)[0].reset();
 
                     $('.modal').modal('hide'); 
@@ -388,8 +383,7 @@ jQuery(document).ready(function($) {
                 InputMask();
             }
         });
-    }
-
+    } 
     $(document).on('submit', 'form.ajax__submit', function(e){
         e.preventDefault();
         var form   = $(this);
@@ -431,6 +425,20 @@ jQuery(document).ready(function($) {
         }, 500);
     });
 });
+
+function showFadeModal(type, text){ //fade-success, fade-danger 
+    setTimeout(function() { 
+        $('.fade__modal').addClass('fade-' + type); 
+        $('.fade__modal').fadeIn(200); 
+        $('.fade__modal').find('h2').html(text);
+    }, 300);
+
+    setTimeout(function() {
+        $('.fade__modal').fadeOut(300, function(){
+            $('.fade__modal').removeClass('fade-' + type);
+        }); 
+    }, 4000); 
+}
 
 function institutionCheck(input){
     if ($(input).prop('checked') == true) {
@@ -538,10 +546,10 @@ function eqBlocksInit()
 
     setEqualHeight2($('.item__block .item__name'), $('.teachers__conections_container')); 
     setEqualHeight2($('.item__block .item__img'), $('.teachers__conections_container')); 
-     
 
-     
-
+    setEqualHeight2($('.news__item a.news_name'), $('.news__catalog')); 
+    setEqualHeight2($('.news__item p'), $('.news__catalog')); 
+    
     $('.tab-pane').each(function(){ 
         setEqualHeight2($(this).find('.external_card h3'), $(this));
         setEqualHeight2($(this).find('.external_card h4'), $(this)); 

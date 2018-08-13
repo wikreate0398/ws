@@ -101,9 +101,12 @@
 		<div class="col-md-9">
  
 			@if(@count(Session::get('courseMsg')))
-			    <div class="alert alert-{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}">
-			    	<p>{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}</p>
-			    </div> 
+				<script> 
+					$(document).ready(function(){  
+						showFadeModal("{{ Session::get('courseMsg.success') ? 'success' : 'danger' }}", 
+							          "{{ Session::get('courseMsg.success') ? Session::get('courseMsg.success') : Session::get('courseMsg.error') }}");
+					});
+				</script> 
 			@endif
 
 			<div class="about__course">
@@ -140,6 +143,11 @@
 													{{ $lecture->duration_hourse }} ч {{ $lecture->duration_minutes }} мин.
 												</td>
 											</tr> 
+											<tr>
+												<td colspan="2" style="font-size: 14px; padding-top: 0px;">
+													{{ $lecture->description }}
+												</td>
+											</tr>
 										@endforeach
 									</table>
 								 </div>
@@ -371,6 +379,8 @@
 		border-radius: 5%;
 		box-shadow: 0 1px 3px rgba(0,0,0,.3);
 		padding: 15px;
+		margin-bottom: 20px;
+		text-align: center;
 	}
 
 	.trainer_photo{

@@ -489,7 +489,7 @@
         @endforeach
     @endif 
 
-    <div class="success fade__modal">
+    <div class="fade-default fade__modal">
         <div class="fade__modal__wrapper">
             <i class="close" onclick="$('.fade__modal').fadeOut();">×</i> 
             <h2></h2>

@@ -18,4 +18,9 @@ class NewsCategory extends Model
         'seo_description',
         'seo_keywords'
     ];
+
+    public function news()
+    {
+        return $this->hasMany('App\Models\News', 'id_category', 'id')->orderBy('created_at', 'desc');
+    }
 }

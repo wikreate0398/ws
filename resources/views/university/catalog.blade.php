@@ -116,19 +116,19 @@
                                         <img class="img-responsive" src="{{ imageThumb(@$university->user->avatar, 'uploads/users', 400, 300, 'universities') }}">
                                     </a>
                                     <span class="reviews_external_univer">
-                                        15 отзывов
+                                        0 отзывов
                                     </span>
                                     <a class="bookmark_external_univer" href="#">
                                         <i class="fa course_heart fa-heart-o"></i>
                                     </a>
                                 </div>
-                                <h3>{{ $university->full_name }}</h3>
+                                <h3><a href="/university/{{ $university->id }}/">{{ $university->full_name }}</a></h3>
                                 <ul class="list-unstyled info_list_univer">
                                     <li>
                                         Курсов <span>{{ count($university->user->courses) }}</span>
                                     </li>
                                     <li>
-                                        Преподавателей <span>кол</span>
+                                        Преподавателей <span>0</span>
                                     </li>
                                     <li>
                                         Факуоьтетов <span>{{ count($university->faculties) }}</span>
@@ -137,11 +137,18 @@
                                         Бюджетных мест <span>{{ $university->qty_budget }}</span>
                                     </li>
                                 </ul>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                От <strong>{{ priceString($university->price) }}</strong> р./год
+                                <ul class="list-inline bottom_info_list_univer">
+                                    <li class="univer_rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </li>
+                                    <li class="univer_price"> 
+                                        От <strong>{{ priceString($university->price) }}</strong> р./год
+                                    </li> 
+                                </ul>
                             </div>
                         </div>
                     @endforeach  

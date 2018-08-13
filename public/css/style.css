@@ -1829,12 +1829,26 @@ input#amount{
     margin-top: 10px;
     margin-bottom: 10px;
 }
+.external_univer h3 a{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 18px;
+    color: #5f5f5f;
+}
 .external_univer .info_list_univer li{
 	font-family: 'Helvetica Neue Cyr Light Italic';
-    font-size: 16px;
+    font-size: 14px;
     color: #6c6c6c;
 }
 .external_univer .info_list_univer li span{
+	float: right;
+}
+.external_univer .bottom_info_list_univer .univer_rating{
+	color: #ffc900;
+}
+.external_univer .bottom_info_list_univer .univer_price{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 16px;
+    color: #5f5f5f;
 	float: right;
 }
 /* Фильтр */

@@ -36,7 +36,7 @@
                 <ul class="nav nav-tabs filter_tabs">
                     <li class="active">
                         <a href="#">
-                            ПОПУЛЯРНЫЕ
+                            Популярные
                         </a>
                     </li>
                     <li class="">
@@ -110,55 +110,43 @@
                 <div class="row universities_catalog">
                     @foreach($universities as $university)
                         <div class="col-md-4">
-                            <div class="university__item eq_list__item">
-                                <div class="university__img">
+                            <div class="external_univer">
+                                <div class="image">
                                     <a href="/university/{{ $university->id }}/">
                                         <img class="img-responsive" src="{{ imageThumb(@$university->user->avatar, 'uploads/users', 400, 300, 'universities') }}">
                                     </a>
+                                    <span class="reviews_external_univer">
+                                        15 отзывов
+                                    </span>
+                                    <a class="bookmark_external_univer" href="#">
+                                        <i class="fa course_heart fa-heart-o"></i>
+                                    </a>
                                 </div>
                                 <h3>{{ $university->full_name }}</h3>
-                                <hr>
-                                <table>
-                                    <tr>
-                                        <td>КУРСОВ</td> 
-                                        <td>{{ count($university->user->courses) }}</td>
-                                    </tr>
-
-                                    <tr> 
-                                        <td>ПРЕПОДАВАТЕЛЕЙ</td> 
-                                        <td>2</td>
-                                    </tr>
-
-                                    <tr> 
-                                        <td>ФАКУЛЬТЕТОВ</td> 
-                                        <td>{{ count($university->faculties) }}</td>
-                                    </tr> 
-
-                                    <tr> 
-                                        <td>БЮДЖЕТНЫХ МЕСТ</td> 
-                                        <td>{{ $university->qty_budget }}</td>
-                                    </tr> 
-                                </table>
-                                <hr>
-                                <div class="univ__footer">
-                                    <div class="univ__review">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <sup>(12)</sup>
-                                    </div>
-
-                                    <div class="univ__price">
-                                        От <strong>{{ priceString($university->price) }}</strong> р./год
-                                    </div>
-                                </div>
+                                <ul class="list-unstyled info_list_univer">
+                                    <li>
+                                        Курсов <span>{{ count($university->user->courses) }}</span>
+                                    </li>
+                                    <li>
+                                        Преподавателей <span>кол</span>
+                                    </li>
+                                    <li>
+                                        Факуоьтетов <span>{{ count($university->faculties) }}</span>
+                                    </li>
+                                    <li>
+                                        Бюджетных мест <span>{{ $university->qty_budget }}</span>
+                                    </li>
+                                </ul>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                От <strong>{{ priceString($university->price) }}</strong> р./год
                             </div>
                         </div>
                     @endforeach  
                 </div>
                 {{ $universities->appends(request()->input())->links() }}
-                  
             </div>
             <div class="col-lg-3">
             <div class="filter_block">                 

@@ -925,6 +925,41 @@ form#search_form .input-group{
     text-decoration: none;
     background: #b93777;
 }
+/* Кнопки фильтрации */
+.filter_tabs{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e3e5e8;
+}
+.filter_tabs li{
+    float: none;
+    display: inline-block;
+	margin-left: -5px;
+}
+.filter_tabs > li > a{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+	color: #a8a8a8;
+    text-transform: uppercase;
+	margin-right: 0px;
+	border-radius: 0px;
+}
+.filter_tabs > li > a:focus,
+.filter_tabs > li > a:hover{
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
+.filter_tabs > li.active > a, .filter_tabs > li.active > a:focus, .filter_tabs > li.active > a:hover {
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
 /* О нас на главной */
 .about_us_block {
     padding-top: 30px;

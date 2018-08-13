@@ -34,6 +34,35 @@
 					</div>
 			</form>
         </div>
+		<div class="col-lg-12">
+			<ul class="nav nav-tabs filter_tabs">
+				<li class="active">
+					<a href="#">
+						Популярные курсы
+					</a>
+				</li>
+				<li class="">
+					<a href="#">
+						Новые курсы
+					</a>
+				</li>                                             
+				<li class="">
+					<a href="#">
+						Рекомендуемые
+					</a>
+				</li>                                             
+				<li class="">
+					<a href="#">
+						Есть скидка
+					</a>
+				</li>                                          
+				<li class="">
+					<a href="#">
+						Онлайн обучение
+					</a>
+				</li>                         
+			</ul>
+		</div>
     </div>
 
     <div class="row">

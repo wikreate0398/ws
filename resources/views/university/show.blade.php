@@ -1,45 +1,39 @@
 @extends('layouts.app')
 @section('content')
 <div class="container no__home">
-   <div class="row university__show">
-      <div class="col-md-9">
-         <div class="university__header">
-            <label class="badge">
-            @if($university->status == 1)
-            Государственный
-            @else
-            Коммерческий
-            @endif
-            </label>
-            <h1>{{ $university->full_name }}</h1>
-            <p>г.{{ $university->user->cityData->name }}</p>
-            <ul class="university__data_list">
-               <li>
-                  <strong>{{ count($university->user->courses) }}</strong>
-                  КУРСОВ
-               </li>
-               <li>
-                  <strong>{{ count($university->user->connectionTeachers) }} </strong> 
-                  {{ format_by_count(count($university->user->connectionTeachers), 'ПРЕПОДАВАТЕЛЬ','ПРЕПОДАВАТЕЛЯ','ПРЕПОДАВАТЕЛЕЙ') }} 
-               </li>
-               <li>
-                  <strong>{{ count($university->faculties) }}</strong>
-                  ФАКУЛЬТЕТОВ
-               </li>
-               <li>
-                  <strong>{{ $university->qty_budget }}</strong>
-                  БЮДЖЕТНЫХ МЕСТ
-               </li>
-            </ul>
-         </div>
-         <ul class="nav nav-tabs">
+   <div class="row university__show university_page">
+      <div class="col-lg-12">
+        <ul class="breadcrumb">
+            <li><a href="/">Главная</a></li>
+            <li><a href="/universities">Вузы и школы</a></li>
+            <li><span>{{ $university->full_name }}</span></li>
+        </ul>
+        <ul class="list-inline card_tag">
+            <li class="tag_sticker">
+                <span>@if($university->status == 1) Государственный @else Коммерческий @endif</span>
+            </li> 
+            <li class="bookmark_tag">
+                <i class="fa fa-bookmark-o" onclick="courseFavorite(this, 6);" aria-hidden="true"></i> 
+            </li> 
+        </ul>
+        <h1>{{ $university->full_name }}</h1>
+        <span class="city_university">г.{{ $university->user->cityData->name }}</span>
+        <ul class="list-inline short_info_university">
+            <li><span>{{ count($university->user->courses) }}</span> курсов</li>
+            <li><span>{{ count($university->user->connectionTeachers) }}</span> {{ format_by_count(count($university->user->connectionTeachers), 'преподаватель','преподавателя','преподавателей') }}</li>
+            <li><span>{{ count($university->faculties) }}</span> факультетов</li>
+            <li><span>{{ $university->qty_budget }}</span> бюджетных мест</li>
+        </ul>
+        <ul class="nav nav-tabs university_tabs">
             <li class="active"><a data-toggle="tab" href="#general">ОБЩАЯ ИНФОРМАЦИЯ</a></li>
             <li><a data-toggle="tab" href="#course" onclick="setTimeout(function(){ eqBlocksInit(); }, 200);">КУРСЫ И ПРОГРАММЫ</a></li>
             <li><a data-toggle="tab" href="#teachers">ПРЕПОДАВАТЕЛИ</a></li>
             <li><a data-toggle="tab" href="#faculties">ФАКУЛЬТЕТЫ</a></li>
             <li><a data-toggle="tab" href="#news">НОВОСТИ</a></li>
-            <li><a data-toggle="tab" href="#contacts">КОНТАКТЫ</a></li>
-         </ul>
+            <li><a data-toggle="tab" href="#contacts">КОНТАКТЫ</a></li>                       
+        </ul>
+      </div>
+      <div class="col-md-9">
          <div class="tab-content">
             <div id="general" class="tab-pane fade in active">
                <p>{{ $university->user->about }}</p>

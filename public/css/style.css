@@ -476,6 +476,15 @@ margin-bottom: 30px;
 	font-weight: normal;
 	font-style: normal;
 }
+@font-face {
+    font-family: 'Helvetica Neue Cyr Light';
+    src: url('../fonts/HelveticaNeueCyr-Light.eot');
+    src: url('../fonts/HelveticaNeueCyr-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/HelveticaNeueCyr-Light.woff') format('woff'),
+    url('../fonts/HelveticaNeueCyr-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 /* Шапка */
 header .header_top_nav{
 	float: right;
@@ -2920,6 +2929,7 @@ select option:disabled {
 }
 
 .course_page .card_tag{
+	margin-top: 20px;
 	margin-bottom: 20px;
 	text-align: center;
 }
@@ -3043,7 +3053,96 @@ select option:disabled {
 .course_page .table > tbody > tr > td, .course_page .table > tbody > tr > th, .course_page .table > tfoot > tr > td, .course_page .table > tfoot > tr > th, .course_page .table > thead > tr > td, .course_page .table > thead > tr > th{
 	border: 0px;
 }
-
+/* Страница вуза подробно */
+.university_page .card_tag {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.university_page .card_tag li {
+    vertical-align: middle;
+}
+.university_page .card_tag .tag_sticker span {
+    font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+    color: #ffffff;
+    background: #b93777;
+    padding: 12px 15px;
+    display: inline-block;
+}
+.university_page .card_tag .bookmark_tag {
+    font-size: 40px;
+    line-height: 40px;
+    color: #a8a8a8;
+}
+.university_page h1 {
+    font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 25px;
+    color: #000000;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+.university_page .city_university{
+    font-family: 'Cuprum Regular';
+    font-size: 18px;
+    color: #a8a8a8;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    display: block;
+}
+.university_page .short_info_university{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.university_page .short_info_university li{
+    font-family: 'Helvetica Neue Cyr Roman';
+    color: #000000;
+    font-size: 14px;
+    padding: 0px 20px;
+    text-transform: uppercase;
+}
+.university_page .short_info_university li span{
+    font-family: 'Helvetica Neue Cyr Light';
+    color: #a8a8a8;
+    font-size: 40px;
+    display: block;
+}
+.university_page .university_tabs{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e3e5e8;
+}
+.university_page .university_tabs li{
+    float: none;
+    display: inline-block;
+	margin-left: -5px;
+}
+.university_page .university_tabs > li > a{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+	color: #a8a8a8;
+    text-transform: uppercase;
+	margin-right: 0px;
+	border-radius: 0px;
+}
+.university_page .university_tabs > li > a:focus,
+.university_page .university_tabs > li > a:hover{
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
+.university_page .university_tabs > li.active > a, .university_page .university_tabs > li.active > a:focus, .university_page .university_tabs > li.active > a:hover {
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
 .searche__header{
         margin-bottom: 30px;
     }

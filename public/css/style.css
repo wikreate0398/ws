@@ -867,6 +867,35 @@ form#search_form .input-group{
 	color: #000000;
 	background: transparent;
 }
+.external_card .caption .card_tag_page{
+	margin-bottom: 20px;
+}
+.external_card .caption .card_tag_page .tag_sticker span{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+	color: #ffffff;
+	background: #b93777;
+	padding: 12px 15px;
+	display: inline-block;
+}
+.external_card .caption .card_tag_page .bookmark_tag{
+	float: right;
+    padding: 0px;
+    margin-top: 10px;
+}
+.external_card .caption .card_tag_page .bookmark_tag i{
+	color: #b93777;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 22px;
+	 
+}
+.external_card .caption .card_tag_page .bookmark_tag span .btn-default:focus,
+.external_card .caption .card_tag_page .bookmark_tag span .btn-default:hover{
+	color: #000000;
+	background: transparent;
+}
 .external_card .caption h3{
 	font-family: 'Helvetica Neue Cyr Roman';
     font-size: 15px;
@@ -3149,6 +3178,41 @@ select option:disabled {
     border-bottom: 1px solid #b93777;
     background: transparent;
 	margin-right: 0px;
+}
+.university_page .vuz_page_sidebar .image{
+    position: relative;
+}
+.university_page .vuz_page_sidebar .image img{
+    width: 100%;
+}
+.university_page .vuz_page_sidebar .image .reviews_vuz_page{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    background: #000;
+    padding: 5px 10px;
+    color: #fff;
+}
+.university_page .teacher_card_page{
+    margin-bottom: 30px;
+}
+.university_page .teacher_card_page .teacher_image img{
+    width: 100%;
+}
+.university_page .teacher_card_page h3{
+    text-align: center;
+}
+.university_page .teacher_card_page h3 a{
+    font-family: 'Cuprum Regular';
+    font-size: 22px;
+    color: #4f433a;
+}
+.university_page .teacher_card_page p{
+    font-family: 'Cuprum Regular';
+    font-size: 15px;
+    color: #b93777;
+    text-align: center;
+    margin-bottom: 0px;
 }
 .searche__header{
         margin-bottom: 30px;

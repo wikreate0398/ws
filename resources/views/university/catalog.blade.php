@@ -110,7 +110,7 @@
                 <div class="row universities_catalog">
                     @foreach($universities as $university)
                         <div class="col-md-4">
-                            <div class="external_univer">
+                            <div class="external_univer eq_list__item">
                                 <div class="image">
                                     <a href="/university/{{ $university->id }}/">
                                         <img class="img-responsive" src="{{ imageThumb(@$university->user->avatar, 'uploads/users', 400, 300, 'universities') }}">
@@ -128,10 +128,10 @@
                                         Курсов <span>{{ count($university->user->courses) }}</span>
                                     </li>
                                     <li>
-                                        Преподавателей <span>0</span>
+                                        {{ format_by_count(count($university->user->connectionTeachers), 'Преподаватель','Преподавателя','Преподавателей') }} <span>{{ count($university->user->connectionTeachers) }}</span>
                                     </li>
                                     <li>
-                                        Факуоьтетов <span>{{ count($university->faculties) }}</span>
+                                        факультетов <span>{{ count($university->faculties) }}</span>
                                     </li>
                                     <li>
                                         Бюджетных мест <span>{{ $university->qty_budget }}</span>

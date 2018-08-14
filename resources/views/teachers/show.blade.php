@@ -143,10 +143,10 @@
 			<div id="page_teacher_universities" class="owl-carousel owl-theme">
 				@foreach($universities as $university)
 				<div class="item"> 
-					<a href="/institution/1/"> 
+					<a href="/university/<?=$university['id']?>/"> 
 						<img class="img-responsive" src="{{ imageThumb(@$university['user']['image'], 'uploads/users', 400, 400, 'university_list') }}">
 					</a> 
-					<h3><a href="/institution/1">{{ $university['full_name'] }}</a></h3>
+					<h3><a href="/university/<?=$university['id']?>">{{ $university['full_name'] }}</a></h3>
 					<ul class="list-unstyled">
 						<li>
 							{{ count($university->user->courses) }} 

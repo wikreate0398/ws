@@ -194,8 +194,26 @@
                </div>
             </div>
             <div id="teachers" class="tab-pane fade">
-                <div class="col-md-12 no__data"> 
-                    <h5>Нет преподов</h5>
+                <div class="col-md-12  "> 
+                  @if(count($university->user->connectionTeachers))
+                    <ul>
+                      @foreach($university->user->connectionTeachers as $teacher)
+                        <li>
+                          <a href="/teacher/{{ $teacher['id'] }}/">
+                            <img style=" max-width: 100px;" 
+                                                 class="img-responsive" 
+                                                 src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
+                          </a> 
+                          <h3><a href="/teacher/{{ $teacher['id'] }}/">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
+                          <p>{{ implode(',', array_slice($teacher->subjects->pluck('name')->toArray(), 0, 2)) }}</p>
+                        </li>
+                      @endforeach
+                    </ul>
+                  @else
+                    <div class="no__data"> 
+                      <h5>Нет преподов</h5>
+                    </div>
+                  @endif 
                 </div>
             </div>
             <div id="faculties" class="tab-pane fade">

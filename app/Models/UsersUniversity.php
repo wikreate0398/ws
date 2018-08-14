@@ -90,6 +90,10 @@ class UsersUniversity extends Model
                                 return User::allowUser();
                             })->orderBy('id_user', 'asc');
 
+        $university->with(['user.courses' => function($query){
+                                return $query->published();
+                            }]);
+
         return $university->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
                                       ['*'], 
                                       'page', 

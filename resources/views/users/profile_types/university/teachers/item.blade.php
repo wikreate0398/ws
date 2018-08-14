@@ -1,7 +1,7 @@
 <div class="col-md-3">
 	<div class="item__block eq_list__item">
 		<div class="item__img">
-			<img class="img-responsive" src="{{ imageThumb(@$item->image, 'uploads/users', 400, 500, 'list') }}">
+			<img class="img-responsive" src="{{ imageThumb(@$item->avatar, 'uploads/users', 400, 500, 'list') }}">
 		</div>
 
 		<div class="item__info">

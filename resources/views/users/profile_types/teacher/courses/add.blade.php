@@ -71,7 +71,17 @@
                      </label>
                      <div class="col-md-7">
                         <div class="form-group">
-                           <textarea class="form-control" maxlength="1200" name="" disabled> {{ Auth::user()->name }}</textarea> 
+                           @if(Auth::user()->type == 2)
+                              <textarea class="form-control" maxlength="1200" name="" disabled> {{ Auth::user()->name }}</textarea> 
+                           @else 
+                              @foreach(Auth::user()->connectionTeachers as $teacher)
+                                 <label class="checkbox-inline">
+                                    <input type="checkbox"  
+                                           name="teachers[{{ $teacher->id }}]" 
+                                           id="teachers{{ $teacher->id }}"> {{ $teacher->name }}
+                                 </label>
+                              @endforeach  
+                           @endif
                         </div>
                      </div>
                      <div class="clearfix"></div>

@@ -125,13 +125,13 @@
                                 <h3><a href="/university/{{ $university->id }}/">{{ $university->full_name }}</a></h3>
                                 <ul class="list-unstyled info_list_univer">
                                     <li>
-                                        Курсов <span>{{ count($university->user->courses) }}</span>
+                                        Курсов <span>{{ $university->user->courses->count() }}</span>
                                     </li>
                                     <li>
-                                        {{ format_by_count(count($university->user->connectionTeachers), 'Преподаватель','Преподавателя','Преподавателей') }} <span>{{ count($university->user->connectionTeachers) }}</span>
+                                        {{ format_by_count($university->user->connectionTeachers->count(), 'Преподаватель','Преподавателя','Преподавателей') }} <span>{{ $university->user->connectionTeachers->count() }}</span>
                                     </li>
                                     <li>
-                                        факультетов <span>{{ count($university->faculties) }}</span>
+                                        факультетов <span>{{ $university->faculties->count() }}</span>
                                     </li>
                                     <li>
                                         Бюджетных мест <span>{{ $university->qty_budget }}</span>

@@ -130,6 +130,8 @@ Route::group(['middleware' => ['web_auth']], function(){
 				Route::get('{id}/delete', "$controller@deleteCourse")->name("{$userDefine}_delete_course"); 
 				Route::post('save', "$controller@saveCourse")->name("{$userDefine}_save_course"); 
 				Route::post('{id}/edit', "$controller@editCourse")->name("{$userDefine}_update_course");  
+
+				Route::post('filter/load-categories', "$controller@loadFilterCategories")->name("{$userDefine}_filter_categories");  
 			}); 
 		}); 
 

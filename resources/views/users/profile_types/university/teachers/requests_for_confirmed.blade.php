@@ -5,7 +5,7 @@
 				<div class="row" style="align-items: stretch; display: flex;">
 					<div class="col-md-3 teacher__info">
 						<div class="teacher__info_inner"> 
-							<div class="img" style="background-image: url({{ imageThumb(($teacher->avatar ? $user->avatar : $user->image), 'uploads/users', 400, 300, 'universities') }});"> 
+							<div class="img" style="background-image: url({{ imageThumb(($teacher->teacher->avatar ? $teacher->teacher->avatar : $teacher->teacher->image), 'uploads/users', 400, 300, 'universities') }});"> 
 							</div>
 							<div class="name">{{ $teacher->teacher->name }}</div>
 							<a href="/teacher/{{ $teacher->teacher->id }}" target="_blank" class="btn btn-default">Подробнее</a>

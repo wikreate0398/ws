@@ -17,13 +17,16 @@
 	        </div>
 	    </div>
 
-		<div class="row"> 
+		<div class="row news__show"> 
 			<div class="@if(count($more_news)) col-md-8 @else col-md-12 @endif"> 
-				<div class="row news__show"> 
+				<div class="row"> 
 					<div class="col-md-12">
 						<span class="nws__time">{{ date('d.m.Y H:i', strtotime($data['created_at'])) }}</span>
 						<h1 class="page__title">{{ $data['name'] }}</h1> 
-						<div>{!! $data['text'] !!}</div>
+						<div class="news__big_img">
+							<img class="img-responsive" src="{{ imageThumb(@$data->image, 'uploads/news', 1140, 456, 'view') }}">
+						</div>
+						<div class="news__text">{!! $data['text'] !!}</div>
 						<br>
 						<a href="/news" class="btn btn2">Назад к новостям</a>
 					</div>

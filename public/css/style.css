@@ -2767,6 +2767,10 @@ select option:disabled {
     padding: 10px;
 }
 
+.no__data.warning{
+    background: #f5f768; 
+}
+
 .no__data h5{
     font-size: 16px;
 }
@@ -3635,6 +3639,27 @@ select option:disabled {
         font-family: 'Cuprum Regular';
     }
 
+    .news__show{
+        margin-top: 50px;
+    }
+
     .news__show .page__title{
         margin-bottom: 30px;
+    }
+
+    .news__big_img{
+        margin-bottom: 20px;
+    }
+
+    .news__big_img img{
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .news__text{
+        text-align: justify;
+    }
+
+    .badge-red{
+        background: #ea7272;
     }

@@ -65,6 +65,11 @@ class Courses extends Model
         return $this->belongsToMany('App\Models\User', 'course_request', 'id_course', 'id_user');
     }
 
+    public function teachers()
+    {
+        return $this->belongsToMany('App\Models\User', 'course_teachers', 'id_course', 'id_teacher');
+    }  
+
     public function userFavorite()
     { 
         return $this->belongsToMany('App\Models\User', 'course_favorite', 'id_course', 'id_user'); 
@@ -100,9 +105,7 @@ class Courses extends Model
             $courses->whereHas('category', function($query) use($cat){
                 $query->where('url', $cat);
             });
-        } 
-
-         
+        }  
         
         return $courses->published()->with('user')->orderByCourses()->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
                                       ['*'], 
@@ -120,6 +123,7 @@ class Courses extends Model
         return $query->where('general_filled', 1)
                      ->where('program_filled', 1)
                      ->where('settings_filled', 1)
+                     ->where('сertificates_filled', 1)
                      ->where('view', 1)
                      ->whereRaw('If(`hide_after_end`= 1, `is_open_to` >= CURDATE(), `view`=1)')
                      ->whereHas('user', function($query){
@@ -127,22 +131,49 @@ class Courses extends Model
                     });
     } 
 
+    public function scopeFilterProfile($courses)
+    { 
+        if (isset(request()->search)) 
+        {
+            if (@request()->status == '0') 
+            {
+                $courses->whereDate('date_to', '<', date('Y-m-d'))->where('settings_filled', '1');
+            } 
+
+            if (@request()->status == '1') 
+            {
+                $courses->whereDate('date_to', '>=', date('Y-m-d'))->where('settings_filled', '1');
+            } 
+
+            if (@request()->category) 
+            {
+                $courses->where('id_category', request()->category);
+            }  
+
+            if (@request()->searchByName) 
+            {
+                $courses->where('name', 'like', '%'.request()['searchByName'].'%');
+            }  
+
+            if (@request()->teacher) 
+            {
+                $teacherId = request()->teacher;
+                $courses->whereHas('teachers', function($query) use($teacherId){ 
+                    return $query->where('id_teacher', $teacherId);
+                });
+            }   
+        } 
+    }
+
     public function scopeOrderByCourses($query)
-    {
-        //return $query->orderBy(DB::raw('ABS(DATEDIFF(date_from, NOW()))')); 
+    { 
         return $query->orderBy('date_from'); 
     }
 
     public static function countTotal()
     {    
         return Courses::published()->count();
-    } 
-
-    // public function scopeRating($query)
-    // {
-    //     return $query->leftJoin('course_reviews', 'course_reviews.id_course', '=', 'courses.id') 
-    //                  ->select(DB::raw('COUNT(course_reviews.id) as count_reviews, FORMAT(avg(rating),1) as avg1')); 
-    // }
+    }  
 
     public static function getOneCourse($id, $authCheck = false)
     {

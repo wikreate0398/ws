@@ -27,14 +27,20 @@ class CourseController extends UniversityController
         $this->_course = new Course;
     } 
 
-    public function showCourse()
+    public function showCourse(Request $request)
     {   
         $user    = Auth::user();
-        $courses = Courses::with('sections')->where('id_user', $user->id)->get();
-
+        $userId  = $user->id;
+        $courses = Courses::with('sections')
+                          ->filterProfile()
+                          ->where('id_user', $user->id);
+  
         return view('users.university_profile', [ 
-            'user'    => Auth::user(), 
-            'courses' => $courses, 
+            'user'       => Auth::user(), 
+            'courses'    => $courses->get(),
+            'categories' => CourseCategory::whereHas('courses', function($query) use($userId){
+                                return $query->where('id_user', $userId);
+                            })->get(),
             'include' => $this->viewPath . 'courses.list',
             'scripts' => [ 
                 'js/courses.js'
@@ -53,6 +59,27 @@ class CourseController extends UniversityController
             ]
         ]); 
     } 
+
+    public function loadFilterCategories(Request $request)
+    { 
+        $teacherId   = $request->input('id');
+        $selectedCat = $request->input('category');
+        $get = CourseCategory::whereHas('courses.teachers', function($query) use($teacherId){
+                                return $query->where('id_teacher', $teacherId);
+                            })->get();
+        
+        if (empty($get)) {
+            die();
+        }
+
+        $options = '<option value="0">Категория</option>';
+        foreach ($get as $category) 
+        {
+            $selected = (@$selectedCat == $category['id']) ? 'selected' : '';
+            $options .= '<option '.$selected.' value="'.$category['id'].'">'.$category['name'].'</option> ';
+        }
+        echo $options;
+    }
 
     public function editCourseForm($id_course)
     {

@@ -9,7 +9,8 @@ use App\Models\CourseSections;
 use App\Models\SectionLectures; 
 use App\Models\CourseCategory;
 use App\Models\CoursesCertificates; 
- 
+use App\Models\CourseTeachers; 
+  
 class Crud extends Course
 { 
     protected $_course_facade = null;
@@ -42,7 +43,8 @@ class Crud extends Course
     ]; 
 
     private $customMessage = [ 
-        'available.required' => 'Укажите доступность на сайте' 
+        'available.required' => 'Укажите доступность на сайте',
+        'teachers.required'  => 'Выберите преподавателей'
     ];
 
     private $payOptions = ['1','2'];
@@ -134,6 +136,11 @@ class Crud extends Course
                     $rules['price'] = 'required';
                 }
 
+                if ($this->user->user_type == 3) 
+                {
+                    $rules['teachers'] = 'required';
+                }
+
                 if (!in_array($data['pay'], $this->payOptions)) 
                 {
                     return 'Ошибка на сервере';
@@ -145,7 +152,7 @@ class Crud extends Course
                     $errors['subcat_id'] = ['Укажите <strong>подкатегорию</strong> курса'];
                 }
 
-                $validator = Validator::make($data, $rules); 
+                $validator = Validator::make($data, $rules, $this->customMessage); 
                 $validator->setAttributeNames($this->niceNames);  
                 if ($validator->fails()) 
                 {
@@ -241,8 +248,26 @@ class Crud extends Course
         $id_course = Courses::create($create)->id; 
  
         $this->id_course = $id_course;
+
+        if (!empty($data['teachers'])) 
+        {
+            $this->saveCourseTeachers($data['teachers']);
+        }
+
         return $id_course;
     } 
+
+    public function saveCourseTeachers($teachers)
+    { 
+        CourseTeachers::where('id_course', $this->id_course)->delete();
+        foreach ($teachers as $id_teacher => $value) 
+        {
+            CourseTeachers::create([
+                'id_course'  => $this->id_course,
+                'id_teacher' => $id_teacher
+            ]);
+        }
+    }
 
     public function editGeneral(array $data)
     {   
@@ -274,7 +299,12 @@ class Crud extends Course
 
         Courses::where('id', $this->id_course)
         ->where('id_user', $this->user->id)
-        ->update($dataUpdate);  
+        ->update($dataUpdate); 
+
+        if (!empty($data['teachers'])) 
+        {
+            $this->saveCourseTeachers($data['teachers']);
+        } 
     } 
 
     public function editSettings(array $data)

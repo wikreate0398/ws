@@ -3192,9 +3192,6 @@ select option:disabled {
 .university_page .teacher_card_page{
     margin-bottom: 30px;
 }
-.university_page .teacher_card_page .teacher_image{
-    padding: 0px 30px;
-}
 .university_page .teacher_card_page .teacher_image img{
     width: 100%;
 }

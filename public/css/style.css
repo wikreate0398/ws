@@ -3189,6 +3189,27 @@ select option:disabled {
     padding: 5px 10px;
     color: #fff;
 }
+.university_page .teacher_card_page{
+    margin-bottom: 30px;
+}
+.university_page .teacher_card_page .teacher_image{
+    padding: 0px 30px;
+}
+.university_page .teacher_card_page h3{
+    text-align: center;
+}
+.university_page .teacher_card_page h3 a{
+    font-family: 'Cuprum Regular';
+    font-size: 22px;
+    color: #4f433a;
+}
+.university_page .teacher_card_page p{
+    font-family: 'Cuprum Regular';
+    font-size: 15px;
+    color: #b93777;
+    text-align: center;
+    margin-bottom: 0px;
+}
 .searche__header{
         margin-bottom: 30px;
     }

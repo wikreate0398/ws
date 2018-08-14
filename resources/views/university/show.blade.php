@@ -160,30 +160,30 @@
                         </div>
                         @endforeach @else
                         <div class="col-md-12 no__data">
-                            <h5>Нет курсов</h5>
+                            <h5>В данный момент нету курсов</h5>
                         </div>
                         @endif
                     </div>
                 </div>
                 <div id="teachers" class="tab-pane fade">
-                    <div class="col-md-12  ">
+                      <div class="row">
                         @if(count($university->user->connectionTeachers))
-                        <ul>
                             @foreach($university->user->connectionTeachers as $teacher)
-                            <li>
-                                <a href="/teacher/{{ $teacher['id'] }}/">
-                            <img style=" max-width: 100px;" 
-                                                 class="img-responsive" 
-                                                 src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
-                          </a>
-                                <h3><a href="/teacher/{{ $teacher['id'] }}/">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
-                                <p>{{ implode(',', array_slice($teacher->subjects->pluck('name')->toArray(), 0, 2)) }}</p>
-                            </li>
+                            <div class="col-md-4">
+                                <div class="teacher_card_page">
+                                    <div class="teacher_image">
+                                        <a href="/teacher/{{ $teacher['id'] }}/">
+                                          <img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
+                                        </a>
+                                    </div>
+                                    <h3><a href="/teacher/{{ $teacher['id'] }}/">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
+                                    <p>{{ implode(',', array_slice($teacher->subjects->pluck('name')->toArray(), 0, 2)) }}</p>
+                                </div>
+                            </div>
                             @endforeach
-                        </ul>
                         @else
-                        <div class="no__data">
-                            <h5>Нет преподов</h5>
+                        <div class="col-md-12 no__data">
+                            <h5>В данный момент нету преподователей</h5>
                         </div>
                         @endif
                     </div>

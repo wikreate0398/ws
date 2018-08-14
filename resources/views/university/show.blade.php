@@ -273,7 +273,7 @@
                                                 @elseif($faculty->duration_learning > 1 && $faculty->duration_learning <= 4)
                                                     года
                                                 @else
-                                                лет
+                                                    лет
                                                 @endif
                                               
                                             <strong style="margin-top: 10px;">Экзамены для поступления</strong>
@@ -318,8 +318,13 @@
          </div>
       </div>
       <div class="col-md-3">
+          <div class="vuz_page_sidebar">
+              <div class="image">
+                  <img src="/public/uploads/users/{{ $university->user->avatar ? $university->user->avatar : $university->user->image }}{{'?v=' . time()}}">
+              </div>
+          </div>
           <div class="vuz__card_sidebar">
-            <div class="vuz__logo" style="background-image: url(/public/uploads/users/{{ $university->user->avatar ? $university->user->avatar : $university->user->image }}{{'?v=' . time()}});)"> 
+            <div class="vuz__logo" style="background-image: url(/public/uploads/users/{{ $university->user->avatar ? $university->user->avatar : $university->user->image }}{{'?v=' . time()}})"> 
             </div>
             <div class="vuz__price_box">
               <small>От</small>

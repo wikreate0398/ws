@@ -3195,6 +3195,9 @@ select option:disabled {
 .university_page .teacher_card_page .teacher_image{
     padding: 0px 30px;
 }
+.university_page .teacher_card_page .teacher_image img{
+    width: 100%;
+}
 .university_page .teacher_card_page h3{
     text-align: center;
 }

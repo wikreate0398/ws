@@ -25,26 +25,27 @@
          <ul class="nav add_course" role="tablist">
             <li role="presentation" 
                 class="{{ isActive(route(userRoute('edit_course'), ['id' => $course->id])) ? 'active' : '' }} {{ $disabled }}">
-               <a aria-controls="about" href="<?=route(userRoute('edit_course'), ['id' => $course->id])?>" role="tab" data-toggle="tab">О курсе</a>
+               <a aria-controls="about" href="<?=route(userRoute('edit_course'), ['id' => $course->id])?>">О курсе</a>
             </li>
             <li role="presentation" 
                 class="{{ isActive(route(userRoute('edit_course_settings'), ['id' => $course->id])) ? 'active' : '' }} 
                        {{ $course->general_filled ? $disabled : 'disabled' }}">
-               <a aria-controls="settings" href="{{ route(userRoute('edit_course_settings'), ['id' => $course->id]) }}" role="tab" data-toggle="tab">Настройки курса</a>
+               <a aria-controls="settings" href="{{ route(userRoute('edit_course_settings'), ['id' => $course->id]) }}">Настройки курса</a>
             </li>
             <li role="presentation" 
                 class="{{ isActive(route(userRoute('edit_course_program'), ['id' => $course->id])) ? 'active' : '' }} 
                        {{ ($course->settings_filled && $course->general_filled) ? $disabled : 'disabled' }}">
-               <a aria-controls="programm" href="{{ route(userRoute('edit_course_program'), ['id' => $course->id]) }}" role="tab" data-toggle="tab">Программа курса</a>
+               <a aria-controls="programm" href="{{ route(userRoute('edit_course_program'), ['id' => $course->id]) }}">Программа курса</a>
             </li> 
             <li role="presentation" 
                 class="{{ isActive(route(userRoute('edit_course_сertificates'), ['id' => $course->id])) ? 'active' : '' }}
                        {{ ($course->program_filled &&$course->settings_filled && $course->general_filled) ? '' : 'disabled' }}">
-               <a aria-controls="certificate" href="{{ route(userRoute('edit_course_сertificates'), ['id' => $course->id]) }}" role="tab" data-toggle="tab">Сертификат/диплом</a>
+               <a aria-controls="certificate" href="{{ route(userRoute('edit_course_сertificates'), ['id' => $course->id]) }}">Сертификат/диплом</a>
             </li>
             <li role="presentation" 
-                class="{{ isActive(route(userRoute('course_participants'), ['id' => $course->id])) ? 'active' : '' }}">
-               <a aria-controls="participants" href="{{ route(userRoute('course_participants'), ['id' => $course->id]) }}" role="tab" data-toggle="tab">Участники курса ({{ count($course->userRequests) }})</a>
+                class="{{ isActive(route(userRoute('course_participants'), ['id' => $course->id])) ? 'active' : '' }}
+                {{ Course::manager($course)->ifAdded() ? '' : 'disabled' }}">
+               <a aria-controls="participants" href="{{ route(userRoute('course_participants'), ['id' => $course->id]) }}">Участники курса ({{ count($course->userRequests) }})</a>
             </li>
          </ul>
          

@@ -125,8 +125,7 @@ jQuery(document).ready(function($) {
         loop:true,
         margin:00,
         nav:false,
-        dots:false,
-        navText: ['<img src="public/images/left-arrow.png">', '<img src="public/images/right-arrow.png">'],
+        dots:true, 
         responsive:{
             0:{
                 items:1
@@ -139,6 +138,24 @@ jQuery(document).ready(function($) {
             }
         }
     });
+
+    $('#course_teachers_slider').owlCarousel({
+        loop:false,
+        margin:00,
+        nav:false,
+        dots:true, 
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:1
+            },
+            1000:{
+                items:1
+            }
+        }
+    }); 
 
     $('#certificates__box').owlCarousel({
         loop:true,
@@ -541,6 +558,10 @@ function eqBlocksInit()
 
     setEqualHeight2($('.external_univer h3'), $('.universities_catalog'));
     setEqualHeight2($('.external_univer'), $('.universities_catalog'));
+
+
+    setEqualHeight($('.trainer__box'));
+ 
 
     setEqualHeight2($('.course_card .footer__course_card .set__going_date'), $('.course__catalog'));
     setEqualHeight2($('.university__item h3'), $('.universities_catalog'));

@@ -297,3 +297,12 @@ function courseFavorite(item, id){
         complete: function() { }
     });
 }
+
+function selectFilterTeacher(select, category, url){
+    var val      = $(select).val(); 
+    var cacheStr = String((new Date()).getTime()).replace(/\D/gi, '');
+    $( "#category").load(url + "?rnd=" + cacheStr,
+                             {'id': val, 'category': category, '_token': CSRF_TOKEN}, 
+                             function( response, status, xhr ) {  
+    }); 
+} 

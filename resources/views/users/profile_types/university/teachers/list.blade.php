@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div style="border-bottom: 1px solid #ededed; padding-bottom: 15px; margin-bottom: 15px;"> 
-			<a href="" class="btn btn-default">Создать запрос</a>
+			<a href="{{ route(userRoute('user_teachers')) }}?p=requests_for_teachers" class="btn btn-default">Создать запрос</a>
 		</div>
 	</div>
 </div>

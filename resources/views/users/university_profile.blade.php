@@ -54,19 +54,19 @@
                 <ul class="nav lk_menu">
                     @if(Auth::user()->data_filled == 1)
 			      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
-			      		<a href="{{ route('university_user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ)</a>
+			      		<a href="{{ route('university_user_profile') }}">МОИ КУРСЫ (ОБУЧАЮ) ({{ count(Auth::user()->courses) }})</a>
 			      	</li> 
 					
 					<li class="{{ isActive(route(userRoute('user_teachers'))) ? 'active' : '' }}">
-			      		<a href="{{ route(userRoute('user_teachers')) }}">ПРЕПОДАВАТЕЛИ</a>
+			      		<a href="{{ route(userRoute('user_teachers')) }}">ПРЕПОДАВАТЕЛИ ({{ count(Auth::user()->connectionTeachers) }})</a>
 			      	</li>  
 
 			      	<li class="{{ isActive(route(userRoute('user_faculties'))) ? 'active' : '' }}">
-			      		<a href="{{ route(userRoute('user_faculties')) }}">Факультеты</a>
+			      		<a href="{{ route(userRoute('user_faculties')) }}">Факультеты ({{ count(Auth::user()->university->faculties) }})</a>
 			      	</li> 
 
 			      	<li class="{{ isActive(route(userRoute('user_news'))) ? 'active' : '' }}">
-			      		<a href="{{ route(userRoute('user_news')) }}">Новости</a>
+			      		<a href="{{ route(userRoute('user_news')) }}">Новости ({{ count(Auth::user()->university->news) }})</a>
 			      	</li> 
 					@endif
                 </ul>

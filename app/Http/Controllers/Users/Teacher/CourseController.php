@@ -30,12 +30,16 @@ class CourseController extends TeacherController
     public function showCourse()
     {   
         $user    = Auth::user();
-        $courses = Courses::with('sections')->where('id_user', $user->id)->get();
+        $userId  = $user->id;
+        $courses = Courses::with('sections')->filterProfile()->where('id_user', $user->id)->get();
  
         return view('users.teacher_profile', [ 
-            'user'                 => $user,  
-            'courses'              => $courses,
-            'include'              => $this->viewPath . 'courses.list',
+            'user'          => $user,  
+            'courses'       => $courses,
+            'categories'    => CourseCategory::whereHas('courses', function($query) use($userId){
+                                return $query->where('id_user', $userId);
+                            })->get(),
+            'include'       => $this->viewPath . 'courses.list',
             'scripts' => [ 
                 'js/courses.js'
             ]

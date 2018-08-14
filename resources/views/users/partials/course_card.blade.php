@@ -76,7 +76,11 @@
 					$esablishDate = Course::manager($course)->esablishDate();  
                 @endphp
                 <li class="right_date"> 
-                    {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}
+                	@if(Course::manager($course)->ifAdded())
+						{{ $esablishDate['status'] }} {{ $esablishDate['date'] }}
+					@else
+						<span class="badge badge-red">Курс не добавлен</span>
+                	@endif 
                 </li> 
 			</ul>
 			<div class="row">

@@ -24,8 +24,7 @@
 		@if(count($user->coursesRequests)) 
 			<div class="row course__catalog"> 
 			@foreach($user->coursesRequests as $course)
-				@php 
-
+				@php  
 					$id = '';
 					if (Course::manager($course)->isFinished()) {
 						$id .= 'is_finished';

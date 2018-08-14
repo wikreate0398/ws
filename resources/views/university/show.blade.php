@@ -19,9 +19,9 @@
         <h1>{{ $university->full_name }}</h1>
         <span class="city_university">г.{{ $university->user->cityData->name }}</span>
         <ul class="list-inline short_info_university">
-            <li><span>{{ count($university->user->courses) }}</span> курсов</li>
-            <li><span>{{ count($university->user->connectionTeachers) }}</span> {{ format_by_count(count($university->user->connectionTeachers), 'преподаватель','преподавателя','преподавателей') }}</li>
-            <li><span>{{ count($university->faculties) }}</span> факультетов</li>
+            <li><span>{{ $university->user->courses->count() }}</span> курсов</li>
+            <li><span>{{ $university->user->connectionTeachers->count() }}</span> {{ format_by_count(count($university->user->connectionTeachers), 'преподаватель','преподавателя','преподавателей') }}</li>
+            <li><span>{{ $university->faculties->count() }}</span> факультетов</li>
             <li><span>{{ $university->qty_budget }}</span> бюджетных мест</li>
         </ul>
         <ul class="nav nav-tabs university_tabs">
@@ -79,7 +79,7 @@
             </div>
             <div id="course" class="tab-pane fade">
                <div class="row course__catalog">
-                    @if(count($university->user->courses))
+                    @if($university->user->courses->count())
                   @foreach($university->user->courses as $course)
                   <div class="col-md-4"> 
                 <div class="course_card eq_list__item">
@@ -168,7 +168,7 @@
                   <div class="footer__course_card">
                     <div class="pers__num">
                       <i class="fa fa-user" aria-hidden="true"></i>
-                      <span>{{ count($course->userRequests) }}</span>
+                      <span>{{ $course->userRequests->count() }}</span>
                     </div>
                     <div class="set__going">   
                       @php 
@@ -195,7 +195,7 @@
             </div>
             <div id="teachers" class="tab-pane fade">
                 <div class="col-md-12  "> 
-                  @if(count($university->user->connectionTeachers))
+                  @if($university->user->connectionTeachers->count())
                     <ul>
                       @foreach($university->user->connectionTeachers as $teacher)
                         <li>
@@ -246,7 +246,7 @@
                             font-size: 14px;
                         }
                     </style>
-                    @if(count($university->faculties))
+                    @if($university->faculties->count())
                         <table class="table faculties__table">
                             <thead>
                                 <tr>
@@ -299,7 +299,7 @@
             </div>
             <div id="news" class="tab-pane fade">
                <div class="row university__news">
-                    @if(count($university->news))
+                    @if($university->news->count())
                         @foreach($university->news as $news)
                         <div class="col-md-4">
                             <a href="/university/news/{{ $news->id }}">{{ $news->name }}</a>

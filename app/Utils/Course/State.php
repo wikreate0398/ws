@@ -46,8 +46,8 @@ class State extends Course
     }
 
     public function canManage()
-    {
-        if ($this->isStarted() or $this->isFinished()) 
+    { 
+        if ($this->isStarted() or $this->isFinished() or (!empty($this->course) && !count($this->course->user->connectionTeachers))) 
         {
             return false;
         }
@@ -69,11 +69,19 @@ class State extends Course
 
     public function ifHasUserReview($id_user=null)
     {
-
         if (in_array($id_user, $this->course->reviews->pluck('id_user')->toArray())) 
         {
             return true;
         } 
+        return false;
+    }
+
+    public function ifAdded()
+    {
+        if ($this->course->general_filled && $this->course->program_filled && $this->course->settings_filled && $this->course->сertificates_filled) 
+        {
+            return true;
+        }
         return false;
     }
 

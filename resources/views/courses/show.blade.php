@@ -307,27 +307,41 @@
 		</div>
 
 		<div class="col-md-3">
-			<div class="trainer__box">
-				@php
-					if($course->user->user_type==3){
-						$link = '/university/' . $course->user->university->id;
-					}else{
+			@if($course->user->user_type==3)
+				@if(count($course->teachers))
+					<div id="course_teachers_slider" class="owl-carousel owl-theme">
+						@foreach($course->teachers as $teacher)
+							<div class="trainer__box">
+								@php
+									$link = '/teacher/' . $teacher->id;
+								@endphp
+								<a href="{{ $link }}" class="trainer_photo" style="background-image: url({{ imageThumb(($teacher->avatar ? $teacher->avatar : $teacher->image), 'uploads/users', 150, 150, 'small') }})"> 
+								</a>
+								<a href="{{ $link }}" class="trainer_name">
+									{{ $teacher->name }} 
+								</a>
+								<div class="trainer_description">
+									{{ str_limit($teacher->about, 100) }} 
+								</div>
+							</div>
+						@endforeach
+					</div>
+				@endif 
+			@else
+				<div class="trainer__box">
+					@php
 						$link = '/teacher/' . $course->user->id;
-					}
-				@endphp
-				<a href="{{ $link }}" class="trainer_photo" style="background-image: url({{ imageThumb(($course->user->avatar ? $course->user->avatar : $course->user->image), 'uploads/users', 150, 150, 'small') }})"> 
-				</a>
-				<a href="{{ $link }}" class="trainer_name">
-					@if($course->user->user_type==3)
-							{{ $course->user->university['full_name'] }} 
-						@else
-							{{ $course->user->name }} 
-					@endif
-				</a>
-				<div class="trainer_description">
-					{{ str_limit($course->user->about, 100) }} 
+					@endphp
+					<a href="{{ $link }}" class="trainer_photo" style="background-image: url({{ imageThumb(($course->user->avatar ? $course->user->avatar : $course->user->image), 'uploads/users', 150, 150, 'small') }})"> 
+					</a>
+					<a href="{{ $link }}" class="trainer_name">
+						{{ $course->user->name }} 
+					</a>
+					<div class="trainer_description">
+						{{ str_limit($course->user->about, 100) }} 
+					</div>
 				</div>
-			</div>
+			@endif
 			
 			@if(count($course->certificates) > 0)
 				<div class="course__sidebar_box" style="padding-bottom: 30px;">
@@ -379,8 +393,12 @@
 		border-radius: 5%;
 		box-shadow: 0 1px 3px rgba(0,0,0,.3);
 		padding: 15px;
-		margin-bottom: 20px;
+		margin:5px;
 		text-align: center;
+	}
+
+	#course_teachers_slider{
+		margin-bottom: 20px;
 	}
 
 	.trainer_photo{

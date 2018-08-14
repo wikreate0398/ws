@@ -44,7 +44,26 @@
              </label>
              <div class="col-md-7">
                 <div class="form-group">
-                   <textarea class="form-control" maxlength="1200" name="" disabled>{{ Auth::user()->name }}</textarea> 
+                  @if(Auth::user()->type == 2)
+                    <textarea class="form-control" maxlength="1200" name="" disabled> {{ Auth::user()->name }}</textarea> 
+                  @else  
+
+
+                    @php
+                      $teachers = array_map(function ($item) {
+                          return $item['id'];
+                      }, $course->teachers->toArray());     
+                    @endphp
+
+                    @foreach(Auth::user()->connectionTeachers as $teacher)
+                       <label class="checkbox-inline">
+                          <input type="checkbox" 
+                                 {{ in_array($teacher->id, $teachers) ? 'checked' : '' }} 
+                                 name="teachers[{{ $teacher->id }}]" 
+                                 id="teachers{{ $teacher->id }}"> {{ $teacher->name }}
+                       </label>
+                    @endforeach  
+                  @endif
                 </div>
              </div>
              <div class="clearfix"></div>

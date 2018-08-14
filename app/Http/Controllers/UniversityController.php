@@ -58,6 +58,9 @@ class UniversityController extends Controller
     {
         $university = UsersUniversity::with([
             'user', 
+            'user.courses' => function($query){
+                                return $query->published();
+                            }, 
             'news' => function($query){
                 return $query->where('view','1');
             }

@@ -3193,6 +3193,38 @@ select option:disabled {
     padding: 5px 10px;
     color: #fff;
 }
+.university_page .vuz_page_sidebar .price_box{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 17px;
+    color: #a8a8a8;
+    text-align: center;
+    margin-top: 20px;
+}
+.university_page .vuz_page_sidebar .price_box span{
+    font-size: 23px;
+    color: #000000;
+}
+.university_page .vuz_page_sidebar .vuz_page_rating{
+    color: #ffc900;
+    text-align: center;
+    margin-top: 5px;
+}
+.university_page .vuz_page_sidebar .btn_study_here{
+    font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 15px;
+    color: #fff;
+    border: 1px solid #b93777;
+    background: #b93777;
+    padding: 12px 25px;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+.university_page .vuz_page_sidebar .btn_study_here:hover{
+    color: #95979c;
+    border-color: #95979c;
+    background: transparent;
+}
 .university_page .teacher_card_page{
     margin-bottom: 30px;
 }
@@ -3213,6 +3245,96 @@ select option:disabled {
     color: #b93777;
     text-align: center;
     margin-bottom: 0px;
+}
+.university_page .news_item{
+    border-bottom: 1px solid ;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+.university_page .news_item .data_news{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 14px;
+    color: #b93777;
+    display: block;
+    margin-bottom: 10px;
+}
+.university_page .news_item a{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 18px;
+    color: #000000;
+}
+.university_page .faculties_table th{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 17px;
+    color: #a8a8a8;
+    font-weight: normal;
+}
+.university_page .faculties_table h3{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 18px;
+    color: #000000;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.university_page .faculties_table span{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 16px;
+    color: #a8a8a8;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+.university_page .faculties_table h4{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 16px;
+    color: #5f5f5f;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.university_page .faculties_table .info_table{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 16px;
+    color: #c8c8c8;
+	text-align: center;
+}
+.university_page .faculties_table .info_table span{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 20px;
+    color: #b93777;
+    display: inline-block;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.university_page .univer_description{
+    font-family: 'Cuprum Regular';
+    color: #5f5f5f;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 45px;
+}
+.university_option > tbody > tr > td, .university_option > tbody > tr > th, .university_option > tfoot > tr > td, .university_option > tfoot > tr > th, .university_option > thead > tr > td, .university_option > thead > tr > th {
+    vertical-align: middle;
+    border-top: 0px solid #ddd;
+}
+.university_page .university_option th{
+	font-family: 'Helvetica Neue Cyr Roman';
+    color: #a8a8a8;
+    font-size: 18px;
+    text-align: center;
+    font-weight: normal;
+}
+.university_page .university_option td{
+	font-family: 'Helvetica Neue Cyr Roman';
+    color: #5f5f5f;
+    font-size: 18px;
+}
+.university_page .university_option span{
+	font-family: 'Helvetica Neue Cyr Roman';
+    color: #b93777;
+    font-size: 26px;
+}
+.university_page .university_option span.inactive_option{
+    color: #e6e6e6;
 }
 .searche__header{
         margin-bottom: 30px;

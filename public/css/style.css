@@ -700,11 +700,11 @@ header .header_bottom .navbar-right .register_link a{
     color: #b93777;
 }
 /* Поиск */
-#search_form{
+form#search_form{
     margin-top: 50px;
     margin-bottom: 360px;
 }
-#search_form .form-group{
+form#search_form .form-group{
     margin-bottom: 0px;
 }
 
@@ -715,7 +715,7 @@ form#search_form .input-group{
     box-shadow: 4px 0px 10px rgba(0,0,0,.23); 
 }
 
-#search_form .form-control{
+form#search_form .form-control{
 	font-family: 'Cuprum Regular';
     font-size: 20px;
 	color: #fff;
@@ -727,7 +727,7 @@ form#search_form .input-group{
 	padding: 15px 15px;
 	background: transparent;
 }
-#search_form .btn_search{
+form#search_form .btn_search{
 	font-size: 33px;
 	color: #ffffff;
 	background: transparent;
@@ -736,30 +736,30 @@ form#search_form .input-group{
 	border-left: 0px;
 	border-radius: 0px;*/
 }
-#search_form ::-webkit-input-placeholder{/* webkit */
+form#search_form ::-webkit-input-placeholder{/* webkit */
 	color:#5f5f5f; opacity:1;
 }
-#search_form ::-moz-placeholder{/* Firefox 19+ */
+form#search_form ::-moz-placeholder{/* Firefox 19+ */
 	color:#5f5f5f; opacity:1;
 }
-#search_form :-moz-placeholder{/* Firefox 18- */
+form#search_form :-moz-placeholder{/* Firefox 18- */
 	color:#5f5f5f; opacity:1;
 }
-#search_form :-ms-input-placeholder{/* IE */
+form#search_form :-ms-input-placeholder{/* IE */
 	color:#5f5f5f; opacity:1;
 }
-#search_form.no_home{
+form#search_form.no_home{
     margin-top: 0px;
     margin-bottom: 0px;
 }
-#search_form.no_home .form-control{
+form#search_form.no_home .form-control{
 	font-family: 'Cuprum Regular';
     font-size: 16px;
 	color: #5f5f5f;
 	background: #fff;
 	padding: 6px 12px;
 }
-#search_form.no_home .btn_search{
+form#search_form.no_home .btn_search{
 	font-family: 'Cuprum Regular';
     font-size: 16px;
 	color: #fff;
@@ -3538,6 +3538,21 @@ select option:disabled {
         text-align: justify;
     }
 
+    .news__text img{
+        max-width: 100%;
+    }
+
     .badge-red{
         background: #ea7272;
+    }
+
+    .filter__autocomplete_input{
+        position: relative;
+    }
+
+    .filter__autocomplete_input .loaded__search_result{
+        top: 50px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius:0 0 5px 5px;
     }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\CourseCategory;
 use App\Models\Courses;   
 use App\Utils\Course\Course;
+use App\Models\User;
 
 class CourseController extends UniversityController
 {
@@ -31,6 +32,7 @@ class CourseController extends UniversityController
     {   
         $user    = Auth::user();
         $userId  = $user->id;
+        $status  = request()->status;
         $courses = Courses::with('sections')
                           ->filterProfile()
                           ->where('id_user', $user->id);
@@ -38,9 +40,19 @@ class CourseController extends UniversityController
         return view('users.university_profile', [ 
             'user'       => Auth::user(), 
             'courses'    => $courses->get(),
-            'categories' => CourseCategory::whereHas('courses', function($query) use($userId){
+            'categories' => CourseCategory::whereHas('courses', function($query) use($userId, $status){
+
+                                if ($status == '0') 
+                                {
+                                    $query->finishedStatus();
+                                } 
+
+                                if ($status == '1') 
+                                { 
+                                    $query->activeStatus();
+                                } 
                                 return $query->where('id_user', $userId);
-                            })->get(),
+                            })->get(), 
             'include' => $this->viewPath . 'courses.list',
             'scripts' => [ 
                 'js/courses.js'
@@ -79,6 +91,28 @@ class CourseController extends UniversityController
             $options .= '<option '.$selected.' value="'.$category['id'].'">'.$category['name'].'</option> ';
         }
         echo $options;
+    }
+
+    public function filterAutocomplete(Request $request)
+    {   
+        $courses = Courses::with('sections')
+                          ->filterProfile()
+                          ->where('id_user', Auth::user()->id)->get();
+     
+        if (!$courses->count()) 
+        {
+            die();
+        } 
+        $content = '';
+        foreach ($courses as $course) 
+        {
+            $content .= '<a href="javascript:;" onclick="setAutocompleteValue(this)" data-value="'.$course['name'].'"> 
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>' . $course['name'] .  '
+                        </a>';
+        }
+        $content .= '</div>';
+
+        return \App\Utils\JsonResponse::success(['content' => $content]); 
     }
 
     public function editCourseForm($id_course)

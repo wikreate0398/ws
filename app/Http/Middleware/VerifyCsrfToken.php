@@ -12,6 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+        '/public/theme/theme/assets/global/plugins/ckfinder/upload.php'
     ];
 }

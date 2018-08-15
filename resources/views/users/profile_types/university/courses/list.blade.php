@@ -2,7 +2,7 @@
 	<div class="row" style="margin-bottom: 30px;">
 		<form action="{{ route('university_user_profile') }}" method="GET">
 			<input type="hidden" name="search" value="1">
-			<input type="hidden" name="status" value="{{ (request()->status == null) ? 'all' : '' }}">
+			<input type="hidden" name="status" value="{{ request()->status }}">
 			 
 			<div class="col-md-3">
 				<select name="teacher" 
@@ -33,13 +33,19 @@
 			</div>
 
 			<div class="col-md-3">
-				<input type="text" class="form-control" value="{{ request()->input('searchByName') }}" name="searchByName" placeholder="Поиск по названию">
+				<div id="search_form" 
+				     class="filter__autocomplete_input" 
+				     data-url-autocomplete="{{ route(userRoute('filter_autocomplete')) }}">
+					<input type="text" autocomplete="off" id="search__input" class="form-control" value="{{ request()->input('searchByName') }}" name="searchByName" placeholder="Поиск по названию">
+					<div class="loaded__search_result"></div>
+				</div> 
 			</div>
+ 
 
 			<div class="col-md-3" style="text-align: center;">
 				<button class="btn btn-default" type="submit">Применить</button>
 				@if(request()->has('search'))
-					<a class="btn btn-danger" href="{{ route('university_user_profile') }}">Сбросить</a>
+					<a class="btn btn-danger" href="{{ route(userRoute('user_profile')) }}">Сбросить</a>
 				@endif
 			</div>
 		</form>
@@ -48,7 +54,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="course__status_links">
-				<a href="{{ route('university_user_profile') }}" class="{{ (request()->status == 'all' or request()->status == null) ? 'active' : '' }}">
+				<a href="{{ route(userRoute('user_profile')) }}" class="{{ (request()->status == 'all' or request()->status == null) ? 'active' : '' }}">
 					ВСЕ
 				</a> 
 				&nbsp; &nbsp;
@@ -70,6 +76,12 @@
 		@else
 		<div class="col-lg-12">
 			<div class="no__data"> 
+				@php
+					$msg = 'Вы не добавили ни одного курса';
+					if(request()->search){
+						$msg = 'Ничего не найдено';
+					}
+				@endphp
 				<h5>Вы не добавили ни одного курса</h5>
 			</div>
 		</div>

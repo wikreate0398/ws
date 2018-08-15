@@ -132,17 +132,17 @@ class Courses extends Model
     } 
 
     public function scopeFilterProfile($courses)
-    { 
+    {  
         if (isset(request()->search)) 
         {
             if (@request()->status == '0') 
             {
-                $courses->whereDate('date_to', '<', date('Y-m-d'))->where('settings_filled', '1');
+                $courses->finishedStatus();
             } 
 
             if (@request()->status == '1') 
-            {
-                $courses->whereDate('date_to', '>=', date('Y-m-d'))->where('settings_filled', '1');
+            { 
+                $courses->activeStatus();
             } 
 
             if (@request()->category) 
@@ -152,7 +152,8 @@ class Courses extends Model
 
             if (@request()->searchByName) 
             {
-                $courses->where('name', 'like', '%'.request()['searchByName'].'%');
+                $searchByName = request()->searchByName;
+                $courses->where('name', 'like', '%'.$searchByName.'%');
             }  
 
             if (@request()->teacher) 
@@ -163,6 +164,16 @@ class Courses extends Model
                 });
             }   
         } 
+    }
+
+    public function scopeActiveStatus($query)
+    {
+        return $query->whereDate('date_to', '>=', date('Y-m-d'))->where('settings_filled', '1');
+    }
+
+    public function scopeFinishedStatus($query)
+    {
+        return $query->whereDate('date_to', '<', date('Y-m-d'))->where('settings_filled', '1');
     }
 
     public function scopeOrderByCourses($query)

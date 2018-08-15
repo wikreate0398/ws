@@ -26,12 +26,12 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.extraPlugins = 'youtube';
 
-	config.filebrowserBrowseUrl = '/theme/theme/assets/global/plugins/ckfinder/browse.php?type=files';
-	config.filebrowserImageBrowseUrl = '/theme/theme/assets/global/plugins/ckfinder/browse.php?type=images';
-	config.filebrowserFlashBrowseUrl = '/theme/theme/assets/global/plugins/ckfinder/browse.php?type=flash';
-	config.filebrowserUploadUrl = '/theme/theme/assets/global/plugins/ckfinder/upload.php?type=files';
-	config.filebrowserImageUploadUrl = '/theme/theme/assets/global/plugins/ckfinder/upload.php?type=images';
-	config.filebrowserFlashUploadUrl = '/theme/theme/assets/global/plugins/ckfinder/upload.php?type=flash';
+	config.filebrowserBrowseUrl = '/public/admin_theme/theme/assets/global/plugins/ckfinder/browse.php?type=files';
+	config.filebrowserImageBrowseUrl = '/public/admin_theme/theme/assets/global/plugins/ckfinder/browse.php?type=images';
+	config.filebrowserFlashBrowseUrl = '/public/admin_theme/theme/assets/global/plugins/ckfinder/browse.php?type=flash';
+	config.filebrowserUploadUrl = '/public/admin_theme/theme/assets/global/plugins/ckfinder/upload.php?type=files';
+	config.filebrowserImageUploadUrl = '/public/admin_theme/theme/assets/global/plugins/ckfinder/upload.php?type=images';
+	config.filebrowserFlashUploadUrl = '/public/admin_theme/theme/assets/global/plugins/ckfinder/upload.php?type=flash';
 
 	config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,Undo,Redo,Scayt,About';
 	config.enterMode = CKEDITOR.ENTER_BR; 

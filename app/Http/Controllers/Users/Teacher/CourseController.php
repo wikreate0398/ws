@@ -31,19 +31,52 @@ class CourseController extends TeacherController
     {   
         $user    = Auth::user();
         $userId  = $user->id;
+        $status  = request()->status;
         $courses = Courses::with('sections')->filterProfile()->where('id_user', $user->id)->get();
  
         return view('users.teacher_profile', [ 
             'user'          => $user,  
             'courses'       => $courses,
-            'categories'    => CourseCategory::whereHas('courses', function($query) use($userId){
+            'categories'    => CourseCategory::whereHas('courses', function($query) use($userId, $status){
+
+                                if ($status == '0') 
+                                {
+                                    $query->finishedStatus();
+                                } 
+
+                                if ($status == '1') 
+                                { 
+                                    $query->activeStatus();
+                                } 
                                 return $query->where('id_user', $userId);
-                            })->get(),
+                            })->get(), 
             'include'       => $this->viewPath . 'courses.list',
             'scripts' => [ 
                 'js/courses.js'
             ]
         ]); 
+    }
+
+    public function filterAutocomplete(Request $request)
+    {   
+        $courses = Courses::with('sections')
+                          ->filterProfile()
+                          ->where('id_user', Auth::user()->id)->get();
+     
+        if (!$courses->count()) 
+        {
+            die();
+        } 
+        $content = '';
+        foreach ($courses as $course) 
+        {
+            $content .= '<a href="javascript:;" onclick="setAutocompleteValue(this)" data-value="'.$course['name'].'"> 
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>' . $course['name'] .  '
+                        </a>';
+        }
+        $content .= '</div>';
+
+        return \App\Utils\JsonResponse::success(['content' => $content]); 
     }
 
     public function showCourseForm()

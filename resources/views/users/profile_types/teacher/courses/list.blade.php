@@ -4,7 +4,7 @@
 	<div class="row" style="margin-bottom: 30px;">
 		<form action="{{ route(userRoute('user_profile')) }}" method="GET">
 			<input type="hidden" name="search" value="1">
-			<input type="hidden" name="status" value="{{ (request()->status == null) ? 'all' : '' }}">
+			<input type="hidden" name="status" value="{{ request()->status }}">
 			  
 			<div class="col-md-4">
 				<select name="category" class="form-control">
@@ -16,7 +16,12 @@
 			</div>
 
 			<div class="col-md-5">
-				<input type="text" class="form-control" value="{{ request()->input('searchByName') }}" name="searchByName" placeholder="Поиск по названию">
+				<div id="search_form" 
+				     class="filter__autocomplete_input" 
+				     data-url-autocomplete="{{ route(userRoute('filter_autocomplete')) }}">
+					<input type="text" autocomplete="off" id="search__input" class="form-control" value="{{ request()->input('searchByName') }}" name="searchByName" placeholder="Поиск по названию">
+					<div class="loaded__search_result"></div>
+				</div> 
 			</div>
 
 			<div class="col-md-3" style="text-align: center;">

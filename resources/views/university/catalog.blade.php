@@ -118,9 +118,13 @@
                                     <span class="reviews_external_univer">
                                         0 отзывов
                                     </span>
-                                    <a class="bookmark_external_univer" href="#">
-                                        <i class="fa course_heart fa-heart-o"></i>
-                                    </a>
+                                    
+                                    @if(@Auth::check()) 
+                                        <a class="bookmark_external_univer {{ @in_array($university->user->id, $userUniversityBoockmarks) ? 'active' : '' }}"   href="#" onclick="return false;">
+                                            <i class="fa {{ @in_array($university->user->id, $userUniversityBoockmarks) ? 'is_favorite fa-heart' : 'fa-heart-o' }}"
+                                               onclick="universityBookmark(this, {{ $university->user->id }});" ></i>
+                                        </a>
+                                    @endif
                                 </div>
                                 <h3><a href="/university/{{ $university->id }}/">{{ $university->full_name }}</a></h3>
                                 <ul class="list-unstyled info_list_univer">

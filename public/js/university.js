@@ -1,3 +1,28 @@
+function universityBookmark(item, id){ 
+    $.ajax({
+        url: '/university/setBoockmark',
+        type: 'POST', 
+        data: {'id':id, _token: CSRF_TOKEN}, 
+        dataType: 'json',
+        beforeSend: function() {},
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status === 401) document.location.reload(true);
+        },
+        success: function(jsonResponse, textStatus, request) {
+            if (jsonResponse.status == 1) {
+                $(item).parent().addClass('active');
+                $(item).addClass('is_favorite fa-heart');
+                $(item).removeClass('fa-heart-o');
+            }else{
+                $(item).parent().removeClass('active');
+                $(item).removeClass('is_favorite fa-heart');
+                $(item).addClass('fa-heart-o');
+            }
+        },
+        complete: function() { }
+    });
+} 
+
 function openDirectionSubjects(span) {
     $(span).closest('li').find('ul').slideToggle();
 }

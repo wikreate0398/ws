@@ -59,6 +59,7 @@ class TeachersController extends Controller
             'specializations'        => TeacherSpecializationsList::whereHas('users', function($query){
                                             return User::allowUser();
                                         })->get(),
+            'userTeacherBoockmarks'  => Auth::user()->userTeacherBoockmarks->pluck('id')->toArray(),
 
             'minMaxPrice'            => User::getTeachersMinMaxPrice(),
             'lesson_filter_options'  => LessonOptionsList::whereHas('users', function($query){
@@ -73,9 +74,7 @@ class TeachersController extends Controller
                 'js/filter_teachers.js',
                 'js/teachers.js'
             ]
-        ];  
-
-        //exit(print_arr($data['subjects']->toArray()));
+        ];     
 
         return view('teachers.catalog', $data);
     } 
@@ -83,7 +82,7 @@ class TeachersController extends Controller
     public function show($id)
     { 
         $teacher = User::with(['cityData', 
-                               'teacherSpecializations', 
+                               'teacherSpecializations',  
                                'certificates', 
                                'lesson_options', 
                                'educations', 
@@ -92,6 +91,8 @@ class TeachersController extends Controller
                               return User::allowUser();
                          })->where('user_type',2)
                          ->findOrFail($id); 
+
+        $bookmark = @in_array($id, @Auth::user()->userTeacherBoockmarks->pluck('id')->toArray())  ? true : false;
         $data = [
             'teacher'        => $teacher,  
             'hasRequest'     => ($this->_teacher_request->setIdTeacher($id)
@@ -102,7 +103,7 @@ class TeachersController extends Controller
                                                           ->orderBy('id', 'desc')
                                                           ->get(),
             'universities' => UsersUniversity::getUniversities(), 
-            'boockmark'    => TeacherBoockmarks::where([['id_user', @Auth::user()->id], ['id_teacher', $id]])->first(),
+            'bookmark'     => $bookmark,
             'scripts' => [
               'js/teachers.js'
             ]

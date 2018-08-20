@@ -9,10 +9,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
 
 use \App\Models\User;
 use \App\Models\UsersUniversity;
 use \App\Models\UniversitySpecializationsList;
+use \App\Models\UniversityBookmarks;
 
 class UniversityController extends Controller
 {
@@ -44,8 +46,10 @@ class UniversityController extends Controller
                                           ->orderBy('id', 'desc')->get(),
                 'minMaxPrice'        => UsersUniversity::getFilterMinMaxPrice(),
             ],
+            'userUniversityBoockmarks'  => Auth::user()->userUniversityBoockmarks->pluck('id')->toArray(),
             'scripts' => [
-                'js/filter_university.js'
+                'js/filter_university.js',
+                'js/university.js'
             ]
         ]; 
 
@@ -70,11 +74,16 @@ class UniversityController extends Controller
         
         if (empty($university)) abort('404'); 
 
-        $data = [
-            'university' => $university 
-        ];  
+        $bookmark = @in_array($university->user->id, @Auth::user()->userUniversityBoockmarks->pluck('id')->toArray())  ? true : false;
 
-// exit(print_arr($data['university']->toArray()));
+        $data = [
+            'university' => $university, 
+            'bookmark'   => $bookmark,
+            'scripts' => [
+                'js/university.js'
+            ]
+        ];   
+
         return view('university.show', $data);
     }
 
@@ -102,5 +111,22 @@ class UniversityController extends Controller
         } 
 
         return \App\Utils\JsonResponse::success(['content' => $content]);
+    }
+
+    public function setBoockmark(Request $request)
+    {
+        $id_university = $request->input('id');
+        $check = UniversityBookmarks::where('id_user', Auth::user()->id)
+                                     ->where('id_university', $id_university)->count();
+
+        if ($check != false) {
+            UniversityBookmarks::where([['id_user', Auth::user()->id], ['id_university', $id_university]])->delete();
+            $status = 0;
+        }else{
+            UniversityBookmarks::insert(['id_user' => Auth::user()->id, 'id_university' => $id_university]);
+            $status = 1;
+        }
+
+        return \App\Utils\JsonResponse::success(['status' => $status]);
     }
 }

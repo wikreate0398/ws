@@ -10,9 +10,11 @@ function teacherBookmark(item, id){
         },
         success: function(jsonResponse, textStatus, request) {
             if (jsonResponse.status == 1) {
-                $(item).addClass('add_bkmrk');
+                $(item).addClass('is_favorite fa-heart');
+                $(item).removeClass('fa-heart-o');
             }else{
-                $(item).removeClass('add_bkmrk');
+                $(item).removeClass('is_favorite fa-heart');
+                $(item).addClass('fa-heart-o');
             }
         },
         complete: function() { }

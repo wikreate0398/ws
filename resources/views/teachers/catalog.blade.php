@@ -187,6 +187,14 @@
 								@endif
 								</span>
 								<ul class="list-inline teachers_label">
+                                    @if(@Auth::check()) 
+                                        <li class="teachers_bookmark"> 
+                                            <i class="fa {{ @in_array($teacher->id, $userTeacherBoockmarks) ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+                                               onclick="teacherBookmark(this, {{ $teacher->id }});" 
+                                               aria-hidden="true"></i>
+                                        </li>
+                                    @endif
+
 									<li class="teachers_employment">
 										{{ $teacher->is_available ? 'Свободен' : 'Занят' }}
 									</li>

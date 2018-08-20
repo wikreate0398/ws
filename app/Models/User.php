@@ -46,8 +46,8 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
-
+    ]; 
+    
     public function cityData()
     {
         return $this->hasOne('App\Models\Cities', 'id', 'city');
@@ -59,13 +59,28 @@ class User extends Authenticatable
     }
 
     public function teacherBoockmarks()
-    {
-        return $this->hasOne('App\Models\TeacherBoockmarks', 'id_user', 'id_teacher'); 
+    { 
+        return $this->belongsToMany('App\Models\User', 'teacher_boockmarks', 'id_teacher', 'id_user')->allowUser();
     }
 
+    public function userTeacherBoockmarks()
+    {
+        return $this->belongsToMany('App\Models\User', 'teacher_boockmarks', 'id_user', 'id_teacher')->allowUser();
+    }
+
+    public function universityBoockmarks()
+    { 
+        return $this->belongsToMany('App\Models\User', 'university_bookmarks', 'id_university', 'id_user')->allowUser();
+    }
+
+    public function userUniversityBoockmarks()
+    {
+        return $this->belongsToMany('App\Models\User', 'university_bookmarks', 'id_user', 'id_university')->allowUser();
+    }
+ 
     public function courseFavorite()
     { 
-        return $this->belongsToMany('App\Models\Courses', 'course_favorite', 'id_user', 'id_course'); 
+        return $this->belongsToMany('App\Models\Courses', 'course_favorite', 'id_user', 'id_course')->published(); 
     }
 
     public function connectionTeachers()
@@ -162,7 +177,7 @@ class User extends Authenticatable
             });
         }
 
-        $user->allowUser()->where('user_type',2);
+        $user->allowUser()->where('user_type',2); 
 
         return $user->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
                                       ['*'], 

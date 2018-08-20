@@ -14,4 +14,9 @@ class TeacherBoockmarks extends Model
         'id_teacher',
         'id_user'
     ];
+
+    public function teacher()
+    {
+    	return $this->hasOne('App\Models\User', 'id', 'id_teacher');
+    }
 }

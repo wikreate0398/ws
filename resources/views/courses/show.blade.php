@@ -13,9 +13,15 @@
 				<li class="tag_sticker">
 					<span>Профессиональные курсы</span>
 				</li> 
-				<li class="bookmark_tag">
-					<i class="fa fa-bookmark-o" onclick="courseFavorite(this, 6);" aria-hidden="true"></i> 
-				</li> 
+
+				@if(@Auth::check()) 
+					@php 
+						$favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); 
+					@endphp 
+					<li class="bookmark_tag">
+						<i class="fa course_heart {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" onclick="courseFavorite(this, 6);" aria-hidden="true"></i> 
+					</li> 
+				@endif 
 			</ul>
 			<h1>{{ $course->name }}</h1>
 			<h2>

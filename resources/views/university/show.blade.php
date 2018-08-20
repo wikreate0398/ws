@@ -11,9 +11,15 @@
                 <li class="tag_sticker">
                     <span>@if($university->status == 1) Государственный @else Коммерческий @endif</span>
                 </li>
-                <li class="bookmark_tag">
-                    <i class="fa fa-bookmark-o" onclick="courseFavorite(this, 6);" aria-hidden="true"></i>
-                </li>
+                 
+                @if(@Auth::check()) 
+                    <li class="bookmark_tag"> 
+                        <i class="fa {{ $bookmark ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
+                           onclick="universityBookmark(this, {{ $university->user->id }});" 
+                           aria-hidden="true"></i>
+                    </li>
+                @endif
+
             </ul>
             <h1>{{ $university->full_name }}</h1>
             <span class="city_university">г.{{ $university->user->cityData->name }}</span>

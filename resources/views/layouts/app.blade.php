@@ -105,22 +105,13 @@
 						<ul class="nav navbar-nav nav__actions"> 
                             <li>
                                 <div class="cities_header"> 
-                                    <a href="#user_location" data-toggle="modal">
+                                    <a href="#user_location" data-toggle="modal" onclick="setTimeout(function(){initSelect2();},500);">
                                         Город
                                         <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                                    </a>
-                                    @if(false)
-                                    <select name="" onchange="selectLocation(this)" class="select2" data-container-class="cities_header_select2">
-                                        <option value="">Выберите Город</option>
-                                         
-                                        @foreach(\App\Models\Cities::where('country_id', 3159)->orderBy('name', 'asc')->get() as $city)
-                                            <option value="{{ $city['id'] }}">{{ $city['name'] }}</option>
-                                        @endforeach  
-                                    </select>
-                                    @endif
+                                    </a> 
                                 </div>
 
-                                <div id="user_location" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+                                <div id="user_location" class="modal fade"   data-backdrop="static" data-keyboard="false">
                                    <div class="modal-dialog">
                                       <div class="modal-content">
                                          <div class="modal-header">
@@ -136,7 +127,7 @@
                                                     <div class="row">
                                                         <div class="col-md-6 regions__area">
                                                             <div class="form-group select_form">
-                                                                <select class="form-control select2" id="select__regions" onchange="loadRegionCities(this)" name="region">
+                                                                <select class="form-control select2" onchange="loadRegionCities(this)" name="region">
                                                                     <option value="">Область</option>
                                                                     @foreach(\App\Models\Regions::where('country_id', 3159)->orderBy('name', 'asc')->get() as $item)
                                                                         <option value="{{$item['id']}}">
@@ -151,7 +142,7 @@
                                                     <button type="button" data-dismiss="modal" style="float: none;" class="btn btn_save">Сохранить</button> 
                                                 </div>
                                             </div>
-                                         </div> 
+                                         </div>  
                                       </div>
                                    </div>
                                 </div>

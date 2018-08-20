@@ -32,6 +32,7 @@ Route::get('terms-of-use', 'PagesController@termsOfUse');
 Route::get('universities', 'UniversityController@index'); 
 Route::get('university/{id}', 'UniversityController@view');
 Route::get('universities/autocomplete', 'UniversityController@autocomplete');
+Route::post('university/setBoockmark', 'UniversityController@setBoockmark'); 
 
 Route::get('teachers', 'TeachersController@index');
 Route::get('teacher/{id}', 'TeachersController@show');
@@ -203,6 +204,10 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
 			}); 
+
+		 	Route::get('favorites', "$controller@showFavorites")->name("{$userDefine}_user_favorites");
+		 	Route::get('favorites/delete/{id}', "$controller@destroyFavorites")->name("{$userDefine}_user_favorites_delete"); 
+		 	 
 		});  
 	});  
   

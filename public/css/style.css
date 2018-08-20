@@ -1857,6 +1857,16 @@ input#amount{
     padding: 10px 5px;
     color: #fff;
 }
+
+.external_univer .bookmark_external_univer.active{
+    background: #fafafa; 
+    -webkit-box-shadow: -1px 1px 6px rgba(0,0,0,.1);
+    box-shadow: -1px 1px 6px rgba(0,0,0,.1);
+
+     /*  border-left: 1px solid #b93777;
+    border-bottom: 1px solid #b93777;*/
+}
+
 .external_univer .bookmark_external_univer:hover{
     cursor: pointer;
 }
@@ -3551,6 +3561,10 @@ select option:disabled {
         color: #333;
         margin: 10px 0;
         display: block;
+    }
+
+    .news__catalog{
+        margin-top: 50px;
     }
 
     .news__catalog .news__item{

@@ -34,7 +34,7 @@
 				<ul class="list-inline teachers_label pull-left">
 					@if(@Auth::check())
 					<li class="teachers_bookmark"> 
-						<i class="fa fa-bookmark {{ !empty($boockmark) ? 'add_bkmrk' : '' }} " 
+						<i class="fa course_heart {{ $bookmark ? 'is_favorite fa-heart' : 'fa-heart-o' }}" 
 						   onclick="teacherBookmark(this, {{ $teacher->id }});" 
 						   aria-hidden="true"></i>
 					</li>

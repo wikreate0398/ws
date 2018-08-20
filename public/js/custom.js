@@ -580,6 +580,8 @@ function eqBlocksInit()
  
 
     setEqualHeight2($('.course_card .footer__course_card .set__going_date'), $('.course__catalog'));
+    setEqualHeight2($('.course_card h2'), $('.course__catalog'));
+
     setEqualHeight2($('.university__item h3'), $('.universities_catalog'));
 
     setEqualHeight2($('.item__block .item__name'), $('.teacher__universities'));
@@ -598,7 +600,6 @@ function eqBlocksInit()
     }); 
 }
  
- 
 function setEqualHeight2(columns, parent) {   
     if (!$(columns).length ) { 
         return false;
@@ -609,7 +610,7 @@ function setEqualHeight2(columns, parent) {
         var itemInRow = parseInt(width/item_width, 10); 
     }else{
         var itemInRow = 3; 
-    }
+    } 
 
     cloudHeight    = 0; 
     var totalItems = $(columns).length 
@@ -659,15 +660,19 @@ $(window).on('load', function() {
 function loadRegionCities(select, city){
     var val      = $(select).val(); 
     var cacheStr = String((new Date()).getTime()).replace(/\D/gi, '');
-    $( ".cities__area").load("/user/actions/loadRegionCities?rnd=" + cacheStr,
+
+    var citiesArea  = $(select).closest('.regions__area').next();
+    var regionsArea = $(select).closest('.regions__area');
+
+    $(citiesArea).load("/user/actions/loadRegionCities?rnd=" + cacheStr,
                              {'id': $(select).val(), 'id_city': city, '_token': CSRF_TOKEN}, 
                              function( response, status, xhr ) { 
         if ( response == "" ) {
-            $('.cities__area').hide();
-            $('.regions__area').removeClass('col-md-6').addClass('col-md-12');
+            $(citiesArea).hide();
+            $(regionsArea).removeClass('col-md-6').addClass('col-md-12');
         }else{
-            $('.cities__area').show(); 
-            $('.regions__area').removeClass('col-md-12').addClass('col-md-6');
+            $(citiesArea).show(); 
+            $(regionsArea).removeClass('col-md-12').addClass('col-md-6');
         }
         initSelect2();
     }); 

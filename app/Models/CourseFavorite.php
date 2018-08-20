@@ -14,4 +14,9 @@ class CourseFavorite extends Model
         'id_course',
         'id_user'
     ];
+
+    public function course()
+    {
+    	return $this->hasOne('App\Models\Courses', 'id', 'id_course');
+    }
 }

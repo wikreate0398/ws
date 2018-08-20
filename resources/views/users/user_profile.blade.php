@@ -52,6 +52,11 @@
 			      	<li class="{{ isActive(route(userRoute('user_profile'))) ? 'active' : '' }}">
 			      		<a href="{{ route(userRoute('user_profile')) }}">МОИ КУРСЫ (ОБУЧАЮСЬ)</a>
 			      	</li> 
+
+			      	<li class="{{ isActive(route(userRoute('user_favorites'))) ? 'active' : '' }}">
+			      		<a href="{{ route(userRoute('user_favorites')) }}">Избранное</a>
+			      	</li> 
+
                 </ul> 
 			</div>
 		</div>

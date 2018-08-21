@@ -10,7 +10,7 @@
                <li class="active">Добавить курс</li>
             </ul>
             <h1 class="title_page">ДОБАВИТЬ КУРС</h1>
-            <p class="title_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.</p>
+            <p class="title_desc">Хотите поделиться своими знаниями с тысячами посетителей нашего портала? Сделайте это, опубликовав свой курс в данном разделе. Вам достаточно: ввести название, описание, выбрать категорию и подкатегорию в форме ниже. Делитесь своими обучающими материалами на бесплатной или платной основе. Опубликуйте курс и о нем узнают тысячи пользователей «КОРПОРАЦИИ МОЗГА».</p>
          </div>
       </div>
       <div class="row">

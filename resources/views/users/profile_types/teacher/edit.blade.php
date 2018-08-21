@@ -10,7 +10,7 @@
 		  <li class="active">Редактировать информацию</li>
 		</ul>
 		<h1 class="title_page">РЕДАКТИРОВАТЬ ПРОФИЛЬ</h1>
-		<p class="title_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.</p>
+		<p class="title_desc">Укажите актуальные данные о вас. Введите ФИО, краткую информацию, укажите дату рождения, пол, город и образование. Не забудьте заполнить контактные и регистрационные данные. На вкладке «Я репетитор» укажите данные о вашем репетиторском опыте, выберите предметную область и варианты проведения занятий. Откройте вкладку «Сертификат/Диплом», чтобы загрузить изображения имеющихся у вас дипломов и сертификатов.</p>
 	</div>
 	<div class="col-lg-12">
 		<ul class="nav nav-tabs user_edit">

@@ -9,7 +9,7 @@
 			  <li class="active">Редактировать информацию</li>
 			</ul>
 			<h1 class="title_page">РЕДАКТИРОВАТЬ ПРОФИЛЬ</h1>
-			<p class="title_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.</p>
+			<p class="title_desc">Укажите информацию о вашем учебном заведении. Заполните общий профиль, введя название, краткое описание, дату основания и город. Также укажите контактные данные ВУЗа. На вкладке «Общая информация» выберите тип ВУЗа, стоимость обучения, количество бюджетных мест и доступные специальности. На вкладке «Сертификаты/Дипломы» загрузите изображения соответствующих документов: лицензии, сертификаты и грамоты.</p>
 		</div>
 		<div class="col-lg-12">
 			<ul class="nav nav-tabs user_edit">

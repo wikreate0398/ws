@@ -11,7 +11,7 @@
                <li class="active">Редактировать Новость</li>
             </ul>
             <h1 class="title_page">Редактировать Новость</h1>
-            <p class="title_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.</p>
+            <p class="title_desc">Повышайте уровень взаимодействия с пользователями «КОРПОРАЦИИ МОЗГА», публикуя новости от имени ВУЗа. Освещайте важные события из жизни вашего учебного заведения или приглашайте посетителей на открытые мероприятия.</p>
          </div>
       </div>
       <div class="row">

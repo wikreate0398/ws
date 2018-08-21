@@ -670,6 +670,15 @@ header .header_bottom .navbar-right .register_link a{
 	margin-bottom: 35px;
     text-transform: uppercase;
 }
+.sub_title_page{
+	font-family: 'Cuprum Regular';
+	font-size: 18px;
+	color: #cccccc;
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+    text-transform: uppercase;
+}
 .title_desc{
 	font-family: 'Cuprum Regular';
 	font-size: 16px;

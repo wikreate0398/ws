@@ -11,7 +11,7 @@
                <li class="active">Редактировать Факультет</li>
             </ul>
             <h1 class="title_page">Редактировать Факультет</h1>
-            <p class="title_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.</p>
+            <p class="title_desc">Заполните информацию о факультете ВУЗа. Укажите название, форму обучения, длительность и другие данные. Чем больше факультетов вы опубликуете, тем более исчерпывающую информацию о факультете получит абитуриент.</p>
          </div>
       </div>
       <div class="row">

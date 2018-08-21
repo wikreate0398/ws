@@ -250,36 +250,23 @@
 						<img class="img-responsive" src="/images/footer_logo.png" alt="">
 					</div>
 					<ul class="list-unstyled footer_menu">
-							<li>
-								<a class="" href="/about">
-									О ПРОЕКТЕ
-								</a>
-							</li>
-							<li>
-								<a class="" href="/courses">
-									КУРСЫ
-								</a>
-							</li>
-							<li>
-								<a class="" href="/universities">
-									ВУЗЫ И ШКОЛЫ
-								</a>
-							</li>
-							<li>
-								<a class="" href="/teachers">
-									ПРЕПОДВАТЕЛИ
-								</a>
-							</li>
-								@if(Auth::check())
-									<li>
-										<a href="{{ route(userRoute('user_edit')) }}">Личные данные</a>
-									</li> 
-								@else  
-								@endif  
+							@foreach(Page::bottom() as $menu)
+								<li>
+									<a class="{{ (request()->segment(1) == $menu['url']) ? 'active' : '' }}" href="/{{ $menu['url'] }}">
+										{{ $menu['name'] }}
+									</a>
+								</li>
+							@endforeach  
+							@if(Auth::check())
+								<li>
+									<a href="{{ route(userRoute('user_edit')) }}">Личные данные</a>
+								</li> 
+							@else  
+							@endif  
 					</ul>
 					<ul class="list-inline nav-justified social_menu">
 						<li>
-							<a href="#">
+							<a href="https://vk.com/brainincorporated" target="_blank">
 								<span class="fa-stack fa-lg">
 								  <i class="fa fa-circle fa-stack-2x"></i>
 								  <i class="fa fa-vk fa-stack-1x fa-inverse"></i>
@@ -287,7 +274,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a  href="https://www.facebook.com/Brainincorporated" target="_blank">
 								<span class="fa-stack fa-lg">
 								  <i class="fa fa-circle fa-stack-2x"></i>
 								  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
@@ -295,26 +282,18 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="https://www.instagram.com/brainincorporated/" target="_blank">
 								<span class="fa-stack fa-lg">
 								  <i class="fa fa-circle fa-stack-2x"></i>
-								  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+								  <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="https://t.me/brainincorporated" target="_blank">
 								<span class="fa-stack fa-lg">
 								  <i class="fa fa-circle fa-stack-2x"></i>
-								  <i class="fa fa-odnoklassniki fa-stack-1x fa-inverse"></i>
-								</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="fa-stack fa-lg">
-								  <i class="fa fa-circle fa-stack-2x"></i>
-								  <i class="fa fa-skype fa-stack-1x fa-inverse"></i>
+								  <i class="fa fa-telegram fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>
@@ -331,7 +310,7 @@
 					</div>
 					<ul class="list-inline nav-justified social_menu">
 						<li>
-							<a href="#">
+							<a href="https://vk.com/brainincorporated" target="_blank">
 								<span class="fa-stack fa-lg">
 								  <i class="fa fa-circle fa-stack-2x"></i>
 								  <i class="fa fa-vk fa-stack-1x fa-inverse"></i>
@@ -339,7 +318,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="https://www.facebook.com/Brainincorporated" target="_blank">
 								<span class="fa-stack fa-lg">
 								  <i class="fa fa-circle fa-stack-2x"></i>
 								  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
@@ -347,26 +326,18 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="https://www.instagram.com/brainincorporated/" target="_blank">
 								<span class="fa-stack fa-lg">
 								  <i class="fa fa-circle fa-stack-2x"></i>
-								  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+								  <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="https://t.me/brainincorporated" target="_blank">
 								<span class="fa-stack fa-lg">
 								  <i class="fa fa-circle fa-stack-2x"></i>
-								  <i class="fa fa-odnoklassniki fa-stack-1x fa-inverse"></i>
-								</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="fa-stack fa-lg">
-								  <i class="fa fa-circle fa-stack-2x"></i>
-								  <i class="fa fa-skype fa-stack-1x fa-inverse"></i>
+								  <i class="fa fa-telegram fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>

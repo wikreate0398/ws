@@ -2474,7 +2474,7 @@ footer .footer_menu_bottom ul li a{
 footer .footer_menu_bottom ul li a:focus,
 footer .footer_menu_bottom ul li a:hover,
 footer .footer_menu_bottom ul li.active a{
-	color: #fff;
+	color: #000;
 	text-decoration: none;
 }
 footer .copyright{

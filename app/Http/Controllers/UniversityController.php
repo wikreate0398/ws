@@ -35,6 +35,12 @@ class UniversityController extends Controller
     public function index(Request $request)
     { 
 
+        $userUniversityBoockmarks = [];
+        if (Auth::check()) 
+        {
+            $userUniversityBoockmarks = Auth::user()->userUniversityBoockmarks->pluck('id')->toArray();
+        }
+
         $data = [
             'universities'       => UsersUniversity::getUniversities($request),
             'filter' => [
@@ -46,7 +52,7 @@ class UniversityController extends Controller
                                           ->orderBy('id', 'desc')->get(),
                 'minMaxPrice'        => UsersUniversity::getFilterMinMaxPrice(),
             ],
-            'userUniversityBoockmarks'  => Auth::user()->userUniversityBoockmarks->pluck('id')->toArray(),
+            'userUniversityBoockmarks'  => $userUniversityBoockmarks,
             'scripts' => [
                 'js/filter_university.js',
                 'js/university.js'
@@ -74,7 +80,11 @@ class UniversityController extends Controller
         
         if (empty($university)) abort('404'); 
 
-        $bookmark = @in_array($university->user->id, @Auth::user()->userUniversityBoockmarks->pluck('id')->toArray())  ? true : false;
+        $bookmark = [];
+        if (Auth::check()) 
+        {
+            $bookmark = @in_array($university->user->id, @Auth::user()->userUniversityBoockmarks->pluck('id')->toArray())  ? true : false;
+        } 
 
         $data = [
             'university' => $university, 

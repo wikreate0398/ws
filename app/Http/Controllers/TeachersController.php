@@ -48,6 +48,13 @@ class TeachersController extends Controller
      */
     public function index(Request $request)
     { 
+
+        $userTeacherBoockmarks = [];
+        if (Auth::check()) 
+        {
+          $userTeacherBoockmarks = @Auth::user()->userTeacherBoockmarks->pluck('id')->toArray();
+        }
+
         $data = [
             'teachers'               => User::getTeachers($request),
             'teachersRequests'       => $this->_teacher_request,
@@ -60,7 +67,7 @@ class TeachersController extends Controller
                                             return User::allowUser();
                                         })->get(),
 
-            'userTeacherBoockmarks'  => @Auth::user()->userTeacherBoockmarks->pluck('id')->toArray(),
+            'userTeacherBoockmarks'  => $userTeacherBoockmarks,
 
             'minMaxPrice'            => User::getTeachersMinMaxPrice(),
             'lesson_filter_options'  => LessonOptionsList::whereHas('users', function($query){
@@ -75,7 +82,9 @@ class TeachersController extends Controller
                 'js/filter_teachers.js',
                 'js/teachers.js'
             ]
-        ];     
+        ];    
+
+
 
         return view('teachers.catalog', $data);
     } 
@@ -93,7 +102,12 @@ class TeachersController extends Controller
                          })->where('user_type',2)
                          ->findOrFail($id); 
 
-        $bookmark = @in_array($id, @Auth::user()->userTeacherBoockmarks->pluck('id')->toArray())  ? true : false;
+        $bookmark = [];
+        if (Auth::check()) 
+        {
+          $bookmark = @in_array($id, @Auth::user()->userTeacherBoockmarks->pluck('id')->toArray())  ? true : false;
+        }
+ 
         $data = [
             'teacher'        => $teacher,  
             'hasRequest'     => ($this->_teacher_request->setIdTeacher($id)

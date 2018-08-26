@@ -80,6 +80,9 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::post('update-general', "$controller@editGeneral")->name("{$userDefine}_update_general");
 		 	Route::post('update-certificates', "$controller@editCertifications")->name("{$userDefine}_update_certificates");
 
+		 	Route::get('favorites', "\App\Http\Controllers\\Users\FavoritesController@index")->name("{$userDefine}_user_favorites");
+		 	Route::get('favorites/delete/{id}', "\App\Http\Controllers\\Users\FavoritesController@destroy")->name("{$userDefine}_user_favorites_delete"); 
+
 		 	Route::group(['prefix' => 'faculties'], function() use($userDefine) {
 		 		$controller = 'FacultiesController';
 		 		Route::get('/', "$controller@showFaculties")->name("{$userDefine}_user_faculties");
@@ -152,7 +155,9 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
 	 		Route::get('reviews', "{$controller}@showReviews")->name("{$userDefine}_user_reviews"); 
 			Route::get('subscriptions', "{$controller}@showSubscriptions")->name("{$userDefine}_user_subscriptions"); 
-			Route::get('bookmarks', "{$controller}@showBookmarks")->name("{$userDefine}_user_bookmarks"); 
+			
+			Route::get('favorites', "\App\Http\Controllers\\Users\FavoritesController@index")->name("{$userDefine}_user_favorites");
+		 	Route::get('favorites/delete/{id}', "\App\Http\Controllers\\Users\FavoritesController@destroy")->name("{$userDefine}_user_favorites_delete"); 
 
 			Route::group(['prefix' => 'universities'], function() {  
 				$userDefine = 'teacher'; 
@@ -199,14 +204,14 @@ Route::group(['middleware' => ['web_auth']], function(){
 			$userDefine = 'pupil'; 
 		 	Route::get('edit', "$controller@showEditForm")->name("{$userDefine}_user_edit");
 		 	Route::post('update-profile', "$controller@editProfile")->name("{$userDefine}_update_profile");
-		 	Route::post('updatePass', "$controller@@updatePassword")->name("{$userDefine}_update_pass"); 
+		 	Route::post('updatePass', "$controller@updatePassword")->name("{$userDefine}_update_pass"); 
 
 		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
 			}); 
 
-		 	Route::get('favorites', "$controller@showFavorites")->name("{$userDefine}_user_favorites");
-		 	Route::get('favorites/delete/{id}', "$controller@destroyFavorites")->name("{$userDefine}_user_favorites_delete"); 
+		 	Route::get('favorites', "\App\Http\Controllers\\Users\FavoritesController@index")->name("{$userDefine}_user_favorites");
+		 	Route::get('favorites/delete/{id}', "\App\Http\Controllers\\Users\FavoritesController@destroy")->name("{$userDefine}_user_favorites_delete"); 
 		 	 
 		});  
 	});  

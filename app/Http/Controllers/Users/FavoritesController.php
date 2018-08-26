@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users\Teacher;
+namespace App\Http\Controllers\Users;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ use App\Models\CourseFavorite;
 use App\Models\TeacherBoockmarks;
 use App\Models\UniversityBookmarks;
 
-class FavoritesController extends TeacherController
+class FavoritesController
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class FavoritesController extends TeacherController
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
         $user       = Auth::user();
         $courses    = CourseFavorite::where('id_user', $user->id)
                                     ->with('course')

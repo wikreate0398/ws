@@ -80,6 +80,9 @@
 					<li class="{{ isActive(route(userRoute('user_universities'))) ? 'active' : '' }}">
 						<a href="{{ route(userRoute('user_universities')) }}">УЧЕБНЫЕ ЗАВЕДЕНИЯ ({{ count($user->connectionUniversities) }})</a>
 					</li>
+					<li class="{{ isActive(route(userRoute('user_favorites'))) ? 'active' : '' }}">
+			      		<a href="{{ route(userRoute('user_favorites')) }}">Избранное</a>
+			      	</li> 
 					<li class="{{ isActive(route(userRoute('user_reviews'))) ? 'active' : '' }}">
 						<a href="{{ route(userRoute('user_reviews')) }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
 					</li> 

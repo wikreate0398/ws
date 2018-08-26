@@ -68,6 +68,10 @@
 			      	<li class="{{ isActive(route(userRoute('user_news'))) ? 'active' : '' }}">
 			      		<a href="{{ route(userRoute('user_news')) }}">Новости ({{ count(Auth::user()->university->news) }})</a>
 			      	</li> 
+
+			      	<li class="{{ isActive(route(userRoute('user_favorites'))) ? 'active' : '' }}">
+			      		<a href="{{ route(userRoute('user_favorites')) }}">Избранное</a>
+			      	</li> 
 					@endif
                 </ul>
 				@endif

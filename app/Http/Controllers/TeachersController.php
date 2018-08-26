@@ -59,7 +59,8 @@ class TeachersController extends Controller
             'specializations'        => TeacherSpecializationsList::whereHas('users', function($query){
                                             return User::allowUser();
                                         })->get(),
-            'userTeacherBoockmarks'  => Auth::user()->userTeacherBoockmarks->pluck('id')->toArray(),
+
+            'userTeacherBoockmarks'  => @Auth::user()->userTeacherBoockmarks->pluck('id')->toArray(),
 
             'minMaxPrice'            => User::getTeachersMinMaxPrice(),
             'lesson_filter_options'  => LessonOptionsList::whereHas('users', function($query){

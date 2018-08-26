@@ -78,7 +78,7 @@
                                 </div> 
                             </div>
                             <div class="form-group">
-                                <div class="col-md-12" id="error-respond"></div>
+                                <div id="error-respond"></div>
                                 <div class="col-md-12">
 									<div class="btn_form">
 										<p>Нажимая кнопку «Зарегистрироваться», Вы принимаете условия <a href="">Пользовательского соглашения</a> и <a href="">политики конфиденциальности</a> нашего портала</p>
@@ -145,7 +145,7 @@
                             </div> 
  
                             <div class="form-group">
-                                <div class="col-md-12" id="error-respond"></div>
+                                <div id="error-respond"></div>
                                 <div class="col-md-12">
 									<div class="btn_form">
 										<p>Нажимая кнопку «Зарегистрироваться», Вы принимаете условия <a href="">Пользовательского соглашения</a> и <a href="">политики конфиденциальности</a> нашего портала</p>
@@ -212,7 +212,7 @@
                                 </div> 
                             </div>  
                             <div class="form-group">
-                                <div class="col-md-12" id="error-respond"></div>
+                                <div id="error-respond"></div>
                                 <div class="col-md-12 text-center">
 									<div class="btn_form">
 										<p>Нажимая кнопку «Зарегистрироваться», Вы принимаете условия <a href="">Пользовательского соглашения</a> и <a href="">политики конфиденциальности</a> нашего портала</p>

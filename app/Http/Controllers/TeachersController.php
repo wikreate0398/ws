@@ -64,14 +64,14 @@ class TeachersController extends Controller
                                           ->orderBy('id', 'desc')->get(),
 
             'specializations'        => TeacherSpecializationsList::whereHas('users', function($query){
-                                            return User::allowUser();
+                                            return $query->allowUser();
                                         })->get(),
 
             'userTeacherBoockmarks'  => $userTeacherBoockmarks,
 
             'minMaxPrice'            => User::getTeachersMinMaxPrice(),
             'lesson_filter_options'  => LessonOptionsList::whereHas('users', function($query){
-                                                            return User::allowUser();
+                                                            return $query->allowUser();
                                                         })->orderBy('page_up', 'asc')
                                                           ->orderBy('id', 'desc')->get(), 
 
@@ -97,9 +97,8 @@ class TeachersController extends Controller
                                'lesson_options', 
                                'educations', 
                                'subjects'])
-                         ->where(function($query){
-                              return User::allowUser();
-                         })->where('user_type',2)
+                         ->allowUser()
+                         ->where('user_type',2)
                          ->findOrFail($id); 
 
         $bookmark = [];
@@ -147,11 +146,10 @@ class TeachersController extends Controller
     public function autocomplete(Request $request)
     {
       $query      = urldecode($request->input('search'));  
-      $searchData = User::where('user_type', 2)->where(function($query){
-                              return User::allowUser();
-                          })
-                          ->where('name', 'like', "%$query%")
-                          ->orderBy('created_at', 'desc')->get();
+      $searchData = User::where('user_type', 2)
+                        ->allowUser()
+                        ->where('name', 'like', "%$query%")
+                        ->orderBy('created_at', 'desc')->get();
 
       if (empty($searchData)) die();
       

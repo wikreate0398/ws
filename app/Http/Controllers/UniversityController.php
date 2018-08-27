@@ -90,7 +90,8 @@ class UniversityController extends Controller
             'university' => $university, 
             'bookmark'   => $bookmark,
             'scripts' => [
-                'js/university.js'
+                'js/university.js',
+                'js/courses.js'
             ]
         ];   
 

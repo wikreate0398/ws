@@ -178,7 +178,7 @@ class PagesController extends Controller
 
     public function contacts()
     {
-        return view('pages.contacts');
+        return view('pages.contacts', ['page' => \Page::pageData()]);
     }     
 
     public function about()

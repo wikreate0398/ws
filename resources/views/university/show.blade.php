@@ -299,7 +299,26 @@
                     </div>
                 </div>
                 <div id="contacts" class="tab-pane fade">
-
+                    <table>
+                        <tr>
+                            <td>АДРЕС:</td>
+                            <td>{{ $university->user->address }}</td>
+                        </tr>
+                        @if($university->user->site)
+                            <tr>
+                                <td>АДРЕС САЙТА:</td>
+                                <td>{{ $university->user->site }}</td>
+                            </tr>
+                        @endif
+                    </table>
+                    <br>
+                    <strong>КОНТАКТЫ</strong>
+                    <table>
+                        <tr>
+                            <td>ПРИЕМНАЯ КОМИССИЯ:</td>
+                            <td>{{ $university->user->phone }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

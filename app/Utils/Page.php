@@ -9,7 +9,6 @@ use \App\Models\Menu;
 */
 class Page  
 {
-
 	function __construct() {}
 
 	public function top()
@@ -31,4 +30,9 @@ class Page
 	{
 		return Menu::where('url', $url)->first();
 	}
+
+	public function pageData()
+    {
+        return $this->meta(request()->segment(1));
+    }
 }

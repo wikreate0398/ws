@@ -7,7 +7,7 @@ use \App\Models\Menu;
 /**
 * 
 */
-class Page  
+class Page
 {
 	function __construct() {}
 
@@ -22,7 +22,7 @@ class Page
 	}
 
 	public function active($url)
-	{ 
+	{
 		(request()->segment(1) == $url) ? true : false;
 	}
 
@@ -34,5 +34,10 @@ class Page
 	public function pageData()
     {
         return $this->meta(request()->segment(1));
+    }
+
+    public function uriName()
+    {
+        return !request()->segment(1) ? '' : request()->segment(1);
     }
 }

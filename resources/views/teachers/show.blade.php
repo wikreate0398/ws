@@ -12,7 +12,11 @@
 			</ul>
 		</div>
 		<div class="col-lg-3"> 
-			<img class="img-responsive" style="width: 100%;" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
+			<img class="img-responsive"
+				 style="width: 100%;"
+				 src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}"
+				 title="Brain Incorporated | Учитель {{ $teacher['name'] }} образовательного портала России и мира"
+				 alt="Корпорация Мозга | Учитель {{ $teacher['name'] }} образовательного портала России и мира">
 			<button @if($hasRequest==true && Auth::check() == true)
 						disabled
 					@endif
@@ -144,7 +148,10 @@
 				@foreach($universities as $university)
 				<div class="item"> 
 					<a href="/university/<?=$university['id']?>/"> 
-						<img class="img-responsive" src="{{ imageThumb(@$university['user']['image'], 'uploads/users', 400, 400, 'university_list') }}">
+						<img class="img-responsive"
+							 src="{{ imageThumb(@$university['user']['image'], 'uploads/users', 400, 400, 'university_list') }}"
+							 title="Brain Incorporated | Учебное заведение {{ $university['full_name'] }} образовательного портала России и мира | Лучшие ВУЗы Москвы"
+							 alt="Корпорация Мозга | Учебное заведение {{ $university['full_name'] }} образовательного портала России и мира | Лучшие ВУЗы Москвы">
 					</a> 
 					<h3><a href="/university/<?=$university['id']?>">{{ $university['full_name'] }}</a></h3>
 					<ul class="list-unstyled">

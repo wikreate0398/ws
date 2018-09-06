@@ -113,7 +113,10 @@
                             <div class="external_univer eq_list__item">
                                 <div class="image">
                                     <a href="/university/{{ $university->id }}/">
-                                        <img class="img-responsive" src="{{ imageThumb(@$university->user->avatar, 'uploads/users', 400, 300, 'universities') }}">
+                                        <img class="img-responsive"
+                                             src="{{ imageThumb(@$university->user->avatar, 'uploads/users', 400, 300, 'universities') }}"
+                                             title="Brain Incorporated | Учебное заведение {{ $university['full_name'] }} образовательного портала России и мира | Лучшие ВУЗы Москвы"
+                                             alt="Корпорация Мозга | Учебное заведение {{ $university['full_name'] }} образовательного портала России и мира | Лучшие ВУЗы Москвы">
                                     </a>
                                     <span class="reviews_external_univer">
                                         0 отзывов

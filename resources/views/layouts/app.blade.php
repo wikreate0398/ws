@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>{{ @Page::meta(request()->segment(1))->seo_title }}</title>
-    <meta name="description" content="{{ @Page::meta(request()->segment(1))->seo_description }}">
-    <meta name="seo_keywords" content="{{ @Page::meta(request()->segment(1))->seo_keywords }}"> 
+    @php $page = Page::meta(Page::uriName()); @endphp
+    <title>{{ @$page->seo_title }}</title>
+    <meta name="description" content="{{ @$page->seo_description }}">
+    <meta name="seo_keywords" content="{{ @$page->seo_keywords }}">
 
     <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -22,7 +23,8 @@
     <link href="{{ asset('css/style.css') . '?v=' . time() }}" rel="stylesheet">
     <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media-queries.css') }}" rel="stylesheet"> 
-    <link rel="stylesheet" href="{{ asset('js/bar-rating/dist/themes/fontawesome-stars-o.css') }}">  
+    <link rel="stylesheet" href="{{ asset('js/bar-rating/dist/themes/fontawesome-stars-o.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css">
 
     <!-- Cropper -->
     <link  href="{{ asset('js/cropperjs/dist/cropper.css') }}" rel="stylesheet">
@@ -48,7 +50,8 @@
     <script src="{{ asset('js/jquery-ui.min.js') . '?v=' . time() }}"></script>
     <script src="{{ asset('js/bar-rating/jquery.barrating.js') }}"></script>
     <script src="{{ asset('js/switcher.js') }}"></script>
-    <script src="{{ asset('js/select2.js') }}"></script> 
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.js"></script>
 
     <!-- Price Input Mask -->
     <script type="text/javascript" src="{{ asset('js/input_mask.js') }}"></script>

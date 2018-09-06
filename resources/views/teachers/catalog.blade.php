@@ -116,7 +116,10 @@
 					<div class="row">
 						<div class="col-md-3"> 
 							<a href="/teacher/{{ $teacher['id'] }}/">
-								<img class="img-responsive" src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
+								<img class="img-responsive"
+									 src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}"
+									 title="Brain Incorporated | Учитель {{ $teacher['name'] }} образовательного портала России и мира"
+									 alt="Корпорация Мозга | Учитель {{ $teacher['name'] }} образовательного портала России и мира">
 							</a>
 							@php
 								$hasRequest = ($teachersRequests->setIdTeacher($teacher->id)

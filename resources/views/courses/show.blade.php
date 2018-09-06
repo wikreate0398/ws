@@ -349,13 +349,17 @@
 				</div>
 			@endif
 			
-			@if(count($course->certificates) > 0)
+			@if($course->certificates->count() > 0)
 				<div class="course__sidebar_box" style="padding-bottom: 30px;">
 					<h3>СЕРТИФИКАТ ОБ <br> ОКОНЧАНИИ</h3>
 					<div class="certificates__box owl-carousel owl-theme" id="certificates__box">
 					 	@foreach($course->certificates as $certificate)
 							<div class="certificate_slider__item">
-								<img src="/public/uploads/courses/certificates/{{ $certificate->image }}" alt="">
+								<a href="/public/uploads/courses/certificates/{{ $certificate->image }}" class="fancybox">
+									<img src="/public/uploads/courses/certificates/{{ $certificate->image }}"
+										 alt="Brain Incorporated | Профессиональные курсы со всего мира "
+									     title="Корпорация Мозга | Профессиональные курсы со всего мира ">
+								</a>
 							</div>
 					 	@endforeach
 					</div>

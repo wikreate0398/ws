@@ -325,7 +325,9 @@
         <div class="col-md-3">
             <div class="vuz_page_sidebar">
                 <div class="image">
-                    <img src="/public/uploads/users/{{ $university->user->avatar ? $university->user->avatar : $university->user->image }}{{'?v=' . time()}}">
+                    <img src="/public/uploads/users/{{ $university->user->avatar ? $university->user->avatar : $university->user->image }}{{'?v=' . time()}}"
+                         title="Brain Incorporated | Учебное заведение {{ $university['full_name'] }} образовательного портала России и мира | Лучшие ВУЗы Москвы"
+                         alt="Корпорация Мозга | Учебное заведение {{ $university['full_name'] }} образовательного портала России и мира | Лучшие ВУЗы Москвы">
                     <span class="reviews_vuz_page">
                         0 отзывов
                     </span>

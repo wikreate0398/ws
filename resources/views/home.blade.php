@@ -218,7 +218,10 @@
             </div>
             <div class="col-lg-12">
                 <div class="banner_block">
-                    <img class="img-responsive" src="/images/banner_1.jpg" alt="">
+                    <img class="img-responsive"
+                         src="/images/banner_1.jpg"
+                         title="Brain Incorporated | Образовательный портал России и мира"
+                         alt="Корпорация Мозга | Образовательный портал России и мира" >
                 </div>
             </div>
         </div>
@@ -231,7 +234,10 @@
 				<p>Каждый участник корпорации: ученик, преподаватель или учебное заведение — звенья одной большой цепи под названием «Современное обучение». Мы хотим сделать его именно таким свободным, удобным и доступным каждому. Присоединяйтесь к современному обучению и вы, становитесь частью большого дела!</p>
 			</div>
 			<div class="col-lg-12">
-				<img class="img-responsive" src="/images/about_us.png" alt="">
+				<img class="img-responsive"
+                     src="/images/about_us.png"
+                     title="Brain Incorporated | Все о компании Корпорация Мозга"
+                     alt="Корпорация Мозга | Все о компании Корпорация Мозга">
 			</div>
 		</div>
 	</div>
@@ -244,7 +250,10 @@
                         @foreach($university as $item)
                             <div class="item">  
                                 <a href="/university/{{ $item['id'] }}/">
-									<img class="img-responsive" src="{{ imageThumb(@$item->user->avatar, 'uploads/users', 400, 300, 'universities') }}">
+									<img class="img-responsive"
+                                         title="Brain Incorporated | Учебное заведение {{ $item['full_name'] }} образовательного портала России и мира"
+                                         alt="Корпорация Мозга | Учебное заведение {{ $item['full_name'] }} образовательного портала России и мира"
+                                         src="{{ imageThumb(@$item->user->avatar, 'uploads/users', 400, 300, 'universities') }}">
 								</a> 
                                 <h3><a href="/university/{{ $item['id'] }}">{{ $item['full_name'] }}</a></h3>
                                 <ul class="list-unstyled">
@@ -267,7 +276,10 @@
                 </div>
 				
                 <div class="banner_block">
-                    <img class="img-responsive" src="/images/banner_2.jpg" alt="">
+                    <img class="img-responsive"
+                         src="/images/banner_2.jpg"
+                         title="Brain Incorporated | Образовательный портал России и мира"
+                         alt="Корпорация Мозга | Образовательный портал России и мира">
                 </div>
 
                 @if(!empty($teachers))
@@ -276,11 +288,12 @@
                     @foreach($teachers as $teacher)
                         <div class="item"> 
                             <a href="/teacher/{{ $teacher['id'] }}/">
-								<img style="" 
+								<img title="Brain Incorporated | Учитель {{ $teacher['name'] }} образовательного портала России и мира"
+                                     alt="Корпорация Мозга | Учитель {{ $teacher['name'] }} образовательного портала России и мира"
                                      class="img-responsive" 
                                      src="{{ imageThumb(@$teacher->image, 'uploads/users', 400, 500, 'list') }}">
 							</a> 
-                            <h3><a href="/teacher/{{ $teacher['id'] }}/">{{ $teacher['name'] }} {{ $teacher['surname'] }}</a></h3>
+                            <h3><a href="/teacher/{{ $teacher['id'] }}/">{{ $teacher['name'] }}</a></h3>
                             <p>{{ implode(',', array_slice($teacher->subjects->pluck('name')->toArray(), 0, 2)) }}</p>
  
 
@@ -301,7 +314,10 @@
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				<div class="user_type_home">
-					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_one.png" alt="">
+					<img class="img-responsive img-thumbnail"
+                         src="/public/images/user_type_home_img_one.png"
+                         title="Brain Incorporated | Образовательный портал России и мира для учеников и абитуриентов"
+                         alt="Корпорация Мозга | Образовательный портал России и мира для учеников и абитуриентов">
 					<h3>УЧЕНИКАМ/АБИТУРИЕНТАМ</h3>
 					<p>
 						Найдите учебный курс с наиболее подходящим для вас содержанием и условием обучения. Получите доступ к максимально полной базе онлайн-семинаров, лекций и полноценных учебных программ!
@@ -311,7 +327,10 @@
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				<div class="user_type_home">
-					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_two.png" alt="">
+					<img class="img-responsive img-thumbnail"
+                         src="/public/images/user_type_home_img_two.png"
+                         title="Brain Incorporated | Образовательный портал России и мира для вузов и онлайн школ"
+                         alt="Корпорация Мозга | Образовательный портал России и мира для вузов и онлайн школ">
 					<h3>ВУЗАМ И ОНЛАЙН ШКОЛАМ</h3>
 					<p>
 						Станьте нашим партнером, разместив максимально подробную информацию о вашем учебном заведении на страницах нашего сайта. Расскажите о вашем ВУЗе или онлайн-школе потенциальным абитуриентам!
@@ -321,7 +340,10 @@
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				<div class="user_type_home">
-					<img class="img-responsive img-thumbnail" src="/public/images/user_type_home_img_three.png" alt="">
+					<img class="img-responsive img-thumbnail"
+                         src="/public/images/user_type_home_img_three.png"
+                         title="Brain Incorporated | Образовательный портал России и мира для преподавателей"
+                         alt="Корпорация Мозга | Образовательный портал России и мира для преподавателей">
 					<h3>ПРЕПОДАВАТЕЛЯМ</h3>
 					<p>
 						Создайте профиль на нашем сайте, опишите свою квалификацию и направление работы – и уже скоро вы сможете передавать свои знания максимальному количеству учеников.

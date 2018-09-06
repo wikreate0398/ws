@@ -233,13 +233,16 @@
         <div class="banner_block">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <img class="img-responsive" src="/images/banner_3.jpg" alt="">
+                    <img class="img-responsive" src="/images/banner_3.jpg" title="Brain Incorporated | Образовательный портал России и мира"
+                         alt="Корпорация Мозга | Образовательный портал России и мира">
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <img class="img-responsive" src="/images/banner_4.jpg" alt="">
+                    <img class="img-responsive" src="/images/banner_4.jpg" title="Brain Incorporated | Образовательный портал России и мира"
+                         alt="Корпорация Мозга | Образовательный портал России и мира">
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <img class="img-responsive" src="/images/banner_5.jpg" alt="">
+                    <img class="img-responsive" src="/images/banner_5.jpg" title="Brain Incorporated | Образовательный портал России и мира"
+                         alt="Корпорация Мозга | Образовательный портал России и мира">
                 </div>
             </div>
         </div>

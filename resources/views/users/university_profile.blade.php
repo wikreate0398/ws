@@ -83,15 +83,6 @@
 		<div class="row">
 			 
 			<div class="col-md-12">   
-				@if(Session::has('flash_message') or Session::has('error_flash_message'))
-					@php
-						$message = @Session::has('flash_message') ? @Session::get('flash_message') : @Session::get('error_flash_message');
-						$status  = @Session::has('flash_message') ? 'alert-success' : 'alert-danger';
-					@endphp
-				    <div class="alert {{ $status }}">
-				    	<p>{{ $message }}</p>
-				    </div> 
-				@endif 
 
 				<div style="min-height: 400px;">
 					@include($include)   

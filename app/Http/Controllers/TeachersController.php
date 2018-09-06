@@ -20,6 +20,7 @@ use App\Models\TeacherRequest;
 use App\Models\UsersUniversity;
 use App\Models\User;
 use App\Models\CourseCategory;
+use App\Models\TeacherReviews;
  
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
@@ -185,5 +186,32 @@ class TeachersController extends Controller
       }
 
       return redirect('teacher/' . $id)->with('teacherMsg.success', 'Вы успешно оставили свою заявку этому учителю'); 
-    } 
+    }
+
+    public function review($id, Request $request)
+    {
+        $teacher = User::whereId($id)
+                      ->allowUser()
+                      ->where('user_type',2)
+                      ->first();
+
+        if (!$teacher or !Auth::check())
+        {
+            return;
+        }
+
+        if (!$request->input('message'))
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Заполните поле с комментарием']);
+        }
+
+        TeacherReviews::create([
+            'id_teacher'=> $id,
+            'id_user'   => Auth::user()->id,
+            'review'    => $request->input('message'),
+            'rating'    => floatval($request->input('rating'))
+        ]);
+
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Отзыв успешно добавлен и ожидает проверки модератора');
+    }
 }

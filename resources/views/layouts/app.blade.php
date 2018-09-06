@@ -463,6 +463,19 @@
             <h2></h2>
         </div>
     </div>
+
+
+    @if(Session::has('flash_message') or Session::has('error_flash_message'))
+        @php
+            $message = @Session::has('flash_message') ? @Session::get('flash_message') : @Session::get('error_flash_message');
+            $status  = @Session::has('flash_message') ? 'success' : 'danger';
+        @endphp
+        <script>
+            $(document).ready(function(){
+                showFadeModal("{{ $status }}", "{{ $message }}");
+            });
+        </script>
+    @endif
 	
 	<!-- Yandex.Metrika counter -->
 	<script type="text/javascript" >

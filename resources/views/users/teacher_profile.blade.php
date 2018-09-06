@@ -94,13 +94,7 @@
 
 	<div class="container"> 
 		<div class="row"> 
-			<div class="col-md-12">   
-				@if(Session::has('flash_message'))
-				    <div class="alert alert-success">
-				    	<p>{{ Session::get('flash_message') }}</p>
-				    </div> 
-				@endif 
-
+			<div class="col-md-12">
 				<div style="min-height: 400px;">
 					@include($include)  
 				</div>

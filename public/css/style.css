@@ -428,6 +428,10 @@ margin-bottom: 30px;
     margin-bottom: 10px;
 }
 
+.teachers_rating .br-widget a{
+    font-size: 16px !important;
+}
+
 
 /* Новые стили после перевёрстки всего сайта выше css удалить */
 /* Подключаем шрифты */
@@ -3701,3 +3705,11 @@ select option:disabled {
         padding: 10px;
         border-radius:0 0 5px 5px;
     }
+
+.br-widget{
+    height: auto !important;
+}
+
+.br-theme-fontawesome-stars-o .br-widget a.br-selected:after {
+    color: #ffcd00!important;
+}

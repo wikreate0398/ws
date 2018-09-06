@@ -25,7 +25,8 @@ Route::group(['middlewars' => 'guest'], function(){
 Route::get('about', 'PagesController@about');
 Route::get('autocomplete', 'PagesController@autocomplete'); 
  
-Route::get('contacts', 'PagesController@contacts'); 
+Route::get('contacts', 'PagesController@contacts');
+Route::post('contacts', 'PagesController@sendContacts');
 Route::get('under-construction', 'PagesController@underConstruction');
 Route::get('terms-of-use', 'PagesController@termsOfUse');
  
@@ -39,6 +40,7 @@ Route::get('teacher/{id}', 'TeachersController@show');
 Route::get('teacher/{id}/makeRequest', 'TeachersController@makeRequest');
 Route::get('teachers/autocomplete', 'TeachersController@autocomplete');
 Route::post('teachers/setBoockmark', 'TeachersController@setBoockmark');
+Route::post('teachers/review/{id}', 'TeachersController@review', ['middleware' => 'web_auth'])->name('teacher_review');
 
 Route::get('courses', 'CoursesController@index'); 
 Route::get('courses/cat/{cat}', 'CoursesController@index');

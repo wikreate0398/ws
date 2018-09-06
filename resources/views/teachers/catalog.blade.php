@@ -202,10 +202,16 @@
 										{{ $teacher->is_available ? 'Свободен' : 'Занят' }}
 									</li>
 									<li class="teachers_rating">
-										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+										<select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($teacher->teacherReviews->avg('rating')) }}" autocomplete="off">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
 									</li>
 									<li class="teachers_comment">
-										15 отзывов
+										{{ $teacher->teacherReviews->count() }} {{ format_by_count($teacher->teacherReviews->count(), 'Отзыв', 'Отзыва', 'Отзывов') }}
 									</li>
 								</ul>
 							</div>

@@ -15,6 +15,10 @@ use App\Models\CourseCategory;
 use Illuminate\Http\Request; 
 use App\Models\Menu;
 
+
+use App\Mail\Contacts;
+use Illuminate\Support\Facades\Mail;
+
 class PagesController extends Controller
 {
     /**
@@ -180,6 +184,25 @@ class PagesController extends Controller
     {
         return view('pages.contacts', ['page' => \Page::pageData()]);
     }     
+
+    public function sendContacts(Request $request)
+    {
+        if (!$request->name or !$request->email or !$request->message)
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Заполните все обязательные поля!']);
+        }
+
+        $message = "<b>Имя:</b>" . $request->name . "<br>";
+        if($request->email)
+        {
+            $message .= "<b>Email:</b>" . $request->email . "<br>";
+        }
+        $message .= "<b>Телефон:</b>" . $request->phone . "<br>";
+        $message .= "<b>Сообщение:</b>" . $request->message;
+
+        Mail::to('fleancu.daniel@gmail.com')->send(new Contacts($message));
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно отправленны');
+    }
 
     public function about()
     {

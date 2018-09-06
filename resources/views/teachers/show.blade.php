@@ -32,7 +32,7 @@
 			    <div class="alert alert-{{ Session::get('teacherMsg.success') ? 'success' : 'danger' }}">
 			    	<p>{{ Session::get('teacherMsg.success') ? Session::get('teacherMsg.success') : Session::get('teacherMsg.error') }}</p>
 			    </div> 
-			@endif 
+			@endif
 
 			<div class="teachers_name">
 				<ul class="list-inline teachers_label pull-left">
@@ -49,10 +49,16 @@
 				</ul>
 				<ul class="list-inline teachers_label pull-right">
 					<li class="teachers_rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+						<select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($teacher->teacherReviews->avg('rating')) }}" autocomplete="off">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
 					</li>
 					<li class="teachers_comment">
-						15 отзывов
+						{{ $teacher->teacherReviews->count() }} {{ format_by_count($teacher->teacherReviews->count(), 'Отзыв', 'Отзыва', 'Отзывов') }}
 					</li>
 				</ul>
 				<div class="clearfix"></div>
@@ -210,6 +216,152 @@
 				</div>
 			</div>
 			@endif
+
+			@if(count($teacher->teacherReviews) > 0)
+				<div class="review__container">
+					<h3>Отзывы ({{ count($teacher->teacherReviews) }})</h3>
+					<div class="reviews_items">
+						@foreach($teacher->teacherReviews as $review)
+							<div class="review_item">
+
+								<div class="review__top_side">
+									<div class="review__left_side">
+										<div class="review__user_image" style="background-image: url({{ imageThumb(($review->user->avatar ? $review->user->avatar : $review->user->image), 'uploads/users', 150, 150, 'small') }})"></div>
+										<div class="review__user_info">
+											<div class="review__post_date">
+												{{ date('d.m.Y H:i', strtotime($review['created_at'])) }}
+											</div>
+											<div class="review__user_name">
+												{{ $review->user->name }}
+											</div>
+										</div>
+									</div>
+
+									<div class="stars stars-example-fontawesome">
+										<select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ $review['rating'] }}" autocomplete="off">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
+									</div>
+
+								</div>
+
+								<div class="review__message">
+									{{ $review['review'] }}
+								</div>
+							</div>
+						@endforeach
+					</div>
+				</div>
+			@endif
+
+			@if(Auth::check() && !in_array(Auth::user()->id, $teacher->teacherReviews->pluck('id_user')->toArray()))
+				<div class="review__container">
+					<button class="btn" onclick="$('.review__form').slideToggle()">Оставить Отзыв</button>
+					<div class="review__form" style="display: none;">
+						<form action="{{ route('teacher_review', ['id' => $teacher->id]) }}" class="ajax__submit">
+							{{ csrf_field() }}
+							<textarea name="message" placeholder="Комментарий" class="form-control"></textarea>
+							<div class="stars stars-example-fontawesome">
+								<select class="rating-stars" name="rating" autocomplete="off">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+							</div>
+							<div id="error-respond"></div>
+							<button class="btn btn_save" type="submit">Добавить</button>
+						</form>
+					</div>
+				</div>
+			@endif
+
+			<style>
+				.review__container{
+					margin-bottom: 20px;
+					margin-top: 40px;
+				}
+
+				.title__review_section{
+					font-weight: bold !important;
+					font-size: 18px !important;
+					text-transform: uppercase;
+					color: #333 !important;
+					margin-top: 30px !important;
+					margin-bottom: 20px;
+				}
+
+				.review__form{
+					margin-top: 20px;
+				}
+
+				.review__form .btn_save{
+					margin-top: 10px;
+					float: none !important;
+				}
+
+				.stars{
+					margin-top:10px;
+				}
+
+				.review__user_image{
+					display: block;
+					border-radius: 50%;
+					width: 60px;
+					height: 60px;
+					background-repeat: no-repeat;
+					background-position: center;
+					background-size: cover;
+					background-color: #ededed;
+				}
+
+				.review_item {
+					padding: 20px;
+					-webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.349019607843137);
+					box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.349019607843137);
+					margin-bottom: 20px;
+				}
+
+				.review__post_date{
+					color: #ccc;
+					font-size: 12px;
+				}
+
+				.review__user_name{
+					font-weight: bold;
+					text-transform: uppercase;
+					font-size: 15px;
+				}
+
+				.review__left_side{
+					justify-content: flex-start;
+					display: flex;
+					align-items: center;
+				}
+
+				.review__top_side{
+					justify-content: space-between;
+					display: flex;
+					align-items: center;
+				}
+
+				.review__user_info{
+					margin-left: 10px;
+				}
+
+				.review__message{
+					margin-top: 10px;
+					font-size: 14px;
+					color: #333;
+				}
+
+			</style>
+
 		</div>
 	</div>
 </div>

@@ -51,24 +51,24 @@
             <form class="ajax__submit" method="POST" action="/contacts">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <label>Ваше имя</label>
-                    <input type="text" class="form-control" id="" placeholder="Имя">
+                    <label>Ваше имя <span class="req">*</span></label>
+                    <input type="text" name="name" class="form-control" id="" placeholder="Имя">
                 </div>
                 <div class="form-group">
                     <label>Email адресс</label>
-                    <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail" placeholder="Email">
                 </div>
                 <div class="form-group">
-                    <label for="telephone">Номер телефона</label>
-                    <input type="tel" class="form-control" id="telephone" placeholder="Телефон">
+                    <label for="telephone">Номер телефона <span class="req">*</span></label>
+                    <input type="tel" name="phone" class="form-control" id="telephone" placeholder="Телефон">
                 </div>
                 <div class="form-group">
-                    <label for="description">Сообщение</label>
-                    <textarea class="form-control" id="description" placeholder="Сообщение"></textarea>
+                    <label for="description">Сообщение <span class="req">*</span></label>
+                    <textarea class="form-control" id="description" name="message" placeholder="Сообщение"></textarea>
                 </div>
                 <div class="form__footer">
                     <small>Нажимая кнопку «Отправить», Вы принимаете условия Пользовательского соглашения и политики конфиденциальности нашего портала</small>
-
+                    <div id="error-respond"></div>
                     <button type="submit" class="btn btn2" style="width: auto;">
                         Отправить
                     </button>

@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Cities', 'id', 'city');
     }
 
+    public function teacherReviews()
+    {
+        return $this->hasMany('App\Models\TeacherReviews', 'id_teacher', 'id')->orderBy('created_at', 'desc');
+    }
+
     public function userType()
     {
         return $this->hasOne('App\Models\UserTypes', 'id', 'user_type');

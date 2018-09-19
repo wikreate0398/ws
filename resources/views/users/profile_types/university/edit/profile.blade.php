@@ -80,9 +80,41 @@
 				<div class="form-group">
 					<input class="form-control" value="{{ $user['phone'] }}" name="phone" type="text">
 				</div>
-				<div class="form-group">
-					<input class="form-control" value="{{ $user['phone2'] }}" name="phone2" type="text">
-				</div>
+			</div>
+			<div class="clearfix"></div>
+			<label class="col-md-4 control-label">Отделы</label>
+			<div class="col-md-8">
+				@if(count($user->universityDepartment))
+                    <?php $i=0; ?>
+					@foreach($user->universityDepartment as $department)
+						<div class="row multi__container education__container {{ ($i == 0) ? 'first_block' : '' }}">
+							@if($i > 0)
+								<a class="close__item delete__item" href="{{ route(userRoute('delete_department'), ['id' => $department->id]) }}">X</a>
+							@endif
+							@include('users.profile_types.university.partials.department')
+						</div>
+                        <?php $i++ ?>
+					@endforeach
+				@else
+					<div class="row multi__container education__container first_block">
+						@include('users.profile_types.university.partials.department')
+					</div>
+				@endif
+
+				<button class="btn btn-sm btn-dafault add__more"
+						onclick="addBlock('education__container');"
+						type="button">
+					+ Добавить еще
+				</button>
+			</div>
+			<div class="clearfix"></div>
+			<br>
+			<label class="col-md-4 control-label">Месторасположение<span class="req">*</span></label>
+			<div class="col-md-8">
+				<div id="map"
+					 data-name="{{ $user->university->full_name }}"
+					 style="width: 100%; height: 400px"></div>
+				<input type="hidden" id="placemark" name="placemark" value="{{ $user->university->placemark }}">
 			</div>
 			<div class="clearfix"></div>
 			<div class="col-md-12">

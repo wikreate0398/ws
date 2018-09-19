@@ -111,3 +111,24 @@ function deleteTeacherSubject(id) {
         $('.select--subjects-label').show();
     }
 }
+
+ymaps.ready(initMap);
+function initMap(coords) {
+    var placemark = $('#map').attr('data-placemark').split(',');
+    if (placemark != ''){
+        var iconCaption = $('#map').attr('data-iconCaption');
+        var myMap = new ymaps.Map("map", {
+            center: placemark,
+            zoom: 7
+        });
+
+        var myPlacemark = new ymaps.Placemark(placemark, {
+            iconCaption: iconCaption
+        }, {
+            preset: 'islands#violetDotIconWithCaption',
+            draggable: true
+        });
+
+        myMap.geoObjects.add(myPlacemark);
+    }
+}

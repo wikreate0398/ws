@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\User', 'university_bookmarks', 'id_university', 'id_user')->allowUser();
     }
 
+    public function universityDepartment()
+    {
+        return $this->hasMany('App\Models\UniversityDepartment', 'id_university', 'id')->orderBy('id', 'asc');
+    }
+
     public function userUniversityBoockmarks()
     {
         return $this->belongsToMany('App\Models\User', 'university_bookmarks', 'id_user', 'id_university')->allowUser();

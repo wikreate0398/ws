@@ -82,8 +82,10 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::post('update-general', "$controller@editGeneral")->name("{$userDefine}_update_general");
 		 	Route::post('update-certificates', "$controller@editCertifications")->name("{$userDefine}_update_certificates");
 
+            Route::get('delete-department/{id}', "$controller@deleteDepartment")->name("{$userDefine}_delete_department");
+
 		 	Route::get('favorites', "\App\Http\Controllers\\Users\FavoritesController@index")->name("{$userDefine}_user_favorites");
-		 	Route::get('favorites/delete/{id}', "\App\Http\Controllers\\Users\FavoritesController@destroy")->name("{$userDefine}_user_favorites_delete"); 
+		 	Route::get('favorites/delete/{id}', "\App\Http\Controllers\\Users\FavoritesController@destroy")->name("{$userDefine}_user_favorites_delete");
 
 		 	Route::group(['prefix' => 'faculties'], function() use($userDefine) {
 		 		$controller = 'FacultiesController';

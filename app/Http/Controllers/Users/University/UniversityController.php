@@ -61,7 +61,11 @@ class UniversityController extends ProfileController
             'specializations' => UniversitySpecializationsList::where('view', '1')->orderBy('page_up','asc')->orderBy('id','desc')->get(), 
             'user'            => User::with('university')->where('id', $user->id)->first(),  
             'university'      => University::orderBy('page_up','asc')->get(),
-            'university_specializations' => UniversitySpecializations::where('id_university', $user->university->id)->get(),   
+            'university_specializations' => UniversitySpecializations::where('id_university', $user->university->id)->get(),
+            'scripts' => [
+                'full:https://api-maps.yandex.ru/2.1/?lang=ru_RU',
+                'js/map.js'
+            ]
         ];
 
         $data['userUniversity'] = $data['user']['university'];
@@ -75,8 +79,7 @@ class UniversityController extends ProfileController
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
-        } 
- 
+        }
  
         return \App\Utils\JsonResponse::success(self::redirectAfterSave('profile', $request, Auth::user()), 'Данные успешно сохранены!'); 
     }  

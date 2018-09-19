@@ -46,6 +46,22 @@ function format_by_count($count, $form1, $form2, $form3)
     return $form3;
 }
 
+function keykeyInsteadOfField($array)
+{
+    $data = [];
+    if (!empty($array))
+    {
+        foreach ($array as $field => $value)
+        {
+            foreach ($value as $key => $item)
+            {
+                $data[$key][$field] = $item;
+            }
+        }
+    }
+    return $data;
+}
+
 function dayCase($ndata)
 {  
     return format_by_count($ndata, 'день', 'дня', 'дней');

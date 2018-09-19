@@ -310,15 +310,30 @@
                                 <td>{{ $university->user->site }}</td>
                             </tr>
                         @endif
-                    </table>
-                    <br>
-                    <strong>КОНТАКТЫ</strong>
-                    <table>
                         <tr>
-                            <td>ПРИЕМНАЯ КОМИССИЯ:</td>
+                            <td>ТЕЛЕФОН:</td>
                             <td>{{ $university->user->phone }}</td>
                         </tr>
                     </table>
+                    @if($university->user->universityDepartment->count())
+                        <br>
+                        <strong>ОТДЕЛЫ</strong>
+                        <table>
+                            @foreach($university->user->universityDepartment as $department)
+                                <tr>
+                                    <th>{{ $department->name }}</th>
+                                    <td>{{ $department->phone }}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    @endif
+
+                    @if($university->placemark)
+                        <div id="map"
+                             data-iconCaption="{{ $university->full_name }}"
+                             data-placemark="{{ $university->placemark }}"
+                             style="width: 100%; height: 400px; margin-top: 20px;"></div>
+                    @endif
                 </div>
             </div>
         </div>

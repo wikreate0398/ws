@@ -90,6 +90,7 @@ class UniversityController extends Controller
             'university' => $university, 
             'bookmark'   => $bookmark,
             'scripts' => [
+                'full:https://api-maps.yandex.ru/2.1/?lang=ru_RU',
                 'js/university.js',
                 'js/courses.js'
             ]

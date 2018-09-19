@@ -187,5 +187,11 @@ class ProfileController extends Controller
     { 
         \App\Models\UsersEducations::where('id', $id)->where('id_user', Auth::user()->id)->delete();
         return redirect()->back()->with('flash_message', 'Образование успешно удалено');
-    }  
+    }
+
+    public function deleteDepartment($id)
+    {
+        \App\Models\UniversityDepartment::where('id', $id)->where('id_university', Auth::user()->id)->delete();
+        return redirect()->back()->with('flash_message', 'Отдел успешно удален');
+    }
 }

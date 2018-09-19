@@ -872,4 +872,8 @@ function teacherStatus(input){
         success: function(jsonResponse, textStatus, request) {},
         complete: function() {}
     }); 
-} 
+}
+
+function log(data) {
+    console.log(data);
+}

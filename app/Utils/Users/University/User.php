@@ -7,6 +7,7 @@ use App\Models\User as ModelUser;
 use App\Models\UsersUniversity;
 use App\Models\UniversitySpecializations;
 use App\Models\UsersCertificates;
+use App\Models\UniversityDepartment;
 use Illuminate\Support\Facades\Hash;
 
 class User 
@@ -167,16 +168,31 @@ class User
             'city'    => $data['city'], 
             'region'  => $data['region'],
             'phone'   => $data['phone'],
-            'phone2'  => !empty($data['phone2']) ? $data['phone2'] : '', 
             'site'    => !empty($data['site']) ? $data['site'] : '',
             'email'   => $data['email'],
             'univ_profile_filled' => '1'
         ]);  
 
         UsersUniversity::where('id_user', $this->userId)->update([    
-            'full_name'          => $data['name'],  
+            'full_name'          => $data['name'],
+            'placemark'          => $data['placemark'],
             'year_of_foundation' => date('Y-m-d', strtotime($data['year_of_foundation'])), 
-        ]); 
+        ]);
+
+        UniversityDepartment::where('id_university', $this->userId)->delete();
+        if (!empty($data['department']))
+        {
+            $insert          = [];
+            foreach (keykeyInsteadOfField($data['department']) as $item)
+            {
+                $insert[] = [
+                    'id_university' => $this->userId,
+                    'name'          => $item['name'],
+                    'phone'         => $item['phone']
+                ];
+            }
+            UniversityDepartment::insert($insert);
+        }
 
         if (!empty($data['old_password'])) 
         { 

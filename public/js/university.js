@@ -119,7 +119,8 @@ function initMap(coords) {
         var iconCaption = $('#map').attr('data-iconCaption');
         var myMap = new ymaps.Map("map", {
             center: placemark,
-            zoom: 7
+            zoom: 7,
+            controls: ['trafficControl', 'fullscreenControl', 'zoomControl'],
         });
 
         var myPlacemark = new ymaps.Placemark(placemark, {

@@ -130,7 +130,7 @@ class Courses extends Model
 
         }
 
-        return $courses->published()->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 2,
+        return $courses->published()->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 12,
                                       ['*'], 
                                       'page', 
                                       !empty($input['page']) ? $input['page'] : 1);

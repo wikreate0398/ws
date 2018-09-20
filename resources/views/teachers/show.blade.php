@@ -210,8 +210,10 @@
 				<div class="row">
 					@foreach($teacher->certificates as $certificate)
 						<div class="col-lg-4">
-							<img class="img-responsive" src="{{ imageThumb(@$certificate->image, 'uploads/users/certificates', 400, 500, 'teacher_in') }}">  
-						</div> 
+							<a href="/public/uploads/users/certificates/{{ @$certificate->image }}" class="fancybox">
+								<img class="img-responsive" src="{{ imageThumb(@$certificate->image, 'uploads/users/certificates', 400, 500, 'teacher_in') }}">
+						    </a>
+						</div>
 					@endforeach
 				</div>
 			</div>

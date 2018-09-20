@@ -34,12 +34,14 @@ class PagesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
+    {
         $data = [
             'university' => UsersUniversity::getUniversities(),
             'teachers'   => User::allowUser()->where('user_type', 2)->orderBy('created_at', 'desc')->get(),
             'stats'      => [
-                'institutions' => User::allowUser()->where('user_type', 3)->count(),
+                'institutions' => UsersUniversity::whereHas('user', function($query){
+                                    return User::allowUser();
+                                  })->count(),
                 'teachers'     => User::allowUser()->where('user_type', 2)->count(),
                 'courses'      => Courses::published()->count() 
             ],  

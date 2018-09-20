@@ -109,7 +109,7 @@ class Courses extends Model
             });
         }
 
-        switch ($input['filter']){
+        switch (@$input['filter']){
             case "popular":
                 $courses->leftJoin('count_views', 'count_views.id_item', '=', 'courses.id')
                         ->withCount('userRequests')

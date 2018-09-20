@@ -82,7 +82,7 @@
 					</li>
 					<li class="{{ isActive(route(userRoute('user_favorites'))) ? 'active' : '' }}">
 			      		<a href="{{ route(userRoute('user_favorites')) }}">Избранное</a>
-			      	</li> 
+			      	</li>
 					<li class="{{ isActive(route(userRoute('user_reviews'))) ? 'active' : '' }}">
 						<a href="{{ route(userRoute('user_reviews')) }}">ОТЗЫВЫ И КОММЕНТАРИИ</a>
 					</li> 

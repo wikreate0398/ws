@@ -84,6 +84,8 @@ class Courses extends Model
     {
         $courses = (new Courses)->newQuery();
 
+        $courses->select('courses.*');
+
         if (!empty($input['q'])) 
         {
             $courses->where('name', 'like', '%'.$input['q'].'%');
@@ -105,12 +107,43 @@ class Courses extends Model
             $courses->whereHas('category', function($query) use($cat){
                 $query->where('url', $cat);
             });
-        }  
-        
-        return $courses->published()->with('user')->orderByCourses()->paginate(!empty($input['per_page']) ? $input['per_page'] : 6, 
+        }
+
+        switch ($input['filter']){
+            case "popular":
+                $courses->leftJoin('count_views', 'count_views.id_item', '=', 'courses.id')
+                        ->withCount('userRequests')
+                        ->orderBy('count_views.count', 'desc')
+                        ->orderBy('user_requests_count', 'desc');
+                break;
+
+            case "new":
+                $courses->orderBy('id', 'desc');
+                break;
+
+            case "discount":
+                $courses->where('discount_price', '>', 0);
+                break;
+
+            default:
+                $courses->orderByCourses();
+
+        }
+
+        return $courses->published()->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 2,
                                       ['*'], 
                                       'page', 
                                       !empty($input['page']) ? $input['page'] : 1);
+    }
+
+    public function scopeOrderByCourses($query)
+    {
+        return $query->orderBy('date_from');
+    }
+
+    public function counter()
+    {
+        return $this->hasOne('App\Models\CountViews', 'id', 'id_item')->where('type', 'course');
     }
 
     public function scopePublished($query)
@@ -174,11 +207,6 @@ class Courses extends Model
     public function scopeFinishedStatus($query)
     {
         return $query->whereDate('date_to', '<', date('Y-m-d'))->where('settings_filled', '1');
-    }
-
-    public function scopeOrderByCourses($query)
-    { 
-        return $query->orderBy('date_from'); 
     }
 
     public static function countTotal()

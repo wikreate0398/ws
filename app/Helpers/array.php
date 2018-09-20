@@ -423,3 +423,17 @@ function getUserYears($birthDate)
     $diff = $d2->diff($d1);  
     return $diff->y;
 }
+
+function addUriParam($param){
+    $url = request()->url();
+    $get = \Illuminate\Support\Facades\Input::get();
+
+    foreach ($param as $key => $value)
+    {
+        $get[$key] = $value;
+    }
+
+    $fullUrl = $url . '?' . http_build_query($get);
+
+    return $fullUrl;
+}

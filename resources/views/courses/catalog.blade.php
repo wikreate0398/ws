@@ -36,31 +36,31 @@
         </div>
 		<div class="col-lg-12">
 			<ul class="nav nav-tabs filter_tabs">
-				<li class="active">
-					<a href="#">
+				<li class="{{ (request()->filter == 'popular') ? 'active' : '' }}">
+					<a href="{{ addUriParam(['filter' => 'popular']) }}">
 						Популярные курсы
 					</a>
 				</li>
-				<li class="">
-					<a href="#">
+				<li class="{{ (request()->filter == 'new') ? 'active' : '' }}">
+					<a href="{{ addUriParam(['filter' => 'new']) }}">
 						Новые курсы
 					</a>
 				</li>                                             
-				<li class="">
-					<a href="#">
+				<li class="{{ (request()->filter == 'featured') ? 'active' : '' }}">
+					<a href="{{ addUriParam(['filter' => 'featured']) }}">
 						Рекомендуемые
 					</a>
 				</li>                                             
-				<li class="">
-					<a href="#">
+				<li class="{{ (request()->filter == 'discount') ? 'active' : '' }}">
+					<a href="{{ addUriParam(['filter' => 'discount']) }}">
 						Есть скидка
 					</a>
 				</li>                                          
-				<li class="">
-					<a href="#">
+				<!---<li class="{{ (request()->filter == 'online_training') ? 'active' : '' }}">
+					<a href="{{ addUriParam(['filter' => 'online_training']) }}">
 						Онлайн обучение
 					</a>
-				</li>                         
+				</li>         -->
 			</ul>
 		</div>
     </div>
@@ -190,7 +190,7 @@
 								</li>
 							</ul>
 							<ul class="list-inline card_date_info">
-								<li class="left_date"><i class="fa fa-user"></i> {{ $course->user_requests_count }}</li> 
+								<li class="left_date"><i class="fa fa-user"></i> {{ $course->user_requests_count }}</li>
 								@php 
 									$esablishDate = Course::manager($course)->esablishDate();  
 								@endphp

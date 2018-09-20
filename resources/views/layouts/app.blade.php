@@ -158,13 +158,13 @@
 										<img src="{{ imageThumb(@Auth::user()->avatar, 'uploads/users', 40, 40, 'icon') }}">
 									</a>
 								</li>
-								<li><a href="#"><img src="/images/icon_bookmark2.png"></a></li>
+								<li><a href="{{ route(userRoute('user_favorites')) }}"><img src="/images/icon_bookmark2.png"></a></li>
 								<li>
 									<a href="{{ route('logout') }}">Выйти</a>
 								</li>
 							@else 
 								<li class="register_link">
-									<a href="{{ route('registration') }}?type=teacher">Хочу обучать</a>
+									<a href="{{ Page::getUriByType('want-to-teach') }}">Хочу обучать</a>
 								</li>
 								<li>
 									<a href="{{ route('login') }}">Войти</a>

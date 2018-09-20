@@ -40,4 +40,9 @@ class Page
     {
         return !request()->segment(1) ? '' : request()->segment(1);
     }
+
+    public function getUriByType($type)
+    {
+        return @Menu::where('page_type', $type)->first()->url;
+    }
 }

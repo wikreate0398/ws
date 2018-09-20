@@ -71,7 +71,7 @@
 
 			      	<li class="{{ isActive(route(userRoute('user_favorites'))) ? 'active' : '' }}">
 			      		<a href="{{ route(userRoute('user_favorites')) }}">Избранное</a>
-			      	</li> 
+			      	</li>
 					@endif
                 </ul>
 				@endif

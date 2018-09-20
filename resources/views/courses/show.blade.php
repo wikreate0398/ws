@@ -36,7 +36,7 @@
                     $esablishDate = Course::manager($course)->esablishDate();  
                 @endphp 
 				<li><i class="fa fa-calendar"></i> {{ $esablishDate['status'] }} {{ $esablishDate['date'] }}</li>
-				<li><i class="fa fa-user" aria-hidden="true"></i> {{ count($course->userRequests) }}</li>
+				<li><i class="fa fa-user" aria-hidden="true"></i> {{ $course->userRequests->count() }}</li>
 				<li><i class="fa fa-clock-o" aria-hidden="true"></i>
 					@php 
 	                    $diff = dateDiff($course->date_from, $course->date_to);
@@ -93,11 +93,7 @@
 					</button> 
 				</li>
 				<li>
-					<button type="button" 
-						@if(Course::request($course)->canMakeRequest() !== true && Auth::check() == true)
-							disabled
-						@endif
-						onclick="courseRequest(this, {{ $course->id }}, '{{ Auth::check() }}', '{{ (Course::request($course)->canMakeRequest()!==true) ? false : true }}')" 
+					<button type="button"
 						class="btn add_course_free course_request_btn">
 						ПОПРОБЫВАТЬ БЕСПЛАТНО
 					</button> 

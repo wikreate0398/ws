@@ -12,7 +12,8 @@ use App\Models\User;
 use App\Models\Courses;
 use App\Models\CourseCategory; 
 use App\Models\CourseFavorite; 
-use App\Models\CourseReviews; 
+use App\Models\CourseReviews;
+use App\Models\CountViews;
  
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -70,8 +71,8 @@ class CoursesController extends Controller
                               }])->has('courses', '>=', '1')->get(); 
         } 
 
-        $courses = Courses::getCatalog($cat, $subcat, $request->all()); 
-        
+        $courses = Courses::getCatalog($cat, $subcat, $request->all());
+
         $data = [
             'courses'           => $courses, 
             'totalCourses' => Courses::countTotal(),
@@ -81,7 +82,8 @@ class CoursesController extends Controller
             'scripts' => [
                 'js/filter_courses.js',
                 'js/courses.js'
-            ]
+            ],
+            'filterUrl' => request()->fullUrl() . (request()->query() ? '&' : '?')
         ];    
 
         return view('courses.catalog', $data);
@@ -96,10 +98,28 @@ class CoursesController extends Controller
             'scripts'        => [
                 'js/courses.js'
             ]
-        ]; 
- 
+        ];
+        self::counter($id);
         return view('courses.show', $data);
-    } 
+    }
+
+    private static function counter($id)
+    {
+        $count = CountViews::where('type', 'course')->where('id_item', $id)->first();
+        if ($count)
+        {
+            $count->count++;
+            $count->save();
+        }
+        else
+        {
+            CountViews::create([
+                'type'    => 'course',
+                'id_item' => $id,
+                'count'   => 1
+            ]);
+        }
+    }
 
     public function autocomplete(Request $request)
     { 

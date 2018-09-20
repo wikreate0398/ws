@@ -217,18 +217,20 @@
 					<a href="/courses">Все Курсы <span class="badge badge-default">{{ $totalCourses }}</span></a>
 				</li>
 				@foreach($categories as $category)
-					<li class="{{ (request()->segment(3) == $category['url']) ? 'active' : '' }}">
-						<a href="/courses/cat/{{ $category['url'] }}">
-							{{ $category['name'] }} 
-							<span class="badge badge-default">
-								@if($subcatFlag == false)
-									{{ count($category->courses) }}
-								@else
-									{{ count($category->coursesSubcat) }}
-								@endif
-							</span>
-						</a>
-					</li>
+					@if($category->courses->count())
+						<li class="{{ (request()->segment(3) == $category['url']) ? 'active' : '' }}">
+							<a href="/courses/cat/{{ $category['url'] }}">
+								{{ $category['name'] }}
+								<span class="badge badge-default">
+									@if($subcatFlag == false)
+										{{ count($category->courses) }}
+									@else
+										{{ count($category->coursesSubcat) }}
+									@endif
+								</span>
+							</a>
+						</li>
+					@endif
 				@endforeach
 			</ul>
 		</div>

@@ -62,13 +62,13 @@ class CoursesController extends Controller
             } 
             $categories =  CourseCategory::with(['coursesSubcat' => function($query){ 
                             $query->published();
-                        }])->has('coursesSubcat', '>=', '1')->where('parent_id', $id)->get();  
+                        }])->get();
         }
         else
         {
             $categories = CourseCategory::with(['courses' => function($query){ 
                                     $query->published();
-                              }])->has('courses', '>=', '1')->get(); 
+                              }])->get();
         } 
 
         $courses = Courses::getCatalog($cat, $subcat, $request->all());

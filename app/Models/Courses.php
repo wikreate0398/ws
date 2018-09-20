@@ -122,7 +122,11 @@ class Courses extends Model
                 break;
 
             case "discount":
-                $courses->where('discount_price', '>', 0);
+                $courses->where('discount_price', '>', 0)->orderByCourses();
+                break;
+
+            case "featured":
+                $courses->where('featured', 1)->orderByCourses();
                 break;
 
             default:

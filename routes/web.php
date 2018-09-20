@@ -214,9 +214,12 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
 			}); 
 
-		 	Route::get('favorites', "\App\Http\Controllers\\Users\FavoritesController@index")->name("{$userDefine}_user_favorites");
-		 	Route::get('favorites/delete/{id}', "\App\Http\Controllers\\Users\FavoritesController@destroy")->name("{$userDefine}_user_favorites_delete"); 
-		 	 
+		 	Route::get('favorites', "\App\Http\Controllers\Users\FavoritesController@index")->name("{$userDefine}_user_favorites");
+		 	Route::get('favorites/delete/{id}', "\App\Http\Controllers\Users\FavoritesController@destroy")->name("{$userDefine}_user_favorites_delete");
+
+            Route::get('reviews', "$controller@showReviews")->name("{$userDefine}_user_reviews");
+            Route::get('reviews/delete/{id}', "$controller@reviewDelete")->name("{$userDefine}_review_delete");
+
 		});  
 	});  
   

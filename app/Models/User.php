@@ -58,6 +58,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\TeacherReviews', 'id_teacher', 'id')->orderBy('created_at', 'desc');
     }
 
+    public function userTeacherReviews()
+    {
+        return $this->hasMany('App\Models\TeacherReviews', 'id_user', 'id')->orderBy('created_at', 'desc');
+    }
+
+    public function userCourseReviews()
+    {
+        return $this->hasMany('App\Models\CourseReviews', 'id_user', 'id')->orderBy('created_at', 'desc');
+    }
+
     public function userType()
     {
         return $this->hasOne('App\Models\UserTypes', 'id', 'user_type');

@@ -258,7 +258,7 @@
 				</div>
 			@endif
 
-			@if(Auth::check() && !in_array(Auth::user()->id, $teacher->teacherReviews->pluck('id_user')->toArray()))
+			@if(Auth::check() && !in_array(Auth::user()->id, $teacher->teacherReviews->pluck('id_user')->toArray()) && @Auth::user()->user_type == 1)
 				<div class="review__container">
 					<button class="btn" onclick="$('.review__form').slideToggle()">Оставить Отзыв</button>
 					<div class="review__form" style="display: none;">

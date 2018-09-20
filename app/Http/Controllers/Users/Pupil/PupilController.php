@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Users\Pupil;
 
 use App\Models\User; 
-use App\Models\Regions; 
+use App\Models\Regions;
+use App\Models\CourseReviews;
+use App\Models\TeacherReviews;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
@@ -42,21 +44,44 @@ class PupilController extends ProfileController
             'user'    => Auth::user(), 
             'include' => $this->viewPath . 'edit'
         ]); 
-    } 
-
-    public function showSubscriptions()
-    {
-        return view('users.user_profile', [ 
-            'user'               => Auth::user(), 
-            'include'            => $this->viewPath . 'subscriptions',
-        ]); 
     }
 
     public function showReviews()
     {
-        return view('users.user_profile', [ 
-            'user'               => Auth::user(), 
-            'include'            => $this->viewPath . 'reviews',
-        ]); 
-    }    
+        switch (request()->p) {
+            case 'courses':
+                $page = 'courses';
+                break;
+
+            case 'teachers':
+                $page = 'teachers';
+                break;
+
+            default:
+                $page = 'university';
+                break;
+        }
+
+        $data = [
+            'user'    => Auth::user(),
+            'include' => $this->viewPath . 'reviews',
+            'page'    => 'users.profile_types.user.reviews.' . $page,
+        ];
+
+        return view('users.user_profile', $data);
+    }
+
+    public function reviewDelete($id)
+    {
+        $type = \request()->type;
+        if ($type == 'teacher')
+        {
+            TeacherReviews::whereId($id)->delete();
+        }
+        elseif($type == 'course')
+        {
+            CourseReviews::whereId($id)->delete();
+        }
+        return redirect()->back()->with('flash_message', 'Отзыв успешно удален');
+    }
 }

@@ -20,5 +20,10 @@ class TeacherReviews extends Model
     public function user()
     {
         return $this->hasOne('App\Models\User', 'id', 'id_user');
-    }  
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'id_teacher');
+    }
 }

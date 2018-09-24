@@ -23,9 +23,16 @@ function teacherBookmark(item, id){
 
 function teacherRequest(button, id_teacher, auth, hasRequest)
 {
+
+    if (!confirm('Вы действительно хотите оставить заявку этому преподавателю?'))
+    {
+        return;
+    }
+
     if (hasRequest == true && auth == true) { 
         return;
     }
+
     if (auth != true) 
     {
         window.location = loginLink + '?redirectUri=/teacher/' + id_teacher + '/makeRequest';

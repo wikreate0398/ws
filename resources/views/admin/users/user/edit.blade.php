@@ -10,12 +10,6 @@
 
                 <div class="row" style="padding-top:20px;">
                     <div class="col-md-6">
-                       <!--  <div class="form-group">
-                            <label class="col-md-12 control-label">Фамилия <span class="req">*</span></label>
-                            <div class="col-md-12">
-                                <input type="text" class="form-control" name="surname" value="{{ $user->surname }}" required autofocus>
-                            </div>
-                        </div> -->
 
                         <div class="form-group">
                             <label class="col-md-12 control-label">Имя <span class="req">*</span></label>
@@ -25,13 +19,17 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
-                            <label class="col-md-12 control-label">Отчество <span class="req">*</span></label>
+                        <div class="form-group">
+                            <label class="col-md-12 control-label">Пол <span class="req">*</span></label>
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="patronymic"
-                                       value="{{ $user->patronymic }}" required>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sex" {{ ($user->sex=='female') ? 'checked' : '' }} id="inlineRadio1" value="female"> Женский
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sex" {{ ($user->sex=='male') ? 'checked' : '' }} id="inlineRadio2" value="male"> Мужской
+                                </label>
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="form-group">
                             <label class="col-md-12 control-label">Расположение</label>
@@ -54,6 +52,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-md-12 control-label">Адрес <span class="req">*</span></label>
+                            <div class="col-md-12">
+                                <input class="form-control" name="address" value="{{ $user->address }}" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-md-12 control-label">E-mail <span class="req">*</span></label>
                             <div class="col-md-12">
                                 <input type="email" class="form-control" name="email" value="{{ $user->email }}"
@@ -68,7 +73,7 @@
                             </label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control datepicker" name="date_birth"
-                                       value="{{ !empty($user->date_birth) ? date('d-m-Y', strtotime($user->date_birth)) : '' }}" required placeholder="DD/MM/YY">
+                                       value="{{ !empty($user->date_birth) ? date('d.m.Y', strtotime($user->date_birth)) : '' }}" required placeholder="DD.MM.YY">
                             </div>
                         </div>
 

@@ -7,6 +7,7 @@ use App\Utils\Users\FastRegistration;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\UsersCertificates;
 
 class SiteUser extends Controller
 {
@@ -20,7 +21,8 @@ class SiteUser extends Controller
 
 	public function fastRegister(Request $request)
     {
-        $input = $request->all();  
+        $input = $request->all();
+
         $this->_fastRegister->setUserType($input['user_type']);
         $this->_fastRegister->setRequestData($input); 
         if ($this->_fastRegister->validationData($input) !== true) 
@@ -28,15 +30,14 @@ class SiteUser extends Controller
             return $this->_fastRegister->getError();
         } 
 
-        $user = $this->_fastRegister->register();
-        User::where('id', $user['id'])->
-            update([ 
-                'activate'     => '1',
-                'confirm'      => '1', 
-                'confirm_date' => date('Y-m-d H:i:s'),
-        ]);
+        $user    = $this->_fastRegister->register();
+        $getUser = User::whereId( $user['id'])->with('userType')->first();
+        $getUser->create_from_admin = 1;
+        $getUser->save();
 
-        return \App\Utils\JsonResponse::success(['message' => 'Пользователь успешно добавлен!']);
+        return \App\Utils\JsonResponse::success([
+            'redirect' => '/admin/users/'. $getUser->userType->admin_url .'/'. $getUser->id .'/edit'
+        ], 'Пользователь успешно добавлен! Заполните обязательные поля.');
     }
 
     public function updatePassword($id)
@@ -62,5 +63,27 @@ class SiteUser extends Controller
         $obj_user->save(); 
 
         return \App\Utils\JsonResponse::success(['reload' => true], 'Пароль успешно изменен!');  
-    } 
+    }
+
+    public function allowUser($id)
+    {
+        $getUser = User::whereId($id)->first();
+        if (@$getUser->create_from_admin == 1)
+        {
+            $getUser->activate = 1;
+            if (!$getUser->confirm)
+            {
+                $getUser->confirm = 1;
+                $getUser->confirm_date = date('Y-m-d H:i:s');
+            }
+            $getUser->save();
+        }
+    }
+
+    public function deleteCertificate(Request $request)
+    {
+        $id      = $request->input('id');
+        $id_user = $request->input('id_user');
+        UsersCertificates::whereId($id)->where('id_user', $id_user)->delete();
+    }
 }

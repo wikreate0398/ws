@@ -11,7 +11,8 @@ use App\Models\Regions;
 use App\Models\UsersUniversity; 
 use App\Models\University;  
 use App\Models\UniversitySpecializationsList;
-use App\Models\UniversitySpecializations; 
+use App\Models\UniversitySpecializations;
+use Illuminate\Support\Facades\DB;
 
 use App\Utils\Users\University\User as UniversityUser;
 use App\Http\Controllers\Admin\Users\SiteUser;
@@ -34,6 +35,7 @@ class UniversityUserController extends SiteUser
      */
     public function __construct() 
     {
+        parent::__construct();
         $this->_user = new UniversityUser;
     } 
 
@@ -60,42 +62,47 @@ class UniversityUserController extends SiteUser
         ]);
     }
 
-    private function validateInputs(array $data)
-    { 
-        $validator = Validator::make($data, $this->rules, ['unique' => 'Пользователь уже Существует.']); 
-        $validator->setAttributeNames($this->niceNames);  
-        return $validator;
-    }
-
-    public function createUser(Request $request)
-    {
-        $data     = $request->all();  
-        $validate = $this->validation($data, $this->addRules);
-        if ($validate !== true) 
-        {  
-            return \App\Utils\JsonResponse::error(['messages' => $validate]); 
-        } 
-
-        $create = $this->_user->create($data);
- 
-        User::where('id', $create)->
-            update([ 
-                'activate'     => '1',
-                'confirm'      => '1', 
-                'confirm_date' => date('Y-m-d H:i:s'),
-        ]);
-
-        return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
-    }
-
     public function updateUser($id, Request $request)
     {
-        $edit = $this->_user->edit($request->all(), $id);   
-        if ($edit !== true) 
+        $data     = $request->all();
+        $_methods = [
+            'editProfile', 'editGeneral'
+        ];
+
+        try {
+            DB::beginTransaction();
+            $this->_user->setUserId($id);
+            $error = [];
+            foreach ($_methods as $key => $method) {
+                $_edit = $this->_user->{$method}($data);
+                if ($_edit !== true)
+                {
+                    if (!is_array($_edit))
+                    {
+                        $arr['nf'] = $_edit;
+                        $_edit     = $arr;
+                    }
+                    $error = array_merge($error, $_edit);
+                }
+            }
+
+            if (!empty($error))
+            {
+                throw new \Exception(serialize($error));
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return \App\Utils\JsonResponse::error(['messages' => unserialize($e->getMessage())]);
+        }
+        if (!empty($data['certificates']))
         {
-            return \App\Utils\JsonResponse::error(['messages' => $edit]);  
-        } 
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
+            $this->_user->saveCertificates($data['certificates']);
+        }
+
+        $this->allowUser($id);
+
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!');
     }  
 
     public function showeditForm($id)
@@ -109,10 +116,14 @@ class UniversityUserController extends SiteUser
             'specializations' => UniversitySpecializationsList::where('view', '1')->orderBy('page_up','asc')->orderBy('id','desc')->get(), 
             'user'            => User::with('university')->where('id', $user->id)->first(),  
             'university'      => University::orderBy('page_up','asc')->get(),
-            'university_specializations' => UniversitySpecializations::where('id_university', $user->university->id)->get(), 
+            'university_specializations' => UniversitySpecializations::where('id_university', $user->university->id)->get(),
+            'scripts' => [
+                'full:https://api-maps.yandex.ru/2.1/?lang=ru_RU',
+                'js/map.js'
+            ]
         ];
         $data['userUniversity'] = $user['university'];
         
         return view('admin.'.$this->folder.'.edit', $data);
-    }  
+    }
 }

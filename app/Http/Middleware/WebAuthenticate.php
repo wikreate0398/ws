@@ -18,10 +18,17 @@ class WebAuthenticate
     {
         if (Auth::check() == true && in_array(0, array(Auth::user()->activate, Auth::user()->confirm)) or empty(Auth::user()->id)) 
         {
-            Auth::guard('web')->logout(); 
-            return  redirect()->route('login');
-        }   
- 
+            if ($request->ajax())
+            {
+                header("HTTP/1.1 401 Unauthorized");
+                die();
+            }
+            else
+            {
+                Auth::guard('web')->logout();
+                return  redirect()->route('login');
+            }
+        }
         return $next($request);
     }
 }

@@ -505,9 +505,15 @@
 <!-- Main scripts -->
 <script src="/admin_theme/assets/js/jquery.nestable.js?v=<?=time()?>" type="text/javascript"></script>
 <script src="/admin_theme/assets/js/ajax.js?v={{ time() }}" type="text/javascript"></script>
-<script src="/admin_theme/assets/js/custom.js?v={{ time() }}" type="text/javascript"></script> 
+<script src="/admin_theme/assets/js/custom.js?v={{ time() }}" type="text/javascript"></script>
 
-<script>
+   @if(!empty($scripts))
+       @foreach($scripts as $key => $script)
+           {!! setScript('/public/', $script) !!}
+       @endforeach
+   @endif
+
+   <script>
    jQuery(document).ready(function() {    
       Metronic.init(); // init metronic core components
       Layout.init(); // init current layout

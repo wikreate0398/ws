@@ -25,13 +25,13 @@
                   <label class="col-md-4 control-label">ВАШЕ ФИО <span class="req">*</span></label>
                   <div class="col-md-8">
                      <div class="form-group">
-                        <input class="form-control" value="{{ $user->name }}" name="name" required type="text">
+                        <input class="form-control" value="{{ $user->name }}" name="name" type="text">
                      </div>
                   </div>
                   <label class="col-md-4 control-label">КОРОТКО  О ВАС <span class="req">*</span></label>
                   <div class="col-md-8">
                      <div class="form-group">
-                        <textarea class="form-control" maxlength="1200" name="about" required autofocus="">{{ $user->about }}</textarea>
+                        <textarea class="form-control" maxlength="1200" name="about" autofocus="">{{ $user->about }}</textarea>
                         <div class="maxlength__label"><span>0</span> символов (1200 максимум)</div>
                      </div>
                   </div>
@@ -42,7 +42,7 @@
                            class="form-control datepicker ll-skin-melon" 
                            name="date_birth"
                            value="{{ !empty($user->date_birth) ? date('d.m.Y', strtotime($user->date_birth)) : '' }}" 
-                           required 
+                            
                            autocomplete="off" 
                            placeholder="ДД.ММ.ГГГГ"> 
                      </div>
@@ -53,7 +53,7 @@
                         <div class="input-group">
                            <div class="icheck-inline"> 
                               <label style="padding-left: 0;">
-                              <input type="radio" class="icheck" required name="sex" {{ ($user->sex=='female') ? 'checked' : '' }} id="inlineRadio1" value="female"> Женский
+                              <input type="radio" class="icheck"  name="sex" {{ ($user->sex=='female') ? 'checked' : '' }} id="inlineRadio1" value="female"> Женский
                               </label>
                               <label>
                               <input type="radio" class="icheck" name="sex" {{ ($user->sex=='male') ? 'checked' : '' }} id="inlineRadio2" value="male"> Мужской
@@ -119,13 +119,13 @@
                   <label class="col-md-4 control-label">АДРЕС <span class="req">*</span></label>
                   <div class="col-md-8">
                      <div class="form-group">
-                        <input class="form-control" name="address" value="{{ $user->address }}" required type="text">
+                        <input class="form-control" name="address" value="{{ $user->address }}"  type="text">
                      </div>
                   </div>
                   <label class="col-md-4 control-label">ТЕЛЕФОН <span class="req">*</span></label>
                   <div class="col-md-8">
                      <div class="form-group">
-                        <input class="form-control" name="phone" value="{{ $user->phone }}" required type="text">
+                        <input class="form-control" name="phone" value="{{ $user->phone }}"  type="text">
                      </div>
                   </div>
                   <div class="col-md-12">
@@ -134,7 +134,7 @@
                   <label class="col-md-4 control-label">E-MAIL <span class="req">*</span></label>
                   <div class="col-md-8">
                      <div class="form-group">
-                        <input class="form-control" name="email" value="{{ $user->email }}" required type="text">
+                        <input class="form-control" name="email" value="{{ $user->email }}"  type="text">
                      </div>
                   </div>
 
@@ -159,7 +159,7 @@
                   <div class="col-md-12">
                      <h3 class="header_blok_user">Я умею учить</h3>
                   </div>
-                  <label class="col-md-4 control-label">СТЕПЕНЬ ВАШЕГО ОПЫТА <span class="req">*</span></label>
+                  <label class="col-md-4 control-label">СТЕПЕНЬ ВАШЕГО ОПЫТА </label>
                   <div class="col-md-8">
                      <div class="form-group select_form">
                         <select class="form-control" name="grade_experience">
@@ -172,13 +172,13 @@
                         </select>
                      </div>
                   </div>
-                  <label class="col-md-4 control-label">ОПЫТ РАБОТЫ УЧИТЕЛЕМ С <span class="req">*</span></label>
+                  <label class="col-md-4 control-label">ОПЫТ РАБОТЫ УЧИТЕЛЕМ С </label>
                   <div class="col-md-8">
                      <div class="form-group">
                         <input class="form-control datepicker ll-skin-melon" 
                            name="experience_from" 
                            value="{{ !empty($user->experience_from) ? date('d.m.Y', strtotime($user->experience_from)) : '' }}" 
-                           required="" 
+                           ="" 
                            autocomplete="off" 
                            type="text">
                      </div>
@@ -186,7 +186,7 @@
                   <label class="col-md-4 control-label">СРЕДНЯЯ СТОИМОСТЬ ЧАСА (₽)<span class="req">*</span></label>
                   <div class="col-md-8">
                      <div class="form-group">
-                        <input class="form-control rp" name="price_hour" value="{{ $user->price_hour }}" required="" type="text">
+                        <input class="form-control number" name="price_hour" value="{{ $user->price_hour }}" ="" type="text">
                      </div>
                   </div>
                   <div class="col-md-12">
@@ -210,49 +210,81 @@
                   <div class="col-md-12">
                      <h3 class="header_blok_user">Ваша предметная область</h3>
                   </div>
-                  <label class="col-md-4 control-label">ПРЕДМЕТЫ <span class="req">*</span></label>
-                  <div class="col-md-8">
-                     <div class="form-group">
-                        <select name="" class="form-control teacher_subjects_select" onchange="teacherSubject(this)">
-                           <option value="0">Выбрать</option>
-                           @php
-                              $teacherSubjectsId = $user->subjects->pluck('id')->toArray();
-                           @endphp
-                           @foreach($subjects_list as $subject) 
-                              @php
-                                 $disabled = '';
-                                 if(in_array($subject->id, $teacherSubjectsId)){
-                                 $disabled = 'disabled';
-                                 }
-                              @endphp
-                              <option {{ $disabled }} value="{{ $subject->id }}">{{ $subject->name }}</option>
-                           @endforeach
-                        </select>
-                        <div class="selected__teacher_subjects" style=" {{ !count($user->subjects) ? 'display: none;' : ''  }}">
-                           @if(count($user->subjects))
-                           @foreach($user->subjects as $subject)
-                           <span id="teacher_subjects_{{ $subject->id }}" data-id="{{ $subject->id }}">
-                              <div class="subject_tag"> 
-                                 {{ $subject->name }} 
+
+                     <label class="col-md-4 control-label">Направления и Предметы <span class="req">*</span></label>
+                     <div class="col-md-8">
+                        <div class="form-group">
+                           <div class="category--subjects">
+                              <div class="selected--subjects-list">
+                                 @if(count($user->subjects))
+                                    @foreach($user->subjects as $subject)
+                                       <span id="teacher_label_{{ $subject->id }}"
+                                             data-parent="{{ $subject->pivot->id_direction }}"
+                                             data-id="{{ $subject->id }}">
+												<div class="subject_tag">
+													{{ $subject->name }}
+												</div>
+												<div onclick="deleteTeacherSubject({{ $subject->id }}, 'teacher_subjects_inner');"
+                                                     class="delete__subject">
+													<i class="fa fa-times" aria-hidden="true"></i>
+												</div>
+											</span>
+                                    @endforeach
+                                 @endif
+
+                                 <p style="{{ count($user->subjects) ? 'display: none;' : '' }}" class="select--subjects-label">
+                                    Выбрать
+                                 </p>
                               </div>
-                              <div onclick="deleteTeacherSubject({{ $subject->id }});" class="delete__subject">
-                                 <i class="fa fa-times" aria-hidden="true"></i>
+                              <div class="dropdown-category">
+                                 <ul>
+                                    @php
+                                       $teacherSubjectsId = $user->subjects->pluck('id')->toArray();
+                                       $teacherDirectionId = $user->direction->pluck('id')->toArray();
+                                    @endphp
+                                    @foreach($categories as $direction)
+                                       @if(count($direction['childs']))
+                                          <li>
+												<span onclick="openDirectionSubjects(this);"
+                                                      direction-id="{{ $direction['name'] }}">{{ $direction['name'] }}</span>
+                                             <ul style="{{ in_array($direction['id'], $teacherDirectionId) ? 'display: block' : '' }}"">
+                                          @foreach($direction['childs'] as $subject)
+                                             <li>
+															<span onclick="selectSubject(this);"
+                                                                  direction-id="{{ $direction['id'] }}"
+                                                                  subject-id="{{ $subject['id'] }}"
+                                                                  class="{{ in_array($subject['id'], $teacherSubjectsId) ? 'selected--subject' : ''}}">
+																{{ $subject['name'] }}
+															</span>
+                                             </li>
+                                          @endforeach
+                                 </ul>
+                                 </li>
+                                 @endif
+                                 @endforeach
+                                 </ul>
                               </div>
-                           </span>
-                           @endforeach
-                           @endif
-                        </div>
-                        <div class="selected__teacher_inputs">
-                           @if(count($user->subjects))
-                           @foreach($user->subjects as $subject)
-                           <input type="hidden" id="teacher_subjects_input_{{ $subject->id }}" value="{{ $subject->id }}" name="teacher_subjects[]">
-                           @endforeach
-                           @endif
+                           </div>
+
+                           <div class="selected__teacher_inputs">
+                              @if(count($user->subjects))
+                                 @foreach($user->subjects as $subject)
+                                    <input type="hidden"
+                                           id="teacher_subjects_input_{{ $subject->id }}"
+                                           value="{{ $subject->id }}"
+                                           name="teacher_subjects[{{ $subject->pivot->id_direction }}][]">
+                                 @endforeach
+                              @endif
+                           </div>
                         </div>
                      </div>
-                  </div>
+
+                  <script>
+                      var categories = JSON.parse("<?=prepareArrayForJson($categories)?>");
+                  </script>
+
                   <div class="col-md-12">
-                     <h3 class="header_blok_user">Варианты проведения занятий</h3>
+                     <h3 class="header_blok_user">Варианты проведения занятий <span class="req">*</span></h3>
                   </div>
                   <div class="col-md-12" style="margin-bottom: 15px;"> 
                      @php
@@ -267,7 +299,7 @@
                      </label>
                      @endforeach 
                   </div>
-                  <label class="col-md-4 control-label">У ВАС (РЕПЕТИТОРА) НА ДОМУ</label>
+                  <label class="col-md-4 control-label">АДРЕС НА ДОМУ</label>
                   <div class="col-md-8">
                      <div class="form-group">
                         <textarea class="form-control" name="lesson_place" autofocus="">{{ $user->lesson_place }}</textarea>
@@ -321,7 +353,7 @@
                             <label class="col-md-12 control-label">Пароль <span class="req">*</span></label>
                             <div class="col-md-12">
                                 <input type="password" class="form-control" name="password"
-                                       value="" required>
+                                       value="" >
                             </div>
                         </div>
 
@@ -330,7 +362,7 @@
                                 <span class="req">*</span>
                             </label>
                             <div class="col-md-12">
-                                <input type="password" class="form-control" name="password_confirmation" value="" required>
+                                <input type="password" class="form-control" name="password_confirmation" value="" >
                             </div>
                         </div>
                     </div> 

@@ -14,7 +14,8 @@
 	      				<th>E-mail</th>
 	      				<th>Дата регистрации</th>
 	      				<th style="text-align: center;">Подтверждение <br> Аккаунта</th>
-	      				<th style="width: 250px; white-space: nowrap; text-align: right;"><i class="fa fa-cogs" aria-hidden="true"></i></th>
+						<th>Активность</th>
+	      				<th style="white-space: nowrap; text-align: right;"><i class="fa fa-cogs" aria-hidden="true"></i></th>
 	      			</tr>
 	      		</thead>
 	      		<tbody>
@@ -59,13 +60,14 @@
 								</div>
 	      					@endif
 	      				</td>
+						<td align="center">
+							<input type="checkbox"
+								   class="make-switch" data-size="mini" {{ !empty($user['activate']) ? 'checked' : '' }}
+								   data-on-text="<i class='fa fa-check'></i>"
+								   data-off-text="<i class='fa fa-times'></i>"
+								   onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $user["id"] }}', 'activate')">
+						</td>
 	      				<td style="white-space: nowrap;">
-	      					
-	      					<input type="checkbox" 
-	          		       class="make-switch" data-size="mini" {{ !empty($user['activate']) ? 'checked' : '' }} 
-	          		       data-on-text="<i class='fa fa-check'></i>" 
-	          		       data-off-text="<i class='fa fa-times'></i>" 
-	          		       onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $user["id"] }}', 'activate')"> 
 			             	<a style="margin-left: 5px;" href="/{{ $method }}/{{ $user['id'] }}/edit/" class="btn btn-primary btn-xs">Редактировать</a>  
 			             	<a class="btn btn-danger btn-xs" data-toggle="modal" href="#deleteModal_{{ $table }}_{{ $user['id'] }}">Удалить</a>  
 			            	<!-- Modal -->

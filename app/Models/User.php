@@ -145,8 +145,8 @@ class User extends Authenticatable
 
     public static function getTeachers($request = false)
     {
-
-        $user = (new User)->newQuery(); 
+        $user = (new User)->newQuery();
+        $user->select('users.*');
 
         if (isset($request['q'])) 
         {
@@ -197,12 +197,44 @@ class User extends Authenticatable
             });
         }
 
-        $user->allowUser()->where('user_type',2); 
+        switch (@$request['tab']){
+            case "popular":
+                $user->leftJoin('count_views', 'count_views.id_item', '=', 'users.id')
+                    ->withCount('teacherRequests')
+                    ->withCount('teacherReviews')
+                    ->orderBy('teacher_requests_count', 'desc')
+                    ->orderBy('count_views.count', 'desc')
+                    ->orderBy('teacher_reviews_count', 'desc');
+                break;
+
+            case "featured":
+                $user->where('featured', 1)->orderTeacher();
+                break;
+
+            case "online_training":
+                $user->whereHas('lesson_options', function ($query) {
+                    $query->where('id_lesson_option', '4');
+                })->orderTeacher();
+                break;
+
+            default:
+                $user->orderTeacher();
+
+        }
+
+        $user->allowUser()->where('user_type',2);
+
+        $user->groupBy('users.id');
 
         return $user->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
                                       ['*'], 
                                       'page', 
                                       !empty($request['page']) ? $request['page'] : 1);
+    }
+
+    public function scopeOrderTeacher($query)
+    {
+        return $query->orderBy('id', 'desc');
     }
 
     public function direction()

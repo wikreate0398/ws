@@ -33,33 +33,34 @@
 				</form>
             </div>
             <div class="col-lg-12">
-                <ul class="nav nav-tabs filter_tabs">
-                    <li class="active">
-                        <a href="#">
-                            Популярные
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="#">
-                            Подготовка к ЕГЭ
-                        </a>
-                    </li>                                             
-                    <li class="">
-                        <a href="#">
-                            Рекомендуемые
-                        </a>
-                    </li>                                             
-                    <li class="">
-                        <a href="#">
-                            Есть скидка
-                        </a>
-                    </li>                                          
-                    <li class="">
-                        <a href="#">
-                            Онлайн обучение
-                        </a>
-                    </li>                         
-                </ul>
+				<ul class="nav nav-tabs filter_tabs">
+					<li class="{{ (request()->tab == 'popular') ? 'active' : '' }}">
+						<a href="{{ addUriParam(['tab' => 'popular']) }}">
+							Популярные
+						</a>
+					</li>
+					<li class="{{ (request()->tab == 'for_exams') ? 'active' : '' }}">
+						<a href="{{ addUriParam(['tab' => 'for_exams']) }}">
+							Подготовка к ЕГЭ
+						</a>
+					</li>
+					<li class="{{ (request()->tab == 'featured') ? 'active' : '' }}">
+						<a href="{{ addUriParam(['tab' => 'featured']) }}">
+							Рекомендуемые
+						</a>
+					</li>
+					<!--
+					<li class="{{ (request()->tab == 'discount') ? 'active' : '' }}">
+						<a href="{{ addUriParam(['tab' => 'discount']) }}">
+							Есть скидка
+						</a>
+					</li>-->
+					<li class="{{ (request()->tab == 'online_training') ? 'active' : '' }}">
+						<a href="{{ addUriParam(['tab' => 'online_training']) }}">
+							Онлайн обучение
+						</a>
+					</li>
+				</ul>
             </div>
         </div>
         @if(!empty($teachers))  

@@ -38,7 +38,8 @@ class User
         'city'       => 'required',
         'phone'      => 'required', 
         'address'    => 'required', 
-        'email'      => 'required|string|email|unique:users'
+        'email'      => 'required|string|email|unique:users',
+        'image'      => 'file|mimes:jpeg,jpg,png|max:200000'
     ];
 
 	public function validation(array $data, $rules)
@@ -96,11 +97,20 @@ class User
                 'phone'        => $data['phone'], 
                 'sex'          => $data['sex'],
                 'data_filled'  => 1
-      	]); 
+      	]);
+
+        $image = $this->uploadImage();
+        if($image){
+            ModelUser::where('id', $id_user)->
+            update([
+                'image'  => $image ,
+                'avatar' => $image
+            ]);
+        }
 
         if (!empty($data['old_password'])) 
         {
- 
+
             $validator = Validator::make($data, [
                 'old_password'          => 'required',
                 'password'              => 'required|string|min:6|confirmed|',

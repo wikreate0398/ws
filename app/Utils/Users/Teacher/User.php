@@ -72,10 +72,8 @@ class User
 
     public function create(array $data)
     {
-        $this->education = sortValue(request()->input('education'));  
-        $confirm_hash    = md5(microtime());
- 
-        $createUser = ModelUser::create([ 
+        $confirm_hash = md5(microtime());
+        $createUser   = ModelUser::create([
             'name'         => $data['name'], 
             'user_type'    => 2,
             'phone'        => $data['phone'],
@@ -168,129 +166,6 @@ class User
         $this->userId = $id_user; 
         return $this;
     }
-
-    public function edit(array $data)
-    {       
-        $errors = $this->validateEdit($data); 
- 
-        if ($errors !== true) 
-        {
-            return $errors; 
-        }      
-
-        $checkEmail = ModelUser::whereEmail($data['email'])->where('id', '!=', $this->userId)->get();
-        if (count($checkEmail) > 0) 
-        {
-            return 'Пользователь с таким имейлом уже существует!'; 
-        } 
-  
-        ModelUser::where('id', $this->userId)
-            ->update([ 
-            'name'       => $data['name'], 
-            'date_birth' => date('Y-m-d', strtotime($data['date_birth'])), 
-            'phone'      => $data['phone'],
-            'email'      => $data['email'], 
-            'city'       => $data['city'],
-            'region'     => $data['region'],
-            'phone'      => $data['phone'],
-            'about'      => $data['about'],
-            'sex'        => $data['sex'],
-            'address'    => $data['address'],
-            'grade_experience' => $data['grade_experience'],
-            'experience_from' => !empty($data['experience_from']) ? date('Y-m-d', strtotime($data['experience_from'])) : null,
-            'price_hour'      => toFloat($data['price_hour']),
-            'lesson_place'    => $data['lesson_place'],
-            'data_filled'     => '1'
-        ]);    
-
-        TeacherSubjects::where('id_teacher', $this->userId)->delete();
-        if (!empty($data['teacher_subjects'])) 
-        { 
-            foreach ($data['teacher_subjects'] as $id_direction => $subjects) 
-            {
-                 
-                foreach ($subjects as $key => $id_subject) { 
-                    $insert[] = [
-                        'id_teacher'   => $this->userId,
-                        'id_direction' => $id_direction,
-                        'id_subject'   => $id_subject
-                    ];
-                } 
-            } 
-            TeacherSubjects::insert($insert);
-        }
-
-        TeacherSpecializations::where('id_teacher', $this->userId)->delete();
-        if (!empty($data['specializations'])) 
-        { 
-            $insert          = [];
-            foreach ($data['specializations'] as $id_specialization => $value) 
-            {
-                $insert[] = [
-                    'id_teacher'        => $this->userId,
-                    'id_specialization' => $id_specialization
-                ];
-            }
-            TeacherSpecializations::insert($insert);
-        }
-
-        TeacherLessonOptions::where('id_teacher', $this->userId)->delete();
-        if (!empty($data['lesson_options'])) 
-        { 
-            $insert         = [];
-            foreach ($data['lesson_options'] as $id_lesson_option => $value) 
-            {
-                $insert[] = [
-                    'id_teacher'       => $this->userId,
-                    'id_lesson_option' => $id_lesson_option
-                ];
-            } 
-            TeacherLessonOptions::insert($insert);
-        } 
-
-        $this->saveEducations($this->userId); 
-
-        if (!empty($data['certificates'])) 
-        {
-            $this->saveCertificates($data['certificates'], $this->userId);
-        }
-
-        if (!empty($data['old_password'])) 
-        {
- 
-            $validator = Validator::make($data, [
-                'old_password'          => 'required',
-                'password'              => 'required|string|min:6|confirmed|',
-                'password_confirmation' => 'required',
-            ]);
-            $validator->setAttributeNames([
-                'password'         => 'Пароль',
-                'repeat_password'  => 'Повторите пароль',
-                'old_password'     => 'Старый Пароль'
-            ]);
-            $errors=false;
-            if ($validator->fails()) 
-            {
-                $errors = $validator->errors()->toArray(); 
-            } 
-
-            $obj_user = ModelUser::find($this->userId);
-
-            if(Hash::check($data['old_password'], $obj_user->password) == false) {
-                $errors[]['password'] = 'Старый пароль не верный';
-            } 
-
-            if (!empty($errors)) 
-            {   
-                return $errors;
-            } 
- 
-            $obj_user->password = Hash::make($data['password']);
-            $obj_user->save(); 
-        }
-
-        return true; 
-    } 
 
     public function editGeneral(array $data)
     {

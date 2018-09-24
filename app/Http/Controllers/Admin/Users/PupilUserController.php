@@ -29,6 +29,7 @@ class PupilUserController extends SiteUser
      */
     public function __construct() 
     {
+        parent::__construct();
         $this->_user = new PupilUser;
     }
 
@@ -64,11 +65,12 @@ class PupilUserController extends SiteUser
 
     public function updateUser($id, Request $request)
     {
-        $edit = $this->_user->edit($request->all(), $id);   
+        $edit = $this->_user->edit($request->all(), $id);
         if ($edit !== true) 
         {
             return \App\Utils\JsonResponse::error(['messages' => $edit]);  
-        } 
+        }
+        $this->allowUser($id);
         return \App\Utils\JsonResponse::success(['reload' => true], 'Данные успешно обновлены!'); 
     }
  

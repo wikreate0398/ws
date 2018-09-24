@@ -416,7 +416,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif  
+                    @endif
 					 
 
 					<div class="row">

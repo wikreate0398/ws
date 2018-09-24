@@ -4,9 +4,25 @@ $(document).ready(function(){
     $('.fancybox-button').fancybox();
     $('.fancybox').fancybox();
     initSelect2();
-    $('.number').keypress(function(event) {
+
+
+    $(document).on('keypress', '.number_field, .number', function(event) {
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();
+        }
+    });
+
+    $(document).on('input', '.number_field', function (e) {
+
+        var max = parseInt($(this).attr('max'));
+        var min = parseInt($(this).attr('min'));
+        if ($(this).val() > max)
+        {
+            $(this).val(max);
+        }
+        else if ($(this).val() < min)
+        {
+            $(this).val(min);
         }
     });
 
@@ -23,7 +39,7 @@ $(document).ready(function(){
     });
 
     $( ".datepicker" ).datepicker({
-        dateFormat: "dd-mm-yy",
+        dateFormat: "dd.mm.yy",
         changeMonth: true,
         changeYear: true,
         yearRange: '1945:'+(new Date).getFullYear()
@@ -150,38 +166,57 @@ function institutionCheck(input){
 
 /* Teacher Subjects */
 
-function teacherSubject(select){
-    var value = $(select).val();
-    if (value <= 0) return;
-    var name  = $(select).find('option[value="'+value+'"]').text(); 
-    $(select).find('option[value="'+value+'"]').attr('disabled',true);
-    var input = '<input type="hidden" id="teacher_subjects_input_'+value+'" value="'+value+'" name="teacher_subjects[]">';
-    $('.selected__teacher_inputs').append(input);
-    var tagLabel = '<span data-id="'+value+'" id="teacher_subjects_'+value+'">'+
-                   '<div class="subject_tag">'+name+'</div>'+
-                   '<div class="delete__subject" onclick="deleteTeacherSubject('+value+');"><i class="fa fa-times" aria-hidden="true"></i></div></span>';
-    $('.selected__teacher_subjects').append(tagLabel);
-    $('.selected__teacher_subjects').show();
+function openDirectionSubjects(span) {
+    $(span).closest('li').find('ul').slideToggle();
 }
 
-function deleteTeacherSubject(id){
-    var span = $('span#teacher_subjects_' + id);
-    var name = $(span).find('.subject_tag').text(); 
-    var id = $(span).attr('data-id'); 
-    $('select.teacher_subjects_select option[value="'+id+'"]').attr('disabled',false);
-    $('input#teacher_subjects_input_' + id).remove();
-    $('span#teacher_subjects_' + id).remove();
+function selectSubject(span) {
+    $(span).toggleClass('selected--subject');
+    var name = $(span).text();
+    var id   = $(span).attr('subject-id');
+    var directionId   = $(span).attr('direction-id');
 
-    if ($('.selected__teacher_subjects span').length <= 0) {
-        $('.selected__teacher_subjects').hide();
+    if ($(span).hasClass('selected--subject')) {
+        var parent = '.teacher_subjects_inner';
+        var input = '<input type="hidden" id="teacher_subjects_input_'+id+'" value="'+id+'" name="teacher_subjects['+directionId+'][]">';
+        $('.selected__teacher_inputs').append(input);
+        var tagLabel = '<span id="teacher_label_'+id+'">'+
+            '<div class="subject_tag">'+name+'</div>'+
+            '<div class="delete__subject" onclick="deleteTeacherSubject('+id+');"><i class="fa fa-times" aria-hidden="true"></i></div></span>';
+        $('.selected--subjects-list').append(tagLabel);
+        $('.select--subjects-label').hide();
+        $('.selected--subjects-list').show();
+    }else{
+        deleteTeacherSubject(id);
+    }
+}
 
-        $('select.teacher_subjects_select option[selected="selected"]').each(
-            function() {
-                $(this).removeAttr('selected');
-            }
-        );
+$(document).ready(function(){
 
-        $('select.teacher_subjects_select option:first').attr('selected',true);
+    $('.selected--subjects-list').on('click', function(event){
+        if (!$(event.target).hasClass('subject_tag') && !$(event.target).closest('.delete__subject').length) {
+            $('.dropdown-category').toggleClass('open--dropdown');
+            $('.selected--subjects-list').toggleClass('active--drowdown');
+        }
+    });
+
+    $(document).click(function(event){
+        if (!$(event.target).hasClass('category--subjects')
+            && !$(event.target).closest('.category--subjects').length
+            && !$(event.target).hasClass('fa')) {
+            $('.dropdown-category').removeClass('open--dropdown');
+            $('.selected--subjects-list').removeClass('active--drowdown');
+        }
+    });
+});
+
+function deleteTeacherSubject(id) {
+    $('#teacher_subjects_input_' + id).remove();
+    $('#teacher_label_' + id).remove();
+    $('span[subject-id="'+id+'"]').removeClass('selected--subject');
+
+    if ($('.selected--subjects-list span').length == 0) {
+        $('.select--subjects-label').show();
     }
 }
 

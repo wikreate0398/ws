@@ -82,11 +82,9 @@ class TeachersController extends Controller
             'scripts' => [
                 'js/filter_teachers.js',
                 'js/teachers.js'
-            ]
-        ];    
-
-
-
+            ],
+            'filterUrl' => request()->fullUrl() . (request()->query() ? '&' : '?')
+        ];
         return view('teachers.catalog', $data);
     } 
  
@@ -122,7 +120,9 @@ class TeachersController extends Controller
             'scripts' => [
               'js/teachers.js'
             ]
-        ];     
+        ];
+
+        (new \App\Utils\CounterViews)->counter($id, 'teacher');
 
         return view('teachers.show', $data);
     } 

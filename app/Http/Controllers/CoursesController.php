@@ -13,7 +13,6 @@ use App\Models\Courses;
 use App\Models\CourseCategory; 
 use App\Models\CourseFavorite; 
 use App\Models\CourseReviews;
-use App\Models\CountViews;
  
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -99,7 +98,8 @@ class CoursesController extends Controller
                 'js/courses.js'
             ]
         ];
-        self::counter($id);
+
+        (new \App\Utils\CounterViews)->counter($id, 'course');
         return view('courses.show', $data);
     }
 

@@ -111,7 +111,10 @@ class Courses extends Model
 
         switch (@$input['filter']){
             case "popular":
-                $courses->leftJoin('count_views', 'count_views.id_item', '=', 'courses.id')
+                $courses->leftJoin('count_views', function($leftJoin){
+                            $leftJoin->on('count_views.id_item', '=', 'courses.id')
+                                     ->where('type', 'course');
+                        })
                         ->withCount('userRequests')
                         ->orderBy('count_views.count', 'desc')
                         ->orderBy('user_requests_count', 'desc');

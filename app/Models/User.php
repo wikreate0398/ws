@@ -199,7 +199,10 @@ class User extends Authenticatable
 
         switch (@$request['tab']){
             case "popular":
-                $user->leftJoin('count_views', 'count_views.id_item', '=', 'users.id')
+                $user->leftJoin('count_views', function($leftJoin){
+                        $leftJoin->on('count_views.id_item', '=', 'users.id')
+                                 ->where('type', 'teacher');
+                    })
                     ->withCount('teacherRequests')
                     ->withCount('teacherReviews')
                     ->orderBy('teacher_requests_count', 'desc')

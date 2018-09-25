@@ -113,7 +113,7 @@ class Courses extends Model
             case "popular":
                 $courses->leftJoin('count_views', function($leftJoin){
                             $leftJoin->on('count_views.id_item', '=', 'courses.id')
-                                     ->where('type', 'course');
+                                     ->where('count_views.type', 'course');
                         })
                         ->withCount('userRequests')
                         ->orderBy('count_views.count', 'desc')

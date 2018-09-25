@@ -101,7 +101,7 @@ function teacherFilter(){
 
     flt='?flt=1'; 
     if(search__input) flt+='&q='+search__input;
-    if(teacher_available) flt+='&teacher_available='+teacher_available;
+    // if(teacher_available) flt+='&teacher_available='+teacher_available;
     if(subjects) flt+='&subjects='+subjects;
     if(sex) flt+='&sex='+sex;
     if(min_price) flt+='&min_price='+min_price;

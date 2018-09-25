@@ -195,7 +195,7 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <label class="col-md-4 control-label">КОЛИЧЕСТВО МЕСТ НА БЮДЖЕТНОЙ ОСНОВЕ<span class="req">*</span>
+                <label class="col-md-4 control-label">КОЛИЧЕСТВО МЕСТ НА БЮДЖЕТНОЙ ОСНОВЕ
                 </label>
                 <div class="col-md-8">
                     <div class="form-group">

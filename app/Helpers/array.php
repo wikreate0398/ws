@@ -427,13 +427,12 @@ function getUserYears($birthDate)
 function addUriParam($param){
     $url = request()->url();
     $get = \Illuminate\Support\Facades\Input::get();
-
     foreach ($param as $key => $value)
     {
         $get[$key] = $value;
+        if ($value === '') unset($get[$key]);
     }
-
-    $fullUrl = $url . '?' . http_build_query($get);
-
+    $fullUrl = $url;
+    if (!empty($get)) $fullUrl.= '?' . http_build_query($get);
     return $fullUrl;
 }

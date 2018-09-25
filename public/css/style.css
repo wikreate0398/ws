@@ -999,7 +999,7 @@ form#search_form.no_home .btn_search{
 .filter_tabs > li > a:focus,
 .filter_tabs > li > a:hover{
 	color: #b93777;
-	border: 0px;
+	border: 1px solid transparent;
     border-bottom: 1px solid #b93777;
     background: transparent;
 	margin-right: 0px;

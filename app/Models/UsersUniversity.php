@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use function foo\func;
 use Illuminate\Database\Eloquent\Model;
 
 class UsersUniversity extends Model
@@ -46,7 +47,7 @@ class UsersUniversity extends Model
     {
         $university = (new UsersUniversity)->newQuery();
 
-        // exit($request['']);
+        $university->select('users_university.*');
 
         if (isset($request['has_military_department']) && in_array($request['has_military_department'], ['1','0'])) 
         {
@@ -88,16 +89,51 @@ class UsersUniversity extends Model
 
         $university->with('user')->whereHas('user', function($query){
                                 return User::allowUser();
-                            })->orderBy('id_user', 'asc');
+                            });
 
         $university->with(['user.courses' => function($query){
                                 return $query->published();
                             }]);
 
+        switch (@$request['tab']){
+            case "popular":
+                $university->leftJoin('count_views', function($leftJoin){
+                                $leftJoin->on('count_views.id_item', '=', 'users_university.id_user')
+                                    ->where('type', 'university');
+                            })
+                           ->orderBy('count_views.count', 'desc');
+                break;
+
+            case "featured":
+                $university->whereHas('user', function($query){
+                    $query->where('featured', '1');
+                })->orderUniv();
+                break;
+
+            case "budget":
+                $university->where('qty_budget', '>', '0')->orderUniv();
+                break;
+
+            case "online_training":
+                $university->where('distance_learning', '1')->orderUniv();
+                break;
+
+            default:
+                $university->orderUniv();
+
+        }
+
+        $university->groupBy('users_university.id');
+
         return $university->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
                                       ['*'], 
                                       'page', 
                                       !empty($request['page']) ? $request['page'] : 1);
+    }
+
+    public function scopeOrderUniv($query)
+    {
+        $query->orderBy('id_user', 'asc');
     }
 
     public function specializations()

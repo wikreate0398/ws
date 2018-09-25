@@ -41,7 +41,7 @@ class User
         'phone'                 => 'required',  
         'email'                 => 'required|email',
         'price'                 => 'required',
-        'qty_budget'            => 'required|integer|min:1',
+        'qty_budget'            => 'integer|min:1',
         'budget_points_admission'  => 'required|min:1',
         'payable_points_admission' => 'required|min:1', 
         'status'                   => 'required|integer',    

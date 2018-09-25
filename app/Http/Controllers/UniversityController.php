@@ -57,9 +57,7 @@ class UniversityController extends Controller
                 'js/filter_university.js',
                 'js/university.js'
             ]
-        ]; 
-
-        //exit(print_arr($data['filter']['specializationList']));
+        ];
  
         return view('university.catalog', $data);
     }
@@ -94,7 +92,9 @@ class UniversityController extends Controller
                 'js/university.js',
                 'js/courses.js'
             ]
-        ];   
+        ];
+
+        (new \App\Utils\CounterViews)->counter($university->user->id, 'university');
 
         return view('university.show', $data);
     }

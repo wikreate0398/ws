@@ -524,3 +524,20 @@ select option:disabled {
     color: #ababab;
     background-color: #ededed;
 }
+
+.bootstrap-switch, .bootstrap-switch-handle-off, .bootstrap-switch-handle-on{
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;
+    border-radius: 20px !important;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary, .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary{
+    background: #5dc13d !important;
+}
+
+.drop-item{
+    padding: 8px 14px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}

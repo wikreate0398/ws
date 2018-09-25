@@ -36,6 +36,11 @@
         </div>
 		<div class="col-lg-12">
 			<ul class="nav nav-tabs filter_tabs">
+				<li class="{{ (!request()->filter or request()->filter == 'all') ? 'active' : '' }}">
+					<a href="{{ addUriParam(['filter' => '']) }}">
+						Все
+					</a>
+				</li>
 				<li class="{{ (request()->filter == 'popular') ? 'active' : '' }}">
 					<a href="{{ addUriParam(['filter' => 'popular']) }}">
 						Популярные курсы
@@ -72,19 +77,16 @@
                     <div class="col-lg-4">
                         <ul class="list-inline available_list">
                             <li class="{{ (request()->input('pay') == 'all' or request()->input('pay') == null) ? 'active' : '' }}">
-                                <a data-pay="all" onclick="courses_pay_filter(this); return false;" href="#">ВСЕ</a>
+                                <a   href="{{ addUriParam(['pay' => '']) }}">ВСЕ</a>
                             </li> 
                             <li class="{{ (request()->input('pay') == '2') ? 'active' : '' }}">
-                                <a data-pay="2" onclick="courses_pay_filter(this); return false;" href="#">ПЛАТНЫЕ</a>
+                                <a href="{{ addUriParam(['pay' => '2']) }}">ПЛАТНЫЕ</a>
                             </li>
 
                             <li class="{{ (request()->input('pay') == '1') ? 'active' : '' }}">
-                                <a data-pay="1" onclick="courses_pay_filter(this); return false;" href="#">БЕСПЛАТНЫЕ</a>
+                                <a href="{{ addUriParam(['pay' => '1']) }}">БЕСПЛАТНЫЕ</a>
                             </li>
                         </ul>
-                        <input type="hidden" 
-                               id="courses_pay" 
-                               value="{{ @request()->input('pay') ? request()->input('pay') : 'all' }}">
                     </div>
                     <div class="col-lg-4">
                         <ul class="list-inline sorting_list">
@@ -95,22 +97,15 @@
                     <div class="col-lg-4" style="text-align: right;">
                         <ul class="list-inline per_page_list">
                             <li class="{{ (request()->input('per_page') == '12' or request()->input('per_page') == null) ? 'active' : '' }}">
-                                <a data-perpage="12" onclick="courses_perpage_filter(this); return false;" href="#">12</a>
+                                <a href="{{ addUriParam(['per_page' => '']) }}">12</a>
                             </li>
                             <li class="{{ (request()->input('per_page') == '24') ? 'active' : '' }}">
-                                <a data-perpage="24" onclick="courses_perpage_filter(this); return false;" href="#">24</a>
+                                <a href="{{ addUriParam(['per_page' => '24']) }}">24</a>
                             </li>
                             <li class="{{ (request()->input('per_page') == '48') ? 'active' : '' }}">
-                                <a data-perpage="48" onclick="courses_perpage_filter(this); return false;" href="#">48</a>
+                                <a href="{{ addUriParam(['per_page' => '48']) }}">48</a>
                             </li>
                         </ul>
-                        <input type="hidden" 
-                               id="per_page" 
-                               value="{{ @request()->input('per_page') ? request()->input('per_page') : '6' }}">
-
-                        <input type="hidden" 
-                               id="page" 
-                               value="{{ @request()->input('page') ? request()->input('page') : '1' }}">
                     </div>
                 </div>
             </div>

@@ -14,4 +14,14 @@ class CourseRequest extends Model
         'id_course',
         'id_user' 
     ];
+
+    public function user()
+    {
+    	return $this->hasOne('App\Models\User', 'id', 'id_user');
+    }
+
+    public function course()
+    {
+    	return $this->hasOne('App\Models\Courses', 'id', 'id_course');
+    }
 }

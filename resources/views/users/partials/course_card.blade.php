@@ -71,7 +71,15 @@
 				</li>
 			</ul>
 			<ul class="list-inline card_date_info">
-				<li class="left_date"><i class="fa fa-user"></i> {{ count($course->userRequests) }}</li>
+				<li class="left_date">
+					@if($course->userRequests->count())
+						<a href="{{ route(userRoute('course_participants'), ['id' => $course->id]) }}">
+					@endif
+							<i class="fa fa-user"></i> {{ $course->userRequests->count() }}
+					@if($course->userRequests->count())
+						</a>
+					@endif
+				</li>
 				@php  
 					$esablishDate = Course::manager($course)->esablishDate();  
                 @endphp
@@ -85,7 +93,9 @@
 			</ul>
 			<div class="row">
 				<div class="col-lg-6">
-					<div class="more_card"><a href="{{ route(userRoute('edit_course'), ['id' => $course->id]) }}">Управлять курсом</a></div>
+					<div class="more_card">
+						<a href="{{ route(userRoute('edit_course'), ['id' => $course->id]) }}">Управлять курсом</a>
+					</div>
 				</div>
 				@if(!Course::manager($course)->isStarted()) 
 					<div class="col-lg-6">

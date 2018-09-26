@@ -951,6 +951,11 @@ form#search_form.no_home .btn_search{
     color: #c3bbbb;
 	margin-bottom: 20px;
 }
+
+.external_card .caption .card_date_info .left_date a{
+    text-decoration: none;
+}
+
 .external_card .caption .card_date_info i{
 	font-size: 1.5em;
 }

@@ -46,10 +46,19 @@ class State extends Course
     }
 
     public function canManage()
-    { 
-        if ($this->isStarted() or $this->isFinished() or (!empty($this->course) && !count($this->course->user->connectionTeachers))) 
-        {
-            return false;
+    {  
+        /*
+        * Если курс Добавлен
+        * Если курс начался
+        * Если курс закончился 
+        * Если к курсу привязаны участники
+        */
+        if ($this->ifAdded()) 
+        {  
+            if ($this->isStarted() or $this->isFinished()) // (!empty($this->course) && !count($this->course->user->connectionTeachers)) 
+            { 
+                return false;
+            } 
         }
         return true;
     }
@@ -78,7 +87,7 @@ class State extends Course
 
     public function ifAdded()
     {
-        if ($this->course->general_filled && $this->course->program_filled && $this->course->settings_filled && $this->course->сertificates_filled) 
+        if (!empty($this->course) && $this->course->general_filled && $this->course->program_filled && $this->course->settings_filled && $this->course->сertificates_filled) 
         {
             return true;
         }

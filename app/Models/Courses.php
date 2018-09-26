@@ -62,7 +62,7 @@ class Courses extends Model
 
     public function userRequests()
     {
-        return $this->belongsToMany('App\Models\User', 'course_request', 'id_course', 'id_user');
+        return $this->belongsToMany('App\Models\User', 'course_request', 'id_course', 'id_user')->withPivot('confirm', 'trial', 'confirm_date', 'trial_date');
     }
 
     public function teachers()

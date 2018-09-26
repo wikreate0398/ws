@@ -6,7 +6,7 @@
 		<h4 class="sub_title_page">Описание</h4>
 		<p class="title_desc">Если вы готовы провести пробное занятие — нажмите на соответствующую кнопку возле участника. После этого занятие будет активировано и автоматически отобразится дата первой лекции.
 		После завершения занятия кнопка «Пробное занятие» будет неактивна. В дальнейшем вы должны будете принять решение — принимать ученика в качестве участника курса или отказать ему в обучении, используя соответствующие кнопки.</p>
-      <div class="row" style="margin-bottom: 40px;">
+      <div class="row" style="margin-bottom: 40px;"> 
          @if(count($course->userRequests) > 0)
             @foreach($course->userRequests as $user)
                <div class="col-md-12 userRequest">
@@ -39,11 +39,22 @@
                      </div>
                      <div class="col-md-3 request__actions">
                         <div class="request__top">
-                           <button type="button" class="request_btn conf">Принять</button>
-                           <button type="button" class="request_btn decline">Отказать</button>
-                        </div>
+                           @if(!$user->pivot->confirm)
+                              <a href="{{ route(userRoute('confirm_participant'), ['course' => $course->id, 'user' => $user->id]) }}" 
+                                 class="request_btn conf confirm__item">
+                                 Принять
+                              </a>
 
-                        <button type="button" class="request_btn test_course">ПРОБНОЕ ЗАНЯТИЕ</button>
+                              <a href="{{ route(userRoute('decline_participants'), ['course' => $course->id, 'user' => $user->id]) }}" class="request_btn decline confirm__item">Отказать</a>
+                           @else
+                              <button type="button" class="request_btn rc_confirmed">Подтвержен</button>
+                           @endif 
+                        </div>
+                        @if(!$user->pivot->confirm)
+                           <a href="{{ route(userRoute('course_participants'), ['id' => $course->id]) }}" class="request_btn test_course confirm__item">
+                              ПРОБНОЕ ЗАНЯТИЕ
+                           </a>
+                        @endif 
                      </div> 
                   </div>
                </div>
@@ -60,6 +71,14 @@
                   outline: none;
                   font-size: 13px;
                   margin-bottom: 10px;
+                  text-align: center;
+                  display: block;
+                  text-decoration: none;
+               }
+
+               .request_btn:hover{
+                  text-decoration: none;
+                  color: #fff;
                }
 
                .request_btn.conf{
@@ -69,6 +88,11 @@
                .request_btn.decline{
                   background-color: #fff;
                   color: #333;
+               }
+
+               .request_btn.rc_confirmed{
+                  background: green;
+                  cursor: default;
                }
 
                .test_course{

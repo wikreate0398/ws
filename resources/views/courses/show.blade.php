@@ -19,7 +19,7 @@
 						$favorite = in_array(Auth::user()->id, $course->userFavorite->pluck('id')->toArray()); 
 					@endphp 
 					<li class="bookmark_tag">
-						<i class="fa course_heart {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" onclick="courseFavorite(this, 6);" aria-hidden="true"></i> 
+						<i class="fa course_heart {{ $favorite ? 'is_favorite fa-heart' : 'fa-heart-o' }}" onclick="courseFavorite(this, {{ $course->id }});" aria-hidden="true"></i> 
 					</li> 
 				@endif 
 			</ul>

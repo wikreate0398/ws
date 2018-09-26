@@ -43,6 +43,12 @@ $(document).ready(function(){
 
 function courseRequest(button, id_course, auth, canMakeRequest)
 {
+
+    if (!confirm('Вы действительно хотите записаться на курс?'))
+    {
+        return;
+    }
+
 	if (canMakeRequest == false && auth == true) { 
 		return;
 	}

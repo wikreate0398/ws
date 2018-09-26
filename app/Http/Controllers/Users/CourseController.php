@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users\Teacher;
+namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -8,24 +8,42 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\CourseCategory;
+use App\Models\CourseRequest;
 use App\Models\Courses;  
 use App\Utils\Course\Course;
 
-class CourseController extends TeacherController
+use App\Mail\Course\ConfirmRequest; 
+use App\Mail\Course\DeclineRequest; 
+ 
+use Illuminate\Support\Facades\Mail;
+
+class CourseController extends Controller
 {
 
     protected $_course;
+
+    private $view;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() 
-    { 
+    public function __construct()
+    {
         $this->middleware('data_filled'); 
         $this->_course = new Course;
-    } 
+    }
+
+    private function _view()
+    {
+        return (Auth::user()->user_type == 2) ? 'teacher_profile' : 'university_profile';
+    }
+
+    private function _viewPath()
+    {
+        return (Auth::user()->user_type == 2) ? 'users.profile_types.teacher.' : 'users.profile_types.university.';
+    }
 
     public function showCourse()
     {   
@@ -34,7 +52,7 @@ class CourseController extends TeacherController
         $status  = request()->status;
         $courses = Courses::with('sections')->filterProfile()->where('id_user', $user->id)->get();
  
-        return view('users.teacher_profile', [ 
+        return view('users.' . $this->_view(), [
             'user'          => $user,  
             'courses'       => $courses,
             'categories'    => CourseCategory::whereHas('courses', function($query) use($userId, $status){
@@ -50,7 +68,7 @@ class CourseController extends TeacherController
                                 } 
                                 return $query->where('id_user', $userId);
                             })->get(), 
-            'include'       => $this->viewPath . 'courses.list',
+            'include'       => $this->_viewPath() . 'courses.list',
             'scripts' => [ 
                 'js/courses.js'
             ]
@@ -81,9 +99,9 @@ class CourseController extends TeacherController
 
     public function showCourseForm()
     {  
-        return view('users.teacher_profile', [ 
+        return view('users.' . $this->_view(), [
             'user'       => Auth::user(), 
-            'include'    => $this->viewPath . 'courses.add',
+            'include'    => $this->_viewPath() . 'courses.add',
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
             'scripts' => [
                 'js/courses.js'
@@ -112,7 +130,7 @@ class CourseController extends TeacherController
                 $view = 'participants';
                 break;
 
-            case 'сertificates':
+            case 'certificates':
                 $view = 'certificates';
                 break;
             default:
@@ -123,9 +141,16 @@ class CourseController extends TeacherController
         $user    = Auth::user();
         $course = Courses::with('sections')->where('id_user', $user->id)->findOrFail($id_course); 
 
-        if (!$this->_course->manager($course)->canManage() && !in_array($formSection, ['сertificates', 'participants'])) 
+        if (!$this->_course->manager($course)->canManage() && !in_array($formSection, ['certificates', 'participants'])) 
         { 
-            return redirect()->route(userRoute('course_participants'), ['id' => $id_course]);
+            if ($this->_course->manager($course)->ifAdded()) 
+            {
+                return redirect()->route(userRoute('course_participants'), ['id' => $id_course]);
+            }
+            else
+            {
+                return redirect()->route(userRoute('user_profile'));
+            }             
         }
  
         return view('users.profile_types.teacher.courses.edit.' . $view, [ 
@@ -304,5 +329,38 @@ class CourseController extends TeacherController
         }
 
         return $redirect;
+    }
+
+    public function confirmParticipant($id_course, $id_user)
+    {
+        $data = CourseRequest::where('id_course', $id_course)
+                             ->where('id_user', $id_user)
+                             ->where('confirm', 0)
+                             ->whereHas('user', function($query){
+                                return $query->allowuser();
+                             })
+                             ->with(['user', 'course'])
+                             ->firstOrFail();
+ 
+        $data->confirm = 1;
+        $data->confirm_date = date('Y-m-d H:i:s');
+        $data->save(); 
+        Mail::to($data->user->email)->send(new ConfirmRequest($data->course));  
+        return redirect()->back()->with('flash_message', 'Курс успешно подтвержден!');
+    }
+
+    public function declineParticipant($id_course, $id_user)
+    {
+        $data = CourseRequest::where('id_course', $id_course)
+                             ->where('id_user', $id_user)
+                             ->where('confirm', 0)
+                             ->whereHas('user', function($query){
+                                return $query->allowuser();
+                             })
+                             ->with(['user', 'course'])
+                             ->firstOrFail();
+        $data->delete();
+        Mail::to($data->user->email)->send(new DeclineRequest($data->course));  
+        return redirect()->back()->with('flash_message', 'Запрос откланен!');
     }
 }

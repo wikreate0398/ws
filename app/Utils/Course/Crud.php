@@ -27,7 +27,8 @@ class Crud extends Course
         'is_open_to'    => 'Запись курса открыта до',
         'type'          => 'Тип',
         'available'     => 'Доступность на сайте',
-        'price'         => 'Стоимость' 
+        'price'         => 'Стоимость',
+        'max_nr_people' => 'Кол-во людей'
     ];
 
     private $rules = [
@@ -44,7 +45,8 @@ class Crud extends Course
 
     private $customMessage = [ 
         'available.required' => 'Укажите доступность на сайте',
-        'teachers.required'  => 'Выберите преподавателей'
+        'teachers.required'  => 'Выберите преподавателей',
+        'max_nr_people.required' => 'Необходимо указать кол-в людей если желаете скрыть курс по окончанию набора'
     ];
 
     private $payOptions = ['1','2'];
@@ -173,6 +175,7 @@ class Crud extends Course
                 {
                     $rules['is_open_from'] = 'required';
                     $rules['is_open_to'] = 'required';
+                    $rules['max_nr_people'] = 'required';
                 } 
 
                 $validator = Validator::make($data, $rules, $this->customMessage); 

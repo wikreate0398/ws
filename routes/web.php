@@ -34,13 +34,14 @@ Route::get('universities', 'UniversityController@index');
 Route::get('university/{id}', 'UniversityController@view');
 Route::get('universities/autocomplete', 'UniversityController@autocomplete');
 Route::post('university/setBoockmark', 'UniversityController@setBoockmark'); 
+Route::post('university/review/{id}', 'UniversityController@review', ['middleware' => 'web_auth'])->name('university_review');
 
 Route::get('teachers', 'TeachersController@index');
 Route::get('teacher/{id}', 'TeachersController@show');
 Route::get('teacher/{id}/makeRequest', 'TeachersController@makeRequest');
 Route::get('teachers/autocomplete', 'TeachersController@autocomplete');
 Route::post('teachers/setBoockmark', 'TeachersController@setBoockmark');
-Route::post('teachers/review/{id}', 'TeachersController@review', ['middleware' => 'web_auth'])->name('teacher_review');
+Route::post('teachers/review/{id}', 'TeachersController@review', ['middleware' => 'web_auth'])->name('teacher_review'); 
 
 Route::get('courses', 'CoursesController@index'); 
 Route::get('courses/cat/{cat}', 'CoursesController@index');
@@ -62,7 +63,8 @@ Route::group(['prefix' => 'user/actions'], function() {
 	Route::post('deleteCertificate', 'Users\ProfileController@deleteCertificate')->middleware('web_auth');
 	Route::post('deleteCourseCertificate', 'Users\ProfileController@deleteCourseCertificate')->middleware('web_auth');
 	Route::post('loadCourseSubcats', 'Users\ProfileController@loadCourseSubcats')->middleware('web_auth'); 
-	Route::post('changeStatus', 'Users\ProfileController@changeStatus')->middleware('web_auth');  
+	Route::post('changeStatus', 'Users\ProfileController@changeStatus')->middleware('web_auth'); 
+	Route::post('deleteUploadMaterial', 'Users\ProfileController@deleteUploadMaterial')->middleware('web_auth');  
 }); 
 
 Route::group(['middleware' => ['web_auth']], function(){  

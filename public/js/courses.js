@@ -38,7 +38,9 @@ $(document).ready(function(){
     });
 
     course_date_from.trigger('pick.datepicker'); 
-    course_date_to.trigger('pick.datepicker');  
+    course_date_to.trigger('pick.datepicker'); 
+
+    attrLectureInputName(); 
 });
 
 function courseRequest(button, id_course, auth, canMakeRequest)
@@ -93,6 +95,31 @@ function deleteCourseUploadImg(item, id){
     }
 } 
 
+function deleteUploadMaterial(item, id){ 
+    if (!confirm('Вы действительно хотите удалить?')) {
+        return false;
+    }
+
+    $(item).closest('.material-upload-item').fadeOut(150, function(){
+        $(this).closest('.material-upload-item').remove();
+    }); 
+         
+    if (id) {
+        $.ajax({
+            url: '/user/actions/deleteUploadMaterial',
+            type: 'POST', 
+            data: {'id':id, _token: CSRF_TOKEN}, 
+            dataType: 'json',
+            beforeSend: function() {},
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                if (XMLHttpRequest.status === 401) document.location.reload(true);
+            },
+            success: function(jsonResponse, textStatus, request) {},
+            complete: function() { }
+        });
+    }
+}  
+
 function setPayCourse(input){
     var val = $(input).val();
     if (val == 1) {
@@ -131,6 +158,7 @@ function deleteSectionBlock(item, id){
     //     $(item).closest('.course__section').remove();
     // } 
     $(item).closest('.course__section').remove();
+    attrLectureInputName();
 }
 
 function deleteLectureBlock(item, id){
@@ -164,6 +192,7 @@ function deleteLectureBlock(item, id){
     // } 
 
      $(item).closest('.lecture__section').remove(); 
+    attrLectureInputName();
 }    
 
 function loadCourseSubcats(select, subcat){  
@@ -186,7 +215,7 @@ function loadCourseSubcats(select, subcat){
     });
 }
 
-function addLecture(){
+function addLecture(button){
     var first_block = $('.course__sections .course__section.first_block').find('.lecture__sections .lecture__section.first_block');
     var cloneBlock = $(first_block).clone();
     $(cloneBlock).removeClass('first_block');
@@ -200,9 +229,14 @@ function addLecture(){
     $(cloneBlock).find('input.id__block').remove();
 
     var sectionId = $('.course__sections .course__section').length;
+    var lectureId = $(button).closest('.course__section').find('.lecture__sections .lecture__section').length;
+
     if (sectionId >= 1) {
         sectionId--;
     }
+    if (lectureId >= 1) {
+        lectureId--;
+    } 
 
     $(cloneBlock).find('select').each(function(){
         $(this).attr('name', $(this).attr('name').replace('edit_', '')); 
@@ -212,19 +246,32 @@ function addLecture(){
         $(this).attr('name', $(this).attr('name').replace('edit_', '')); 
     });
 
-    $(cloneBlock).find('textarea').each(function(){
+    $(cloneBlock).find('input').each(function(){
         $(this).attr('name', $(this).attr('name').replace('edit_', '')); 
-    });  
-  
-    $(cloneBlock).insertAfter('.lecture__sections .lecture__section:last'); 
+    }); 
 
+    $(cloneBlock).find('.video__upload').remove();
+    $(cloneBlock).find('.material__upload_files').remove();
+    $(cloneBlock).find('.video__area').hide();
+    $(cloneBlock).find('.active__video').removeClass('active__video');
+
+    var insertAfter = $(button).closest('.course__section').find('.lecture__sections .lecture__section:last');
+  
+    $(cloneBlock).insertAfter(insertAfter);  
+ 
     attrLectureInputName();
 }
 
 function attrLectureInputName(){
     
     $('.course__sections .course__section').each(function(sectionId){
- 
+        $(this).attr('data-section', sectionId);
+
+        $(this).find('.lecture__sections .lecture__section').each(function(lectureId){
+            $(this).attr('data-lecture', lectureId);
+        });
+
+
         $(this).find('select').each(function(){ 
             $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
         });
@@ -236,7 +283,14 @@ function attrLectureInputName(){
         $(this).find('textarea').each(function(){ 
             $(this).attr('name', $(this).attr('name').replace('[0]', '['+sectionId+']'));
         }); 
-    });
+
+        $(this).find('input[type="file"][multiple]').each(function(){ 
+            var lectureId = $(this).closest('.lecture__section').attr('data-lecture');
+            escaped_selector_name = $(this).attr('name').replace(/\[.*?\]/g, '');
+            $(this).attr('name', escaped_selector_name + '['+sectionId+']['+lectureId+'][]'); 
+        });   
+
+    }); 
 }
 
 function addCourseSection()
@@ -254,6 +308,12 @@ function addCourseSection()
     $(cloneBlock).find('select option:first').prop('selected', true);
     $(cloneBlock).find('input.id__block').remove();
 
+    var sectionId = $('.course__sections .course__section').length;
+    var lectureId = 0;
+
+    if (sectionId >= 1) {
+        sectionId--;
+    } 
     $(cloneBlock).find('select').each(function(){
         $(this).attr('name', $(this).attr('name').replace('edit_', ''))
     });
@@ -264,12 +324,18 @@ function addCourseSection()
 
     $(cloneBlock).find('textarea').each(function(){
         $(this).attr('name', $(this).attr('name').replace('edit_', ''))
-    }); 
+    });  
 
     $(cloneBlock).find('.lecture__section').not('.first_block').remove();
+
+    $(cloneBlock).find('.video__upload').remove();
+    $(cloneBlock).find('.material__upload_files').remove();
+    $(cloneBlock).find('.video__area').hide();
+    $(cloneBlock).find('.active__video').removeClass('active__video');
+     
   
     $(cloneBlock).insertAfter('.course__sections .course__section:last'); 
-
+ 
     attrLectureInputName();
 }
 
@@ -312,3 +378,17 @@ function selectFilterTeacher(select, category, url){
                              function( response, status, xhr ) {  
     }); 
 } 
+
+function showProgramVideoArea(button, value){
+    $(button).closest('.video__program_control').find('.video__area').hide();
+    $(button).closest('.video__program_control').find('.active__video').removeClass('active__video');
+    $(button).addClass('active__video');
+    $(button).closest('.video__program_control').find('#video_type').val(value);
+    if (value == 'link') {
+        $(button).closest('.video__program_control').find('.video_link__area').show(); 
+    }else{
+        $(button).closest('.video__program_control').find('.video_file__area').show(); 
+    }
+}
+
+ 

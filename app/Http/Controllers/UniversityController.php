@@ -15,6 +15,7 @@ use \App\Models\User;
 use \App\Models\UsersUniversity;
 use \App\Models\UniversitySpecializationsList;
 use \App\Models\UniversityBookmarks;
+use \App\Models\UniversityReviews;
 
 class UniversityController extends Controller
 {
@@ -140,5 +141,32 @@ class UniversityController extends Controller
         }
 
         return \App\Utils\JsonResponse::success(['status' => $status]);
+    }
+
+    public function review($id, Request $request)
+    {
+        $university = User::whereId($id)
+                          ->allowUser()
+                          ->where('user_type', 3)
+                          ->first();
+
+        if (!$university or !Auth::check())
+        {
+            return;
+        }
+
+        if (!$request->input('message'))
+        {
+            return \App\Utils\JsonResponse::error(['messages' => 'Заполните поле с комментарием']);
+        }
+
+        UniversityReviews::create([
+            'id_university'=> $id,
+            'id_user'      => Auth::user()->id,
+            'review'       => $request->input('message'),
+            'rating'       => floatval($request->input('rating'))
+        ]);
+
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Отзыв успешно добавлен и ожидает проверки модератора');
     }
 }

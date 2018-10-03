@@ -107,35 +107,41 @@ class Courses extends Model
             $courses->whereHas('category', function($query) use($cat){
                 $query->where('url', $cat);
             });
+        } 
+
+        if (request()->reviewSort) 
+        {
+            $courses->orderByReview();
+        }
+
+        if (request()->dateSort) 
+        {
+            $courses->orderByCourses();
         }
 
         switch (@$input['filter']){
-            case "popular":
-                $courses->leftJoin('count_views', function($leftJoin){
-                            $leftJoin->on('count_views.id_item', '=', 'courses.id')
-                                     ->where('count_views.type', 'course');
-                        })
-                        ->withCount('userRequests')
-                        ->orderBy('count_views.count', 'desc')
-                        ->orderBy('user_requests_count', 'desc');
+            case "popular": 
+                $courses->orderByViews();
+                $courses->orderByRequests();
                 break;
 
             case "new":
-                $courses->orderBy('id', 'desc');
+                $courses->whereDate('created_at', \Carbon\Carbon::now()->subDays(10));
                 break;
 
             case "discount":
-                $courses->where('discount_price', '>', 0)->orderByCourses();
-                break;
+                $courses->where('discount_price', '>', 0);
+                break; 
 
             case "featured":
-                $courses->where('featured', 1)->orderByCourses();
+                $courses->where('featured', 1);
                 break;
 
             default:
-                $courses->orderByCourses();
-
-        }
+                break;   
+        } 
+  
+        $courses->orderByCourses();
 
         return $courses->published()->with('user')->paginate(!empty($input['per_page']) ? $input['per_page'] : 12,
                                       ['*'], 
@@ -143,9 +149,47 @@ class Courses extends Model
                                       !empty($input['page']) ? $input['page'] : 1);
     }
 
+    public function scopeOrderByViews($query)
+    {
+        return $query->leftJoin('count_views', function($leftJoin){
+            $leftJoin->on('count_views.id_item', '=', 'courses.id')
+                     ->where('count_views.type', 'course');
+        })->orderBy('count_views.count', 'desc');
+    }
+
+    public function scopeOrderByRequests($query)
+    {
+        return $query->withCount('userRequests') 
+                     ->orderBy('user_requests_count', 'desc');
+    }
+
     public function scopeOrderByCourses($query)
     {
-        return $query->orderBy('date_from');
+        if (request()->dateSort == 'desc') 
+        { 
+            return $query->orderBy('date_from', 'desc');
+        }
+        return $query->orderBy('date_from', 'asc');
+    }
+
+    public function scopeOrderByReview($query)
+    {
+        if (request()->reviewSort) 
+        {
+            $query->withCount('reviews'); 
+            switch (request()->reviewSort) { 
+                case 'asc':
+                    return $query->orderBy('reviews_count', 'asc');
+                    break;
+
+                case 'desc':
+                    return $query->orderBy('reviews_count', 'desc');
+                    break;
+                
+                default: 
+                    break;
+            } 
+        } 
     }
 
     public function counter()

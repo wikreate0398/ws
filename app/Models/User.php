@@ -51,6 +51,11 @@ class User extends Authenticatable
     public function cityData()
     {
         return $this->hasOne('App\Models\Cities', 'id', 'city');
+    }  
+
+    public function userUniversityReviews()
+    {
+        return $this->hasMany('App\Models\UniversityReviews', 'id_user', 'id')->orderBy('created_at', 'desc');
     }
 
     public function teacherReviews()
@@ -197,37 +202,40 @@ class User extends Authenticatable
             });
         }
 
+        if (request()->dateSort) 
+        {
+            $user->orderByDate();
+        }
+
+        if (request()->reviewSort) 
+        {
+            $user->orderByReview();
+        } 
+         
         switch (@$request['tab']){
-            case "popular":
-                $user->leftJoin('count_views', function($leftJoin){
-                        $leftJoin->on('count_views.id_item', '=', 'users.id')
-                                 ->where('type', 'teacher');
-                    })
-                    ->withCount('teacherRequests')
-                    ->withCount('teacherReviews')
-                    ->orderBy('teacher_requests_count', 'desc')
-                    ->orderBy('count_views.count', 'desc')
-                    ->orderBy('teacher_reviews_count', 'desc');
+            case "popular":  
+                    $user->orderByRequests();
+                    $user->orderByViews();
+                    $user->orderByReview(); 
                 break;
 
             case "featured":
-                $user->where('featured', 1)->orderTeacher();
+                $user->where('featured', 1);
                 break;
 
             case "online_training":
                 $user->whereHas('lesson_options', function ($query) {
                     $query->where('id_lesson_option', '4');
-                })->orderTeacher();
+                });
                 break;
 
-            default:
-                $user->orderTeacher();
-
+            default:  
+                break;
         }
 
-        $user->allowUser()->where('user_type',2);
+        $user->orderTeacher();  
 
-        $user->groupBy('users.id');
+        $user->allowUser()->where('user_type',2)->groupBy('users.id'); 
 
         return $user->paginate(!empty($request['per_page']) ? $request['per_page'] : 6, 
                                       ['*'], 
@@ -235,6 +243,61 @@ class User extends Authenticatable
                                       !empty($request['page']) ? $request['page'] : 1);
     }
 
+    public function scopeSortSequence($query, $sortArray = [])
+    {
+        $sequenceArray = [
+            'date'    => 'orderByDate',
+            'review'  => 'orderByReview',
+            'view'    => 'orderByViews',
+            'request' => 'orderByRequests',
+            'default' => 'orderTeacher'
+        ];
+
+        foreach ($sortArray as $key => $value) 
+        { 
+            $query->{$sequenceArray[$value]}();
+        }
+    }
+
+    public function scopeOrderByReview($query)
+    {
+        $query->withCount('teacherReviews');
+        if (request()->reviewSort == 'asc') 
+        {
+            return $query->orderBy('teacher_reviews_count', 'asc');
+        }
+        elseif (request()->reviewSort == 'desc') 
+        {
+            return $query->orderBy('teacher_reviews_count', 'desc');
+        }  
+    }
+
+    public function scopeOrderByDate($query)
+    {
+        if (request()->dateSort == 'desc') 
+        { 
+            return $query->orderBy('created_at', 'desc');
+        }
+        elseif (request()->dateSort == 'asc') 
+        {
+            return $query->orderBy('created_at', 'asc');
+        } 
+    }
+
+    public function scopeOrderByViews($query)
+    {
+        return $query->leftJoin('count_views', function($leftJoin){
+            $leftJoin->on('count_views.id_item', '=', 'users.id')
+                     ->where('type', 'teacher');
+        })->orderBy('count_views.count', 'desc');
+    }
+
+    public function scopeOrderByRequests($query)
+    {
+        return $query->withCount('teacherRequests') 
+                     ->orderBy('teacher_requests_count', 'desc');
+    }
+ 
     public function scopeOrderTeacher($query)
     {
         return $query->orderBy('id', 'desc');

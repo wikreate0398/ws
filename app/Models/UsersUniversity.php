@@ -42,6 +42,11 @@ class UsersUniversity extends Model
     {
         return $this->hasOne('App\Models\TeacherUniversityConnect', 'id_university', 'id_user')->fromTeacher()->orderBy('created_at', 'desc');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\UniversityReviews', 'id_university', 'id_user')->orderBy('created_at', 'desc');
+    } 
  
     public static function getUniversities($request = false)
     {
@@ -88,40 +93,49 @@ class UsersUniversity extends Model
         }
 
         $university->with('user')->whereHas('user', function($query){
-                                return User::allowUser();
+                                return $query->allowUser();
                             });
 
         $university->with(['user.courses' => function($query){
                                 return $query->published();
                             }]);
 
+        
+        if (request()->reviewSort) 
+        {
+            $university->orderByReview();
+        } 
+
+        if (request()->placesSort) 
+        {
+            $university->orderByPlaces();
+        }
+
         switch (@$request['tab']){
-            case "popular":
-                $university->leftJoin('count_views', function($leftJoin){
-                                $leftJoin->on('count_views.id_item', '=', 'users_university.id_user')
-                                    ->where('type', 'university');
-                            })
-                           ->orderBy('count_views.count', 'desc');
+            case "popular": 
+                    $university->orderByViews();
+                    $university->orderByReview(); 
                 break;
 
             case "featured":
                 $university->whereHas('user', function($query){
                     $query->where('featured', '1');
-                })->orderUniv();
+                });
                 break;
 
             case "budget":
-                $university->where('qty_budget', '>', '0')->orderUniv();
+                $university->where('qty_budget', '>', '0');
                 break;
 
             case "online_training":
-                $university->where('distance_learning', '1')->orderUniv();
+                $university->where('distance_learning', '1');
                 break;
 
             default:
-                $university->orderUniv();
-
+                break;
         }
+
+        $university->orderUniv();
 
         $university->groupBy('users_university.id');
 
@@ -136,6 +150,40 @@ class UsersUniversity extends Model
         $query->orderBy('id_user', 'asc');
     }
 
+    public function scopeOrderByReview($query)
+    {
+        $query->withCount('reviews');
+
+        if (request()->reviewSort == 'asc') 
+        {
+            return $query->orderBy('reviews_count', 'asc');
+        }
+        elseif (request()->reviewSort == 'desc') 
+        {
+            return $query->orderBy('reviews_count', 'desc');
+        }  
+    }
+
+    public function scopeOrderByPlaces($query)
+    {
+        if (request()->placesSort == 'desc') 
+        { 
+            return $query->orderBy('qty_budget', 'desc');
+        }
+        elseif (request()->placesSort == 'asc') 
+        {
+            return $query->orderBy('qty_budget', 'asc');
+        } 
+    }
+
+    public function scopeOrderByViews($query)
+    {
+        return $query->leftJoin('count_views', function($leftJoin){
+            $leftJoin->on('count_views.id_item', '=', 'users_university.id_user')
+                     ->where('type', 'university');
+        })->orderBy('count_views.count', 'desc');
+    }
+
     public function specializations()
     {
         return $this->belongsToMany('App\Models\UniversitySpecializationsList', 'university_specializations', 'id_university', 'id_specialization');
@@ -143,10 +191,14 @@ class UsersUniversity extends Model
 
     public static function getFilterMinMaxPrice()
     {
-        $min = self::where('price', '>', '0')
+        $min = self::where('price', '>', '0')->whereHas('user', function($query){
+                                return $query->allowUser();
+                            })
                     ->min('price');
 
-        $max = self::where('price', '>', '0')
+        $max = self::where('price', '>', '0')->whereHas('user', function($query){
+                                return $query->allowUser();
+                            })
                    ->max('price');
 
         return compact('min', 'max');

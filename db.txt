@@ -1,3 +1,0 @@
- db name - brainincorp
- usr - brainincorp
-  pass - 0E1d6N3x

@@ -4,7 +4,7 @@
             <ul class="links">
                 <li>
                     <a class="{{ (request()->input('p')=='university' or !request()->input('p')) ? 'active' : '' }}"
-                       href="{{ route(userRoute('user_reviews')) }}?p=university">Вузы ({{ count(@$university) }})</a>
+                       href="{{ route(userRoute('user_reviews')) }}?p=university">Вузы ({{ @$user->userUniversityReviews->count() }})</a>
                 </li>
                 <li>
                     <a class="{{ (request()->input('p')=='courses') ? 'active' : '' }}"

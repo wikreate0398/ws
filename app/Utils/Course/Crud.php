@@ -10,6 +10,7 @@ use App\Models\SectionLectures;
 use App\Models\CourseCategory;
 use App\Models\CoursesCertificates; 
 use App\Models\CourseTeachers; 
+use App\Models\SectionLecturesMaterials; 
   
 class Crud extends Course
 { 
@@ -40,7 +41,8 @@ class Crud extends Course
         'date_from'    => 'required',
         'date_to'      => 'required',
         'type'         => 'required',
-        'available'    => 'required',  
+        'available'    => 'required', 
+        'lecture_video.*' => 'mimes:mp4' 
     ]; 
 
     private $customMessage = [ 
@@ -83,7 +85,7 @@ class Crud extends Course
             foreach ($sections as $section_key => $section_value) 
             { 
                 if (empty($section_value)) 
-                {
+                {  
                     $err = true;
                 } 
 
@@ -92,13 +94,15 @@ class Crud extends Course
                     if ($lecture_key == $section_key) 
                     { 
                         foreach ($lectures as $lecture_field_name => $lecture_values) 
-                        { 
-
-                            foreach ($lecture_values as $lecture_values_key => $lecture_values_value) 
-                            {
-                                if ($lecture_values_value == null) 
+                        {  
+                            if (!in_array($lecture_field_name, ['video_link', 'video_type', 'last_id'])) 
+                            { 
+                                foreach ($lecture_values as $lecture_values_key => $lecture_values_value) 
                                 {
-                                    $err = true;
+                                    if ($lecture_values_value == null) 
+                                    {
+                                        $err = true;
+                                    }
                                 }
                             }
                         }
@@ -208,6 +212,25 @@ class Crud extends Course
                     $errors[] = ['Заполните все обязательные поля в разделе <strong>Программа курса</strong>!'] ;
                     $errors['multifields'] = $validateSectionsAndLectures;
                 }
+
+                $validator = Validator::make($data, [
+                    'lecture_video.*.*'     => 'mimes:mp4,ogv,ogg,m4v|max:5000',
+                    'lecture_materials.*.*.*' => 'mimes:doc,docx,pdf,rtf,zip|max:2000',
+                ], [
+                    'lecture_video.*.mimes'     => 'Видеофайл не правильного формата',
+                    'lecture_materials.*.mimes' => 'Файл материала не правильного формата',
+                    'lecture_video.*.max'       => 'Загрузите видео размером не более 5мб',
+                    'lecture_materials.*.max'   => 'Загрузите файлы размером не более 2мб'
+                ]);  
+                if ($validator->fails()) 
+                {
+                    $errors = array_merge($errors, $validator->errors()->toArray());
+                }
+
+                if (!empty($errors)) 
+                {
+                    return $errors;
+                }  
 
                 break;
             
@@ -345,6 +368,10 @@ class Crud extends Course
 
     public function saveSections()
     {  
+         
+        // exit('sad');
+        //exit(print_arr(request()->all()));
+        $files  = @request()->file(); 
         $insert = [];
         foreach ($this->sections as $sectionKey => $section) 
         {  
@@ -355,15 +382,64 @@ class Crud extends Course
 
             foreach (sortValue($this->lectures[$sectionKey]) as $lectureKey => $lecture) 
             { 
-                SectionLectures::insert([
-                    'id_section'      => $id,
-                    'name'            => $lecture['name'],
-                    'description'     => $lecture['description'],
-                    'duration_hourse' => toFloat($lecture['hourse']),
+                $videoFile = null;
+                if (!empty($files['lecture_video'][$sectionKey][$lectureKey]) && $lecture['video_type'] == 'file') 
+                {
+                    $video     = $files['lecture_video'][$sectionKey][$lectureKey]; 
+                    $fileName  = md5($video->getClientOriginalName() . time()) . "." . $video->getClientOriginalExtension();
+                    $videoFile = $fileName;
+                    $video->move(public_path() . '/uploads/courses/video/', $fileName); 
+                }
+
+                $createLecture = [
+                    'id_section'       => $id,
+                    'name'             => $lecture['name'],
+                    'description'      => $lecture['description'],
+                    'duration_hourse'  => toFloat($lecture['hourse']),
                     'duration_minutes' => toFloat($lecture['minutes']),
-                ]);
+                    'video_link'       => ($lecture['video_type'] == 'link') ? $lecture['video_link'] : null, 
+                    'video_type'       => $lecture['video_type']
+                ];
+
+                if ($lecture['video_type'] == 'file' && !empty($videoFile)) 
+                {
+                    $createLecture['video_file'] = $videoFile;
+                }
+                elseif (!empty($lecture['old_video_file']) && $lecture['video_type'] == 'file') 
+                {
+                    $createLecture['video_file'] = $lecture['old_video_file'];
+                } 
+
+                if ($lecture['video_type'] == 'link' && !empty($lecture['old_video_file'])) 
+                {
+                    \File::delete('uploads/courses/video/' . $lecture['old_video_file']);
+                }
+
+                $insertLecture = SectionLectures::create($createLecture);
+                
+                if (!empty($lecture['last_id'])) 
+                {
+                    SectionLecturesMaterials::where('id_lecture', $lecture['last_id'])->update(['id_lecture' => $insertLecture->id]);
+                } 
+      
+                if (!empty($files['lecture_materials'][$sectionKey][$lectureKey])) 
+                {
+                    $insertData     = [];
+                    $materialsFiles = $files['lecture_materials'][$sectionKey][$lectureKey];   
+                    foreach ($materialsFiles as $key => $file) 
+                    { 
+                        $fileName = $file->getClientOriginalName() . "_" . date('d_m_Y_H_i_s')  . "." . $file->getClientOriginalExtension();
+                        $file->move(public_path() . '/uploads/courses/materials/', $fileName);
+                        $insertData[] = [
+                            'id_lecture' => $insertLecture->id,
+                            'material'   => $fileName
+                        ];
+                    }  
+
+                    SectionLecturesMaterials::insert($insertData);
+                }  
             }
-        } 
+        }  
 
         return true;
     }

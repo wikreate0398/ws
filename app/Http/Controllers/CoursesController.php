@@ -59,9 +59,10 @@ class CoursesController extends Controller
                 $id = $currentCat->id;
                 $subcatFlag = true;
             } 
-            $categories =  CourseCategory::with(['coursesSubcat' => function($query){ 
+
+            $categories =  CourseCategory::where('parent_id', $id)->with(['coursesSubcat' => function($query){ 
                             $query->published();
-                        }])->get();
+                        }])->get(); 
         }
         else
         {
@@ -71,7 +72,7 @@ class CoursesController extends Controller
         } 
 
         $courses = Courses::getCatalog($cat, $subcat, $request->all());
-
+//exit(print_arr($courses->toArray()));
         $data = [
             'courses'           => $courses, 
             'totalCourses' => Courses::countTotal(),

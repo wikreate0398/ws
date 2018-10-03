@@ -1720,7 +1720,8 @@ form#search_form.no_home .btn_search{
 	text-transform: uppercase;
 }
 .filter_top .sorting_list li a:focus,
-.filter_top .sorting_list li a:hover{
+.filter_top .sorting_list li a:hover,
+.filter_top .sorting_list li a.active{
     color: #b93777;
 	font-weight: 300;
 	text-decoration: none;
@@ -2817,7 +2818,9 @@ select option:disabled {
 }
 
 .courses__cats li a{
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding:7px 0;
     border-bottom: 1px solid #ccc;
     text-decoration: none;
@@ -3717,4 +3720,9 @@ select option:disabled {
 
 .br-theme-fontawesome-stars-o .br-widget a.br-selected:after {
     color: #ffcd00!important;
+}
+
+.active__video{
+    background: #a2a2ff;
+    color: #fff !important;
 }

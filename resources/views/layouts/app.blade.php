@@ -196,7 +196,7 @@
 
                             @if($stats['courses'] > 0)
                             <li>
-                                <a href="">
+                                <a href="/courses/">
                                     {{ $stats['courses'] }}   
                                     {{ format_by_count($stats['courses'], 'КУРС', 'КУРСА', 'КУРСОВ') }}
                                 </a>

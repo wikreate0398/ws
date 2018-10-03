@@ -36,29 +36,29 @@
                 <ul class="nav nav-tabs filter_tabs">
 
                     <li class="{{ !request()->tab ? 'active' : '' }}">
-                        <a href="{{ addUriParam(['tab' => '']) }}">
+                        <a href="{{ addUriParam(['tab' => '', 'placesSort' => '', 'reviewSort' => '']) }}">
                             Все
                         </a>
                     </li>
 
                     <li class="{{ (request()->tab == 'popular') ? 'active' : '' }}">
-                        <a href="{{ addUriParam(['tab' => 'popular']) }}">
+                        <a href="{{ addUriParam(['tab' => 'popular', 'placesSort' => '', 'reviewSort' => '']) }}">
                             Популярные
                         </a>
                     </li>
 
                     <li class="{{ (request()->tab == 'featured') ? 'active' : '' }}">
-                        <a href="{{ addUriParam(['tab' => 'featured']) }}">
+                        <a href="{{ addUriParam(['tab' => 'featured', 'placesSort' => '', 'reviewSort' => '']) }}">
                             Рекомендуемые
                         </a>
                     </li>
 					<li class="{{ (request()->tab == 'budget') ? 'active' : '' }}">
-						<a href="{{ addUriParam(['tab' => 'budget']) }}">
+						<a href="{{ addUriParam(['tab' => 'budget', 'placesSort' => '', 'reviewSort' => '']) }}">
 							Есть бюджетные места
 						</a>
 					</li>
                     <li class="{{ (request()->tab == 'online_training') ? 'active' : '' }}">
-                        <a href="{{ addUriParam(['tab' => 'online_training']) }}">
+                        <a href="{{ addUriParam(['tab' => 'online_training', 'placesSort' => '', 'reviewSort' => '']) }}">
                             Онлайн обучение
                         </a>
                     </li>
@@ -73,7 +73,7 @@
                         <div class="col-lg-4">
                             <ul class="list-inline status_list">
                                 <li class="{{ (request()->input('status') == 'all' or request()->input('status') == null) ? 'active' : '' }}">
-                                    <a href="{{ addUriParam(['status' => '']) }}">ВСЕ</a>
+                                    <a href="{{ addUriParam(['status' => '', 'placesSort' => '', 'reviewSort' => '']) }}">ВСЕ</a>
                                 </li>
                                 <li class="{{ (request()->input('status') == '1') ? 'active' : '' }}">
                                     <a href="{{ addUriParam(['status' => '1']) }}">ГОСУДАРСТВЕННЫЕ</a>
@@ -84,9 +84,29 @@
                             </ul>
                         </div>
                         <div class="col-lg-4">
-                            <ul class="list-inline sorting_list univ__sorting_list">
-                                <li><a href=""><i class="fa fa-caret-down" aria-hidden="true"></i> ДАТА</a></li>
-                                <li><a href=""><i class="fa fa-caret-up" aria-hidden="true"></i> ОТЗЫВЫ</a></li>
+                            <ul class="list-inline sorting_list univ__sorting_list">  
+                                <li>
+                                    @php 
+                                        $reviewSort = (request()->reviewSort == 'asc') ? 'desc' : 'asc';  
+                                        $reviewSortClass = (request()->reviewSort == 'desc') ? 'fa-caret-down' : 'fa fa-caret-up';  
+                                        $reviewSortStatus = request()->reviewSort ? 'active' : '';  
+                                    @endphp
+                                    <a href="{{ addUriParam(['reviewSort' => $reviewSort, 'placesSort' => '']) }}" 
+                                       class="{{ $reviewSortStatus }}">
+                                        <i class="fa {{ $reviewSortClass }}" aria-hidden="true"></i> ОТЗЫВЫ
+                                    </a>
+                                </li>  
+                                <li> 
+                                    @php 
+                                        $placesSort = (request()->placesSort == 'asc') ? 'desc' : 'asc';  
+                                        $placesSortClass = (request()->placesSort == 'desc') ? 'fa-caret-down' : 'fa fa-caret-up';  
+                                        $placesSortStatus = request()->placesSort ? 'active' : '';  
+                                    @endphp
+                                    <a href="{{ addUriParam(['placesSort' => $placesSort, 'reviewSort' => '']) }}" 
+                                       class="{{ $placesSortStatus }}">
+                                        <i class="fa {{ $placesSortClass }}" aria-hidden="true"></i> Кол-во мест
+                                    </a>
+                                </li> 
                             </ul>
                         </div>
                         <div class="col-lg-4" style="text-align: right;">
@@ -124,7 +144,7 @@
                                              alt="Корпорация Мозга | Учебное заведение {{ $university['full_name'] }} образовательного портала России и мира | Лучшие ВУЗы Москвы">
                                     </a>
                                     <span class="reviews_external_univer">
-                                        0 отзывов
+                                        {{ $university->reviews->count() }} {{ format_by_count($university->reviews->count(), 'Отзыв', 'Отзыва', 'Отзывов') }}
                                     </span>
                                     
                                     @if(@Auth::check()) 
@@ -151,11 +171,13 @@
                                 </ul>
                                 <ul class="list-inline bottom_info_list_univer">
                                     <li class="univer_rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                        <select class="rating-stars" name="rating" data-readonly="true" data-current-rating="{{ floatval($university->reviews->avg('rating')) }}" autocomplete="off">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
                                     </li>
                                     <li class="univer_price"> 
                                         От <strong>{{ priceString($university->price) }}</strong> р./год

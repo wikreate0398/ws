@@ -16,6 +16,14 @@ class SectionLectures extends Model
         'id_section',
         'description',
         'duration_hourse',
-        'duration_minutes' 
+        'duration_minutes',
+        'video_link',
+        'video_file',
+        'video_type'
     ];
+
+    public function materials()
+    {
+        return $this->hasMany('App\Models\SectionLecturesMaterials', 'id_lecture', 'id');
+    }
 }

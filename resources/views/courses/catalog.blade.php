@@ -37,35 +37,35 @@
 		<div class="col-lg-12">
 			<ul class="nav nav-tabs filter_tabs">
 				<li class="{{ (!request()->filter or request()->filter == 'all') ? 'active' : '' }}">
-					<a href="{{ addUriParam(['filter' => '']) }}">
+					<a href="{{ addUriParam(['filter' => '', 'dateSort' => '', 'reviewSort' => '']) }}">
 						Все
 					</a>
 				</li>
 				<li class="{{ (request()->filter == 'popular') ? 'active' : '' }}">
-					<a href="{{ addUriParam(['filter' => 'popular']) }}">
+					<a href="{{ addUriParam(['filter' => 'popular', 'dateSort' => '', 'reviewSort' => '']) }}">
 						Популярные курсы
 					</a>
 				</li>
 				<li class="{{ (request()->filter == 'new') ? 'active' : '' }}">
-					<a href="{{ addUriParam(['filter' => 'new']) }}">
+					<a href="{{ addUriParam(['filter' => 'new', 'dateSort' => '', 'reviewSort' => '']) }}">
 						Новые курсы
 					</a>
 				</li>                                             
 				<li class="{{ (request()->filter == 'featured') ? 'active' : '' }}">
-					<a href="{{ addUriParam(['filter' => 'featured']) }}">
+					<a href="{{ addUriParam(['filter' => 'featured', 'dateSort' => '', 'reviewSort' => '']) }}">
 						Рекомендуемые
 					</a>
 				</li>                                             
 				<li class="{{ (request()->filter == 'discount') ? 'active' : '' }}">
-					<a href="{{ addUriParam(['filter' => 'discount']) }}">
+					<a href="{{ addUriParam(['filter' => 'discount', 'dateSort' => '', 'reviewSort' => '']) }}">
 						Есть скидка
 					</a>
 				</li>                                          
-				<!---<li class="{{ (request()->filter == 'online_training') ? 'active' : '' }}">
-					<a href="{{ addUriParam(['filter' => 'online_training']) }}">
+			   <!--  <li class="{{ (request()->filter == 'online_training') ? 'active' : '' }}">
+					<a href="{{ addUriParam(['filter' => 'online_training', 'dateSort' => '', 'reviewSort' => '']) }}">
 						Онлайн обучение
 					</a>
-				</li>         -->
+				</li>     -->      
 			</ul>
 		</div>
     </div>
@@ -77,7 +77,7 @@
                     <div class="col-lg-4">
                         <ul class="list-inline available_list">
                             <li class="{{ (request()->input('pay') == 'all' or request()->input('pay') == null) ? 'active' : '' }}">
-                                <a   href="{{ addUriParam(['pay' => '']) }}">ВСЕ</a>
+                                <a   href="{{ addUriParam(['pay' => '', 'dateSort' => '', 'reviewSort' => '']) }}">ВСЕ</a>
                             </li> 
                             <li class="{{ (request()->input('pay') == '2') ? 'active' : '' }}">
                                 <a href="{{ addUriParam(['pay' => '2']) }}">ПЛАТНЫЕ</a>
@@ -90,8 +90,26 @@
                     </div>
                     <div class="col-lg-4">
                         <ul class="list-inline sorting_list">
-                            <li><a href=""><i class="fa fa-caret-down" aria-hidden="true"></i> ДАТА</a></li>
-                            <li><a href=""><i class="fa fa-caret-up" aria-hidden="true"></i> ОТЗЫВЫ</a></li>
+                            <li>
+                            	@php 
+                            		$dateSort = (request()->dateSort == 'asc') ? 'desc' : 'asc';  
+                            		$dateSortClass = (request()->dateSort == 'desc') ? 'fa-caret-down' : 'fa fa-caret-up';  
+                            		$dateSortStatus = request()->dateSort ? 'active' : '';  
+                            	@endphp
+                            	<a href="{{ addUriParam(['dateSort' => $dateSort, 'reviewSort' => '']) }}" class="{{ $dateSortStatus }}">
+                            		<i class="fa {{ $dateSortClass }}" aria-hidden="true"></i> ДАТА
+                            	</a>
+                            </li>
+                            <li>
+                            	@php 
+                            		$reviewSort = (request()->reviewSort == 'asc') ? 'desc' : 'asc';  
+                            		$reviewSortClass = (request()->reviewSort == 'desc') ? 'fa-caret-down' : 'fa fa-caret-up';  
+                            		$reviewSortStatus = request()->reviewSort ? 'active' : '';  
+                            	@endphp
+                            	<a href="{{ addUriParam(['reviewSort' => $reviewSort, 'dateSort' => '']) }}" class="{{ $reviewSortStatus }}">
+                            		<i class="fa {{ $reviewSortClass }}" aria-hidden="true"></i> ОТЗЫВЫ
+                            	</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-lg-4" style="text-align: right;">
@@ -220,16 +238,12 @@
 					<a href="/courses">Все Курсы <span class="badge badge-default">{{ $totalCourses }}</span></a>
 				</li>
 				@foreach($categories as $category)
-					@if($category->courses->count())
+					@if(($category->courses->count() && $subcatFlag == false) or ($category->coursesSubcat->count() && $subcatFlag == true))
 						<li class="{{ (request()->segment(3) == $category['url']) ? 'active' : '' }}">
 							<a href="/courses/cat/{{ $category['url'] }}">
 								{{ $category['name'] }}
 								<span class="badge badge-default">
-									@if($subcatFlag == false)
-										{{ count($category->courses) }}
-									@else
-										{{ count($category->coursesSubcat) }}
-									@endif
+									{{ $category->courses->count()+$category->coursesSubcat->count() }} 
 								</span>
 							</a>
 						</li>

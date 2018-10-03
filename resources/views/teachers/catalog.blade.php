@@ -40,17 +40,17 @@
 						</a>
 					</li>
 					<li class="{{ (request()->tab == 'popular') ? 'active' : '' }}">
-						<a href="{{ addUriParam(['tab' => 'popular']) }}">
+						<a href="{{ addUriParam(['tab' => 'popular', 'dateSort' => '', 'reviewSort' => '']) }}">
 							Популярные
 						</a>
 					</li>
 					<li class="{{ (request()->tab == 'for_exams') ? 'active' : '' }}">
-						<a href="{{ addUriParam(['tab' => 'for_exams']) }}">
+						<a href="{{ addUriParam(['tab' => 'for_exams', 'dateSort' => '', 'reviewSort' => '']) }}">
 							Подготовка к ЕГЭ
 						</a>
 					</li>
 					<li class="{{ (request()->tab == 'featured') ? 'active' : '' }}">
-						<a href="{{ addUriParam(['tab' => 'featured']) }}">
+						<a href="{{ addUriParam(['tab' => 'featured', 'dateSort' => '', 'reviewSort' => '']) }}">
 							Рекомендуемые
 						</a>
 					</li>
@@ -61,7 +61,7 @@
 						</a>
 					</li>-->
 					<li class="{{ (request()->tab == 'online_training') ? 'active' : '' }}">
-						<a href="{{ addUriParam(['tab' => 'online_training']) }}">
+						<a href="{{ addUriParam(['tab' => 'online_training', 'dateSort' => '', 'reviewSort' => '']) }}">
 							Онлайн обучение
 						</a>
 					</li>
@@ -76,7 +76,7 @@
                         <div class="col-lg-3">
                             <ul class="list-inline available_list">
                                 <li class="{{ (request()->input('teacher_available') == 'all' or request()->input('teacher_available') == null) ? 'active' : '' }}">
-                                    <a href="{{ addUriParam(['teacher_available' => '']) }}">ВСЕ</a>
+                                    <a href="{{ addUriParam(['teacher_available' => '', 'dateSort' => '', 'reviewSort' => '']) }}">ВСЕ</a>
                                 </li>
                                 <li class="{{ (request()->input('teacher_available') == '1') ? 'active' : '' }}">
                                     <a href="{{ addUriParam(['teacher_available' => '1']) }}">СВОБОДЕН</a>
@@ -91,8 +91,26 @@
                         </div>
                         <div class="col-lg-6">
                             <ul class="list-inline sorting_list">
-                                <li><a href=""><i class="fa fa-caret-down" aria-hidden="true"></i> ДАТА</a></li>
-                                <li><a href=""><i class="fa fa-caret-up" aria-hidden="true"></i> ОТЗЫВЫ</a></li>
+	                           <li>
+	                            	@php 
+	                            		$dateSort = (request()->dateSort == 'asc') ? 'desc' : 'asc';  
+	                            		$dateSortClass = (request()->dateSort == 'desc') ? 'fa-caret-down' : 'fa fa-caret-up';  
+	                            		$dateSortStatus = request()->dateSort ? 'active' : '';  
+	                            	@endphp
+	                            	<a href="{{ addUriParam(['dateSort' => $dateSort, 'reviewSort' => '']) }}" class="{{ $dateSortStatus }}">
+	                            		<i class="fa {{ $dateSortClass }}" aria-hidden="true"></i> ДАТА
+	                            	</a>
+	                            </li>
+	                            <li>
+	                            	@php 
+	                            		$reviewSort = (request()->reviewSort == 'asc') ? 'desc' : 'asc';  
+	                            		$reviewSortClass = (request()->reviewSort == 'desc') ? 'fa-caret-down' : 'fa fa-caret-up';  
+	                            		$reviewSortStatus = request()->reviewSort ? 'active' : '';  
+	                            	@endphp
+	                            	<a href="{{ addUriParam(['reviewSort' => $reviewSort, 'dateSort' => '']) }}" class="{{ $reviewSortStatus }}">
+	                            		<i class="fa {{ $reviewSortClass }}" aria-hidden="true"></i> ОТЗЫВЫ
+	                            	</a>
+	                            </li>
                             </ul>
                         </div>
                         <div class="col-lg-3" style="text-align: right;">
@@ -324,7 +342,65 @@
                         </div>
                     </div>
                 @endif 
-				 
+
+                @if($minMaxPrice['min'] > 0 && $minMaxPrice['max'] > 0 && $minMaxPrice['min'] <> $minMaxPrice['max'])
+				<div class="price_options">
+					<div class="form-group">
+					<label class="control-label">СТОИМОСТЬ ЧАСА</label>
+						<input type="hidden" name="min_price" value="{{ @request()->input('min_price') }}" id="min_price">
+						<input type="hidden" name="max_price" value="{{ @request()->input('max_price') }}" id="max_price">
+						<div id="slider-range"></div>
+						<input type="text" id="amount" readonly>
+					</div>
+				</div>
+				@endif 
+
+				@if(!empty($specializations))
+                    <div class="specializations_teacher">
+                        @php
+                            $specializationsArray = [];
+                            if(request()->input('specializations')){
+                                $specializationsArray = explode(',', request()->input('specializations'));
+                            }
+                        @endphp
+                        @foreach($specializations as $specialization) 
+                            <div class="checkbox">
+								<label>
+									<input value="{{ $specialization->id }}" 
+									       class="specialization_input" 
+                                           {{ in_array($specialization->id, $specializationsArray) ? 'checked' : '' }}
+                                           type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
+									{{ $specialization->name }}
+								</label>
+							</div> 
+                        @endforeach
+                    </div>
+                @endif  
+				  
+				@if(!empty($lesson_filter_options))  
+					<div class="lesson_options"> 
+				 		@php
+	                        $lessonOptionsArray = [];
+	                        if(request()->input('lesson_options')){
+	                            $lessonOptionsArray = explode(',', request()->input('lesson_options'));
+	                        }
+	                    @endphp
+	                    @foreach($lesson_filter_options as $lesson_option)  
+	                        <div class="checkbox">
+								<label>
+									<input value="{{ $lesson_option->id }}" 
+	                                       class="lesson_option_input" 
+	                                       {{ in_array($lesson_option->id, $lessonOptionsArray) ? 'checked' : '' }} 
+	                                       type="checkbox">
+									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>  
+                                    {{ $lesson_option->name2 ? $lesson_option->name2 : $lesson_option->name }} 
+								</label>
+							</div>
+	                    @endforeach 
+					</div>
+				@endif
+
 				<div class="sex_person">
 					@php  
 						$sexArr = explode(',', request()->input('sex'));
@@ -351,65 +427,7 @@
 							Женшина
 						</label>
 					</div>
-				</div>				 
-
-				@if(!empty($specializations))
-                    <div class="specializations_teacher">
-                        @php
-                            $specializationsArray = [];
-                            if(request()->input('specializations')){
-                                $specializationsArray = explode(',', request()->input('specializations'));
-                            }
-                        @endphp
-                        @foreach($specializations as $specialization) 
-                            <div class="checkbox">
-								<label>
-									<input value="{{ $specialization->id }}" 
-									       class="specialization_input" 
-                                           {{ in_array($specialization->id, $specializationsArray) ? 'checked' : '' }}
-                                           type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>
-									{{ $specialization->name }}
-								</label>
-							</div> 
-                        @endforeach
-                    </div>
-                @endif
-				 
-				@if($minMaxPrice['min'] > 0 && $minMaxPrice['max'] > 0 && $minMaxPrice['min'] <> $minMaxPrice['max'])
-				<div class="price_options">
-					<div class="form-group">
-					<label class="control-label">СТОИМОСТЬ ЧАСА</label>
-						<input type="hidden" name="min_price" value="{{ @request()->input('min_price') }}" id="min_price">
-						<input type="hidden" name="max_price" value="{{ @request()->input('max_price') }}" id="max_price">
-						<div id="slider-range"></div>
-						<input type="text" id="amount" readonly>
-					</div>
-				</div>
-				@endif
-
-				@if(!empty($lesson_filter_options))  
-					<div class="lesson_options"> 
-				 		@php
-	                        $lessonOptionsArray = [];
-	                        if(request()->input('lesson_options')){
-	                            $lessonOptionsArray = explode(',', request()->input('lesson_options'));
-	                        }
-	                    @endphp
-	                    @foreach($lesson_filter_options as $lesson_option)  
-	                        <div class="checkbox">
-								<label>
-									<input value="{{ $lesson_option->id }}" 
-	                                       class="lesson_option_input" 
-	                                       {{ in_array($lesson_option->id, $lessonOptionsArray) ? 'checked' : '' }} 
-	                                       type="checkbox">
-									<span class="jackdaw"><i class="jackdaw-icon fa fa-check"></i></span>  
-                                    {{ $lesson_option->name2 ? $lesson_option->name2 : $lesson_option->name }} 
-								</label>
-							</div>
-	                    @endforeach 
-					</div>
-				@endif
+				</div>	
 
 				@if(request()->input('flt') == 1)
                     <div class="reset_filter">

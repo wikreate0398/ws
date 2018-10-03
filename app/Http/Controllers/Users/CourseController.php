@@ -42,7 +42,7 @@ class CourseController extends Controller
 
     private function _viewPath()
     {
-        return (Auth::user()->user_type == 2) ? 'users.profile_types.teacher.' : 'users.profile_types.university.';
+        return 'users.profile_types.teacher.';
     }
 
     public function showCourse()
@@ -172,10 +172,6 @@ class CourseController extends Controller
             return \App\Utils\JsonResponse::error(['messages' => $validate]);  
         }  
         $idCourse = $crudFactory->save($request->all());  
-        if (!empty($crudFactory->sections)) 
-        {
-            $crudFactory->saveSections($idCourse);
-        } 
 
         return \App\Utils\JsonResponse::success(['redirect' => route(userRoute('edit_course_settings'), ['id' => $idCourse])], '');
     }
@@ -249,7 +245,8 @@ class CourseController extends Controller
     } 
 
     public function editCourseProgram($idCourse, Request $request)
-    {  
+    {   
+
         $course      = Courses::whereId($idCourse)->first();
         $crudFactory = $this->_course->crud($idCourse, Auth::user());
         if (!$crudFactory->hasAccessCourse()) 
@@ -277,13 +274,14 @@ class CourseController extends Controller
   
     public function deleteCourse($id_course)
     {  
+       
         $crudFactory = $this->_course->crud($id_course, Auth::user());
         if ($crudFactory->hasAccessCourse($id_course, Auth::user()->id) &&
-            $this->_course->manager(Courses::whereId($id_course)->first())->canManage() == true) 
+            !$this->_course->manager(Courses::whereId($id_course)->first())->isStarted()) 
         {
             $crudFactory->delete($id_course, Auth::user()->id); 
         }
-        return redirect()->route(userRoute('user_profile'));
+        return redirect()->route(userRoute('user_profile'))->with('flash_message', 'Курс успешно удален!');
     }
 
     private static function redirectAfterSave($action, $request, $course = null)

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Regions;
 use App\Models\CourseReviews;
 use App\Models\TeacherReviews;
+use \App\Models\UniversityReviews;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
@@ -81,6 +82,10 @@ class PupilController extends ProfileController
         elseif($type == 'course')
         {
             CourseReviews::whereId($id)->delete();
+        }
+        elseif ($type == 'university') 
+        {
+            UniversityReviews::whereId($id)->delete();
         }
         return redirect()->back()->with('flash_message', 'Отзыв успешно удален');
     }

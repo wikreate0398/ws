@@ -194,4 +194,15 @@ class ProfileController extends Controller
         \App\Models\UniversityDepartment::where('id', $id)->where('id_university', Auth::user()->id)->delete();
         return redirect()->back()->with('flash_message', 'Отдел успешно удален');
     }
+
+    public function deleteUploadMaterial(Request $request)
+    {
+        $id        = $request->input('id');
+        $materials = \App\Models\SectionLecturesMaterials::whereId($id)->first();
+        if ($materials) 
+        {
+            \File::delete('uploads/courses/materials/' . $materials['material']);
+        } 
+        $materials->delete();
+    }
 }

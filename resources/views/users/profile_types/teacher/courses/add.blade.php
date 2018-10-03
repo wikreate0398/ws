@@ -147,14 +147,14 @@
                      </div>
                   </div> 
                </div>
-               <div class="row">
+               
                   <div class="col-md-12">
                      <div id="error-respond"></div>
                      <button type="submit" class="btn btn_save" style="display: inline-block; width: auto;">
                         Далее 
                      </button>
                   </div>
-               </div>
+                
             </div>
          </form>
       </div>

@@ -13,7 +13,7 @@
                 <h1 class="page__title">{{ $page->name }}</h1>
                 <span><i class="fa fa-map-marker" aria-hidden="true"></i> <br>АДРЕС ЦЕНТРАЛЬНОГО <br> ОФИСА</span>
                 <p class="general_address">
-                    119991, Российская Федерация, Москва, Ленинские горы, д. 1, Московский <br> государственный университет имени М.В.Ломоносова
+                    127018, Российская Федерация, Москва, улица Сущёвский Вал, 5с20
                 </p>
             </div>
         </div>
@@ -23,20 +23,20 @@
 
     <div class="row address__section">
         <div class="col-md-3">
-            <p>ТЕЛЕФОН ПО ВОПРОСАМ <br> СОТРУДНИЧЕСТВА  </p>
-            <strong>8 800 123-45-67</strong>
+            <p>Телефон для связи<br> в Москве  </p>
+            <strong>+7 (499) 753–45–25</strong>
         </div>
         <div class="col-md-3">
-            <p>ТЕЛЕФОН ПО ВОПРОСАМ <br> РЕКЛАМЫ</p>
-            <strong>8 800 123-45-67</strong>
+            <p>Техническая <br> поддержка</p>
+            <strong>+7 (926) 078-48-52</strong>
         </div>
         <div class="col-md-3">
-            <p>E-MAIL ПО ВОПРОСАМ <br> СОТРУДНИЧЕСТВА</p>
-            <strong>info@yandex.ru</strong>
+            <p>По вопросам<br> сотрудничества</p>
+            <strong>info@brainincorporated.com</strong>
         </div>
         <div class="col-md-3">
-            <p>E-MAIL <br> ОТДЕЛА РЕКЛАМЫ</p>
-            <strong>info@yandex.ru</strong>
+            <p>Бухгалтерия<br> Brain Incorporated</p>
+            <strong>buh@brainincorporated.com</strong>
         </div>
     </div>
 
@@ -80,8 +80,7 @@
     <div class="row contact__map">
         <div class="col-md-12">
             <h2 class="page__title">МЫ НА КАРТЕ</h2>
-            <iframe id="u5458_input" scrolling="auto" frameborder="1" webkitallowfullscreen mozallowfullscreen allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3179.507210366911!2d37.529724895772674!3d55.70200681261701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54c6435a66743%3A0xfae7174706dad052!2z0JzQvtGB0LrQvtCy0YHQutC40Lkg0LPQvtGB0YPQtNCw0YDRgdGC0LLQtdC90L3Ri9C5INGD0L3QuNCy0LXRgNGB0LjRgtC10YIg0LjQvNC10L3QuCDQnC7Qki7Qm9C-0LzQvtC90L7RgdC-0LLQsA!5e0!3m2!1sru!2sua!4v1536078247798"></iframe>
-
+            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A2c8ad848ea8a24dcef62d361e8e27eb0a8ce3fd13c947643e231669aaf7f9214&amp;source=constructor" width="100%" height="400" frameborder="0"></iframe>
         </div>
     </div>
 

@@ -64,7 +64,10 @@ class PagesController extends Controller
     { 
         return view('pages/page', ['page' => Menu::where('url', $url)->firstOrFail()]);
     }
- 
+
+    public function tp(){
+        return view('pages/teacher_univ');
+    } 
 
     public function autocomplete(Request $request)
     {

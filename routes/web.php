@@ -23,6 +23,8 @@ Route::group(['middlewars' => 'guest'], function(){
 });
 
 Route::get('about', 'PagesController@about');
+Route::get('tp', 'PagesController@tp');
+
 Route::get('autocomplete', 'PagesController@autocomplete'); 
  
 Route::get('contacts', 'PagesController@contacts');

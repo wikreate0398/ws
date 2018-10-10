@@ -95,7 +95,7 @@ class Crud extends Course
                     { 
                         foreach ($lectures as $lecture_field_name => $lecture_values) 
                         {  
-                            if (!in_array($lecture_field_name, ['video_link', 'video_type', 'last_id'])) 
+                            if (!in_array($lecture_field_name, ['video_link', 'video_type', 'last_id', 'homework', 'homework_letter', 'homework_required'])) 
                             { 
                                 foreach ($lecture_values as $lecture_values_key => $lecture_values_value) 
                                 {
@@ -109,7 +109,8 @@ class Crud extends Course
                     }
                 }
             }
-        }
+        } 
+
 
         if ($err === true) 
         {
@@ -214,13 +215,16 @@ class Crud extends Course
                 }
 
                 $validator = Validator::make($data, [
-                    'lecture_video.*.*'     => 'mimes:mp4,ogv,ogg,m4v|max:5000',
+                    'lecture_video.*.*'       => 'mimes:mp4,ogv,ogg,m4v|max:5000',
                     'lecture_materials.*.*.*' => 'mimes:doc,docx,pdf,rtf,zip|max:2000',
+                    'lecture_homework.*.*'    => 'mimes:doc,docx,pdf,rtf,zip|max:2000',
                 ], [
                     'lecture_video.*.mimes'     => 'Видеофайл не правильного формата',
                     'lecture_materials.*.mimes' => 'Файл материала не правильного формата',
                     'lecture_video.*.max'       => 'Загрузите видео размером не более 5мб',
-                    'lecture_materials.*.max'   => 'Загрузите файлы размером не более 2мб'
+                    'lecture_materials.*.max'   => 'Загрузите файлы размером не более 2мб',
+                    'lecture_homework.*.max'    => 'Файл в разделе домашнего задания должен быть размером не более 2мб',
+                    'lecture_homework.*.mimes'  => 'Файл в разделе домашнего задания не правильного формата',
                 ]);  
                 if ($validator->fails()) 
                 {
@@ -368,15 +372,13 @@ class Crud extends Course
 
     public function saveSections()
     {  
-         
-        // exit('sad');
-        //exit(print_arr(request()->all()));
         $files  = @request()->file(); 
         $insert = [];
         foreach ($this->sections as $sectionKey => $section) 
         {  
             $id = CourseSections::create([
                 'name'      => $section['name'],
+                'date'      => !empty($section['date']) ? date('Y-m-d', strtotime($section['date'])) : NULL,  
                 'id_course' => $this->id_course
             ])->id;
 
@@ -385,10 +387,10 @@ class Crud extends Course
                 $videoFile = null;
                 if (!empty($files['lecture_video'][$sectionKey][$lectureKey]) && $lecture['video_type'] == 'file') 
                 {
-                    $video     = $files['lecture_video'][$sectionKey][$lectureKey]; 
-                    $fileName  = md5($video->getClientOriginalName() . time()) . "." . $video->getClientOriginalExtension();
+                    $file     = $files['lecture_video'][$sectionKey][$lectureKey]; 
+                    $fileName  = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
                     $videoFile = $fileName;
-                    $video->move(public_path() . '/uploads/courses/video/', $fileName); 
+                    $file->move(public_path() . '/uploads/courses/video/', $fileName); 
                 }
 
                 $createLecture = [
@@ -401,6 +403,45 @@ class Crud extends Course
                     'video_type'       => $lecture['video_type']
                 ];
 
+                if (!empty($lecture['homework'])) 
+                {
+                    $homework_file = null;
+                    if (!empty($files['lecture_homework'][$sectionKey][$lectureKey])) 
+                    {
+                        $file          = $files['lecture_homework'][$sectionKey][$lectureKey]; 
+                        $fileName      = $file->getClientOriginalName() . "_" . date('d_m_Y_H_i_s')  . "." . $file->getClientOriginalExtension();
+                        $homework_file = $fileName;
+                        $file->move(public_path() . '/uploads/courses/homework/', $fileName); 
+                    }
+
+                    if (empty($homework_file) && !empty($lecture['old_homework_file'])) 
+                    {
+                        $homework_file = $lecture['old_homework_file'];
+                    }
+
+                    $createLecture = array_merge($createLecture, [
+                        'has_homework'      => 1,
+                        'homework_letter'   => @$lecture['homework_letter'],
+                        'homework_required' => !empty($lecture['homework_required']) ? 1 : 0,
+                        'homework_file'     => $homework_file
+                    ]);
+                }
+                else
+                { 
+                    if (!empty($lecture['old_homework_file'])) 
+                    {
+                        \File::delete('uploads/courses/homework/' . $lecture['old_homework_file']);
+                    }
+
+                    $createLecture = array_merge($createLecture, [
+                        'has_homework'      => 0,
+                        'homework_letter'   => null,
+                        'homework_required' => null,
+                        'homework_file'     => null
+                    ]);
+                } 
+ 
+ 
                 if ($lecture['video_type'] == 'file' && !empty($videoFile)) 
                 {
                     $createLecture['video_file'] = $videoFile;

@@ -12,7 +12,8 @@ class CourseSections extends Model
 
 	protected $fillable = [
         'name',
-        'id_course'
+        'id_course',
+        'date'
     ];
 
     public function lectures()

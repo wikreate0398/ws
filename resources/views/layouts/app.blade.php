@@ -32,6 +32,12 @@
     <!-- Datepicker --> 
     <link href="{{ asset('js/datepicker/datepicker.css') }}" rel="stylesheet">
 
+    @if(!empty($styles))
+        @foreach($styles as $key => $style)
+            {!! setStyle('/public/', $style) !!}
+        @endforeach
+    @endif 
+
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

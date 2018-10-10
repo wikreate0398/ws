@@ -89,10 +89,21 @@ class CoursesController extends Controller
         return view('courses.catalog', $data);
     } 
 
-    public function show($id)
+    public function show($id, $request_id_user = false)
     {     
-        $course = Courses::getOneCourse($id, Auth::check()); 
- 
+        if (empty($request_id_user)) 
+        {
+            $course = Courses::getOneCourse($id, Auth::check()); 
+        }
+        else
+        { 
+            $course = Courses::whereHas('userRequests', function($query) use ($request_id_user){
+                           return $query->where('id_user', $request_id_user);
+                        })->whereHas('user', function($query){
+                            return $query->allowUser();
+                        })->findOrFail($id);
+        }
+          
         $data = [
             'course'         => $course,  
             'scripts'        => [

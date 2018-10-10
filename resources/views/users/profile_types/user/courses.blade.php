@@ -50,7 +50,7 @@
 	            				@endif 
 	            			</div>
 		            		<h2>
-		            			<a href="/course/{{ $course->id }}">
+		            			<a href="/course/{{ $course->id }}/userRequest/{{ $user->id }}">
 		            				{{ $course->name }}
 		            			</a>
 		            		</h2>
@@ -104,15 +104,17 @@
 		            		</table>
 							
 		            		<div class="row" style="margin-top: 10px;">
-		            			<div class="col-md-6">
-		            				@if(!Course::manager($course)->isFinished())
-		            					<button type="button" class="course__btn learning__course">Обучение</button>
-		            					@else
-		            					<a href="" class="dwn__diplom">Скачать Диплом</a> 
-		            				@endif
+		            			<div class="col-md-6">  
+		            				@if(!Course::manager($course)->isFinished()) 
+		            					@php $disable = Course::manager($course)->isStarted() ? '' : 'disable__link' @endphp
+		            					<a href="{{ route(userRoute('course_training'), ['id' => $course->id]) }}" 
+		            					   class="course__btn learning__course {{ $disable }}">Обучение</a> 
+		            				@elseif(Course::manager($course)->isFinished())
+										<a href="" class="dwn__diplom">Скачать Диплом</a> 
+		            				@endif   
 		            			</div>
 		            			<div class="col-md-6">
-		            				<a href="/course/{{ $course->id }}" class="course__btn about__course">О курсе</a>
+		            				<a href="/course/{{ $course->id }}/userRequest/{{ $user->id }}" class="course__btn about__course">О курсе</a>
 		            			</div>
 		            		</div>
 	            		</div> 
@@ -186,6 +188,11 @@
                  	font-weight: bold;
                  	text-decoration: underline;
                  } 
+
+                .disable__link{
+					opacity: 0.5;
+					pointer-events: none;
+                }
     		</style>
 
 		@else

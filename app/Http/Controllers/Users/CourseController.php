@@ -156,10 +156,15 @@ class CourseController extends Controller
         return view('users.profile_types.teacher.courses.edit.' . $view, [ 
             'user'       => Auth::user(),  
             'categories' => map_tree(CourseCategory::orderBy('page_up','asc')->orderBy('id','asc')->get()->toArray()),
-            'course'     => $course,
-            'scripts' => [
+            'course'     => $course, 
+            'scripts' => [ 
+                'full:https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js',
+                'full:https://vjs.zencdn.net/7.2.3/video.js',
                 'js/courses.js' 
-            ]
+            ], 
+            'styles' => [ 
+                'full:https://vjs.zencdn.net/7.2.3/video-js.css' 
+            ],
         ]); 
     }
 

@@ -19,7 +19,7 @@ use App\Utils\Users\Pupil\User as PupilUser;
  
 class PupilController extends ProfileController  
 {
-    private $viewPath = 'users.profile_types.user.';  
+    public $viewPath = 'users.profile_types.user.';  
 
 	function __construct() 
     {

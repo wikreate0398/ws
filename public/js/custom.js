@@ -187,7 +187,7 @@ jQuery(document).ready(function($) {
         height: 20,
         button_width: 25
     });
-
+ 
     $( ".datepicker" ).datepicker({
         format: "dd.mm.yyyy",
         changeMonth: true,
@@ -877,3 +877,9 @@ function teacherStatus(input){
 function log(data) {
     console.log(data);
 }
+
+// function videoJsInit(){
+//     $('.vide__videojs').each(function(){
+//         videojs($(this));
+//     });
+// }

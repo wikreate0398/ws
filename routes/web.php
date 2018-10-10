@@ -45,7 +45,10 @@ Route::post('teachers/review/{id}', 'TeachersController@review', ['middleware' =
 
 Route::get('courses', 'CoursesController@index'); 
 Route::get('courses/cat/{cat}', 'CoursesController@index');
+
 Route::get('course/{id}', 'CoursesController@show');
+Route::get('course/{id}/userRequest/{id_user}', 'CoursesController@show');
+
 Route::get('course/{id}/makeRequest', 'CoursesController@makeRequest');
 Route::get('courses/autocomplete', 'CoursesController@autocomplete');
 Route::post('course/favorite', 'CoursesController@favorite', ['middleware' => 'web_auth']); 
@@ -222,7 +225,13 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 	Route::post('updatePass', "$controller@updatePassword")->name("{$userDefine}_update_pass"); 
 
 		 	Route::group(['prefix' => 'course'], function() use($controller,$userDefine) {
-		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile"); 
+		 		Route::get('/', "$controller@showCourse")->name("{$userDefine}_user_profile");
+
+		 		Route::group(['prefix' => 'training'], function() use($controller,$userDefine) {
+		 			$controller = 'TrainingCourseController';
+		 			Route::get('{id}', "$controller@training")->name("{$userDefine}_course_training");  
+		 			Route::get('download/{file}', "$controller@download")->name("{$userDefine}_course_file_download");   
+		 		}); 
 			}); 
 
 		 	Route::get('favorites', "\App\Http\Controllers\Users\FavoritesController@index")->name("{$userDefine}_user_favorites");

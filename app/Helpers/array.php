@@ -13,6 +13,20 @@ if (!function_exists('key_to_id')) {
     }
 }
 
+function youtubeEmbed($link, $w=250){
+    if ($w) {
+        $w = 'width="'.$w.'"';
+    }else{
+        $w = '';
+    }
+     
+    return preg_replace(
+        "/\s*[a-zA-Z\/\/:\.]*youtu(be.com\/watch\?v=|.be\/)([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i",
+        "<iframe ".$w." src=\"//www.youtube.com/embed/$2\" allowfullscreen></iframe>",
+        $link
+    );
+}
+
 if (!function_exists('map_tree')) {
     function map_tree($dataset)
     {
@@ -414,6 +428,15 @@ function setScript($js_folder, $path){
         $path = $js_folder.$path.'?v='.time();
     }
     return "<script src='{$path}'></script>";
+}
+
+function setStyle($css_folder, $path){
+    if (strpos($path, 'full:') !== false) {
+        $path = str_replace('full:', '', $path); 
+    }else{
+        $path = $css_folder.$path.'?v='.time();
+    }
+    return "<link rel='stylesheet' href='{$path}'>";
 }
 
 function getUserYears($birthDate)

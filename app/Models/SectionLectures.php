@@ -19,11 +19,15 @@ class SectionLectures extends Model
         'duration_minutes',
         'video_link',
         'video_file',
-        'video_type'
+        'video_type',
+        'homework_letter',
+        'homework_required',
+        'homework_file',
+        'has_homework'
     ];
 
     public function materials()
     {
         return $this->hasMany('App\Models\SectionLecturesMaterials', 'id_lecture', 'id');
-    }
+    } 
 }

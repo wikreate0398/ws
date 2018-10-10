@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SectionLectures extends Model
 {
-
 	public $timestamps = false;
 
 	protected $table = 'section_lectures';
@@ -29,5 +28,15 @@ class SectionLectures extends Model
     public function materials()
     {
         return $this->hasMany('App\Models\SectionLecturesMaterials', 'id_lecture', 'id');
+    } 
+
+    public function section()
+    {
+        return $this->hasOne('App\Models\CourseSections', 'id', 'id_section');
+    } 
+
+    public function userHomework()
+    {
+        return $this->hasOne('App\Models\LectureUserHomework', 'id_lecture', 'id');
     } 
 }

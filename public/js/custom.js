@@ -388,7 +388,9 @@ jQuery(document).ready(function($) {
 
                     $(form).find('#error-respond').fadeOut();  
 
+                    if (jsonResponse.message) { 
                     showFadeModal('success', jsonResponse.message);
+                    }
 
                      
                     $(form)[0].reset();
@@ -725,11 +727,18 @@ function profilePhoto(fileName){
     reader.readAsDataURL(file);
 
     var fileSize = parseInt(file["size"]) / 1000; 
+    var fileExtension = ["image/gif", "image/jpeg", "image/png", "image/jpg"];
+    var fileType = fileName["type"];
 
     if (fileSize > 2048) {
         alert('Максимальный размер изображения 2МБ');
         return;
     } 
+
+    if (jQuery.inArray(fileType, fileExtension) == -1) {
+        alert('Файл не неверного формата');
+        return;
+    }
 
     reader.onload = function (e) {
 

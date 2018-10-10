@@ -11,6 +11,7 @@ use App\Models\CourseCategory;
 use App\Models\CoursesCertificates; 
 use App\Models\CourseTeachers; 
 use App\Models\SectionLecturesMaterials; 
+use App\Models\LectureUserHomework;  
   
 class Crud extends Course
 { 
@@ -461,6 +462,7 @@ class Crud extends Course
                 if (!empty($lecture['last_id'])) 
                 {
                     SectionLecturesMaterials::where('id_lecture', $lecture['last_id'])->update(['id_lecture' => $insertLecture->id]);
+                    LectureUserHomework::where('id_lecture', $lecture['last_id'])->update(['id_lecture' => $insertLecture->id]);
                 } 
       
                 if (!empty($files['lecture_materials'][$sectionKey][$lectureKey])) 
@@ -524,8 +526,8 @@ class Crud extends Course
 
     public function hasAccessLecture($id_lecture)
     {
-        $getLecture = SectionLectures::whereId($id_lecture)->first();
-        $getCourse  = CourseSections::whereId(@$getLecture->id_section)->first();
+        $getLecture = SectionLectures::whereId($id_lecture)->first(); 
+        $getCourse  = CourseSections::whereId(@$getLecture->id_section)->first(); 
         return Courses::where('id', @$getCourse->id_course)->where('id_user', $this->user->id)->count();
     }
 

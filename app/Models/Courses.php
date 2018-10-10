@@ -260,6 +260,13 @@ class Courses extends Model
         return $query->whereDate('date_to', '<', date('Y-m-d'))->where('settings_filled', '1');
     }
 
+    public function scopeAllowUser($query)
+    {
+        return $query->whereHas('user', function($query){
+                    return $query->allowUser();
+                });
+    }
+
     public static function countTotal()
     {    
         return Courses::published()->count();

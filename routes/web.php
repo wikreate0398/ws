@@ -54,7 +54,9 @@ Route::get('course/{id}/userRequest/{id_user}', 'CoursesController@show');
 Route::get('course/{id}/makeRequest', 'CoursesController@makeRequest');
 Route::get('courses/autocomplete', 'CoursesController@autocomplete');
 Route::post('course/favorite', 'CoursesController@favorite', ['middleware' => 'web_auth']); 
-Route::post('course/review/{id}', 'CoursesController@review', ['middleware' => 'web_auth'])->name('course_review'); 
+
+Route::post('course/review/{id}', 'CoursesController@review', ['middleware' => 'web_auth'])->name('course_review');  
+ 
 
 Route::get('news', 'NewsController@index');
 Route::get('news/cat/{id}', 'NewsController@index'); 
@@ -232,7 +234,10 @@ Route::group(['middleware' => ['web_auth']], function(){
 		 		Route::group(['prefix' => 'training'], function() use($controller,$userDefine) {
 		 			$controller = 'TrainingCourseController';
 		 			Route::get('{id}', "$controller@training")->name("{$userDefine}_course_training");  
+		 			Route::post('make-homework', "$controller@makeHomework")->name("{$userDefine}_training_homework");  
 		 			Route::get('download/{file}', "$controller@download")->name("{$userDefine}_course_file_download");   
+		 			Route::post('write-message', "$controller@writeMessage")->name("{$userDefine}_write_message");  
+		 			Route::post('review/{id}', "$controller@review")->name("{$userDefine}_write_review");  
 		 		}); 
 			}); 
 

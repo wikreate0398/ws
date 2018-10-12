@@ -22,8 +22,8 @@ Route::group(['middlewars' => 'guest'], function(){
 	Route::post('login', 'Auth\LoginController@login')->name('run_login'); 
 });
 
-Route::get('about', 'PagesController@about');
-Route::get('tp', 'PagesController@tp');
+Route::get('about', 'PagesController@about'); 
+Route::get(Page::getUriByType('universities_teachers'), 'PagesController@universitiesTeachers');
 
 Route::get('autocomplete', 'PagesController@autocomplete'); 
  

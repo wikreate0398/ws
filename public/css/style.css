@@ -3726,3 +3726,288 @@ select option:disabled {
     background: #a2a2ff;
     color: #fff !important;
 }
+/*Вызам и преподователям*/
+.title_page_in{
+	font-family: 'Bebas Neue Regular';
+	font-size: 36px;
+	text-align: center;
+	margin-top: 60px;
+	margin-bottom: 15px;
+}
+.title_page_in_sub{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 18px;
+	color: #a8a8a8;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 60px;
+}
+.parallax_first{
+	min-height: 270px;
+    background: transparent;
+}
+.parallax_first h3{
+	font-family: 'Bebas Neue Regular';
+	text-align: center;
+    font-size: 30px;
+    margin-top: 90px;
+    margin-bottom: 90px;
+}
+.advanced_in{
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+.advanced_in h3{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 18px;
+	color: #000000;
+	text-transform: uppercase;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.advanced_in span{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 16px;
+	color: #666d78;
+}
+.publish-courses{
+	background: url(/public/images/vuzam_prepod/publish-courses.png);
+	padding: 90px 20px 90px 120px;
+	display: block;
+	min-height: 510px;
+	background-size: cover;
+	-webkit-box-shadow: 0px 0px 20px 4px #000000; 
+	box-shadow: 0px 0px 20px 4px #000000;
+}
+.publish-courses-item{
+	margin-bottom: 60px;
+}
+.publish-courses-item h3{
+	font-family: 'Bebas Neue Regular';
+	font-size: 24px;
+	color: #000000;
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+.publish-courses-item p{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #666d78;
+	margin-bottom: 0px;
+}
+.employment{
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+.employment h3{
+	font-family: 'Bebas Neue Regular';
+	font-size: 36px;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 60px;
+	text-transform: uppercase;
+}
+.employment h3 span{
+	display: block;
+	font-size: 28px;
+}
+.employment .percent{
+	font-family: 'Bebas Neue Regular';
+	font-size: 30px;
+	color: #fff;
+	display: inline-block;
+	background: #b93777;
+	padding: 5px 90px;
+	margin-bottom: 60px
+}
+.employment p{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #666d78;
+	text-align: center;
+	margin-bottom: 60px;
+}
+.employment p span{
+	color: #000000;
+	text-transform: uppercase;
+}
+.parallax_three{
+	min-height: 590px;
+    background: transparent;
+}
+.tabs_in{
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+.nav_tabs_in{
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e3e5e8;
+}
+.nav_tabs_in li{
+    float: none;
+    display: inline-block;
+	margin-left: -5px;
+}
+.nav_tabs_in > li > a{
+	font-family: 'Helvetica Neue Cyr Roman';
+    font-size: 13px;
+	color: #a8a8a8;
+    text-transform: uppercase;
+	margin-right: 0px;
+	border-radius: 0px;
+}
+.nav_tabs_in > li > a:focus,
+.nav_tabs_in > li > a:hover{
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
+.nav_tabs_in > li.active > a, .nav_tabs_in > li.active > a:focus, .nav_tabs_in > li.active > a:hover {
+	color: #b93777;
+	border: 0px;
+    border-bottom: 1px solid #b93777;
+    background: transparent;
+	margin-right: 0px;
+}
+#nav_tabs_in_university{
+	background: url(/public/images/vuzam_prepod/nav_tabs_in_university.png);
+	background-repeat: no-repeat;
+	background-position: center right;
+	min-height: 625px;
+}
+#nav_tabs_in_teacher{
+	background: url(/public/images/vuzam_prepod/nav_tabs_in_university.png);
+	background-repeat: no-repeat;
+	background-position: center right;
+	min-height: 625px;
+}
+#nav_tabs_in_courses{
+	background: url(/public/images/vuzam_prepod/nav_tabs_in_university.png);
+	background-repeat: no-repeat;
+	background-position: center right;
+	min-height: 625px;
+}
+.tab-content_in h3{
+	font-family: 'Bebas Neue Regular';
+	font-size: 36px;
+	text-transform: uppercase;
+	margin-top: 0px;
+	margin-bottom: 30px;
+}
+.tab-content_in p{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #666d78;
+}
+.scope_heading{
+	font-family: 'Bebas Neue Regular';
+	font-size: 36px;
+	color: #fff;
+	text-align: right;
+	text-transform: uppercase;
+	background: #b93777;
+	margin-top: 0px;
+	margin-bottom: 60px;
+	padding: 15px 120px 15px 0px;
+}
+.scope{
+	background: url(/public/images/vuzam_prepod/scope.png);
+	padding-top: 90px;
+	padding-bottom: 40px;
+}
+.scope .scope_items_heading{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 18px;
+	color: #b93777;
+	padding-left: 60px;
+	margin-top: 0px;
+	margin-bottom: 60px;
+}
+.scope_items{
+	padding: 0px 60px;
+	margin-bottom: 40px;
+}
+.scope_items h3{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 18px;
+	color: #000;
+	margin-top: 0px;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+}
+.scope_items p{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #666d78;
+}
+.stage{
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+.stage-item p{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 16px;
+	color: #666d78;
+	margin-top: 10px;
+	margin-bottom: 0px;
+}
+.paralax_four{
+	min-height: 550px;
+    background: transparent;
+}
+.register_in{
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+.register_in h3{
+	font-family: 'Bebas Neue Regular';
+	font-size: 36px;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 30px;
+}
+.register_in h3 span{
+	font-size: 28px;
+	color: #a8a8a8;
+	display: block;
+}
+.register_in h4{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 24px;
+	color: #b93777;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 30px;
+}
+.register_in h4 a{
+	font-family: 'Helvetica Neue Cyr Roman';
+	font-size: 24px;
+	color: #b93777;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 30px;
+}
+.register_in .form-horizontal .btn_registration_in{
+	font-family: 'Helvetica Neue Cyr Light Italic';
+	font-size: 16px;
+	color: #fff;
+	background: #b93777;
+	border: none;
+	border-radius: 0px;
+	width: 100%;
+	padding: 10px 12px
+}
+.register_in .form-horizontal .form-control{
+	font-family: 'Helvetica Neue Cyr Light Italic';
+	height: auto;
+	padding: 10px 12px;
+	border-radius: 0px;
+	color: #95979c;
+	font-size:16px;
+	border-radius: 0px;
+	text-align: center;
+}

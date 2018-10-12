@@ -3833,7 +3833,7 @@ select option:disabled {
 	text-transform: uppercase;
 }
 .parallax_three{
-	min-height: 590px;
+	min-height: 350px;
     background: transparent;
 }
 .tabs_in{
@@ -3956,7 +3956,7 @@ select option:disabled {
 	margin-bottom: 0px;
 }
 .paralax_four{
-	min-height: 550px;
+	min-height: 350px;
     background: transparent;
 }
 .register_in{

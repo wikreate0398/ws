@@ -93,7 +93,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                           </button>
-                          <a class="navbar-brand hidden-xs" href="/"><img src="/images/logo2.png" alt=""></a>
+                          <a class="navbar-brand hidden-xs" href="/"><img src="/images/logo3.png" alt=""></a>
                           <a class="navbar-brand visible-xs" href="/"><img src="/images/logo_mob.png" alt=""></a>
                         </div>
                     </div>   
@@ -260,7 +260,7 @@
 			<div class="row visible-xs">
 				<div class="col-xs-12">
 					<div class="footer_logo">
-						<img class="img-responsive" src="/images/footer_logo.png" alt="">
+						<img class="img-responsive" src="/images/footer_logo_2.png" alt="">
 					</div>
 					<ul class="list-unstyled footer_menu">
 							@foreach(Page::bottom() as $menu)
@@ -319,7 +319,7 @@
 			<div class="row hidden-xs">
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 					<div class="footer_logo">
-						<img class="img-responsive" src="/images/footer_logo.png" alt="">
+						<img class="img-responsive" src="/images/footer_logo_2.png" alt="">
 					</div>
 					<ul class="list-inline nav-justified social_menu">
 						<li>

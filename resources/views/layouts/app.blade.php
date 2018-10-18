@@ -94,7 +94,7 @@
                             <span class="icon-bar"></span>
                           </button>
                           <a class="navbar-brand hidden-xs" href="/"><img src="/images/logo3.png" alt=""></a>
-                          <a class="navbar-brand visible-xs" href="/"><img src="/images/logo_mob.png" alt=""></a>
+                          <a class="navbar-brand visible-xs" href="/"><img src="/images/logo_mob_2.png" alt=""></a>
                         </div>
                     </div>   
 
